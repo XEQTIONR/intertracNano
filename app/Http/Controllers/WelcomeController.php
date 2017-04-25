@@ -7,12 +7,15 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use Illuminate\Support\Facades\DB;
+
 class WelcomeController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function show()
     {
-      return view('welcome');
+      $tables = DB::select('SELECT* FROM HSCODES',[]);
+      return view('welcome',['tables' => $tables]);
     }
 }

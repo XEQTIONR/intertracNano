@@ -85,6 +85,15 @@
                 <ul>
                   <li>Item 1</li>
                   <li>Item 2</li>
+
+                  <?php
+                  foreach ($tables as $table)
+                  {
+                    echo "<li>";
+                    echo $table->id;
+                    echo "</li>";
+                  }
+                  ?>
                 </ul>
 
                 <div class="links">

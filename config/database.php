@@ -41,17 +41,17 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '192.185.4.102'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'xeqtionr_nano_db'),
-            'username' => env('DB_USERNAME', 'xeqtionr_nuser'),
-            'password' => env('DB_PASSWORD', 'cheesecake'),
-            'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'host' => '192.185.4.102',
+            'port' => '3306',
+            'database' => 'xeqtionr_nano_db',
+            'username' => 'xeqtionr_nuser',
+            'password' => 'cheesecake',
+          //'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_general_ci',
             'prefix' => '',
-            'strict' => true,
-            'engine' => null,
+            //'strict' => true,
+            //'engine' => null,
         ],
 
         'pgsql' => [
