@@ -82,6 +82,11 @@
                     Laravel
                 </div>
 
+                <ul>
+                  <li>Item 1</li>
+                  <li>Item 2</li>
+                </ul>
+
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
