@@ -49,6 +49,10 @@
                 font-size: 84px;
             }
 
+            .title span{
+              color: orange;
+            }
+
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
@@ -57,6 +61,10 @@
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
+            }
+
+            .links > a:hover{
+              color: orange;
             }
 
             .m-b-md {
@@ -79,31 +87,15 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    <span>nano</span>DB
                 </div>
 
-                <ul>
-                  <li>Item 1</li>
-                  <li>Item 2</li>
-
-                  <?php
-                  foreach ($tables as $table)
-                  {
-                    echo "<li>";
-                    echo $table->id;
-                    echo " ";
-                    echo $table->hscode;
-                    echo "</li>";
-                  }
-                  ?>
-                </ul>
-
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://laravel.com/docs">Lists</a>
+                    <a href="https://laracasts.com">Transactions</a>
+                    <a href="https://laravel-news.com">Reports</a>
+                    <a href="https://forge.laravel.com">Help</a>
+                    <a href="https://github.com/laravel/laravel">Logout</a>
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use Illuminate\Support\Facades\DB;
+use App\Hscode;
 
 class WelcomeController extends BaseController
 {
@@ -15,7 +16,9 @@ class WelcomeController extends BaseController
 
     public function show()
     {
-      $tables = DB::select('SELECT* FROM HSCODES',[]);
+
+      $tables = Hscode::all();
+      //$tables = DB::select('SELECT* FROM hscodes',[]);
       return view('welcome',['tables' => $tables]);
     }
 }
