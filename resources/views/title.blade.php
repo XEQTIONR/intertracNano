@@ -114,9 +114,23 @@
 
         <script>
           $(document).ready(function(){
+
             $(".subMenu").hide();         //slideToggle changes this to show
-            $("button").click(function(){
-              $(".subMenu").slideToggle();
+            $(".icons8-Bar-Chart").click(function(){
+
+                $("#theMenu").slideToggle();
+                $("#theMenu2").slideUp();
+                $("#theMenu3").slideUp();
+            });
+            $(".icons8-Visible").click(function(){
+              $("#theMenu2").slideToggle();
+              $("#theMenu").slideUp();
+              $("#theMenu3").slideUp();
+            });
+            $(".icons8-Add").click(function(){
+              $("#theMenu3").slideToggle();
+              $("#theMenu2").slideUp();
+              $("#theMenu").slideUp();
             });
           });
         </script>
@@ -191,7 +205,13 @@
 
                 </div>
 
-                <button>Slide Toggle</button>
+                <div id="theMenu2" class="subMenu" style="background-color: red;">
+
+                </div>
+
+                <div id="theMenu3" class="subMenu" style="background-color: green;">
+
+                </div>
             </div>
         </div>
     </body>
