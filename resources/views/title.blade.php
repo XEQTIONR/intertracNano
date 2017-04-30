@@ -22,7 +22,7 @@
             }
 
             .full-height {
-                height: 50vh;
+                height: 100vh;
             }
 
             .flex-center {
@@ -43,6 +43,7 @@
 
             .content {
                 text-align: center;
+                width: 100%;
             }
 
             .title {
@@ -51,6 +52,19 @@
 
             .title span{
               color: orange;
+            }
+
+            .links{
+              /*display : block;
+              width : auto;
+              margin : 0;
+              background-color: teal;*/
+            }
+
+            .links table
+            {
+              margin-left: auto;
+              margin-right: auto;
             }
 
             .links > a, td > a {
@@ -72,7 +86,7 @@
             }
 
             .mainMenu{
-              width: 100%;
+              /*width: 100%;*/
               display : block;
               margin : 0;
             }
@@ -85,8 +99,29 @@
               display : block;
               margin : auto;
             }
+
+            .subMenu{
+              width: 100%;
+              background-color: orange;
+              height: 75px;
+
+              display: block;
+              margin: 0;
+            }
         </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <script>
+          $(document).ready(function(){
+            $(".subMenu").hide();         //slideToggle changes this to show
+            $("button").click(function(){
+              $(".subMenu").slideToggle();
+            });
+          });
+        </script>
     </head>
+
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
@@ -136,19 +171,13 @@
 
                   <tr>
                     <td>
-                      <a href="/test">
-
-                             Generate Reports
-
-                      </a>
+                      <a href="/test">Generate Reports</a>
                     </td>
                     <td>
                       <a href="https://laracasts.com">View Information</a>
                     </td>
                     <td>
-                      <a href="https://laravel-news.com">
-
-                        Perform Actions</a>
+                      <a href="https://laravel-news.com">Perform Actions</a>
                     </td>
                   </tr>
                   </table>
@@ -157,6 +186,12 @@
 
 
                 </div>
+
+                <div id="theMenu" class="subMenu">
+
+                </div>
+
+                <button>Slide Toggle</button>
             </div>
         </div>
     </body>
