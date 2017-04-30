@@ -22,7 +22,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 75vh;
             }
 
             .flex-center {
@@ -103,11 +103,19 @@
             .subMenu{
               width: 100%;
               background-color: orange;
-              height: 75px;
+              height: auto;
 
               display: block;
               margin: 0;
             }
+
+            .subMenu ul{
+              margin: 0;
+              color: white;
+              list-style-type: none;
+            }
+
+
         </style>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -154,10 +162,7 @@
                     <span>nano</span>DB
                 </div>
 
-                <div class="mainMenu">
 
-
-                </div>
 
 
 
@@ -202,17 +207,44 @@
                 </div>
 
                 <div id="theMenu" class="subMenu">
-
+                  <ul>
+                    <li>Order Report</li>
+                    <li>Payment Report</li>
+                    <li>Expenditure Report</li>
+                    <li>Outstanding Balance Report</li>
+                    <li>Profit/Loss Report</li>
+                  </ul>
                 </div>
 
                 <div id="theMenu2" class="subMenu" style="background-color: red;">
-
+                  <ul>
+                    <li>Cutomer</li>
+                    <li>Tyre</li>
+                    <li>Consignments</li>
+                    <li>LCs</li>
+                    <li>Expenses</li>
+                    <li>Order</li>
+                    <li>Payment</li>
+                    <li>Stock</li>
+                  </ul>
                 </div>
 
                 <div id="theMenu3" class="subMenu" style="background-color: green;">
+                  <ul>
+                    <li>Add new LC</li>
+                    <li>Add new Performa Invoice</li>
+                    <li>Add new consignments</li>
+                    <li>Add new expense</li>
 
+                    <li>Create new Order</li>
+                    <li>Create new Payment Invoice</li>
+                  </ul>
                 </div>
             </div>
+        </div>
+        <div class="mainContent" style="width: 100%; height: 100px; background-color: #999;">
+
+
         </div>
     </body>
 </html>
