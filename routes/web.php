@@ -21,3 +21,8 @@ Route::get('title', function()
 });
 
 Route::get('/', 'WelcomeController@show');
+
+Route::get('layout', function()
+{
+  return view('layout');
+});
