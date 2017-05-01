@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `xeqtionr_nano_db`.`CONTAINER_CONTENTS` (
   `tyre_id` INT NOT NULL,
   `qty` INT NOT NULL DEFAULT 1,
   `unit_price` DECIMAL(7,2) NOT NULL,
-  PRIMARY KEY (`Container#`, `BOL#`),
+  PRIMARY KEY (`Container#`, `BOL#`, `tyre_id`),
   INDEX `fk_TYREcontents_idx` (`tyre_id` ASC),
   CONSTRAINT `fk_CONTAINERcontents`
     FOREIGN KEY (`Container#` , `BOL#`)
@@ -235,19 +235,21 @@ DROP TABLE IF EXISTS `xeqtionr_nano_db`.`ORDER_CONTENTS` ;
 
 CREATE TABLE IF NOT EXISTS `xeqtionr_nano_db`.`ORDER_CONTENTS` (
   `Order#` BIGINT ZEROFILL NOT NULL,
+  `Container#` VARCHAR(45) NOT NULL,
+  `BOL#` VARCHAR(30) NOT NULL,
   `Tyre_id` INT NOT NULL,
   `qty` INT NOT NULL DEFAULT 1,
   `sell_price` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`Order#`, `Tyre_id`),
+  PRIMARY KEY (`Order#`, `Container#`, `BOL#`,`Tyre_id`),
   INDEX `fk_ORDERtyre_idx` (`Tyre_id` ASC),
   CONSTRAINT `fk_ORDERcontents`
     FOREIGN KEY (`Order#`)
     REFERENCES `xeqtionr_nano_db`.`ORDERS` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_ORDERtyre`
-    FOREIGN KEY (`Tyre_id`)
-    REFERENCES `xeqtionr_nano_db`.`TYRES` (`id`)
+  CONSTRAINT `fk_ORDERcontainerContents`
+    FOREIGN KEY (`Container#` ,`BOL#` , `Tyre_id`)
+    REFERENCES `xeqtionr_nano_db`.`CONTAINER_CONTENTS` (`Container#` ,`BOL#` , `tyre_id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
