@@ -14,28 +14,8 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-        <script>
-          $(document).ready(function(){
-
-            $(".subMenu").hide();         //slideToggle changes this to show
-            $(".icons8-Bar-Chart, #reportLabel").click(function(){
-
-                $("#theMenu").slideToggle();
-                $("#theMenu2").slideUp();
-                $("#theMenu3").slideUp();
-            });
-            $(".icons8-Visible, #infoLabel").click(function(){
-              $("#theMenu2").slideToggle();
-              $("#theMenu").slideUp();
-              $("#theMenu3").slideUp();
-            });
-            $(".icons8-Add, #actionLabel").click(function(){
-              $("#theMenu3").slideToggle();
-              $("#theMenu2").slideUp();
-              $("#theMenu").slideUp();
-            });
-          });
-        </script>
+        <script src="/js/main_menu.js"></script>
+          
     </head>
 
     <body>
