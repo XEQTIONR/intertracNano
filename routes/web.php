@@ -20,6 +20,4 @@ Route::get('title', function()
   return view('title');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@show');

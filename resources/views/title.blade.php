@@ -22,7 +22,8 @@
             }
 
             .full-height {
-                height: 75vh;
+                height: auto;
+                margin-top: 30vh;
             }
 
             .flex-center {
@@ -67,7 +68,7 @@
               margin-right: auto;
             }
 
-            .links > a, td > a {
+            .links > a, td > a, a {
                 color: #636b6f;
                 padding: 0 25px;
                 font-size: 12px;
@@ -115,6 +116,20 @@
               list-style-type: none;
             }
 
+            .subMenu li{
+              display: block;
+              width: 33%;
+              float: left;
+            }
+
+            .subMenu li a{
+              color: #FFF;
+            }
+
+            .subMenu li a:hover{
+              color: #CCC;
+            }
+
 
         </style>
 
@@ -124,18 +139,18 @@
           $(document).ready(function(){
 
             $(".subMenu").hide();         //slideToggle changes this to show
-            $(".icons8-Bar-Chart").click(function(){
+            $(".icons8-Bar-Chart, #reportLabel").click(function(){
 
                 $("#theMenu").slideToggle();
                 $("#theMenu2").slideUp();
                 $("#theMenu3").slideUp();
             });
-            $(".icons8-Visible").click(function(){
+            $(".icons8-Visible, #infoLabel").click(function(){
               $("#theMenu2").slideToggle();
               $("#theMenu").slideUp();
               $("#theMenu3").slideUp();
             });
-            $(".icons8-Add").click(function(){
+            $(".icons8-Add, #actionLabel").click(function(){
               $("#theMenu3").slideToggle();
               $("#theMenu2").slideUp();
               $("#theMenu").slideUp();
@@ -190,13 +205,13 @@
 
                   <tr>
                     <td>
-                      <a href="/test">Generate Reports</a>
+                      <a id="reportLabel" href="#">Generate Reports</a>
                     </td>
                     <td>
-                      <a href="https://laracasts.com">View Information</a>
+                      <a id="infoLabel" href="#">View Information</a>
                     </td>
                     <td>
-                      <a href="https://laravel-news.com">Perform Actions</a>
+                      <a id="actionLabel" href="#">Perform Actions</a>
                     </td>
                   </tr>
                   </table>
@@ -206,40 +221,45 @@
 
                 </div>
 
+
                 <div id="theMenu" class="subMenu">
                   <ul>
-                    <li>Order Report</li>
-                    <li>Payment Report</li>
-                    <li>Expenditure Report</li>
-                    <li>Outstanding Balance Report</li>
-                    <li>Profit/Loss Report</li>
+                    <li><a href="#">Order Report</a></li>
+                    <li><a href="#">Payment Report</a></li>
+                    <li><a href="#">Expenditure Report</a></li>
+                    <li><a href="#">Outstanding Balance Report</a></li>
+                    <li><a href="#">Profit/Loss Report</a></li>
                   </ul>
+                  <div style="clear: both;"></div>
                 </div>
 
                 <div id="theMenu2" class="subMenu" style="background-color: red;">
                   <ul>
-                    <li>Cutomer</li>
-                    <li>Tyre</li>
-                    <li>Consignments</li>
-                    <li>LCs</li>
-                    <li>Expenses</li>
-                    <li>Order</li>
-                    <li>Payment</li>
-                    <li>Stock</li>
+                    <li><a href="#">Cutomer</a></li>
+                    <li><a href="#">Tyre</a></li>
+                    <li><a href="#">Consignments</a></li>
+                    <li><a href="#">LCs</a></li>
+                    <li><a href="#">Expenses</a></li>
+                    <li><a href="#">Order</a></li>
+                    <li><a href="#">Payment</a></li>
+                    <li><a href="#">Stock</a></li>
                   </ul>
+                  <div style="clear: both;"></div>
                 </div>
 
                 <div id="theMenu3" class="subMenu" style="background-color: green;">
                   <ul>
-                    <li>Add new LC</li>
-                    <li>Add new Performa Invoice</li>
-                    <li>Add new consignments</li>
-                    <li>Add new expense</li>
+                    <li><a href="#">Add new LC</a></li>
+                    <li><a href="#">Add new Performa Invoice</a></li>
+                    <li><a href="#">Add new consignments</a></li>
+                    <li><a href="#">Add new expense</a></li>
 
-                    <li>Create new Order</li>
-                    <li>Create new Payment Invoice</li>
+                    <li><a href="#">Create new Order</a></li>
+                    <li><a href="#">Create new Payment Invoice</a></li>
                   </ul>
+                  <div style="clear: both;"></div>
                 </div>
+
             </div>
         </div>
         <div class="mainContent" style="width: 100%; height: 100px; background-color: #999;">
