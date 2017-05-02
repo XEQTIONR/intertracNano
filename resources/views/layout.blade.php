@@ -111,11 +111,12 @@
 
                     <li><a href="/tyres/create">Add a new Tyre</a></li>
 
-                    <li><a href="#">Add new LC</a></li>
+                    <li><a href="/lcs/create">Add new LC</a></li>
                     <li><a href="#">Add new Performa Invoice</a></li>
                     <li><a href="#">Add new consignments</a></li>
                     <li><a href="#">Add new expense</a></li>
 
+                    <li><a href="/customers/create">Add a Customer</a></li>
                     <li><a href="#">Create new Order</a></li>
                     <li><a href="#">Create new Payment Invoice</a></li>
                   </ul>

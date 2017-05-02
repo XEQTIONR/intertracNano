@@ -6,9 +6,9 @@
 
   {{ csrf_field() }}
 
-  <input type="text" name="inputBrand"> <br>
-  <input type="text" name="inputSize"> <br>
-  <input type="text" name="inputPattern"> <br>
+  Brand <input type="text" name="inputBrand"> <br>
+  Size Code<input type="text" name="inputSize"> <br>
+  Pattern Code <input type="text" name="inputPattern"> <br>
 
   <button type="submit" value="submit">Submit</button>
 

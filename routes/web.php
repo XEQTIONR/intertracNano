@@ -18,6 +18,8 @@ Route::resource('tyres','TyreController');
 
 Route::resource('lcs','LcController');
 
+Route::resource('customers','CustomerController');
+
 Route::get('title', function()
 {
   return view('title');

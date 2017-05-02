@@ -41,7 +41,18 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //ALLOCATE
+        $customer = new Customer;
+
+
+        //INITIAZE
+        $customer->name = $request->inputName;
+        $customer->address = $request->inputAddress;
+        $customer->phone = $request->inputPhone;
+        $customer->notes = $request->inputNotes;
+
+        //STORE
+        $tyre->save();
     }
 
     /**

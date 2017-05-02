@@ -39,7 +39,29 @@ class LcController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+
+        //ALLOCATE
+        $lc = new Lc;
+
+        //INITIALIZE
+        $lc->id = $request->inputLCnum;
+        $lc->LC_dateissued = $request->inputDateIssue;
+        $lc->LC_dateexpiry = $request->inputDateExpiry;
+        $lc->LC_applicant = $request->inputApplicant;
+        $lc->LC_beneficiary = $request->inputBeneficiary;
+        $lc->LC_currencycode = $request->inputCurrencyCode;
+        $lc->LC_foreignamount = $request->inputValue;
+        $lc->LC_foreignexpense = $request->inputForeignExpense;
+        $lc->LC_domesticexpense = $request->inputLocalExpense;
+        $lc->LC_exchangerate = $request->inputExchangeRate;
+        $lc->LC_portdepart = $request->inputPortDepart;
+        $lc->LC_portarrive = $request->inputPortArrive;
+        $lc->LC_invoice= $request->inputInvoice;
+
+        //STORE
+        $lc->save();
     }
 
     /**
