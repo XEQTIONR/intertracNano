@@ -119,3 +119,14 @@ html, body {
 .mainContent{
   font-weight: 600;
 }
+
+.DBinfo{
+  margin: 75px auto;
+  background-color: #AAA;
+  border-collapse: collapse;
+}
+
+.DBinfo th{
+  background-color: #888;
+  border: 1px solid #AAA;
+}

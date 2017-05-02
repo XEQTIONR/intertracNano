@@ -123,7 +123,7 @@
         </div>
 
 
-        <div class="mainContent" style="width: 100%; height: auto; background-color: 	#8B969C;">
+        <div class="mainContent" style="width: 100%; height: auto;">
           @yield('content')
 
         </div>

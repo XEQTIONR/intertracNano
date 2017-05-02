@@ -2,7 +2,7 @@
 
 @section('content')
 
-<table>
+<table class="DBinfo">
   <tr>
     <th>tyre_id</th>
     <th>tyre_brand</th>
