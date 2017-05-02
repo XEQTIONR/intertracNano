@@ -14,6 +14,8 @@
 
 Route::get('test', 'WelcomeController@show');
 
+Route::get('tyres','TyreController@showAll');
+
 
 Route::get('title', function()
 {

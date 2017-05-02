@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => '192.185.4.102',
             'port' => '3306',
-            'database' => 'xeqtionr_chaos_db',
+            'database' => 'xeqtionr_nano_db',
             'username' => 'xeqtionr_nuser',
             'password' => 'cheesecake',
           //'unix_socket' => env('DB_SOCKET', ''),

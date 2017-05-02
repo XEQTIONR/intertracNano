@@ -15,7 +15,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
         <script src="/js/main_menu.js"></script>
-          
+
     </head>
 
     <body>
@@ -121,8 +121,10 @@
 
             </div>
         </div>
-        <div class="mainContent" style="width: 100%; height: 100px; background-color: #999;">
 
+
+        <div class="mainContent" style="width: 100%; height: auto; background-color: 	#8B969C;">
+          @yield('content')
 
         </div>
     </body>
