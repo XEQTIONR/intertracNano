@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Tyre;
+use App\Customer;
 use Illuminate\Http\Request;
 
-class TyreController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,10 @@ class TyreController extends Controller
     public function index()
     {
         //
-        $tyres = Tyre::all();
+        $customers = Customer::all();
 
-        return view('tyres',['tyres'=>$tyres]);
+        return view('customers',['customers'=>$customers]);
+
     }
 
     /**
@@ -28,7 +29,8 @@ class TyreController extends Controller
     public function create()
     {
         //
-        return view('add_tyre');
+
+          return view('add_tyre');
     }
 
     /**
@@ -40,24 +42,15 @@ class TyreController extends Controller
     public function store(Request $request)
     {
         //
-
-        $tyre = new Tyre;
-        $tyre->tyre_brand = $request->inputBrand;
-        $tyre->tyre_size = $request->inputSize;
-        $tyre->tyre_pattern = $request->inputPattern;
-
-        $tyre->save();
-
-
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tyre  $tyre
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Tyre $tyre)
+    public function show(Customer $customer)
     {
         //
     }
@@ -65,10 +58,10 @@ class TyreController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tyre  $tyre
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tyre $tyre)
+    public function edit(Customer $customer)
     {
         //
     }
@@ -77,10 +70,10 @@ class TyreController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tyre  $tyre
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tyre $tyre)
+    public function update(Request $request, Customer $customer)
     {
         //
     }
@@ -88,10 +81,10 @@ class TyreController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tyre  $tyre
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tyre $tyre)
+    public function destroy(Customer $customer)
     {
         //
     }

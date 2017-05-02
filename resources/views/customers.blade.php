@@ -4,7 +4,7 @@
 
 <table>
   <tr>
-    <th>tyre_id</th>
+    <th>customer#</th>
     <th>tyre_brand</th>
     <th>tyre_size</th>
     <th>tyre_pattern</th>

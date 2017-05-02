@@ -95,7 +95,7 @@
                 <div id="theMenu2" class="subMenu" style="background-color: red;">
                   <ul>
                     <li><a href="#">Cutomer</a></li>
-                    <li><a href="#">Tyre</a></li>
+                    <li><a href="/tyres">Tyre</a></li>
                     <li><a href="#">Consignments</a></li>
                     <li><a href="#">LCs</a></li>
                     <li><a href="#">Expenses</a></li>
