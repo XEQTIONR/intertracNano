@@ -108,6 +108,9 @@
 
                 <div id="theMenu3" class="subMenu" style="background-color: green;">
                   <ul>
+
+                    <li><a href="/tyres/create">Add a new Tyre</a></li>
+
                     <li><a href="#">Add new LC</a></li>
                     <li><a href="#">Add new Performa Invoice</a></li>
                     <li><a href="#">Add new consignments</a></li>
