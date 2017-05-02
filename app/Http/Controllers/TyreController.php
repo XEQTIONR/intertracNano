@@ -29,7 +29,7 @@ class TyreController extends Controller
     public function create()
     {
         //
-        return view('add_tyre');
+        return view('new_tyre');
     }
 
     /**
