@@ -30,7 +30,7 @@ class CustomerController extends Controller
     {
         //
 
-          return view('add_tyre');
+          return view('new_customer');
     }
 
     /**

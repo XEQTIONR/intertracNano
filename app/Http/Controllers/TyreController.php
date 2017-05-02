@@ -17,7 +17,8 @@ class TyreController extends Controller
         //
         $tyres = Tyre::all();
 
-        return view('tyres',['tyres'=>$tyres]);
+        //return view('tyres',['tyres'=>$tyres]);
+        return view('tyres',compact('tyres'));
     }
 
     /**

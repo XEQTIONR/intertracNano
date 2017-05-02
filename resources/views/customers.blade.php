@@ -2,21 +2,21 @@
 
 @section('content')
 
-<table>
+<table class="DBinfo">
   <tr>
     <th>customer#</th>
-    <th>tyre_brand</th>
-    <th>tyre_size</th>
-    <th>tyre_pattern</th>
+    <th>Customer Name</th>
+    <th>Phone</th>
+    <th>Notes</th>
   </tr>
 
 
-  @foreach ($tyres as $tyre)
+  @foreach ($customers as $customer)
     <tr>
-    <td>{{$tyre->id}}</td>
-    <td>{{$tyre->tyre_brand}}</td>
-    <td>{{$tyre->tyre_size}}</td>
-    <td>{{$tyre->tyre_pattern}}</td>
+    <td>{{$customer->id}}</td>
+    <td>{{$customer->name}}</td>
+    <td>{{$customer->phone}}</td>
+    <td>{{$customer->notes}}</td>
   </tr>
   @endforeach
 

@@ -16,6 +16,8 @@ Route::get('test', 'WelcomeController@show');
 
 Route::resource('tyres','TyreController');
 
+Route::resource('lcs','LcController');
+
 Route::get('title', function()
 {
   return view('title');
