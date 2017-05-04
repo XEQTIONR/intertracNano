@@ -3,9 +3,12 @@
 @section('scripts')
 
 <script>
-$( function() {
-  $( ".datepicker" ).datepicker();
-} );
+$( function()
+  {
+    $( ".pickdate" ).datepicker();
+
+    $(".pickdate").datepicker("option", "dateFormat", "yy-mm-dd");
+  });
 </script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <link rel="stylesheet" href="/resources/demos/style.css">
@@ -18,8 +21,8 @@ $( function() {
   {{ csrf_field() }}
 
   LC# <input type="text" name="inputLCnum"> <br>
-  Date Issued <input type="text" class="datepicker" name="inputDateIssue"> <br>
-  Date Expiry <input type="text" class="datepicker" name="inputDateExiry"> <br>
+  Date Issued <input type="text" class="pickdate" name="inputDateIssue"> <br>
+  Date Expiry <input type="text" class="pickdate" name="inputDateExpiry"> <br>
   Applicant <input type="text" name="inputApplicant"> <br>
   Beneficiary <input type="text" name="inputBeneficiary"> <br>
   Departing Port<input type="text" name="inputPortDepart"> <br>

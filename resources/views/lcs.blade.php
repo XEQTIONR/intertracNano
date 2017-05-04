@@ -23,7 +23,7 @@
 
 
   @foreach ($LCs as $LC)
-    <tr>  
+    <tr>
       <td>{{$LC->id}}</td>
       <td>{{$LC->LC_dateissued}}</td>
       <td>{{$LC->LC_dateexpiry}}</td>
@@ -31,14 +31,14 @@
       <td>{{$LC->LC_beneficiary}}</td>
       <td>{{$LC->LC_portdepart}}</td>
       <td>{{$LC->LC_portarrive}}</td>
-      <td>{{$LC->LC_invoice#}}</td>
+      <td>{{$LC->LC_invoice}}</td>
       <td>{{$LC->LC_currencycode}}</td>
       <td>{{$LC->LC_exchangerate}}</td>
       <td>{{$LC->LC_foreignamount}}</td>
       <td>{{$LC->LC_foreignamount * $LC->LC_exchangerate}}</td>
-      <td>{{$LC->:LC_foreignexpense}}</td>
+      <td>{{$LC->LC_foreignexpense}}</td>
       <td>{{$LC->LC_domesticexpense}}</td>
-      <td>{{($LC->:LC_foreignexpense * $LC->LC_exchangerate)+$LC->LC_domesticexpense}}</td>
+      <td>{{($LC->LC_foreignexpense * $LC->LC_exchangerate)+$LC->LC_domesticexpense}}</td>
     </tr>
   @endforeach
 
