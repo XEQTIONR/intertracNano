@@ -49,6 +49,8 @@ class TyreController extends Controller
 
         $tyre->save();
 
+        return redirect('/tyres');
+
 
     }
 
