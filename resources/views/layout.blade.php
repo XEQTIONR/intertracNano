@@ -97,14 +97,14 @@
 
                 <div id="theMenu2" class="subMenu" style="background-color: red;">
                   <ul>
-                    <li><a href="#">Cutomer</a></li>
+                    <li><a href="/customers">Customer</a></li>
                     <li><a href="/tyres">Tyre</a></li>
-                    <li><a href="#">Consignments</a></li>
+                    <li><a href="/consignments">Consignments</a></li>
                     <li><a href="/lcs">LCs</a></li>
-                    <li><a href="#">Expenses</a></li>
-                    <li><a href="#">Order</a></li>
-                    <li><a href="#">Payment</a></li>
-                    <li><a href="#">Stock</a></li>
+                    <li><a href="/expenses">Expenses</a></li>
+                    <li><a href="/orders">Order</a></li>
+                    <li><a href="/payments">Payment</a></li>
+                    <li><a href="/stock">Stock</a></li>
                   </ul>
                   <div style="clear: both;"></div>
                 </div>

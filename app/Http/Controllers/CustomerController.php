@@ -52,7 +52,9 @@ class CustomerController extends Controller
         $customer->notes = $request->inputNotes;
 
         //STORE
-        $tyre->save();
+        $customer->save();
+
+        return redirect('/customers');
     }
 
     /**
