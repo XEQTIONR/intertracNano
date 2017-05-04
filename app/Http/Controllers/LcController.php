@@ -62,6 +62,8 @@ class LcController extends Controller
 
         //STORE
         $lc->save();
+
+        return redirect('/lcs');
     }
 
     /**
