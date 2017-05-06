@@ -5,18 +5,22 @@
 <table class="DBinfo">
   <tr>
     <th>tyre_id</th>
-    <th>tyre_brand</th>
-    <th>tyre_size</th>
-    <th>tyre_pattern</th>
+    <th>Tyre Brand</th>
+    <th>Tyre Size</th>
+    <th>Tyre Pattern</th>
+    <th>Created</th>
+    <th>Updated</th>
   </tr>
 
 
   @foreach ($tyres as $tyre)
     <tr>
-    <td>{{$tyre->id}}</td>
-    <td>{{$tyre->tyre_brand}}</td>
-    <td>{{$tyre->tyre_size}}</td>
-    <td>{{$tyre->tyre_pattern}}</td>
+    <td>{{$tyre->tyre_id}}</td>
+    <td>{{$tyre->brand}}</td>
+    <td>{{$tyre->size}}</td>
+    <td>{{$tyre->pattern}}</td>
+    <td>{{$tyre->created_at}}</td>
+    <td>{{$tyre->updated_at}}</td>
   </tr>
   @endforeach
 

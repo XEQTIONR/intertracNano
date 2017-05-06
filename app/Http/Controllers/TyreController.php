@@ -43,9 +43,9 @@ class TyreController extends Controller
         //
 
         $tyre = new Tyre;
-        $tyre->tyre_brand = $request->inputBrand;
-        $tyre->tyre_size = $request->inputSize;
-        $tyre->tyre_pattern = $request->inputPattern;
+        $tyre->brand = $request->inputBrand;
+        $tyre->size = $request->inputSize;
+        $tyre->pattern = $request->inputPattern;
 
         $tyre->save();
 
