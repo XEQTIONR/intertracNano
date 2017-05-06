@@ -40,12 +40,12 @@ return [
         ],
 
         'mysql' => [
-            'driver' => 'mysql',
-            'host' => '192.185.4.102',
-            'port' => '3306',
-            'database' => 'xeqtionr_nano_db',
-            'username' => 'xeqtionr_nuser',
-            'password' => 'cheesecake',
+            'driver' => env('DB_CONNECTION','or-manually-enter-here'),
+            'host' => env('DB_HOST','or-manually-enter-here'),
+            'port' => env('DB_PORT','or-manually-enter-here'),
+            'database' => env('DB_DATABASE','or-manually-enter-here'),
+            'username' => env('DB_USERNAME','or-manually-enter-here'),
+            'password' => env('DB_PASSWORD','or-manually-enter-here'),
           //'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_general_ci',
