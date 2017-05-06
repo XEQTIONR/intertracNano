@@ -46,19 +46,21 @@ class LcController extends Controller
         $lc = new Lc;
 
         //INITIALIZE
-        $lc->id = $request->inputLCnum;
-        $lc->LC_dateissued = $request->inputDateIssue;
-        $lc->LC_dateexpiry = $request->inputDateExpiry;
-        $lc->LC_applicant = $request->inputApplicant;
-        $lc->LC_beneficiary = $request->inputBeneficiary;
-        $lc->LC_currencycode = $request->inputCurrencyCode;
-        $lc->LC_foreignamount = $request->inputValue;
-        $lc->LC_foreignexpense = $request->inputForeignExpense;
-        $lc->LC_domesticexpense = $request->inputLocalExpense;
-        $lc->LC_exchangerate = $request->inputExchangeRate;
-        $lc->LC_portdepart = $request->inputPortDepart;
-        $lc->LC_portarrive = $request->inputPortArrive;
-        $lc->LC_invoice= $request->inputInvoice;
+        $lc->lc_num = $request->inputLCnum; //LC#
+        $lc->date_issued = $request->inputDateIssue;
+        $lc->date_expiry = $request->inputDateExpiry;
+        $lc->applicant = $request->inputApplicant;
+        $lc->beneficiary = $request->inputBeneficiary;
+        $lc->port_depart = $request->inputPortDepart;
+        $lc->port_arrive = $request->inputPortArrive;
+        $lc->invoice_no= $request->inputInvoice;
+        $lc->currency_code = $request->inputCurrencyCode;
+        $lc->foreign_amount = $request->inputValue;
+        $lc->foreign_expense = $request->inputForeignExpense;
+        $lc->domestic_expense = $request->inputLocalExpense;
+        $lc->exchange_rate = $request->inputExchangeRate;
+
+
 
         //STORE
         $lc->save();

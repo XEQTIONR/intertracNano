@@ -8,7 +8,7 @@ class Lc extends Model
 {
     //
 
-    public $timestamps = false;
-    protected $casts = ['id' => 'string'];
+    public $primaryKey = 'lc_num';
+    protected $casts = ['lc_num' => 'string'];
 }
 ?>

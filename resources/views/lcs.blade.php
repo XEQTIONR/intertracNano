@@ -6,7 +6,7 @@
   <tr>
     <th>LC#</th>
     <th>Date Issued</th>
-    <th>Date Expity</th>
+    <th>Date Expiry</th>
     <th>Applicant</th>
     <th>Beneficiary</th>
     <th>Port Depart</th>
@@ -19,26 +19,30 @@
     <th>Expenses Paid (Foreign)</th>
     <th>Expenses Paid (Local)</th>
     <th>Expenses Total(Local)</th>
+    <th>Created</th>
+    <th>Updated</th>
   </tr>
 
 
   @foreach ($LCs as $LC)
     <tr>
-      <td>{{$LC->id}}</td>
-      <td>{{$LC->LC_dateissued}}</td>
-      <td>{{$LC->LC_dateexpiry}}</td>
-      <td>{{$LC->LC_applicant}}</td>
-      <td>{{$LC->LC_beneficiary}}</td>
-      <td>{{$LC->LC_portdepart}}</td>
-      <td>{{$LC->LC_portarrive}}</td>
-      <td>{{$LC->LC_invoice}}</td>
-      <td>{{$LC->LC_currencycode}}</td>
-      <td>{{$LC->LC_exchangerate}}</td>
-      <td>{{$LC->LC_foreignamount}}</td>
-      <td>{{$LC->LC_foreignamount * $LC->LC_exchangerate}}</td>
-      <td>{{$LC->LC_foreignexpense}}</td>
-      <td>{{$LC->LC_domesticexpense}}</td>
-      <td>{{($LC->LC_foreignexpense * $LC->LC_exchangerate)+$LC->LC_domesticexpense}}</td>
+      <td>{{$LC->lc_num}}</td>
+      <td>{{$LC->date_issued}}</td>
+      <td>{{$LC->date_expiry}}</td>
+      <td>{{$LC->applicant}}</td>
+      <td>{{$LC->beneficiary}}</td>
+      <td>{{$LC->port_depart}}</td>
+      <td>{{$LC->port_arrive}}</td>
+      <td>{{$LC->invoice_no}}</td>
+      <td>{{$LC->currency_code}}</td>
+      <td>{{$LC->exchange_rate}}</td>
+      <td>{{$LC->foreign_amount}}</td>
+      <td>{{$LC->foreign_amount * $LC->exchange_rate}}</td>
+      <td>{{$LC->foreign_expense}}</td>
+      <td>{{$LC->domestic_expense}}</td>
+      <td>{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
+      <td>{{$LC->created_at}}</td>
+      <td>{{$LC->updated_at}}</td>
     </tr>
   @endforeach
 
