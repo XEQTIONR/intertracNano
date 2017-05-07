@@ -30,6 +30,8 @@ Route::resource('customers','CustomerController');
 
 Route::resource('consignment_expenses','ConsignmentExpenseController');
 
+Route::resource('consignment_containers','ConsignmentContainerController');
+
 
 
 

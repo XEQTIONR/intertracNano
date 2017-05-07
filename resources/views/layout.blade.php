@@ -105,6 +105,8 @@
                     <li><a href="/orders">Order</a></li>
                     <li><a href="/payments">Payment</a></li>
                     <li><a href="/stock">Stock</a></li>
+
+                    <li><a href="/consignment_containers">consignment_containers</a></li>
                   </ul>
                   <div style="clear: both;"></div>
                 </div>
