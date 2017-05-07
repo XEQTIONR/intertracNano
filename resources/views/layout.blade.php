@@ -101,7 +101,7 @@
                     <li><a href="/tyres">Tyre</a></li>
                     <li><a href="/consignments">Consignments</a></li>
                     <li><a href="/lcs">LCs</a></li>
-                    <li><a href="/expenses">Expenses</a></li>
+                    <li><a href="/consignment_expenses">Expenses</a></li>
                     <li><a href="/orders">Order</a></li>
                     <li><a href="/payments">Payment</a></li>
                     <li><a href="/stock">Stock</a></li>
@@ -117,7 +117,7 @@
                     <li><a href="/lcs/create">Add new LC</a></li>
                     <li><a href="#">Add new Performa Invoice</a></li>
                     <li><a href="/consignments/create">Add new consignments</a></li>
-                    <li><a href="#">Add new expense</a></li>
+                    <li><a href="/consignment_expenses/create">Add new expense</a></li>
 
                     <li><a href="/customers/create">Add a Customer</a></li>
                     <li><a href="#">Create new Order</a></li>

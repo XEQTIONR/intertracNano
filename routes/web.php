@@ -12,7 +12,13 @@
 */
 //Route::get('/', 'WelcomeController@show');
 
-Route::get('test', 'WelcomeController@show');
+//Route::get('test', 'WelcomeController@show');
+
+Route::get('/', function()
+{
+  return view('layout');
+});
+
 
 Route::resource('tyres','TyreController');
 
@@ -22,14 +28,18 @@ Route::resource('consignments','ConsignmentController');
 
 Route::resource('customers','CustomerController');
 
+Route::resource('consignment_expenses','ConsignmentExpenseController');
+
+
+
+
+
+
+
+
 Route::get('title', function()
 {
   return view('title');
 });
 
-Route::get('/', 'WelcomeController@show');
-
-Route::get('layout', function()
-{
-  return view('layout');
-});
+//Route::get('/', 'WelcomeController@show');
