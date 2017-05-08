@@ -32,6 +32,8 @@ Route::resource('consignment_expenses','ConsignmentExpenseController');
 
 Route::resource('consignment_containers','ConsignmentContainerController');
 
+Route::resource('performa_invoices','PerformaInvoiceController');
+
 
 
 

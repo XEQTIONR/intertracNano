@@ -2,6 +2,7 @@
 
 @section('content')
 
+<a href="/consignment_containers">View Container Info</a>
 <table class="DBinfo">
   <tr>
     <th>BOL#</th>
