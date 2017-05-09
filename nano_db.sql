@@ -86,20 +86,21 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `xeqtionr_nano_db`.`performa_invoices` ;
 
 CREATE TABLE IF NOT EXISTS `xeqtionr_nano_db`.`performa_invoices` (
-  `lc#` VARCHAR(15) NOT NULL,
+  `id`  BIGINT NOT NULL
+  `lc_num` VARCHAR(15) NOT NULL,
   `tyre_id` INT NOT NULL,
   `qty` INT NOT NULL DEFAULT 1,
   `unit_price` DECIMAL(5,2) NOT NULL,
-  PRIMARY KEY (`lc#`),
+  PRIMARY KEY (`id`),
   INDEX `fk_TYRE_idx` (`tyre_id` ASC),
   CONSTRAINT `fk_LCperforma`
-    FOREIGN KEY (`lc#`)
-    REFERENCES `xeqtionr_nano_db`.`lcs` (`id`)
+    FOREIGN KEY (`lc_num`)
+    REFERENCES `xeqtionr_nano_db`.`lcs` (`lc_num`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
   CONSTRAINT `fk_TYREperforma`
     FOREIGN KEY (`tyre_id`)
-    REFERENCES `xeqtionr_nano_db`.`tyres` (`id`)
+    REFERENCES `xeqtionr_nano_db`.`tyres` (`tyre_id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;

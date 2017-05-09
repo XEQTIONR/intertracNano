@@ -9,9 +9,9 @@
     {
 
       //names of parameters.
-      var itemId = "tyre" + count;
-      var qty = "qty" + count;
-      var price = "price" + count;
+      var itemId = "tyre[" + count + "]";
+      var qty = "qty[" + count + "]";
+      var price = "price[" + count + "]";
 
       var subDiv = document.createElement("DIV");
       var subDivId = "subDiv" + count;

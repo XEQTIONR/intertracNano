@@ -40,6 +40,25 @@ class PerformaInvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        $index = 0;
+        //$itemId = "tyre" + $index;
+        //$qty = "qty" + $index;
+        //$price = "price" + $index;
+
+        //for ($i=0; $i<$request->numItems ; $i++)
+        //{
+          $invoiceRecord = new Performa_invoice;
+
+          $invoiceRecord->lc_num = $request->inputLC;
+          $invoiceRecord->tyre_id = $request->tyre[$index];
+          $invoiceRecord->qty = $request->qty[$index];
+          $invoiceRecord->unit_price = $request->price[$index];
+
+          $invoiceRecord->save();
+
+          //
+        //}
+
         //THIS MIGHT NOT WORK BECAUSE OF COMPOSITE PRIMIARY KEY
         /*$invoiceRecord =  new Performa_invoice;
         $invoiceRecord->lc_num = $request->inputLC;
@@ -51,7 +70,7 @@ class PerformaInvoiceController extends Controller
 
         return redirect('/perform_invoices');*/
 
-        return $request;
+        return redirect('/performa_invoices/create');
     }
 
     /**
