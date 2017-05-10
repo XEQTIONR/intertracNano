@@ -44,14 +44,9 @@ class PerformaInvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //$index = 0;
-        //$itemId = "tyre" + $index;
-        //$qty = "qty" + $index;
-        //$price = "price" + $index;
-        //$invoiceRecord;
+
         global $invoiceRecord, $i;
         $lc = Lc::find($request->inputLC);
-        echo $request->inputLC;
 
 
         for ($i=0; $i<$request->numItems; $i++)
@@ -59,7 +54,7 @@ class PerformaInvoiceController extends Controller
 
           $invoiceRecord[$i] = new Performa_invoice;
 
-          //$invoiceRecord[$i]->lc_num = $request->inputLC;
+
           $invoiceRecord[$i]->tyre_id = $request->tyre[$i];
           $invoiceRecord[$i]->qty = $request->qty[$i];
           $invoiceRecord[$i]->unit_price = $request->price[$i];
@@ -75,21 +70,9 @@ class PerformaInvoiceController extends Controller
         {
           $lc->performaInvoice()->saveMany($invoiceRecord);
           return redirect('/performa_invoices/create');
-          //echo 'echoing $invoiceRecord fails';
-          //echo $invoiceRecord;
         }
-        //THIS MIGHT NOT WORK BECAUSE OF COMPOSITE PRIMIARY KEY
-        /*$invoiceRecord =  new Performa_invoice;
-        $invoiceRecord->lc_num = $request->inputLC;
-        $invoiceRecord->tyre_id = $request->inputTyreId;
-        $invoiceRecord->qty = $request->inputQty;
-        $invoiceRecord->unit_price = $request->inputUnitPrice;
-
-        $invoiceRecord->save();
-
-        return redirect('/perform_invoices');*/
-
-        //return redirect('/performa_invoices/create');
+        //$invoiceRecord->save();
+        //ONLY WORKS FOR SINGLE RECORDS
     }
 
     /**
