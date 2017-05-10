@@ -122,7 +122,7 @@
                     <li><a href="/consignment_expenses/create">Add new expense</a></li>
 
                     <li><a href="/customers/create">Add a Customer</a></li>
-                    <li><a href="#">Create new Order</a></li>
+                    <li><a href="/orders/create">Create new Order</a></li>
                     <li><a href="#">Create new Payment Invoice</a></li>
                   </ul>
                   <div style="clear: both;"></div>
