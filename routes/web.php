@@ -38,6 +38,8 @@ Route::resource('orders','OrderController');
 
 Route::resource('payments','PaymentController');
 
+Route::resource('hscodes','HscodeController');
+
 
 
 

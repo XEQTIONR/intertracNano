@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Hscode extends Model
 {
     //
-    public $timestamps = false;
+    protected $casts = ['id' => 'string'];
 }

@@ -117,13 +117,17 @@
                     <li><a href="/tyres/create">Add a new Tyre</a></li>
 
                     <li><a href="/lcs/create">Add new LC</a></li>
-                    <li><a href="#">Add new Performa Invoice</a></li>
+                    <li><a href="/performa_invoices/create">Add new Performa Invoice</a></li>
                     <li><a href="/consignments/create">Add new consignments</a></li>
                     <li><a href="/consignment_expenses/create">Add new expense</a></li>
 
                     <li><a href="/customers/create">Add a Customer</a></li>
                     <li><a href="/orders/create">Create new Order</a></li>
                     <li><a href="/payments/create">Create new Payment Invoice</a></li>
+
+                    <li><a href="/hscodes/create">Create a new Hscode</a></li>
+
+
                   </ul>
                   <div style="clear: both;"></div>
                 </div>

@@ -15,6 +15,9 @@ class HscodeController extends Controller
     public function index()
     {
         //
+        $hscodes = Hscode::all();
+        return view('hscodes', compact('hscodes'));
+
     }
 
     /**
@@ -25,6 +28,8 @@ class HscodeController extends Controller
     public function create()
     {
         //
+
+        return view('new_hscode');
     }
 
     /**
@@ -35,7 +40,13 @@ class HscodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $hscode = new Hscode;
+
+        $hscode->id = $request->inputHscode;
+
+        $hscode->save();
+
+        return redirect('/hscodes');
     }
 
     /**
