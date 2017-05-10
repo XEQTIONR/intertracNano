@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+use App\Payment;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
-        $orders = Order::all();
+        $payments = Payment::all();
 
-        return view('orders', compact('orders'));
+        return view('payments', compact('payments'));
     }
 
     /**
@@ -28,7 +27,7 @@ class OrderController extends Controller
     public function create()
     {
         //
-        return view('new_order');
+        return view('new_payment');
     }
 
     /**
@@ -40,27 +39,24 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
-        $order  = new Order;
+        $payment = new Payment;
 
-        $order->customer_id = $request->inputCustomerId;
-        $order->discount_percent = $request->inputDiscountPercent;
-        $order->discount_amount = $request->inputDiscountAmount;
-        $order->tax_percentage = $request->inputTaxPercent;
-        $order->tax_amount = $request->inputTaxAmount;
+        $payment->Order_num = $request->inputOrderNum;
+        $payment->payment_amount = $request->inputPaidAmount;
 
-        $order->save();
+        $payment->save();
 
-        //echo $order->Order_num;  // last insert id
-        return redirect('/orders');
+        return redirect('/payments');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Payment $payment)
     {
         //
     }
@@ -68,10 +64,10 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(Payment $payment)
     {
         //
     }
@@ -80,10 +76,10 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Payment $payment)
     {
         //
     }
@@ -91,10 +87,10 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Payment $payment)
     {
         //
     }

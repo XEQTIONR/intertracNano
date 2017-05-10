@@ -36,6 +36,8 @@ Route::resource('performa_invoices','PerformaInvoiceController');
 
 Route::resource('orders','OrderController');
 
+Route::resource('payments','PaymentController');
+
 
 
 
