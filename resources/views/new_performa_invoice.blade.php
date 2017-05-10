@@ -81,7 +81,7 @@
 
   </div> <br>
 
-  Num items <input type="text"  name="numItems "id="numItems" readonly>
+  Num items <input type="text"  name="numItems" id="numItems" readonly>
 
 </form>
 
