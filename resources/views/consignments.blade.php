@@ -24,6 +24,7 @@
     <td>{{$consignment->lc}}</td>
     <td>{{$consignment->created_at}}</td>
     <td>{{$consignment->updated_at}}</td>
+    <td><button type="button">View Contents</button></td>
   </tr>
   @endforeach
 

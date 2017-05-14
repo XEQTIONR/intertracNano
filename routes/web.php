@@ -40,6 +40,8 @@ Route::resource('payments','PaymentController');
 
 Route::resource('hscodes','HscodeController');
 
+Route::resource('container_contents', 'ContainerContentController');
+
 
 
 

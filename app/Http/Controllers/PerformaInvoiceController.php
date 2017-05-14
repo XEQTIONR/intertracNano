@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Performa_invoice;
 use App\Lc;
+use App\Tyre;
 use Illuminate\Http\Request;
 
 //$invoiceRecord;
@@ -32,7 +33,8 @@ class PerformaInvoiceController extends Controller
     public function create()
     {
         //
-        return view('new_performa_invoice');
+        $tyres = Tyre::all();
+        return view('new_performa_invoice', compact('tyres'));
 
     }
 
