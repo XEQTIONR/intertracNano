@@ -82,7 +82,7 @@
 
 
                 </div>
-
+                <!-- REPORTS -->
 
                 <div id="theMenu" class="subMenu">
                   <ul>
@@ -94,6 +94,8 @@
                   </ul>
                   <div style="clear: both;"></div>
                 </div>
+
+                <!-- VIEW INFO -->
 
                 <div id="theMenu2" class="subMenu" style="background-color: red;">
                   <ul>
@@ -111,6 +113,8 @@
                   <div style="clear: both;"></div>
                 </div>
 
+                <!-- ACTIONS -->
+
                 <div id="theMenu3" class="subMenu" style="background-color: green;">
                   <ul>
 
@@ -125,6 +129,8 @@
                     <li><a href="/orders/create">Create new Order</a></li>
                     <li><a href="/payments/create">Create new Payment Invoice</a></li>
 
+                    <li><a href="/consignment_containers/create">Add containers to Consignment</a></li>
+                    <li><a href="/container_contents/create">New Commercial Invoice</a></li>
                     <li><a href="/hscodes/create">Create a new Hscode</a></li>
 
 
