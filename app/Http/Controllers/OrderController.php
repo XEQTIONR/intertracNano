@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -16,8 +17,10 @@ class OrderController extends Controller
     {
         //
         $orders = Order::all();
-
-        return view('orders', compact('orders'));
+        $in_stock = Order::tyresRemaining();
+        //return $in_stock;
+        //dd(DB::getQueryLog());
+        return view('orders', compact('orders', 'in_stock'));
     }
 
     /**
