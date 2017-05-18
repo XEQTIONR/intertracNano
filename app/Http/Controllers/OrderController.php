@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Order_content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,10 +18,10 @@ class OrderController extends Controller
     {
         //
         $orders = Order::all();
-        $in_stock = Order::tyresRemaining();
+
         //return $in_stock;
         //dd(DB::getQueryLog());
-        return view('orders', compact('orders', 'in_stock'));
+        return view('orders', compact('orders'));
     }
 
     /**
@@ -31,7 +32,8 @@ class OrderController extends Controller
     public function create()
     {
         //
-        return view('new_order');
+        $in_stock = Order::tyresRemaining();
+        return view('new_order',compact('in_stock'));
     }
 
     /**
@@ -43,6 +45,8 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+        DB::beginTransaction();
+        //{
         $order  = new Order;
 
         $order->customer_id = $request->inputCustomerId;
@@ -52,6 +56,23 @@ class OrderController extends Controller
         $order->tax_amount = $request->inputTaxAmount;
 
         $order->save();
+
+        for ($i=0; $i<$request->numItems; $i++)
+        {
+
+          $contents[$i] = new Order_content;
+
+
+          $contents[$i]->Order_num = $order->Order_num;
+          $contents[$i]->tyre_id = $request->tyre[$i];
+          $contents[$i]->unit_price = $request->price[$i];
+          $contents[$i]->qty = $request->qty[$i];
+        }
+
+        $order->orderContents()->saveMany($contents);
+        //});
+        DB::commit();
+
 
         //echo $order->Order_num;  // last insert id
         return redirect('/orders');

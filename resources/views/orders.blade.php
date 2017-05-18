@@ -1,25 +1,10 @@
 @extends('layout')
 
 
-@section('scripts')
-  <style>
-    .leftDiv{
-      width : 50%;
-      float : left;
-      margin : auto;
-    }
-    .rightDiv{
-      width : 50%;
-      float : right;
-      margin : auto;
-    }
 
-  </style>
-@endsection
 
 @section('content')
 
-<div class="leftDiv">
 
 <table class="DBinfo">
   <tr>
@@ -51,24 +36,7 @@
 
 
 </table>
-</div>
 
-<div class="rightDiv">
-    <table class="DBinfo">
-      <tr>
-        <th> Tyre ID </th>
-        <th> #remaining </th>
-      </tr>
-      @foreach ($in_stock as $item)
-        <tr>
 
-          <td>{{$item->tyre_id}}</td>
-          <td>{{$item->in_stock}}</td>
-
-        </tr>
-      @endforeach
-
-    </table>
-</div>
 
 @endsection
