@@ -14,6 +14,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private static $contents;
+
+
     public function index()
     {
         //
@@ -42,9 +46,29 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function setContent($index, $order, $tyre, $price, $container, $bol)
+    {
+      OrderController::contents[$index] = new Order_content;
+
+      //Set the information from request
+      OrderController::contents[$index]->Order_num = $order->Order_num;
+      OrderController::contents[$index]->tyre_id = $request->tyre[$i];
+      OrderController::contents[$index]->unit_price = $request->price[$i];
+
+      //Set the information from the stock listing generated
+      OrderController::contents[$index]->Container_num = $stock_listing->Container_num;
+      OrderController::contents[$index]->BOL = $stock_listing->BOL;
+
+
+
+    }
     public function store(Request $request)
     {
         //
+        //return Order::tyreInContRemaining(2);
+
+        //return $stock;
         DB::beginTransaction();
         //{
         $order  = new Order;
@@ -57,25 +81,63 @@ class OrderController extends Controller
 
         $order->save();
 
-        for ($i=0; $i<$request->numItems; $i++)
+
+        $index = 0;
+        unset($GLOBALS['contents']);
+
+
+        for ($i=0; $i<$request->numItems; $i++) // each tyre
         {
 
-          $contents[$i] = new Order_content;
+          $full_qty = $request->qty[$i]; //total number of tyre[i] ordered
+          $qty_remain = $full_qty; //remaining qty to be filled
+
+          $in_stock = Order::tyreInContRemaining($request->tyre[$i]); // stock info for tyre_id i
 
 
-          $contents[$i]->Order_num = $order->Order_num;
-          $contents[$i]->tyre_id = $request->tyre[$i];
-          $contents[$i]->unit_price = $request->price[$i];
-          $contents[$i]->qty = $request->qty[$i];
+          foreach ($in_stock as $stock_listing) // each stock entry
+          {
+            //Create a new order_content entry
+
+            $this->contents[$index] = new Order_content;
+
+            //Set the information from request
+            $this->contents[$index]->Order_num = $order->Order_num;
+            $this->contents[$index]->tyre_id = $request->tyre[$i];
+            $this->contents[$index]->unit_price = $request->price[$i];
+
+            //Set the information from the stock listing generated
+            $this->contents[$index]->Container_num = $stock_listing->Container_num;
+            $this->contents[$index]->BOL = $stock_listing->BOL;
+
+
+            if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
+            {
+
+              $this->contents[$index]->qty = $qty_remain;
+              break; // stop looping
+
+            }
+            else // more entries needed keep looping
+            {
+
+              $this->contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
+              $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
+              $index++; // index of next entry
+            }
+
+          }
+
         }
-
-        $order->orderContents()->saveMany($contents);
+        return $this->contents;
+        //$order->orderContents()->saveMany($this->contents);
         //});
-        DB::commit();
+        //DB::commit();
 
 
         //echo $order->Order_num;  // last insert id
-        return redirect('/orders');
+        //return redirect('/orders');
+
     }
 
     /**

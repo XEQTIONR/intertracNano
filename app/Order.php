@@ -20,6 +20,37 @@ class Order extends Model
       return $this->hasMany('App\Payment','Order_num');
     }
 
+    public static function tyreInContRemaining($id)
+    {
+      $remaining = DB::table('container_contents')
+                  ->select('Container_num', 'BOL','tyre_id','qty')
+                  ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
+                                      FROM order_contents
+                                      GROUP BY container_num, bol, tyre_id) AS B'),
+
+                            function($join)
+                            {
+                              $join->on('container_contents.tyre_id','=','B.tyre_id')
+                                ->on('container_contents.BOL','=','B.bol')
+                                ->on('container_contents.Container_num','=','B.container_num');
+
+                            })
+                  ->select('container_contents.Container_num',
+                            'container_contents.BOL',
+                            'container_contents.tyre_id',
+                            'container_contents.qty AS qty_bought',
+                            DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
+                            DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
+                            )
+                  ->where('container_contents.tyre_id', $id)
+                  ->oldest()
+                  ->get();
+
+                  //dd($remaining->toSql());
+
+        return $remaining;
+    }
+
     public static function tyresRemaining()
     {
       //tyres_remaining.sql
