@@ -1,8 +1,21 @@
 @extends('layout')
 
+@section('scripts')
+
+<script>
+  function viewContentFor(BOL)
+  {
+    var base = '/container_contents/';
+    var url = base + BOL; // '/container_contents/BOL'
+    window.location.href = url;
+  }
+</script>
+
+@endsection
+
 @section('content')
 
-<a href="/consignment_containers">View Container Info</a>
+<a href="/consignment_containers">View Consignment Info</a>
 <table class="DBinfo">
   <tr>
     <th>BOL#</th>
@@ -24,7 +37,7 @@
     <td>{{$consignment->lc}}</td>
     <td>{{$consignment->created_at}}</td>
     <td>{{$consignment->updated_at}}</td>
-    <td><button type="button">View Contents</button></td>
+    <td><button type="button"   onclick="viewContentFor('{{$consignment->BOL}}')" >View Contents</button></td>
   </tr>
   @endforeach
 
