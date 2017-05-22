@@ -91,9 +91,11 @@ class ContainerContentController extends Controller
      * @param  \App\Container_contents  $container_contents
      * @return \Illuminate\Http\Response
      */
-    public function show(Container_contents $container_contents)
+    public function show($bol)
     {
-        //
+        $contents = Container_content::where('BOL',$bol)
+                                      ->get();
+        return $contents;
     }
 
     /**
