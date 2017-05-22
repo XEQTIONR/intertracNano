@@ -15,9 +15,42 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private static $contents;
+    //private static $contents;
 
 
+    public static function setContents(&$contents, $index, $order_num, $tyre_id, $price, $stock_listing, $qty_remain)
+    {
+      $item = new Order_content;
+
+      //Set the information from request
+      $item->Order_num = $order_num;
+      $item->tyre_id = $tyre_id;
+      $item->unit_price = $price;
+
+      //Set the information from the stock listing generated
+      $item->Container_num = $stock_listing->Container_num;
+      $item->BOL = $stock_listing->BOL;
+
+
+      if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
+      {
+
+        $item->qty = $qty_remain;
+        $qty_remain = 0;
+
+      }
+      else // more entries needed keep looping
+      {
+
+        $item->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
+        $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
+      }
+
+      array_push($contents, $item);
+
+      return $qty_remain;
+
+    }
     public function index()
     {
         //
@@ -47,7 +80,7 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function setContent($index, $order, $tyre, $price, $container, $bol)
+  /*  public function setContent($index, $order, $tyre, $price, $container, $bol, $qty_remain)
     {
       OrderController::contents[$index] = new Order_content;
 
@@ -60,9 +93,24 @@ class OrderController extends Controller
       OrderController::contents[$index]->Container_num = $stock_listing->Container_num;
       OrderController::contents[$index]->BOL = $stock_listing->BOL;
 
+      if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
+      {
+
+        $this->contents[$index]->qty = $qty_remain;
+        break; // stop looping
+
+      }
+      else // more entries needed keep looping
+      {
+
+        $this->contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
+        $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
+        $index++; // index of next entry
+      }
 
 
-    }
+
+    }*/
     public function store(Request $request)
     {
         //
@@ -81,9 +129,10 @@ class OrderController extends Controller
 
         $order->save();
 
-
+        $contents = array();
+        //$contents[0] = new Order_content; // this initialization is required
         $index = 0;
-        unset($GLOBALS['contents']);
+        //unset($GLOBALS['contents']);
 
 
         for ($i=0; $i<$request->numItems; $i++) // each tyre
@@ -98,42 +147,49 @@ class OrderController extends Controller
           foreach ($in_stock as $stock_listing) // each stock entry
           {
             //Create a new order_content entry
-
-            $this->contents[$index] = new Order_content;
+            $qty_remain = OrderController::setContents($contents, $index, $order->Order_num, $request->tyre[$i], $request->price[$i], $stock_listing, $qty_remain);
+            /*OrderController::contents[$index] = new Order_content;
 
             //Set the information from request
-            $this->contents[$index]->Order_num = $order->Order_num;
-            $this->contents[$index]->tyre_id = $request->tyre[$i];
-            $this->contents[$index]->unit_price = $request->price[$i];
+            OrderController::contents[$index]->Order_num = $order->Order_num;
+            OrderController::contents[$index]->tyre_id = $request->tyre[$i];
+            OrderController::contents[$index]->unit_price = $request->price[$i];
 
             //Set the information from the stock listing generated
-            $this->contents[$index]->Container_num = $stock_listing->Container_num;
-            $this->contents[$index]->BOL = $stock_listing->BOL;
+            OrderController::contents[$index]->Container_num = $stock_listing->Container_num;
+            OrderController::contents[$index]->BOL = $stock_listing->BOL;*/
+            if ($qty_remain==0) {
+              break;
+            }
 
+            else {
+              $index++;
+            }
 
-            if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
+            /*if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
             {
 
-              $this->contents[$index]->qty = $qty_remain;
+              OrderController::contents[$index]->qty = $qty_remain;
               break; // stop looping
 
             }
             else // more entries needed keep looping
             {
 
-              $this->contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
+              OrderController::contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
               $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
               $index++; // index of next entry
-            }
+            }*/
 
           }
 
         }
-        return $this->contents;
-        //$order->orderContents()->saveMany($this->contents);
+        //return OrderController::contents;
+        //return $contents;
+        $order->orderContents()->saveMany($contents);
         //});
-        //DB::commit();
-
+        DB::commit();
+        return $contents;
 
         //echo $order->Order_num;  // last insert id
         //return redirect('/orders');
