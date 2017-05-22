@@ -59,6 +59,9 @@ class ContainerContentController extends Controller
           $container_content_records[$i]->qty = $request->qty[$i];
           $container_content_records[$i]->unit_price = $request->price[$i];
 
+          $container_content_records[$i]->total_tax = $request->tax[$i];
+          $container_content_records[$i]->total_weight = $request->weight[$i];
+
           $container_content_records[$i]->Container_num = $request->inputContainer;
           $container_content_records[$i]->BOL = $request->inputBOL;
         }

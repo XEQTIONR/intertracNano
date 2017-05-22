@@ -3,12 +3,12 @@
 @section('scripts')
 <style>
   .leftDiv{
-    width : 50%;
+    width : auto;
     float : left;
     margin : auto;
   }
   .rightDiv{
-    width : 50%;
+    width : auto;
     float : right;
     margin : auto;
   }
@@ -24,6 +24,8 @@
     var itemId = "tyre[" + count + "]";
     var qty = "qty[" + count + "]";
     var price = "price[" + count + "]";
+    var weight = "weight[" + count + "]";
+    var tax = "tax[" + count + "]";
 
     var subDiv = document.createElement("DIV");
     var subDivId = "subDiv" + count;
@@ -41,7 +43,7 @@
     itemInput.setAttribute("placeholder", "Tyre ID");
 
     //document.getElementById(subDivNum).appendChild(itemInput);
-    $("#"+subDivId).append("Tyre ID: ");
+    //$("#"+subDivId).append("Tyre ID: ");
     subDiv.appendChild(itemInput); //insert in the Div
 
     var qtyInput = document.createElement("INPUT");
@@ -50,7 +52,7 @@
     qtyInput.setAttribute("name", qty);
     qtyInput.setAttribute("placeholder", "Quantity");
 
-    $("#"+subDivId).append("Quantity: ");
+    //$("#"+subDivId).append("Quantity: ");
     subDiv.appendChild(qtyInput); //insert in the Div
     //document.getElementById(subDivNum).appendChild(qtyInput);
 
@@ -60,9 +62,29 @@
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
 
-    $("#"+subDivId).append("Unit Price: ");
+    //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(priceInput); //insert in the Div
     //document.getElementById(subDivNum).appendChild(priceInput);
+
+    var weightInput = document.createElement("INPUT");
+    weightInput.setAttribute("type", "text");
+    weightInput.setAttribute("class", "input");
+    weightInput.setAttribute("name", weight);
+    weightInput.setAttribute("placeholder", "Total Weight");
+
+    //$("#"+subDivId).append("Unit Price: ");
+    subDiv.appendChild(weightInput); //insert in the Div
+
+    var taxInput = document.createElement("INPUT");
+    taxInput.setAttribute("type", "text");
+    taxInput.setAttribute("class", "input");
+    taxInput.setAttribute("name", tax);
+    taxInput.setAttribute("placeholder", "Total Tax");
+
+    //$("#"+subDivId).append("Unit Price: ");
+    subDiv.appendChild(taxInput); //insert in the Div
+
+
 
     var itemlist = document.getElementById("itemList");
 

@@ -9,6 +9,8 @@
     <th>Tyre ID</th>
     <th>Quantity</th>
     <th>Unit Price</th>
+    <th>Total Weight</th>
+    <th>Total Tax Paid</th>
     <th>Created</th>
     <th>Updated</th>
   </tr>
@@ -21,6 +23,8 @@
       <td>{{$content->tyre_id}}</td>
       <td>{{$content->qty}}</td>
       <td>{{$content->unit_price}}</td>
+      <td>{{$content->total_weight}}</td>
+      <td>{{$content->total_tax}}</td>
       <td>{{$content->created_at}}</td>
       <td>{{$content->updated_at}}</td>
     </tr>
