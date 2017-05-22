@@ -15,7 +15,6 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //private static $contents;
 
 
     public static function setContents(&$contents, $index, $order_num, $tyre_id, $price, $stock_listing, $qty_remain)
@@ -73,50 +72,17 @@ class OrderController extends Controller
         return view('new_order',compact('in_stock'));
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-  /*  public function setContent($index, $order, $tyre, $price, $container, $bol, $qty_remain)
-    {
-      OrderController::contents[$index] = new Order_content;
-
-      //Set the information from request
-      OrderController::contents[$index]->Order_num = $order->Order_num;
-      OrderController::contents[$index]->tyre_id = $request->tyre[$i];
-      OrderController::contents[$index]->unit_price = $request->price[$i];
-
-      //Set the information from the stock listing generated
-      OrderController::contents[$index]->Container_num = $stock_listing->Container_num;
-      OrderController::contents[$index]->BOL = $stock_listing->BOL;
-
-      if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
-      {
-
-        $this->contents[$index]->qty = $qty_remain;
-        break; // stop looping
-
-      }
-      else // more entries needed keep looping
-      {
-
-        $this->contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
-        $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
-        $index++; // index of next entry
-      }
-
-
-
-    }*/
     public function store(Request $request)
     {
-        //
-        //return Order::tyreInContRemaining(2);
 
-        //return $stock;
         DB::beginTransaction();
         //{
         $order  = new Order;
@@ -130,9 +96,8 @@ class OrderController extends Controller
         $order->save();
 
         $contents = array();
-        //$contents[0] = new Order_content; // this initialization is required
         $index = 0;
-        //unset($GLOBALS['contents']);
+
 
 
         for ($i=0; $i<$request->numItems; $i++) // each tyre
@@ -148,53 +113,29 @@ class OrderController extends Controller
           {
             //Create a new order_content entry
             $qty_remain = OrderController::setContents($contents, $index, $order->Order_num, $request->tyre[$i], $request->price[$i], $stock_listing, $qty_remain);
-            /*OrderController::contents[$index] = new Order_content;
 
-            //Set the information from request
-            OrderController::contents[$index]->Order_num = $order->Order_num;
-            OrderController::contents[$index]->tyre_id = $request->tyre[$i];
-            OrderController::contents[$index]->unit_price = $request->price[$i];
-
-            //Set the information from the stock listing generated
-            OrderController::contents[$index]->Container_num = $stock_listing->Container_num;
-            OrderController::contents[$index]->BOL = $stock_listing->BOL;*/
-            if ($qty_remain==0) {
+            if ($qty_remain==0)
+            {
               break;
             }
 
-            else {
+            else
+            {
               $index++;
             }
-
-            /*if ($qty_remain <= $stock_listing->in_stock) //one entry covers the entire qty
-            {
-
-              OrderController::contents[$index]->qty = $qty_remain;
-              break; // stop looping
-
-            }
-            else // more entries needed keep looping
-            {
-
-              OrderController::contents[$index]->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
-              $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
-              $index++; // index of next entry
-            }*/
 
           }
 
         }
-        //return OrderController::contents;
-        //return $contents;
+
         $order->orderContents()->saveMany($contents);
         //});
         DB::commit();
         return $contents;
 
-        //echo $order->Order_num;  // last insert id
-        //return redirect('/orders');
-
     }
+
+    
 
     /**
      * Display the specified resource.
