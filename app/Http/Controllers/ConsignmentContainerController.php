@@ -47,6 +47,8 @@ class ConsignmentContainerController extends Controller
         $container->BOL = $request->inputBOL;
 
         $container->save();
+
+        
     }
 
     /**

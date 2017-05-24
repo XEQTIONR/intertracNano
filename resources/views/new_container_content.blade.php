@@ -107,7 +107,7 @@
 
     {{ csrf_field() }}
 
-    Container#<input type="text" name="inputContainer"> <br>
+    Container#<input type="text" name="inputContainerNum"> <br>
     BOL#<input type="text" name="inputBOL"> <br>
 
     <button type="button" onclick="addItem()">Add New Item</button>

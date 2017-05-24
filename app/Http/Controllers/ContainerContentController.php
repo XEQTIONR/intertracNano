@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Container_content;
 use App\Consignment_container;
 use App\Tyre;
@@ -45,13 +46,31 @@ class ContainerContentController extends Controller
     {
         //
 
-        global $container_content_records, $i;
-        $container = Consignment_container::find($request->inputContainer);
 
+
+        $container_content_records = array();
+        //$container = Consignment_container::find($request->inputContainer);
+
+        DB::beginTransaction();
+
+        $container = new Consignment_container;
+
+        $container->Container_num = $request->inputContainerNum;
+        $container->BOL = $request->inputBOL;
+
+        $container->save();
+        //dd($container);
+        //echo $container->Container_num;
+        //echo $request->inputContainer;
+        //echo $container->BOL;
+      //  echo "inputBOL";
+        //echo $request->inputBOL;
 
         for ($i=0; $i<$request->numItems; $i++)
         {
 
+          //echo "forloop<br>"
+          //echo $request->inputBOL;
           $container_content_records[$i] = new Container_content;
 
 
@@ -62,7 +81,7 @@ class ContainerContentController extends Controller
           $container_content_records[$i]->total_tax = $request->tax[$i];
           $container_content_records[$i]->total_weight = $request->weight[$i];
 
-          $container_content_records[$i]->Container_num = $request->inputContainer;
+          $container_content_records[$i]->Container_num = $request->inputContainerNum;
           $container_content_records[$i]->BOL = $request->inputBOL;
         }
 
@@ -76,7 +95,11 @@ class ContainerContentController extends Controller
         {
           $container->containerContents()->saveMany($container_content_records);
 
-          return redirect('/container_contents');
+          DB::commit();
+          $base = "/container_contents/";
+          $url = $base . $request->inputBOL;
+          //dd($url);
+          return redirect($url);
           //$this.index();
         }
         //$invoiceRecord->save();
