@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Order_contents;
+use App\Order_content;
 use Illuminate\Http\Request;
 
 class OrderContentController extends Controller
@@ -20,7 +20,8 @@ class OrderContentController extends Controller
 
         $order_contents = Order_content::all();
 
-        return view('order_contents'. compact('order_contents'));
+        return $order_contents;
+        //return view('order_contents'. compact('order_contents'));
     }
 
     /**

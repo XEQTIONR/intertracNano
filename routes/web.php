@@ -42,6 +42,8 @@ Route::resource('hscodes','HscodeController');
 
 Route::resource('container_contents', 'ContainerContentController');
 
+Route::resource('order_contents', 'OrderContentController');
+
 
 
 

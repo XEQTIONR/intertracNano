@@ -135,7 +135,7 @@ class OrderController extends Controller
 
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -146,6 +146,9 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         //
+        //echo 'Order show here';
+        return $order->orderContents()
+                    ->get();
     }
 
     /**

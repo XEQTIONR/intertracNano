@@ -3,10 +3,10 @@
 @section('scripts')
 
 <script>
-  function viewContentFor(BOL)
+  function viewContentFor(bol)
   {
     var base = '/container_contents/';
-    var url = base + BOL; // '/container_contents/BOL'
+    var url = base + bol; // '/container_contents/BOL'
     window.location.href = url;
   }
 </script>
