@@ -42,7 +42,7 @@
       itemInput.setAttribute("placeholder", "Tyre ID");
 
       //document.getElementById(subDivNum).appendChild(itemInput);
-      $("#"+subDivId).append("Tyre ID: ");
+      //$("#"+subDivId).append("Tyre ID: ");
       subDiv.appendChild(itemInput); //insert in the Div
 
       var qtyInput = document.createElement("INPUT");
@@ -51,7 +51,7 @@
       qtyInput.setAttribute("name", qty);
       qtyInput.setAttribute("placeholder", "Quantity");
 
-      $("#"+subDivId).append("Quantity: ");
+      //$("#"+subDivId).append("Quantity: ");
       subDiv.appendChild(qtyInput); //insert in the Div
       //document.getElementById(subDivNum).appendChild(qtyInput);
 
@@ -61,7 +61,7 @@
       priceInput.setAttribute("name", price);
       priceInput.setAttribute("placeholder", "Unit Price");
 
-      $("#"+subDivId).append("Unit Price: ");
+      //$("#"+subDivId).append("Unit Price: ");
       subDiv.appendChild(priceInput); //insert in the Div
       //document.getElementById(subDivNum).appendChild(priceInput);
 
@@ -71,6 +71,22 @@
 
       count++;
       document.getElementById("numItems").value = count;
+    }
+
+    function removeItem()
+    {
+      //alert("remove item works");
+      var parent = document.getElementById("itemList");
+
+      var subDivId = "subDiv" + (count-1);
+      //alert(subDivId);
+      var child = document.getElementById(subDivId);
+      //child.innerHTML = "<button>THE BUTTON</button>";
+
+      parent.removeChild(child);
+      count--;
+      document.getElementById("numItems").value = count;
+
     }
 
 
@@ -90,6 +106,7 @@
 
   <button type="button" onclick="addItem()">Add New Item</button>
   <button type="submit" value="submit">Submit</button>
+  <button type="button" onclick="removeItem()">Remove Last Item</button>
 
   <div id="itemList" style="border: 2px dashed black;">
 
