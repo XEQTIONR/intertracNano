@@ -37,7 +37,9 @@
       <td>{{$LC->foreign_amount * $LC->exchange_rate}}</td>
       <td>{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
 
-      <td><button type="button" onclick="">View Info</button></td>
+      <td><a href="/lcs/{{$LC->lc_num}}"> VIEW INFO</a></td>
+
+
 <!--      <td>{{$LC->applicant}}</td>
       <td>{{$LC->beneficiary}}</td>
       <td>{{$LC->port_depart}}</td>

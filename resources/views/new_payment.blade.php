@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.mainlayout')
 
 
 @section('content')
@@ -9,7 +9,7 @@
 
   Order# <input type="text" name="inputOrderNum"> <br>
   Amount Paid <input type="text"  name="inputPaidAmount"> <br>
-  
+
   <button type="submit" value="submit">Submit</button>
 
 </form>
