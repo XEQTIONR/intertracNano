@@ -65,7 +65,7 @@ class LcController extends Controller
         //STORE
         $lc->save();
 
-        return redirect('/lcs');
+        return redirect('/lcs/{{$lc->lc_num}}');
     }
 
     /**
@@ -76,7 +76,7 @@ class LcController extends Controller
      */
     public function show(Lc $lc)
     {
-        //
+        return $lc;
     }
 
     /**

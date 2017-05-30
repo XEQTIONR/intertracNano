@@ -47,6 +47,8 @@ class PerformaInvoiceController extends Controller
     public function store(Request $request)
     {
 
+        //validate request : NOT DONE
+        
         global $invoiceRecord, $i;
         $lc = Lc::find($request->inputLC);
 

@@ -1,17 +1,5 @@
 @extends('layout')
 
-@section('scripts')
-<script>
-
-  function viewOrderItemsFor(order)
-  {
-    var base = '/orders/';
-    var url = base + order; // '/container_contents/BOL'
-    window.location.href = url;
-  }
-
-</script>
-@endsection
 
 
 
@@ -43,7 +31,7 @@
       <td>{{$order->created_at}}</td>
       <td>{{$order->updated_at}}</td>
 
-      <td><button type="button"   onclick="viewOrderItemsFor('{{$order->Order_num}}')" >View Contents</button></td>
+      <td><a href = "/orders/{{$order->Order_num}}" >View Contents</a></td>
 
     </tr>
   @endforeach
