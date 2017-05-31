@@ -76,7 +76,8 @@ class LcController extends Controller
      */
     public function show(Lc $lc)
     {
-        return $lc;
+
+        return view('profiles.lc', compact('lc'));
     }
 
     /**
