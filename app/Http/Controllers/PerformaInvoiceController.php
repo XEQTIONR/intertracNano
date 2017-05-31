@@ -23,6 +23,7 @@ class PerformaInvoiceController extends Controller
 
         $invoiceRecords = Performa_invoice::all();
         //return view('performa_invoices', compact('invoiceRecords'));
+        return $invoiceRecords;
     }
 
     /**
@@ -48,7 +49,7 @@ class PerformaInvoiceController extends Controller
     {
 
         //validate request : NOT DONE
-        
+
         global $invoiceRecord, $i;
         $lc = Lc::find($request->inputLC);
 
@@ -85,9 +86,13 @@ class PerformaInvoiceController extends Controller
      * @param  \App\Performa_invoice  $performa_invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(Performa_invoice $performa_invoice)
+    public function show($lc_num) //performa_invoice for lc
     {
         //
+        $records = Performa_invoice::where('lc_num', $lc_num)
+                                    ->get();
+        //return $records;
+        return view('profiles.performa_invoice', compact('records','lc_num'));
     }
 
     /**

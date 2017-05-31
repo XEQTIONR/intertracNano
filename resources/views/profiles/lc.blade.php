@@ -68,7 +68,14 @@
     <td>Destination port</td>
     <td>{{$lc->port_arrive}}</td>
   </tr>
-
+  <tr>
+    <td>created_at</td>
+    <td>{{$lc->created_at}}</td>
+  </tr>
+  <tr>
+    <td>updated_at</td>
+    <td>{{$lc->updated_at}}</td>
+  </tr>
 </table>
 
 
