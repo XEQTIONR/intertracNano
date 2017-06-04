@@ -9,7 +9,8 @@ class Lc extends Model
     //
 
     public $primaryKey = 'lc_num';
-    protected $casts = ['lc_num' => 'string'];
+    public $incrementing = false;
+    //protected $casts = ['lc_num' => 'string'];
 
     public function performaInvoice()
     {

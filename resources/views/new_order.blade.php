@@ -34,9 +34,7 @@
   <button type="submit" value="submit">Submit</button>
   <button type="button" onclick="removeItem()">Remove Last Item</button>
 
-  <div id="itemList" style="border: 2px dashed black;">
-
-  </div> <br>
+  <div id="itemList" style="border: 2px dashed black;"></div> <br>
 
   Num items <input type="text"  name="numItems" id="numItems" readonly>
 

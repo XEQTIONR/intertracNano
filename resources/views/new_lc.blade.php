@@ -10,6 +10,9 @@ $( function()
     $(".pickdate").datepicker("option", "dateFormat", "yy-mm-dd");
   });
 </script>
+
+<script src="/js/addItem.js"></script>
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <link rel="stylesheet" href="/resources/demos/style.css">
 @endsection
@@ -34,7 +37,14 @@ $( function()
   Expenses Paid (Foreign)<input type="text" name="inputForeignExpense"> <br>
   Expenses Paid (Local)<input type="text" name="inputLocalExpense"> <br>
 
+  <button type="button" onclick="addItem()">Add New Item</button>
   <button type="submit" value="submit">Submit</button>
+  <button type="button" onclick="removeItem()">Remove Last Item</button>
+
+  <div id="itemList" style="border: 2px dashed black;"></div> <br>
+
+  Num items <input type="text"  name="numItems" id="numItems" readonly>
+
 
 </form>
 

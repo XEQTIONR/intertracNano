@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lc;
+use App\Performa_invoice;
 use Illuminate\Http\Request;
 
 class LcController extends Controller
@@ -65,7 +66,29 @@ class LcController extends Controller
         //STORE
         $lc->save();
 
-        return redirect('/lcs/{{$lc->lc_num}}');
+        $contents = array();
+        $index = 0;
+
+        for ($i=0; $i<$request->numItems; $i++) // each tyre
+        {
+          $item = new Performa_invoice;
+
+          $item->lc_num = $lc->lc_num;
+          $item->tyre_id = $request->tyre[$i];
+          $item->qty = $request->qty[$i];
+          $item->unit_price = $request->price[$i];
+
+          array_push($contents, $item);
+        }
+
+        $lc->performaInvoice()->saveMany($contents);
+
+
+        //$var = 'LC0001';
+        return redirect("/lcs/".$lc->lc_num);
+
+        //return $lc->lc_num;
+
     }
 
     /**
