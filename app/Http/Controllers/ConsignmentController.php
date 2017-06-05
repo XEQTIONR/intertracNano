@@ -69,6 +69,8 @@ class ConsignmentController extends Controller
     public function show(Consignment $consignment)
     {
         //
+
+        return view('profiles.consignment', compact('consignment'));
     }
 
     /**
