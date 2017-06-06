@@ -1,5 +1,15 @@
 @extends('layout.mainlayout')
 
+@section('scripts')
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({
+      collapsible: true
+    });
+  } );
+</script>
+@endsection
 
 @section('content')
 
@@ -77,6 +87,42 @@
     <td>{{$lc->updated_at}}</td>
   </tr>
 </table>
+
+
+
+<div id="accordion">
+  <h3>Performa Invoice</h3>
+  <div>
+    <table>
+      <tr>
+        <th>Tyre ID</th>
+        <th>Qty</th>
+        <th>Unit Price</th>
+
+        <th>created_at</th>
+        <th>updated_at</th>
+      </tr>
+
+
+      @foreach ($performa as $record)
+      <tr>
+        <td>{{$record->tyre_id}}</td>
+        <td>{{$record->qty}}</td>
+        <td>{{$record->unit_price}}</td>
+
+        <td>{{$record->created_at}}</td>
+        <td>{{$record->updated_at}}</td>
+      </tr>
+      @endforeach
+
+    </table>
+
+  </div>
+  <h3>Consignments</h3>
+  <div>
+
+  </div>
+</div>
 
 
 @endsection

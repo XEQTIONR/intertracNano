@@ -100,7 +100,10 @@ class LcController extends Controller
     public function show(Lc $lc)
     {
 
-        return view('profiles.lc', compact('lc'));
+        $performa = $lc->performaInvoice()
+                      ->get();
+        //return $performa;
+        return view('profiles.lc', compact('lc', 'performa'));
     }
 
     /**
