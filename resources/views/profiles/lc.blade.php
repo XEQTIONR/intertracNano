@@ -120,6 +120,29 @@
   </div>
   <h3>Consignments</h3>
   <div>
+    <table>
+      <tr>
+        <th>Bill Of Lading#</th>
+        <th>Total Value</th>
+        <th>Tax Paid</th>
+        <th>Land Date</th>
+        <th>created_at</th>
+        <th>updated_at</th>
+      </tr>
+
+
+      @foreach($consignments as $consignment)
+        <tr>
+          <td>{{$consignment->BOL}}</td>
+          <td>{{$consignment->value}}</td>
+          <td>{{$consignment->tax}}</td>
+          <td>{{$consignment->land_date}}</td>
+          <td>{{$consignment->created_at}}</td>
+          <td>{{$consignment->updated_at}}</td>
+        </tr>
+      @endforeach
+
+    </table>
 
   </div>
 </div>

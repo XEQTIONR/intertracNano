@@ -102,8 +102,11 @@ class LcController extends Controller
 
         $performa = $lc->performaInvoice()
                       ->get();
+
+        $consignments = $lc->consignment()
+                          ->get();
         //return $performa;
-        return view('profiles.lc', compact('lc', 'performa'));
+        return view('profiles.lc', compact('lc', 'performa', 'consignments'));
     }
 
     /**

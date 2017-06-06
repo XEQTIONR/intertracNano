@@ -16,5 +16,10 @@ class Lc extends Model
     {
       return $this->hasMany('App\Performa_invoice','lc_num');
     }
+
+    public function consignment()
+    {
+      return $this->hasMany('App\Consignment', 'lc');
+    }
 }
 ?>
