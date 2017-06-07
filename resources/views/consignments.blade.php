@@ -29,7 +29,7 @@
     <td>{{$consignment->lc}}</td>
     <td>{{$consignment->created_at}}</td>
     <td>{{$consignment->updated_at}}</td>
-    <td><a href="/container_contents/{{$consignment->BOL}}" >View Contents</a></td>
+    <td><a href="/consignments/{{$consignment->BOL}}" >View Info</a></td>
   </tr>
   @endforeach
 

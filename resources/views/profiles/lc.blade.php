@@ -5,9 +5,10 @@
 <script>
   $( function() {
     $( "#accordion" ).accordion({
-      collapsible: true
+      collapsible: true,
+      active: false
     });
-  } );
+  });
 </script>
 @endsection
 
@@ -139,6 +140,7 @@
           <td>{{$consignment->land_date}}</td>
           <td>{{$consignment->created_at}}</td>
           <td>{{$consignment->updated_at}}</td>
+          <td><a href="/container_contents/{{$consignment->BOL}}" >View Contents</a></td>
         </tr>
       @endforeach
 
