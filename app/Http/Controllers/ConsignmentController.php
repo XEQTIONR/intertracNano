@@ -117,7 +117,10 @@ class ConsignmentController extends Controller
             array_push($contents, $somecontents);
           }
 
-        return view('profiles.consignment', compact('consignment', 'containers','contents'));
+          $expenses = $consignment->expenses()
+                                  ->get();
+
+        return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses'));
     }
 
     /**

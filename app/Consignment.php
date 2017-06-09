@@ -20,4 +20,9 @@ class Consignment extends Model
     {
       return $this->hasMany('App\Consignment_container','BOL');
     }
+
+    public function expenses()
+    {
+      return $this->hasMany('App\Consignment_expense','BOL');
+    }
 }

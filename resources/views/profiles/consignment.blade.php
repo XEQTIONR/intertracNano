@@ -66,6 +66,18 @@
         @endforeach
       </div>
   @endforeach
+
+  <h3>Expenses</h3>
+  <div>
+    @foreach($expenses as $expense)
+      <span>{{$expense->expense_id}}</span>
+      <span>{{$expense->expense_local}}</span>
+      <span>{{$expense->expense_foreign}}</span>
+      <span>{{$expense->expense_notes}}</span> <br>
+    @endforeach
+
+  </div>
+
   </div>
 
   <button>Add a Container</button>
