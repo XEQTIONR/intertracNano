@@ -140,7 +140,7 @@
           <td>{{$consignment->land_date}}</td>
           <td>{{$consignment->created_at}}</td>
           <td>{{$consignment->updated_at}}</td>
-          <td><a href="/container_contents/{{$consignment->BOL}}" >View Contents</a></td>
+          <td><a href="/consignments/{{$consignment->BOL}}" >View Consignment</a></td>
         </tr>
       @endforeach
 

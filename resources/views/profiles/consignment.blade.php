@@ -1,5 +1,18 @@
 @extends('layout.mainlayout')
 
+
+@section('scripts')
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({
+      collapsible: true,
+      active: false
+    });
+  });
+</script>
+@endsection
+
 @section('content')
 
   <table>
@@ -34,25 +47,26 @@
   </table>
 
   {{-- view containers section--}}
+
+  <div id="accordion">
+
   @foreach ($containers as $container)
-    <div id="accordion">
-
-      <h3>{{$container->Container_num}}</h3>
+    <h3>{{$container->Container_num}}</h3>
       <div>
-         @foreach ($contents as $content_one_container) {{--each container--}}
-
-                    {{--@ means if not empty--}}
-           @if (@$content_one_container[0]->Container_num==$container->Container_num) {{--if this container--}}
-             @foreach($content_one_container as $listing) {{---each tyre qty price etc--}}
-               <span>{{$listing->tyre_id}}</span>
-               <span>{{$listing->qty}}</span>
-               <span>{{$listing->unit_price}}</span><br>
-             @endforeach
-           @endif
+        @foreach ($contents as $content_one_container) {{--each container--}}
+          {{--@ means if not empty--}}
+          @if (@$content_one_container[0]->Container_num==$container->Container_num) {{-- if this container add BOL later --}}
+            @foreach($content_one_container as $listing) {{---each tyre qty price etc--}}
+              <span>{{$listing->tyre_id}}</span>
+              <span>{{$listing->qty}}</span>
+              <span>{{$listing->unit_price}}</span><br>
+            @endforeach
+          @endif
 
         @endforeach
       </div>
-    </div>
   @endforeach
+  </div>
+
   <button>Add a Container</button>
 @endsection
