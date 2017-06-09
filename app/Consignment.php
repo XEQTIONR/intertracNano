@@ -15,4 +15,9 @@ class Consignment extends Model
     {
       return $this->belongsTo('App\Lc', 'lc');
     }
+
+    public function containers()
+    {
+      return $this->hasMany('App\Consignment_container','BOL');
+    }
 }

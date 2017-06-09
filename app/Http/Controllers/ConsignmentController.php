@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Consignment;
+use App\Consignment_container;
 use Illuminate\Http\Request;
 
 class ConsignmentController extends Controller
@@ -15,9 +16,28 @@ class ConsignmentController extends Controller
     public function index()
     {
         //
-
+        $containers = array();
+        $contents = array();
         $consignments = Consignment::all();
 
+        foreach($consignments as $consignment)
+        {
+          $somecontainers = $consignment->containers()
+                                      ->get();
+          array_push($containers, $somecontainers);
+
+          foreach($somecontainers as $somecontainer)
+          {
+            $somecontents = $somecontainer->containerContents()
+                                          ->get();
+            array_push($contents, $somecontents);
+          }
+        }
+
+
+        //return $contents;
+        //return $containers;
+        //return $containers;
         return view('consignments', compact('consignments'));
     }
 
@@ -69,8 +89,35 @@ class ConsignmentController extends Controller
     public function show(Consignment $consignment)
     {
         //
+      /*  $containers = $consignment->container()
+                                  ->get();
+        $contents = array();
 
-        return view('profiles.consignment', compact('consignment'));
+        foreach ($containers as $container)
+        {
+          $content = $container->containerContents()
+                              ->get();
+          array_push($contents, $content);
+        }*/
+
+
+
+        //$containers = array();
+        $contents = array();
+
+
+          $containers = $consignment->containers()
+                                      ->get();
+          //array_push($containers, $somecontainers);
+
+          foreach($containers as $somecontainer)
+          {
+            $somecontents = $somecontainer->containerContents()
+                                          ->get();
+            array_push($contents, $somecontents);
+          }
+
+        return view('profiles.consignment', compact('consignment', 'containers','contents'));
     }
 
     /**
