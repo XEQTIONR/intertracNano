@@ -46,7 +46,10 @@ Route::resource('order_contents', 'OrderContentController');
 
 
 
-
+Route::get('layout2', function()
+{
+  return view('layout.layout2');
+});
 
 
 

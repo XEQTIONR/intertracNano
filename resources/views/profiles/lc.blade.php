@@ -14,96 +14,80 @@
 
 @section('content')
 
-<table>
-  <tr>
-    <td>LC#</td>
-    <td>{{$lc->lc_num}}</td>
-  </tr>
-  <tr>
-    <td>Date Issued</td>
-    <td>{{$lc->date_issued}}</td>
-  </tr>
-  <tr>
-    <td>Date Expiry</td>
-    <td>{{$lc->date_expiry}}</td>
-  </tr>
-  <tr>
-    <td>Invoice#</td>
-    <td>{{$lc->foreign_amount}}</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Value(Foreign)</td>
-    <td>{{$lc->foreign_amount}}</td>
-  </tr>
-  <tr>
-    <td>Currency code</td>
-    <td>{{$lc->currency_code}}</td>
-  </tr>
-  <tr>
-    <td>Exchange rate</td>
-    <td>{{$lc->exchange_rate}}</td>
-  </tr>
-  <tr>
-    <td>Value(TK)</td>
-    <td>{{$lc->foreign_amount * $lc->exchange_rate}}</td>
-  </tr>
-  <tr>
-    <td>Expenses Paid(Foreign)</td>
-    <td>{{$lc->foreign_expense}}</td>
-  </tr>
-  <tr>
-    <td>Expenses Paid(Local)</td>
-    <td>{{$lc->domestic_expense}}</td>
-  </tr>
-  <tr>
-    <td>Expenses Total(TK)</td>
-    <td>{{($lc->foreign_expense * $lc->exchange_rate)+$lc->domestic_expense}}</td>
-  </tr>
-  <tr>
-    <td>Applicant</td>
-    <td>{{$lc->applicant}}</td>
-  </tr>
-  <tr>
-    <td>Beneficiary</td>
-    <td>{{$lc->beneficiary}}</td>
-  </tr>
-  <tr>
-    <td>Departing port</td>
-    <td>{{$lc->port_depart}}</td>
-  </tr>
-  <tr>
-    <td>Destination port</td>
-    <td>{{$lc->port_arrive}}</td>
-  </tr>
-  <tr>
-    <td>created_at</td>
-    <td>{{$lc->created_at}}</td>
-  </tr>
-  <tr>
-    <td>updated_at</td>
-    <td>{{$lc->updated_at}}</td>
-  </tr>
-</table>
+<div class="container">
+<div class="row">
+  <dl class="dl-horizontal col-md-6 col-md-push-3">
+    <dt>LC#</dt>
+    <dd>{{$lc->lc_num}}</dd>
 
+    <dt>Date Issued</dt>
+    <dd>{{$lc->date_issued}}</dd>
+
+    <dt>Date Expiry</dt>
+    <dd>{{$lc->date_expiry}}</dd>
+
+    <dt>Invoice#</dt>
+    <dd>{{$lc->foreign_amount}}</dd>
+
+    <dt></dt>
+    <dd></dd>
+
+    <dt>Value(Foreign)</dt>
+    <dd>{{$lc->foreign_amount}}</dd>
+
+    <dt>Currency code</dt>
+    <dd>{{$lc->currency_code}}</dd>
+
+    <dt>Exchange rate</dt>
+    <dd>{{$lc->exchange_rate}}</dd>
+
+    <dt>Value(TK)</dt>
+    <dd>{{$lc->foreign_amount * $lc->exchange_rate}}</dd>
+
+    <dt>Expenses Paid(Foreign)</dt>
+    <dd>{{$lc->foreign_expense}}</dd>
+
+    <dt>Expenses Paid(Local)</dt>
+    <dd>{{$lc->domestic_expense}}</dd>
+
+    <dt>Expenses Total(TK)</dt>
+    <dd>{{($lc->foreign_expense * $lc->exchange_rate)+$lc->domestic_expense}}</dd>
+
+    <dt>Applicant</dt>
+    <dd>{{$lc->applicant}}</dd>
+
+    <dt>Beneficiary</dt>
+    <dd>{{$lc->beneficiary}}</dd>
+
+    <dt>Departing port</dt>
+    <dd>{{$lc->port_depart}}</dd>
+
+    <dt>Destination port</dt>
+    <dd>{{$lc->port_arrive}}</dd>
+
+    <dt>created_at</dt>
+    <dd>{{$lc->created_at}}</dd>
+
+    <dt>lupdated_at</dt>
+    <dd>{{$lc->updated_at}}</dd>
+  </dl>
+</div>
+</div>
 
 
 <div id="accordion">
+
   <h3>Performa Invoice</h3>
-  <div>
-    <table>
+  <div class="container">
+    {{--SOMETHING RANDOM--}}
+    <table class="table table-hover table-bordered">
       <tr>
         <th>Tyre ID</th>
         <th>Qty</th>
-        <th>Unit Price</th>
-
+        <th>UnitPrice</th>
         <th>created_at</th>
         <th>updated_at</th>
       </tr>
-
 
       @foreach ($performa as $record)
       <tr>
@@ -115,13 +99,12 @@
         <td>{{$record->updated_at}}</td>
       </tr>
       @endforeach
-
     </table>
-
   </div>
+
   <h3>Consignments</h3>
-  <div>
-    <table>
+  <div class="container">
+    <table class="table table-hover table-bordered">
       <tr>
         <th>Bill Of Lading#</th>
         <th>Total Value</th>
@@ -140,7 +123,8 @@
           <td>{{$consignment->land_date}}</td>
           <td>{{$consignment->created_at}}</td>
           <td>{{$consignment->updated_at}}</td>
-          <td><a href="/consignments/{{$consignment->BOL}}" >View Consignment</a></td>
+          <td><a href="/consignments/{{$consignment->BOL}}"
+              class="btn btn-info">View Consignment</a></td>
         </tr>
       @endforeach
 
