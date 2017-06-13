@@ -43,17 +43,16 @@
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    <span>nano</span>DB
+            <div class="container-fluid">
+              <div class="row" style="border: 1px solid black;">
+
+                <div class="col-md-2 col-md-push-5"  style="border: 1px solid red;">
+                    <h1 class="text-center">nanoDB</h1>
                 </div>
-
-
-
-
-
-                <div class="links">
-                  <table>
+              </div> <!--row-->
+              <div class="row">
+                <div class="col-md-4 col-md-push-4" style="border: 1px solid red;">
+                  <table style="margin-left: auto; margin-right: auto;">
                   <tr>
 
                     <td>

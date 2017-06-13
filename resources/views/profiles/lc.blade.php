@@ -16,7 +16,8 @@
 
 <div class="container">
 <div class="row">
-  <dl class="dl-horizontal col-md-6 col-md-push-3">
+<div class="col-md-6 col-md-push-3">
+  <dl class="dl-horizontal">
     <dt>LC#</dt>
     <dd>{{$lc->lc_num}}</dd>
 
@@ -71,14 +72,15 @@
     <dt>lupdated_at</dt>
     <dd>{{$lc->updated_at}}</dd>
   </dl>
-</div>
-</div>
+</div> <!--col-->
+</div> <!--row-->
+</div> <!--container-->
 
 
-<div id="accordion">
+<div id="accordion" class="container">
 
   <h3>Performa Invoice</h3>
-  <div class="container">
+  <div>
     {{--SOMETHING RANDOM--}}
     <table class="table table-hover table-bordered">
       <tr>
@@ -103,7 +105,7 @@
   </div>
 
   <h3>Consignments</h3>
-  <div class="container">
+  <div>
     <table class="table table-hover table-bordered">
       <tr>
         <th>Bill Of Lading#</th>
@@ -124,7 +126,7 @@
           <td>{{$consignment->created_at}}</td>
           <td>{{$consignment->updated_at}}</td>
           <td><a href="/consignments/{{$consignment->BOL}}"
-              class="btn btn-info">View Consignment</a></td>
+              class="btn btn-primary">View Consignment</a></td>
         </tr>
       @endforeach
 
