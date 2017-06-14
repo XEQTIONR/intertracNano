@@ -102,7 +102,7 @@
 
   <div class="row subMenu" id="theMenu" style="background-color: orange;">
 
-    <div class="col-md-4"><a href="#"><p class="text-center">Order Report</p></a></div>
+    <div class="col-md-4"><a href="#">Order Report</a></div>
     <div class="col-md-4"><a href="#">Payment Report</a></div>
     <div class="col-md-4"><a href="#">Expenditure Report</a></div>
     <div class="col-md-4"><a href="#">Outstanding Balance Report</a></div>
