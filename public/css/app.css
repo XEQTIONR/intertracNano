@@ -21,3 +21,12 @@
   /*border: 1px solid blue;*/
 
 }
+
+.subMenu div{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.subMenu div a{
+  color: #FFF;
+}

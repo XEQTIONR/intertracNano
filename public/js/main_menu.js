@@ -4,17 +4,17 @@ $(document).ready(function(){
   $(".icons8-Bar-Chart, #reportLabel").click(function(){
 
       $("#theMenu").slideToggle();
-      $("#theMenu2").slideUp();
-      $("#theMenu3").slideUp();
+      $("#theMenu2").hide();
+      $("#theMenu3").hide();
   });
   $(".icons8-Visible, #infoLabel").click(function(){
     $("#theMenu2").slideToggle();
-    $("#theMenu").slideUp();
-    $("#theMenu3").slideUp();
+    $("#theMenu").hide();
+    $("#theMenu3").hide();
   });
   $(".icons8-Add, #actionLabel").click(function(){
     $("#theMenu3").slideToggle();
-    $("#theMenu2").slideUp();
-    $("#theMenu").slideUp();
+    $("#theMenu2").hide();
+    $("#theMenu").hide();
   });
 });
