@@ -21,7 +21,7 @@ $( function()
   {{ csrf_field() }}
 
   Bill of Lading# <input type="text" name="inputBOL"> <br>
-  LC#<input type="text" name="inputLCnum"> <br>
+  LC#<input type="text" name="inputLCnum" value="{{$lc_num}}"> <br>
   Value$ <input type="text" name="inputValue"> <br>
   Tax <input type="text" name="inputTax"> <br>
   Land Date <input type="text" class="pickdate" name="inputLandDate"> <br>

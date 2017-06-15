@@ -24,7 +24,13 @@ Route::resource('tyres','TyreController');
 
 Route::resource('lcs','LcController');
 
+
+//To pass the lc_num
+Route::get('/consignments/create/{lc}', 'ConsignmentController@createGivenLC');
+
 Route::resource('consignments','ConsignmentController');
+
+
 
 Route::resource('customers','CustomerController');
 

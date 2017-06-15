@@ -15,36 +15,34 @@
 
 @section('content')
 
-  <table>
-    <tr>
-      <td>Bill of Lading#</td>
-      <td>{{$consignment->BOL}}</td>
-    </tr>
-    <tr>
-      <td>LC#</td>
-      <td>{{$consignment->lc}}</td>
-    </tr>
-    <tr>
-      <td>Landed On</td>
-      <td>{{$consignment->land_date}}</td>
-    </tr>
-    <tr>
-      <td>Exchange_rate</td>
-      <td>{{60}}</td> {{--Change 60 to exchange_rate--}}
-    </tr>
-    <tr>
-      <td>Total Value (Foreign)</td>
-      <td>{{$consignment->value}}</td>
-    </tr>
-    <tr>
-      <td>Total Value (Local)</td>
-      <td>{{$consignment->value * 60}}</td> {{--change 60 to excahnge rate--}}
-    </tr>
-    <tr>
-      <td>Total Tax Charged (TK)</td>
-      <td>{{$consignment->tax}}</td>
-    </tr>
-  </table>
+<div class="container">
+  <div class="row">
+  <div class="col-md-4 col-md-push-4">
+  <dl class="dl-horizontal">
+
+    <dt>Bill of Lading#</dt>
+    <dd>{{$consignment->BOL}}</dd>
+
+    <dt>LC#</dt>
+    <dd><a href="/lcs/{{$consignment->lc}}">{{$consignment->lc}}</a></dd>
+
+    <dt>Landed On</dt>
+    <dd>{{$consignment->land_date}}</dd>
+
+    <dt>Exchange_rate</dt>
+    <dd>{{60}}</dd> {{--Change 60 to exchange_rate--}}
+
+    <dt>Total Value (Foreign)</dt>
+    <dd>{{$consignment->value}}</dd>
+
+    <dt>Total Value (Local)</dt>
+    <dd>{{$consignment->value * 60}}</dd> {{--change 60 to excahnge rate--}}
+
+    <dt>Total Tax Charged (TK)</dt>
+    <dd>{{$consignment->tax}}</dd>
+  </div> <!--col-->
+  </div> <!--row-->
+</div> <!--container-->
 
   {{-- view containers section--}}
 

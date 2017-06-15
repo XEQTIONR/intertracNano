@@ -1,5 +1,10 @@
 # intertracNano
 
+<span>June 15, 2017</span>
+Added  new create function (<code>createGivenLC</code>) in <code>ConsignmentController</code> which passes in the LC number and does the same things as <code>create</code> function</br>
+Some more bootstrap.
+
+
 <span>June 12, 2017</span>
 Beginning integration of Twitter Bootstap Framework for front-end.
 

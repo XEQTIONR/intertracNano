@@ -48,9 +48,15 @@ class ConsignmentController extends Controller
      */
     public function create()
     {
-        //
+        //Pass a blank lc_num so we cant re-use the same code as below.
+        $lc_num="";
 
-        return view ('new_consignment');
+        return view ('new_consignment', compact('lc_num'));
+    }
+
+    public function createGivenLC($lc_num)
+    {
+      return view('new_consignment', compact('lc_num'));
     }
 
     /**

@@ -102,6 +102,9 @@
       </tr>
       @endforeach
     </table>
+    <a href="#" class="btn btn-primary">Edit</a>
+    <a href="#" class="btn btn-primary">Delete</a>
+
   </div>
 
   <h3>Consignments</h3>
@@ -126,14 +129,15 @@
           <td>{{$consignment->created_at}}</td>
           <td>{{$consignment->updated_at}}</td>
           <td><a href="/consignments/{{$consignment->BOL}}"
-              class="btn btn-primary">View Consignment</a></td>
+              class="btn btn-success">View Consignment</a></td>
         </tr>
       @endforeach
 
     </table>
-
+    <a href="/consignments/create/{{$lc->lc_num}}" class="btn btn-primary">Add Consignment</a>
   </div>
-</div>
+
+</div> <!-- container accordion -->
 
 
 @endsection
