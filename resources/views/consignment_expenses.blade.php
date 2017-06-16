@@ -3,9 +3,12 @@
 @section('content')
 
 
+
+<div class="container"> <!-- bootsreap container -->
+
 <span>CONSIGNMENT EXPENSES</span>
 
-<table class="DBinfo">
+<table class="table table-hover table-bordered">
   <tr>
     <th>BOL#</th>
     <th>Expense id</th>
@@ -33,4 +36,5 @@
 
 </table>
 
+</div>
 @endsection

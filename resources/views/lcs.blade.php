@@ -2,7 +2,10 @@
 
 @section('content')
 
-<table class="DBinfo">
+<div class="container"> <!-- bootsreap container -->
+
+
+<table class="table table-hover table-bordered">
   <tr>
     <th>LC#</th>
     <th>Date Issued</th>
@@ -37,19 +40,8 @@
       <td>{{$LC->foreign_amount * $LC->exchange_rate}}</td>
       <td>{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
 
-      <td><a href="/lcs/{{$LC->lc_num}}"> VIEW INFO</a></td>
+      <td><a href="/lcs/{{$LC->lc_num}}" class="btn btn-primary"> VIEW INFO</a></td>
 
-
-<!--      <td>{{$LC->applicant}}</td>
-      <td>{{$LC->beneficiary}}</td>
-      <td>{{$LC->port_depart}}</td>
-      <td>{{$LC->port_arrive}}</td> -->
-<!--      <td>{{$LC->currency_code}}</td>
-      <td>{{$LC->exchange_rate}}</td> -->
-<!--      <td>{{$LC->foreign_expense}}</td>
-      <td>{{$LC->domestic_expense}}</td> -->
-<!--      <td>{{$LC->created_at}}</td>
-      <td>{{$LC->updated_at}}</td> -->
     </tr>
   @endforeach
 
@@ -57,4 +49,5 @@
 
 </table>
 
+</div>
 @endsection

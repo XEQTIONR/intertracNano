@@ -103,7 +103,7 @@
       @endforeach
     </table>
     <a href="#" class="btn btn-primary">Edit</a>
-    <a href="#" class="btn btn-primary">Delete</a>
+    <a href="#" class="btn btn-danger">Delete</a>
 
   </div>
 

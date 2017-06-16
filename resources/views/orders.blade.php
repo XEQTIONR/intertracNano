@@ -6,8 +6,10 @@
 
 @section('content')
 
+<div class="container"> <!-- bootsreap container -->
 
-<table class="DBinfo">
+
+<table class="table table-hover table-bordered">
   <tr>
     <th>Order#</th>
     <th>Customer ID</th>
@@ -31,7 +33,7 @@
       <td>{{$order->created_at}}</td>
       <td>{{$order->updated_at}}</td>
 
-      <td><a href = "/orders/{{$order->Order_num}}" >View Contents</a></td>
+      <td><a class="btn btn-primary" href = "/orders/{{$order->Order_num}}" >View Contents</a></td>
 
     </tr>
   @endforeach
@@ -40,6 +42,6 @@
 
 </table>
 
-
+<div>
 
 @endsection

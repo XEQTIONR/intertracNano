@@ -2,7 +2,10 @@
 
 @section('content')
 
-<table class="DBinfo">
+<div class="container"> <!-- bootsreap container -->
+
+
+<table class="table table-hover table-bordered">
   <tr>
     <th>Invoice#</th>
     <th>Order#</th>
@@ -27,4 +30,5 @@
 
 </table>
 
+</div>
 @endsection

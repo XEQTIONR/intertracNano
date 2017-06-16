@@ -2,7 +2,10 @@
 
 @section('content')
 
-<table class="DBinfo">
+<div class="container"> <!-- bootsreap container -->
+
+
+<table class="table table-hover table-bordered">
   <tr>
     <th>customer#</th>
     <th>Customer Name</th>
@@ -23,11 +26,13 @@
     <td>{{$customer->notes}}</td>
     <td>{{$customer->created_at}}</td>
     <td>{{$customer->updated_at}}</td>
+    <td><a href="#" class="btn btn-primary">More Info</a></td>
   </tr>
   @endforeach
 
 
 
 </table>
+</div>
 
 @endsection
