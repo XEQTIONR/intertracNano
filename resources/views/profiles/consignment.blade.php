@@ -47,7 +47,7 @@
 
   {{-- view containers section--}}
 
-  <div id="accordion">
+<div id="accordion" class="container">
 
   <h3>Containers</h3>
   <div>
@@ -70,7 +70,7 @@
       @endforeach
 
       <a href="#" class="btn btn-primary">Add a container</a>
-      
+
   </div>
 
 
