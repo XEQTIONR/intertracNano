@@ -7,7 +7,8 @@
   $( function() {
     $( "#accordion" ).accordion({
       collapsible: true,
-      active: false
+      active: false,
+      heightStyle: "content"
     });
   });
 </script>
@@ -48,22 +49,31 @@
 
   <div id="accordion">
 
-  @foreach ($containers as $container)
-    <h3>{{$container->Container_num}}</h3>
-      <div>
-        @foreach ($contents as $content_one_container) {{--each container--}}
-          {{--@ means if not empty--}}
-          @if (@$content_one_container[0]->Container_num==$container->Container_num) {{-- if this container add BOL later --}}
-            @foreach($content_one_container as $listing) {{---each tyre qty price etc--}}
-              <span>{{$listing->tyre_id}}</span>
-              <span>{{$listing->qty}}</span>
-              <span>{{$listing->unit_price}}</span><br>
-            @endforeach
-          @endif
+  <h3>Containers</h3>
+  <div>
+      @foreach ($containers as $container)
+        <div class="panel panel-default">
+          <div class="panel-heading">Container# {{$container->Container_num}}</div>
+            <div class="panel-body">
+              @foreach ($contents as $content_one_container) {{--each container--}}
+                {{--@ means if not empty--}}
+                @if (@$content_one_container[0]->Container_num==$container->Container_num) {{-- if this container add BOL later --}}
+                  @foreach($content_one_container as $listing) {{---each tyre qty price etc--}}
+                    <span>{{$listing->tyre_id}}</span>
+                    <span>{{$listing->qty}}</span>
+                    <span>{{$listing->unit_price}}</span><br>
+                  @endforeach
+                @endif
+              @endforeach
+            </div>
+          </div>
+      @endforeach
 
-        @endforeach
-      </div>
-  @endforeach
+      <a href="#" class="btn btn-primary">Add a container</a>
+      
+  </div>
+
+
 
   <h3>Expenses</h3>
   <div>
@@ -73,10 +83,9 @@
       <span>{{$expense->expense_foreign}}</span>
       <span>{{$expense->expense_notes}}</span> <br>
     @endforeach
-
   </div>
 
-  </div>
+</div> <!--accordion-->
 
-  <button>Add a Container</button>
+
 @endsection
