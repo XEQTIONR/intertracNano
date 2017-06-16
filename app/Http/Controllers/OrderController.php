@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Order;
 use App\Order_content;
 use Illuminate\Http\Request;
@@ -146,9 +147,21 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         //
-        //echo 'Order show here';
-        return $order->orderContents()
-                    ->get();
+        $customer = Customer::find($order->customer_id);
+
+        $contents = $order->orderContents()
+                        ->get();
+
+        $payments = $order->payment()
+                          ->get();
+
+        //return compact('order','contents','customer');
+        return view('profiles.order', compact('order','contents','customer','payments'));
+
+
+
+        //return $order->orderContents()
+                    //->get();
     }
 
     /**
