@@ -26,7 +26,7 @@
     <td>{{$customer->notes}}</td>
     <td>{{$customer->created_at}}</td>
     <td>{{$customer->updated_at}}</td>
-    <td><a href="#" class="btn btn-primary">More Info</a></td>
+    <td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>
   </tr>
   @endforeach
 

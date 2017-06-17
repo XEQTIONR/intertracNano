@@ -155,13 +155,9 @@ class OrderController extends Controller
         $payments = $order->payment()
                           ->get();
 
-        //return compact('order','contents','customer');
         return view('profiles.order', compact('order','contents','customer','payments'));
 
 
-
-        //return $order->orderContents()
-                    //->get();
     }
 
     /**
