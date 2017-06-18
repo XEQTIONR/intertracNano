@@ -51,6 +51,11 @@ Route::resource('container_contents', 'ContainerContentController');
 Route::resource('order_contents', 'OrderContentController');
 
 
+Route::get('stock', function()
+{
+  $in_stock = App\Order::tyresRemaining();
+  return view('partials.currentstock', compact('in_stock'));
+});
 
 Route::get('layout2', function()
 {
