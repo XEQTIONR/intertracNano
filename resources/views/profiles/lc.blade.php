@@ -28,7 +28,7 @@
     <dd>{{$lc->date_expiry}}</dd>
 
     <dt>Invoice#</dt>
-    <dd>{{$lc->foreign_amount}}</dd>
+    <dd>{{$lc->invoice_no}}</dd>
 
     <dt></dt>
     <dd></dd>
