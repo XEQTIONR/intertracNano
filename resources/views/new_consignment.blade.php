@@ -30,10 +30,17 @@ $( function()
     </div>
   </div>
 
+
+
   <div class="form-group">
     <label for="inputLCnum" class="col-md-3 col-md-offset-2 control-label">LC#</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputLCnum" id="inputLCnum">
+      @if ($lc_num=="")
+        <input type="text" class="form-control" name="inputLCnum" id="inputLCnum">
+      @else
+        <input type="text" class="form-control" name="inputLCnum" id="inputLCnum" value="{{$lc_num}}" readonly>
+      @endif
+
     </div>
   </div>
 

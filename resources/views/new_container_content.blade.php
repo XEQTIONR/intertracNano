@@ -100,18 +100,42 @@
 
 @section('content')
 
-  <span>ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</span><br><br>
+<div class="container">
 
-  <div class="leftDiv">
-  <form method="post" action="/container_contents">
+<div class="row">
+<div class="col-md-6 col-md-push-3">
+  <span>ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</span><br><br>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6">
+  <form class="form-horizontal" method="post" action="/container_contents">
 
     {{ csrf_field() }}
 
-    Container#<input type="text" name="inputContainerNum"> <br>
+    <div class="form-group">
+      <label for="inputContainerNum" class="col-md-3 control-label">Container#</label>
+      <div class="col-md-3">
+        <input type="text" class="form-control" name="inputContainerNum" id="inputContainerNum">
+      </div>
+    </div>
+
     @if ($bol=="")
-      BOL#<input type="text" name="inputBOL"> <br>
+      <div class="form-group">
+        <label for="inputBOL" class="col-md-3 control-label">BOL#</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" name="inputBOL" id="inputBOL">
+        </div>
+      </div>
+
     @else
-      BOL#<input type="text" name="inputBOL" value="{{$bol}}" readonly> <br>
+      <div class="form-group">
+        <label for="inputBOL" class="col-md-3 control-label">BOL#</label>
+        <div class="col-md-3">
+          <input type="text" value="{{$bol}}" class="form-control" name="inputBOL" id="inputBOL" readonly>
+        </div>
+      </div>
     @endif
 
 
@@ -125,10 +149,12 @@
     Num items <input type="text"  name="numItems" id="numItems" readonly>
 
   </form>
-  </div>
+</div><!--col-->
 
-  <div class="rightDiv">
-    <table class="DBinfo">
+
+  <div class="col-md-6">
+    <table class="table table-hover">
+    <thead>
       <tr>
         <th>tyre_id</th>
         <th>Tyre Brand</th>
@@ -137,8 +163,9 @@
         <th>Created</th>
         <th>Updated</th>
       </tr>
+    </thead>
 
-
+    <tbody>
       @foreach ($tyres as $tyre)
         <tr>
         <td>{{$tyre->tyre_id}}</td>
@@ -149,10 +176,11 @@
         <td>{{$tyre->updated_at}}</td>
       </tr>
       @endforeach
-
+    </tbody>
 
 
     </table>
-  </div>
-
+  </div><!--col-->
+</div><!--row-->
+</div> <!--container-->
 @endsection
