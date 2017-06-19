@@ -165,7 +165,8 @@ class OrderController extends Controller
       //
      //  $customer = Customer::find($order->customer_id);
       $order = Order::find($order_num);
-      return $order;
+
+      return compact('order');
     }
 
     /**

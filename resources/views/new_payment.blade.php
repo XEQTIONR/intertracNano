@@ -14,32 +14,41 @@
       $.getJSON(url, function(data, status){
         $("#orderDetails").html("");
 
-        $("#orderDetails").append(status);
-        $("#orderDetails").append("<br>");
+        if(data.order == null)
+        {
+          $("#orderDetails").html("NOT FOUND");
+        }
+        else
+        {
 
-        $("#orderDetails").append(data.Order_num);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(status);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.customer_id);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.Order_num);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.discount_percent);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.customer_id);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.discount_amount);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.discount_percent);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.created_at);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.discount_amount);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.updated_at);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.created_at);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.tax_percentage);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.updated_at);
+          $("#orderDetails").append("<br>");
 
-        $("#orderDetails").append(data.tax_amount);
-        $("#orderDetails").append("<br>");
+          $("#orderDetails").append(data.order.tax_percentage);
+          $("#orderDetails").append("<br>");
+
+          $("#orderDetails").append(data.order.tax_amount);
+          $("#orderDetails").append("<br>");
+
+        }
         //alert(data.Order_num);
       });
     });
