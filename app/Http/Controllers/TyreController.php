@@ -49,7 +49,8 @@ class TyreController extends Controller
 
         $tyre->save();
 
-        return redirect('/tyres');
+
+        return redirect('/tyres/'.$tyre->tyre_id);
 
 
     }
@@ -63,6 +64,7 @@ class TyreController extends Controller
     public function show(Tyre $tyre)
     {
         //
+        return view('profiles.tyre', compact('tyre'));
     }
 
     /**
