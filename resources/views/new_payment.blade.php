@@ -17,9 +17,6 @@
         $("#orderDetails").append(status);
         $("#orderDetails").append("<br>");
 
-        if(data=="")
-        alert("NO DATA");
-
         $("#orderDetails").append(data.Order_num);
         $("#orderDetails").append("<br>");
 
