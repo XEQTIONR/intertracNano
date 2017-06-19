@@ -23,7 +23,7 @@ $( function()
   <div class="row">
   <div class="col-md-10 col-md-offset-1">
 
-<form class="form-horizontal" method="post" action="/lcs" style="border: 1px solid black;">
+<form class="form-horizontal" method="post" action="/lcs">
 
   {{ csrf_field() }}
 
@@ -124,9 +124,13 @@ $( function()
 
   <button class="btn btn-warning" type="button" onclick="addItem()">Add New Item</button>
   <button class="btn btn-success" type="submit" value="submit">Submit</button>
-  <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
+  <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button> <br><br><br>
 
-  <div id="itemList" style="border: 2px dashed black;"></div> <br>
+
+
+  <div id="itemList" class="well">
+    <span><b>Enter Performa Invoice</b></span><br>
+  </div> <br>
 
   <div class="form-group">
     <label for="numItems" class="col-md-3 col-md-offset-2 control-label">Num items</label>

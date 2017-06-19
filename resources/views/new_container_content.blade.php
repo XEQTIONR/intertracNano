@@ -115,24 +115,24 @@
     {{ csrf_field() }}
 
     <div class="form-group">
-      <label for="inputContainerNum" class="col-md-3 control-label">Container#</label>
-      <div class="col-md-3">
+      <label for="inputContainerNum" class="col-md-4 control-label">Container#</label>
+      <div class="col-md-4">
         <input type="text" class="form-control" name="inputContainerNum" id="inputContainerNum">
       </div>
     </div>
 
     @if ($bol=="")
       <div class="form-group">
-        <label for="inputBOL" class="col-md-3 control-label">BOL#</label>
-        <div class="col-md-3">
+        <label for="inputBOL" class="col-md-4 control-label">BOL#</label>
+        <div class="col-md-4">
           <input type="text" class="form-control" name="inputBOL" id="inputBOL">
         </div>
       </div>
 
     @else
       <div class="form-group">
-        <label for="inputBOL" class="col-md-3 control-label">BOL#</label>
-        <div class="col-md-3">
+        <label for="inputBOL" class="col-md-4 control-label">BOL#</label>
+        <div class="col-md-4">
           <input type="text" value="{{$bol}}" class="form-control" name="inputBOL" id="inputBOL" readonly>
         </div>
       </div>
