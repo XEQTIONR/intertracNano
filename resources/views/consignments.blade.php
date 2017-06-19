@@ -7,8 +7,9 @@
 
 @section('content')
 
-<a href="/consignment_containers">View Consignment Info</a>
-<table class="DBinfo">
+<div class="container">
+<table class="table table-hover">
+<thead>
   <tr>
     <th>BOL#</th>
     <th>Value$</th>
@@ -18,10 +19,11 @@
     <th>Created</th>
     <th>Updated</th>
   </tr>
+</thead>
 
-
+<tbody>
   @foreach ($consignments as $consignment)
-  <tr>
+  <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
     <td>{{$consignment->BOL}}</td>
     <td>{{$consignment->value}}</td>
     <td>{{$consignment->tax}}</td>
@@ -29,12 +31,12 @@
     <td>{{$consignment->lc}}</td>
     <td>{{$consignment->created_at}}</td>
     <td>{{$consignment->updated_at}}</td>
-    <td><a href="/consignments/{{$consignment->BOL}}" >View Info</a></td>
+    <!--<td><a href="/consignments/{{$consignment->BOL}}" >View Info</a></td>-->
   </tr>
   @endforeach
-
+</tbody>
 
 
 </table>
-
+</div>
 @endsection
