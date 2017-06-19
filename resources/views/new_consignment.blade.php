@@ -16,18 +16,57 @@ $( function()
 
 @section('content')
 
-<form method="post" action="/consignments">
+<div class="container">
 
+
+<form method="post" action="/consignments">
+<div class="row">
   {{ csrf_field() }}
 
-  Bill of Lading# <input type="text" name="inputBOL"> <br>
-  LC#<input type="text" name="inputLCnum" value="{{$lc_num}}"> <br>
-  Value$ <input type="text" name="inputValue"> <br>
-  Tax <input type="text" name="inputTax"> <br>
-  Land Date <input type="text" class="pickdate" name="inputLandDate"> <br>
+  <div class="form-group">
+    <label for="inputBOL" class="col-md-3 col-md-offset-2 control-label">BOL#</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="inputBOL" id="inputBOL">
+    </div>
+  </div>
 
-  <button type="submit" value="submit">Submit</button>
+  <div class="form-group">
+    <label for="inputLCnum" class="col-md-3 col-md-offset-2 control-label">LC#</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="inputLCnum" id="inputLCnum">
+    </div>
+  </div>
 
+  <div class="form-group">
+    <label for="inputValue" class="col-md-3 col-md-offset-2 control-label">Value($)</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="inputValue" id="inputValue">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputTax" class="col-md-3 col-md-offset-2 control-label">Tax Paid</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="inputTax" id="inputTax">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputLandDate" class="col-md-3 col-md-offset-2 control-label">Land Date</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control pickdate" name="inputLandDate" id="inputLandDate">
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">
+    <button type="submit" value="submit">Submit</button>
+  </div>
+</div>
 </form>
+
+
+</div>
 
 @endsection
