@@ -1,5 +1,55 @@
 @extends('layout.mainlayout')
 
+@section('scripts')
+
+<script>
+  $(document).ready(function(){
+    $("#inputOrderNum").change(function(){
+      //alert($("#inputOrderNum").val());
+      var base = "/orders/json/";
+      var number = $("#inputOrderNum").val();
+      var url = base.concat(number);
+
+      //alert(url);
+      $.getJSON(url, function(data, status){
+        $("#orderDetails").html("");
+
+        $("#orderDetails").append(status);
+        $("#orderDetails").append("<br>");
+
+        if(data=="")
+        alert("NO DATA");
+
+        $("#orderDetails").append(data.Order_num);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.customer_id);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.discount_percent);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.discount_amount);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.created_at);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.updated_at);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.tax_percentage);
+        $("#orderDetails").append("<br>");
+
+        $("#orderDetails").append(data.tax_amount);
+        $("#orderDetails").append("<br>");
+        //alert(data.Order_num);
+      });
+    });
+  });
+</script>
+@endsection
+
 
 @section('content')
 

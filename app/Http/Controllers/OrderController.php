@@ -160,6 +160,14 @@ class OrderController extends Controller
 
     }
 
+    public function showJSON($order_num)
+    {
+      //
+     //  $customer = Customer::find($order->customer_id);
+      $order = Order::find($order_num);
+      return $order;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

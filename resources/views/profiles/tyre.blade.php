@@ -27,5 +27,11 @@
       </dl>
     </div>
   </div>
+
+  <div class="row">
+  <div class="col-md-1 col-md-push-3">
+    <button type="button">Edit</button>
+  </div>
+</div>
 </div>
 @endsection

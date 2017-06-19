@@ -40,7 +40,13 @@ Route::resource('consignment_containers','ConsignmentContainerController');
 
 Route::resource('performa_invoices','PerformaInvoiceController');
 
+
+//raw json order info
+Route::get('/orders/json/{order_num}', 'OrderController@showJSON');
+
 Route::resource('orders','OrderController');
+
+
 
 Route::resource('payments','PaymentController');
 
