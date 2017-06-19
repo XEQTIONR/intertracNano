@@ -32,8 +32,16 @@ class ContainerContentController extends Controller
     public function create()
     {
         //
+        $bol="";
         $tyres = Tyre::all();
-        return view('new_container_content', compact('tyres'));
+        return view('new_container_content', compact('tyres','bol'));
+    }
+
+    public function createGivenBOL($bol)
+    {
+      $tyres = Tyre::all();
+      return view('new_container_content', compact('tyres','bol'));
+
     }
 
     /**
@@ -96,7 +104,7 @@ class ContainerContentController extends Controller
           $container->containerContents()->saveMany($container_content_records);
 
           DB::commit();
-          $base = "/container_contents/";
+          $base = "/consignments/";
           $url = $base . $request->inputBOL;
           //dd($url);
           return redirect($url);

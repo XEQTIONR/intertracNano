@@ -69,7 +69,7 @@
           </div>
       @endforeach
 
-      <a href="#" class="btn btn-primary">Add a container</a>
+      <a href="/container_contents/create/{{$consignment->BOL}}" class="btn btn-primary">Add a container</a>
 
   </div>
 

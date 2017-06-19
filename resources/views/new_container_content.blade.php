@@ -108,7 +108,12 @@
     {{ csrf_field() }}
 
     Container#<input type="text" name="inputContainerNum"> <br>
-    BOL#<input type="text" name="inputBOL"> <br>
+    @if ($bol=="")
+      BOL#<input type="text" name="inputBOL"> <br>
+    @else
+      BOL#<input type="text" name="inputBOL" value="{{$bol}}" readonly> <br>
+    @endif
+
 
     <button type="button" onclick="addItem()">Add New Item</button>
     <button type="submit" value="submit">Submit</button>

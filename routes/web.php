@@ -46,7 +46,13 @@ Route::resource('payments','PaymentController');
 
 Route::resource('hscodes','HscodeController');
 
+
+
+Route::get('/container_contents/create/{bol}', 'ContainerContentController@createGivenBOL');
+
 Route::resource('container_contents', 'ContainerContentController');
+
+
 
 Route::resource('order_contents', 'OrderContentController');
 

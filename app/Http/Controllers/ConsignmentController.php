@@ -83,7 +83,7 @@ class ConsignmentController extends Controller
         $consignment->save();
 
         //REDIRECT
-        return redirect('/consignments');
+        return redirect('/consignments/'.$consignment->BOL);
     }
 
     /**
