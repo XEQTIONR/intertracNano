@@ -142,11 +142,18 @@
     <button type="button" onclick="addItem()">Add New Item</button>
     <button type="submit" value="submit">Submit</button>
 
-    <div id="itemList" style="border: 2px dashed black;">
+    <div class="well" id="itemList">
 
     </div> <br>
 
-    Num items <input type="text"  name="numItems" id="numItems" readonly>
+    <div class="form-group">
+      <label for="numItems" class="col-md-4 control-label">Num items</label>
+      <div class="col-md-4">
+        <input type="text" value="0" class="form-control" name="numItems" id="numItems" readonly>
+      </div>
+    </div>
+
+    
 
   </form>
 </div><!--col-->
