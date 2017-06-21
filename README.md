@@ -6,6 +6,9 @@ Some more bootstrap.
 Consignment profile page.
 
 
+<span>June 21, 2017</span>
+Implemented editing of basic customer info in customer profile page. Edit function in CustomerController is not needed, as we display the form right in the profile page.
+
 <span>June 12, 2017</span>
 Beginning integration of Twitter Bootstap Framework for front-end.
 

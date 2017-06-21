@@ -104,6 +104,16 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         //
+
+        $customer->name = $request->inputCustomerName;
+        $customer->address = $request->inputAddress;
+        $customer->phone = $request->inputPhone;
+        $customer->notes = $request->inputNotes;
+
+        $customer->save();
+
+
+        return redirect ("/customers/".$customer->id);
     }
 
     /**

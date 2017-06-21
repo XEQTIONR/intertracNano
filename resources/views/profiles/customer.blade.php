@@ -7,12 +7,14 @@
 
     $('.form-control').hide();
     $('#cancelButton').hide();
+    $('#submitButton').hide();
 
     $('#editButton').click(function(){
       $(".tyre-info").hide();
       $('#editButton').hide();
       $('#cancelButton').show();
       $(".form-control").show();
+      $('#submitButton').show();
       $('.nano-hide').hide();
 
     });
@@ -22,6 +24,7 @@
       $(".form-control").hide();
       $('#editButton').show();
       $('#cancelButton').hide();
+      $('#submitButton').hide();
       $('.nano-hide').show();
 
     });
@@ -47,36 +50,40 @@
 <div class="row">
 <div class="col-md-6 col-md-push-3">
 
-<form method="post" action="/customer">
+<form method="post" action="/customers/{{$customer->id}}">
+
+  {{ csrf_field() }}
+  {{ method_field('PUT') }} <!--This replaces the form method to PUT (from POST in this case)-->
+
   <dl class="dl-horizontal">
-    <dt>Customer ID </dt>
+    <dt class="nano-hide">Customer ID </dt>
     <dd>
       <span class="tyre-info">{{$customer->id}}</span>
-      <input type="text" class="form-control" name="inputCustomerId" id="inputCustomerId">
+      <input type="hidden" value="{{$customer->id}}" name="inputCustomerId">
     </dd>
 
     <dt>Customer/Party Name</dt>
     <dd>
       <span class="tyre-info">{{$customer->name}}</span>
-      <input type="text" class="form-control" name="inputCustomerName" id="inputCustomerName">
+      <input type="text" value="{{$customer->name}}" class="form-control" name="inputCustomerName" id="inputCustomerName">
     </dd>
 
     <dt>Address</dt>
     <dd>
       <span class="tyre-info">{{$customer->address}}</span>
-      <input type="text" class="form-control" name="inputAddress" id="inputAddress">
+      <input type="text" value="{{$customer->address}}" class="form-control" name="inputAddress" id="inputAddress">
     </dd>
 
     <dt>Phone #</dt>
     <dd>
       <span class="tyre-info">{{$customer->phone}}</span>
-      <input type="text" class="form-control" name="inputPhone " id="inputPhone">
+      <input type="text" value="{{$customer->phone}}" class="form-control" name="inputPhone" id="inputPhone">
     </dd>
 
     <dt>Notes</dt>
     <dd>
       <span class="tyre-info">{{$customer->notes}}</span>
-      <input type="text" class="form-control" name="inputNotes" id="inputNotes">
+      <input type="text" value="{{$customer->notes}}" class="form-control" name="inputNotes" id="inputNotes">
     </dd>
 
 
@@ -94,13 +101,18 @@
 </div> <!--col-->
 </div> <!--row-->
 
+
 <div class="row">
-<div class="col-md-1 col-md-push-3">
+<div class="col-md-1 col-md-offset-3">
   <a href="#" id="editButton" class="btn btn-default" role="button">Edit Info</a>
 </div>
 
-<div class="col-md-1 col-md-push-3">
-  <a href="#" id="cancelButton" class="btn btn-default" role="button">Cancel</a>
+<div class="col-md-1 col-md-offset-2">
+  <a href="#" id="cancelButton" class="btn btn-warning" role="button">Cancel</a>
+</div>
+
+<div class="col-md-1">
+  <button id="submitButton" class="btn btn-primary" value="submit" type="submit">Submit Changes</button>
 </div>
 </form>
 </div>
