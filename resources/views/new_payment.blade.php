@@ -16,7 +16,7 @@
 
         if(data.order == null)
         {
-          $("#orderDetails").html("NOT FOUND");
+          $("#orderDetails").html("<h4>NOT FOUND<small>Invalid Order</small></h4>");
         }
         else
         {

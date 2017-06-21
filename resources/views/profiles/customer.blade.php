@@ -3,8 +3,37 @@
 @section('scripts')
 
 <script>
+  $(document).ready(function(){
+
+    $('.form-control').hide();
+    $('#cancelButton').hide();
+
+    $('#editButton').click(function(){
+      $(".tyre-info").hide();
+      $('#editButton').hide();
+      $('#cancelButton').show();
+      $(".form-control").show();
+      $('.nano-hide').hide();
+
+    });
+
+    $('#cancelButton').click(function(){
+      $(".tyre-info").show();
+      $(".form-control").hide();
+      $('#editButton').show();
+      $('#cancelButton').hide();
+      $('.nano-hide').show();
+
+    });
+
+  });
+
+
+</script>
+
+<script>
   $( function() {
-    $( "#accordion" ).accordion({
+    $("#accordion").accordion({
       collapsible: true,
       active: false
     });
@@ -17,30 +46,64 @@
 <div class="container">
 <div class="row">
 <div class="col-md-6 col-md-push-3">
+
+<form method="post" action="/customer">
   <dl class="dl-horizontal">
-    <dt>Customer ID</dt>
-    <dd>{{$customer->id}}</dd>
+    <dt>Customer ID </dt>
+    <dd>
+      <span class="tyre-info">{{$customer->id}}</span>
+      <input type="text" class="form-control" name="inputCustomerId" id="inputCustomerId">
+    </dd>
 
     <dt>Customer/Party Name</dt>
-    <dd>{{$customer->name}}</dd>
+    <dd>
+      <span class="tyre-info">{{$customer->name}}</span>
+      <input type="text" class="form-control" name="inputCustomerName" id="inputCustomerName">
+    </dd>
 
     <dt>Address</dt>
-    <dd>{{$customer->address}}</dd>
+    <dd>
+      <span class="tyre-info">{{$customer->address}}</span>
+      <input type="text" class="form-control" name="inputAddress" id="inputAddress">
+    </dd>
 
     <dt>Phone #</dt>
-    <dd>{{$customer->phone}}</dd>
+    <dd>
+      <span class="tyre-info">{{$customer->phone}}</span>
+      <input type="text" class="form-control" name="inputPhone " id="inputPhone">
+    </dd>
 
     <dt>Notes</dt>
-    <dd>{{$customer->notes}}</dd>
+    <dd>
+      <span class="tyre-info">{{$customer->notes}}</span>
+      <input type="text" class="form-control" name="inputNotes" id="inputNotes">
+    </dd>
 
-    <dt>created_at</dt>
-    <dd>{{$customer->created_at}}</dd>
 
-    <dt>updated_at</dt>
-    <dd>{{$customer->updated_at}}</dd>
+    <dt class="nano-hide">created_at</dt>
+    <dd>
+      <span class="tyre-info">{{$customer->created_at}}</span>
+    </dd>
+
+    <dt class="nano-hide">updated_at</dt>
+    <dd>
+      <span class="tyre-info">{{$customer->updated_at}}</span>
+    </dd>
   </dl>
+
 </div> <!--col-->
 </div> <!--row-->
+
+<div class="row">
+<div class="col-md-1 col-md-push-3">
+  <a href="#" id="editButton" class="btn btn-default" role="button">Edit Info</a>
+</div>
+
+<div class="col-md-1 col-md-push-3">
+  <a href="#" id="cancelButton" class="btn btn-default" role="button">Cancel</a>
+</div>
+</form>
+</div>
 </div> <!--container-->
 
 
