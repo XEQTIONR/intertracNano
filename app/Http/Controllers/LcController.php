@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tyre;
 use App\Lc;
 use App\Performa_invoice;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class LcController extends Controller
      */
     public function create()
     {
-        return view('new_lc');
+        $tyres = Tyre::all();
+        return view('new_lc', compact('tyres'));
     }
 
     /**

@@ -1,6 +1,11 @@
 @extends('layout.mainlayout')
 
 @section('scripts')
+<style>
+  .input{
+    width : 33%;
+  }
+</style>
 
 <script>
 $( function()
@@ -128,20 +133,48 @@ $( function()
 
 
 
-  <div id="itemList" class="well">
-    <span><b>Enter Performa Invoice</b></span><br>
-  </div> <br>
-
-  <div class="form-group">
-    <label for="numItems" class="col-md-3 col-md-offset-2 control-label">Num items</label>
-    <div class="col-md-3">
-      <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
-    </div>
+  <div id="itemList" class="well col-md-6">
+    <h4>Enter Performa Invoice</h4><br>
   </div>
+
+  <div class="col-md-6">
+    <h4>Tyre Catalog</h4> <br>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>tyre_id</th>
+        <th>Tyre Brand</th>
+        <th>Tyre Size</th>
+        <th>Tyre Pattern</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      @foreach ($tyres as $tyre)
+      <tr>
+        <td>{{$tyre->tyre_id}}</td>
+        <td>{{$tyre->brand}}</td>
+        <td>{{$tyre->size}}</td>
+        <td>{{$tyre->pattern}}</td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </div>
+
+
 
 
 </form>
 </div>
 </div>
+
+<div class="form-group row">
+  <label for="numItems" class="col-md-2 col-md-offset-1 control-label">Num items</label>
+  <div class="col-md-1">
+    <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
+  </div>
+</div>
+
 </div>
 @endsection

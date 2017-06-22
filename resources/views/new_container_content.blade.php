@@ -13,6 +13,10 @@
     margin : auto;
   }
 
+  .input{
+    width : 20%;
+  }
+
 </style>
   <script>
   // javascript included in layout file.
@@ -109,7 +113,7 @@
 </div>
 
 <div class="row">
-<div class="col-md-6">
+<div class="col-md-8">
   <form class="form-horizontal" method="post" action="/container_contents">
 
     {{ csrf_field() }}
@@ -148,18 +152,18 @@
 
     <div class="form-group">
       <label for="numItems" class="col-md-4 control-label">Num items</label>
-      <div class="col-md-4">
+      <div class="col-md-1">
         <input type="text" value="0" class="form-control" name="numItems" id="numItems" readonly>
       </div>
     </div>
 
-    
+
 
   </form>
 </div><!--col-->
 
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <table class="table table-hover">
     <thead>
       <tr>
@@ -167,8 +171,6 @@
         <th>Tyre Brand</th>
         <th>Tyre Size</th>
         <th>Tyre Pattern</th>
-        <th>Created</th>
-        <th>Updated</th>
       </tr>
     </thead>
 
@@ -179,8 +181,6 @@
         <td>{{$tyre->brand}}</td>
         <td>{{$tyre->size}}</td>
         <td>{{$tyre->pattern}}</td>
-        <td>{{$tyre->created_at}}</td>
-        <td>{{$tyre->updated_at}}</td>
       </tr>
       @endforeach
     </tbody>
