@@ -75,6 +75,7 @@ class ConsignmentController extends Controller
         $consignment->BOL = $request->inputBOL;
         $consignment->lc = $request->inputLCnum;
         $consignment->value = $request->inputValue;
+        $consignment->exchange_rate = $request->inputExchangeRate;
         $consignment->tax = $request->inputTax;
         $consignment->land_date = $request->inputLandDate;
 

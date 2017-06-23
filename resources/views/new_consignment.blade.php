@@ -52,6 +52,13 @@ $( function()
   </div>
 
   <div class="form-group">
+    <label for="inputExchangeRate" class="col-md-3 col-md-offset-2 control-label">Exchange Rate</label>
+    <div class="col-md-3">
+      <input type="text" class="form-control" name="inputExchangeRate" id="inputExchangeRate">
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="inputTax" class="col-md-3 col-md-offset-2 control-label">Tax Paid</label>
     <div class="col-md-3">
       <input type="text" class="form-control" name="inputTax" id="inputTax">

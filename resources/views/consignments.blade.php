@@ -12,7 +12,9 @@
 <thead>
   <tr>
     <th>BOL#</th>
-    <th>Value$</th>
+    <th>Exchange Rate</th>
+    <th>Value(Foreign)</th>
+    <th>Value(Local)</th>
     <th>Tax</th>
     <th>Land Date</th>
     <th>LC#</th>
@@ -25,7 +27,9 @@
   @foreach ($consignments as $consignment)
   <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
     <td>{{$consignment->BOL}}</td>
+    <td>{{$consignment->exchange_rate}}</td>
     <td>{{$consignment->value}}</td>
+    <td>{{$consignment->value * $consignment->exchange_rate}}</td>
     <td>{{$consignment->tax}}</td>
     <td>{{$consignment->land_date}}</td>
     <td>{{$consignment->lc}}</td>

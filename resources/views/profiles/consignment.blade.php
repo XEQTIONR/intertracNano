@@ -31,13 +31,13 @@
     <dd>{{$consignment->land_date}}</dd>
 
     <dt>Exchange_rate</dt>
-    <dd>{{60}}</dd> {{--Change 60 to exchange_rate--}}
+    <dd>{{$consignment->exchange_rate}}</dd> {{--Change 60 to exchange_rate--}}
 
     <dt>Total Value (Foreign)</dt>
     <dd>{{$consignment->value}}</dd>
 
     <dt>Total Value (Local)</dt>
-    <dd>{{$consignment->value * 60}}</dd> {{--change 60 to excahnge rate--}}
+    <dd>{{$consignment->value * $consignment->exchange_rate}}</dd> {{--change 60 to excahnge rate--}}
 
     <dt>Total Tax Charged (TK)</dt>
     <dd>{{$consignment->tax}}</dd>

@@ -11,6 +11,7 @@
     <th>Date Issued</th>
     <th>Date Expiry</th>
     <th>Invoice#</th>
+    <th>Exchange Rate</th>
     <th>LC Value(Foreign)</th>
     <th>LC Value(Domestic)</th>
     <th>Expenses Total(Local)</th>
@@ -36,6 +37,7 @@
       <td>{{$LC->date_issued}}</td>
       <td>{{$LC->date_expiry}}</td>
       <td>{{$LC->invoice_no}}</td>
+      <td>{{$LC->exchange_rate}}</td>
       <td>{{$LC->foreign_amount}}</td>
       <td>{{$LC->foreign_amount * $LC->exchange_rate}}</td>
       <td>{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
