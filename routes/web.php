@@ -83,3 +83,7 @@ Route::get('title', function()
 });
 
 //Route::get('/', 'WelcomeController@show');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
