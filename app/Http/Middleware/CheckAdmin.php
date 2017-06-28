@@ -15,7 +15,7 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->name == 'Ovi')
+        if($request->user()->admin) // the user is an admin
         {
           return $next($request);
         }
@@ -23,6 +23,6 @@ class CheckAdmin
         {
           return redirect("/");
         }
-        
+
     }
 }
