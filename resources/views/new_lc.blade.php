@@ -38,7 +38,7 @@ $( function()
   <div class="form-group">
     <label for="inputLCnum" class="col-md-3 col-md-offset-2 control-label">LC#</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputLCnum" id="inputLCnum">
+      <input type="text" class="form-control" name="InputLcNum" id="inputLCnum">
     </div>
   </div>
 
@@ -125,6 +125,16 @@ $( function()
       <input type="text" class="form-control" name="inputLocalExpense" id="inputLocalExpense">
     </div>
   </div>
+
+  @if ($errors->any())
+    <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{$error}}</li>
+      @endforeach
+    </ul>
+    </div>
+  @endif
 
 
   <button class="btn btn-warning" type="button" onclick="addItem()">Add New Item</button>

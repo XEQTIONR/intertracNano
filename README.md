@@ -1,5 +1,33 @@
 # intertracNano
 
+<span>June 29, 2017</span>
+Added basic laravel validation to LcController. The error messages use the name from the 'name' attribute of each for field.
+Error messages are displayed in the form if there are errors.
+
+
+<span>June 28, 2017</span>
+Added auth as middleware to the base Controllers
+Added admin middleware to add new user action.
+
+<span>June 27, 2017/<span>
+Created a new middleware <code>CheckAdmin</code> and attached to LcController
+<span>June 23, 2017<span>
+Starting to implement user authentication.
+Implemented login and register.
+
+<span>June 19, 2017</span>
+Displaying order informtion using ajax in 'payments/create' end-point
+
+<span>June 18, 2017</span>
+'/stock' end-point works - shows current stock
+
+
+
+<span>June 16, 2017</span>
+Order profile page.
+Bootstrapify most tables
+
+
 <span>June 15, 2017</span>
 Added  new create function (<code>createGivenLC</code>) in <code>ConsignmentController</code> which passes in the LC number and does the same things as <code>create</code> function</br>
 Some more bootstrap.

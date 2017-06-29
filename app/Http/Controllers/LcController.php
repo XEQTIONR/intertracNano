@@ -48,14 +48,20 @@ class LcController extends Controller
      */
     public function store(Request $request)
     {
+        //VALIDATE
+        $this->validate($request,[
+          'InputLcNum' => 'required',
+          'inputDateIssue' => 'required',
 
+          'inputApplicant' => 'required',
+        ]);
 
 
         //ALLOCATE
         $lc = new Lc;
 
         //INITIALIZE
-        $lc->lc_num = $request->inputLCnum; //LC#
+        $lc->lc_num = $request->InputLcNum; //LC#
         $lc->date_issued = $request->inputDateIssue;
         $lc->date_expiry = $request->inputDateExpiry;
         $lc->applicant = $request->inputApplicant;
