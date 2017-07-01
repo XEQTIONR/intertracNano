@@ -175,7 +175,7 @@ $( function()
 
 
 
-</form>
+
 </div>
 </div>
 
@@ -185,6 +185,9 @@ $( function()
     <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
   </div>
 </div>
+
+</form>
+
 
 </div>
 @endsection
