@@ -6,6 +6,7 @@ use App\Tyre;
 use App\Lc;
 use App\Performa_invoice;
 use Illuminate\Http\Request;
+use Validator;
 
 class LcController extends Controller
 {
@@ -49,40 +50,53 @@ class LcController extends Controller
     public function store(Request $request)
     {
         //VALIDATE
-        $this->validate($request,[
-          'InputLcNum' => 'required|numeric|digits:12',
-          'inputDateIssue' => 'required|date',
-          'inputDateExpiry' => 'required|date|after:inputDateIssue',
-          'inputApplicant' => 'required|string',
-          'inputBeneficiary' => 'required|string',
-          'inputPortDepart' => 'required|string',
-          'inputPortArrive' => 'required|string',
-          'inputInvoice' => 'required',
-          'inputCurrencyCode' => 'required|alpha|size:3',
-          'inputValue' => 'required|numeric|min:0.0000000001',
-          'inputForeignExpense' => 'required|numeric|min:0',
-          'inputLocalExpense' => 'required|numeric|min:0',
-          'inputExchangeRate' => 'required|numeric|min:0.0000000001',
+        $validator=Validator::make($request->all(),[
+          'LcNumber' => 'required|numeric|digits:12',
+          'DateIssued' => 'required|date',
+          'DateExpiry' => 'required|date|after:DateIssued',
+          'Applicant' => 'required|string',
+          'Beneficiary' => 'required|string',
+          'PortDepart' => 'required|string',
+          'PortArrive' => 'required|string',
+          'Invoice' => 'required',
+          'CurrencyCode' => 'required|alpha|size:3',
+          'Value' => 'required|numeric|min:0.0000000001',
+          'ForeignExpense' => 'required|numeric|min:0',
+          'LocalExpense' => 'required|numeric|min:0',
+          'ExchangeRate' => 'required|numeric|min:0.0000000001',
         ]);
+
+        if ($validator->fails())
+        {
+          # code...
+          return redirect('lcs/create')
+                  ->withErrors($validator)
+                  ->withInput();
+        }
+        else
+        {
+          # code...
+
 
 
         //ALLOCATE
         $lc = new Lc;
 
         //INITIALIZE
-        $lc->lc_num = $request->InputLcNum; //LC#
-        $lc->date_issued = $request->inputDateIssue;
-        $lc->date_expiry = $request->inputDateExpiry;
-        $lc->applicant = $request->inputApplicant;
-        $lc->beneficiary = $request->inputBeneficiary;
-        $lc->port_depart = $request->inputPortDepart;
-        $lc->port_arrive = $request->inputPortArrive;
-        $lc->invoice_no= $request->inputInvoice;
-        $lc->currency_code = $request->inputCurrencyCode;
-        $lc->foreign_amount = $request->inputValue;
-        $lc->foreign_expense = $request->inputForeignExpense;
-        $lc->domestic_expense = $request->inputLocalExpense;
-        $lc->exchange_rate = $request->inputExchangeRate;
+        $lc->lc_num = $request->LcNumber; //LC#
+        $lc->date_issued = $request->DateIssued;
+        $lc->date_expiry = $request->DateExpiry;
+        $lc->applicant = $request->Applicant;
+        $lc->beneficiary = $request->Beneficiary;
+        $lc->port_depart = $request->PortDepart;
+        $lc->port_arrive = $request->PortArrive;
+        $lc->invoice_no= $request->Invoice;
+        $lc->currency_code = $request->CurrencyCode;
+        $lc->foreign_amount = $request->Value;
+        $lc->foreign_expense = $request->ForeignExpense;
+        $lc->domestic_expense = $request->LocalExpense;
+        $lc->exchange_rate = $request->ExchangeRate;
+        $lc->notes = $request->Notes;
 
 
 
@@ -111,7 +125,7 @@ class LcController extends Controller
         return redirect("/lcs/".$lc->lc_num);
 
         //return $lc->lc_num;
-
+        }
     }
 
     /**

@@ -66,10 +66,13 @@
     <dt>Destination port</dt>
     <dd>{{$lc->port_arrive}}</dd>
 
+    <dt>Notes</dt>
+    <dd>{{$lc->notes}}</dd>
+
     <dt>created_at</dt>
     <dd>{{$lc->created_at}}</dd>
 
-    <dt>lupdated_at</dt>
+    <dt>updated_at</dt>
     <dd>{{$lc->updated_at}}</dd>
   </dl>
 </div> <!--col-->

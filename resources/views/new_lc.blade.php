@@ -44,93 +44,100 @@ $( function()
 
 
   <div class="form-group">
-    <label for="inputLCnum" class="col-md-3 col-md-offset-2 control-label">LC#</label>
+    <label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="InputLcNum" id="inputLCnum">
+      <input type="text" class="form-control" name="LcNumber" id="inputLCnum" value="{{old('LcNumber')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputDateIssue" class="col-md-3 col-md-offset-2 control-label">Date Issued</label>
+    <label for="DateIssued" class="col-md-3 col-md-offset-2 control-label">Date Issued</label>
     <div class="col-md-2">
-      <input type="text"  class="form-control pickdate" name="inputDateIssue" id="inputDateIssue">
+      <input type="text"  class="form-control pickdate" name="DateIssued" id="inputDateIssue" value="{{old('DateIssued')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputDateExpiry" class="col-md-3 col-md-offset-2 control-label">Date Expiry</label>
+    <label for="DateExpiry" class="col-md-3 col-md-offset-2 control-label">Date Expiry</label>
     <div class="col-md-2">
-      <input type="text" class="form-control pickdate" name="inputDateExpiry" id="inputDateExpiry">
+      <input type="text" class="form-control pickdate" name="DateExpiry" id="inputDateExpiry" value="{{old('DateExpiry')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputApplicant" class="col-md-3 col-md-offset-2 control-label">Applicant</label>
+    <label for="Applicant" class="col-md-3 col-md-offset-2 control-label">Applicant</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputApplicant" id="inputApplicant">
+      <input type="text" class="form-control" name="Applicant" id="inputApplicant" value="{{old('Applicant')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputBeneficiary" class="col-md-3 col-md-offset-2 control-label">Beneficiary</label>
+    <label for="Beneficiary" class="col-md-3 col-md-offset-2 control-label">Beneficiary</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputBeneficiary" id="inputBeneficiary">
+      <input type="text" class="form-control" name="Beneficiary" id="inputBeneficiary" value="{{old('Beneficiary')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputPortDepart" class="col-md-3 col-md-offset-2 control-label">Departing Port</label>
+    <label for="PortDepart" class="col-md-3 col-md-offset-2 control-label">Departing Port</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputPortDepart" id="inputPortDepart">
+      <input type="text" class="form-control" name="PortDepart" id="inputPortDepart" value="{{old('PortDepart')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputPortArrive" class="col-md-3 col-md-offset-2 control-label">Arrival Port</label>
+    <label for="PortArrive" class="col-md-3 col-md-offset-2 control-label">Arrival Port</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputPortArrive" id="inputPortArrive">
+      <input type="text" class="form-control" name="PortArrive" id="inputPortArrive" value="{{old('PortArrive')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputInvoice" class="col-md-3 col-md-offset-2 control-label">Invoice#</label>
+    <label for="Invoice" class="col-md-3 col-md-offset-2 control-label">Invoice#</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputInvoice" id="inputInvoice">
+      <input type="text" class="form-control" name="Invoice" id="inputInvoice" value="{{old('Invoice')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputCurrencyCode" class="col-md-3 col-md-offset-2 control-label">Foreign Currency Code</label>
+    <label for="CurrencyCode" class="col-md-3 col-md-offset-2 control-label">Foreign Currency Code</label>
     <div class="col-md-2">
-      <input type="text" class="form-control" name="inputCurrencyCode" id="inputCurrencyCode">
+      <input type="text" class="form-control" name="CurrencyCode" id="inputCurrencyCode" value="{{old('CurrencyCode')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputExchangeRate" class="col-md-3 col-md-offset-2 control-label">Exchange Rate </label>
+    <label for="ExchangeRate" class="col-md-3 col-md-offset-2 control-label">Exchange Rate</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputExchangeRate" id="inputExchangeRate">
+      <input type="text" class="form-control" name="ExchangeRate" id="inputExchangeRate" value="{{old('ExchangeRate')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputValue" class="col-md-3 col-md-offset-2 control-label">LC Value (Foreign Amount)</label>
+    <label for="Value" class="col-md-3 col-md-offset-2 control-label">LC Value (Foreign Amount)</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputValue" id="inputValue">
+      <input type="text" class="form-control" name="Value" id="inputValue" value="{{old('Value')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputForeignExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Foreign)</label>
+    <label for="ForeignExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Foreign)</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputForeignExpense" id="inputForeignExpense">
+      <input type="text" class="form-control" name="ForeignExpense" id="inputForeignExpense" value="{{old('ForeignExpense')}}">
     </div>
   </div>
 
   <div class="form-group">
-    <label for="inputLocalExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Local)</label>
+    <label for="LocalExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Local)</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="inputLocalExpense" id="inputLocalExpense">
+      <input type="text" class="form-control" name="LocalExpense" id="inputLocalExpense" value="{{old('LocalExpense')}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="Notes" class="col-md-3 col-md-offset-2 control-label">Notes</label>
+    <div class="col-md-3">
+      <textarea rows="5" class="form-control" name="Notes" id="inputNotes" >{{old('Notes')}}</textarea>
     </div>
   </div>
 
