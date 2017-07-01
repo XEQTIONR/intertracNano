@@ -32,7 +32,15 @@ $( function()
 
   {{ csrf_field() }}
 
-
+  @if ($errors->any())
+    <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+        <li>{{$error}}</li>
+      @endforeach
+    </ul>
+    </div>
+  @endif
 
 
   <div class="form-group">
@@ -126,15 +134,7 @@ $( function()
     </div>
   </div>
 
-  @if ($errors->any())
-    <div class="alert alert-danger">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{$error}}</li>
-      @endforeach
-    </ul>
-    </div>
-  @endif
+
 
 
   <button class="btn btn-warning" type="button" onclick="addItem()">Add New Item</button>

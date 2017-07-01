@@ -50,10 +50,19 @@ class LcController extends Controller
     {
         //VALIDATE
         $this->validate($request,[
-          'InputLcNum' => 'required',
-          'inputDateIssue' => 'required',
-
-          'inputApplicant' => 'required',
+          'InputLcNum' => 'required|numeric|digits:12',
+          'inputDateIssue' => 'required|date',
+          'inputDateExpiry' => 'required|date|after:inputDateIssue',
+          'inputApplicant' => 'required|string',
+          'inputBeneficiary' => 'required|string',
+          'inputPortDepart' => 'required|string',
+          'inputPortArrive' => 'required|string',
+          'inputInvoice' => 'required',
+          'inputCurrencyCode' => 'required|alpha|size:3',
+          'inputValue' => 'required|numeric|min:0.0000000001',
+          'inputForeignExpense' => 'required|numeric|min:0',
+          'inputLocalExpense' => 'required|numeric|min:0',
+          'inputExchangeRate' => 'required|numeric|min:0.0000000001',
         ]);
 
 
