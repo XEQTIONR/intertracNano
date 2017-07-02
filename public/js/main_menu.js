@@ -1,20 +1,34 @@
 $(document).ready(function(){
 
   $(".subMenu").hide();         //slideToggle changes this to show
-  $(".icons8-Bar-Chart, #reportLabel").click(function(){
-
+  $("#reportLabel").click(function(){
       $("#theMenu").slideToggle();
       $("#theMenu2").hide();
       $("#theMenu3").hide();
+
+      $("#reportMenuItem").addClass("active");
+      $("#infoMenuItem").removeClass("active");
+      $("#actionMenuItem").removeClass("active");
+
+
   });
-  $(".icons8-Visible, #infoLabel").click(function(){
+  $("#infoLabel").click(function(){
     $("#theMenu2").slideToggle();
     $("#theMenu").hide();
     $("#theMenu3").hide();
+
+    $("#infoMenuItem").addClass("active");
+    $("#reportMenuItem").removeClass("active");
+    $("#actionMenuItem").removeClass("active");
+
   });
-  $(".icons8-Add, #actionLabel").click(function(){
+  $("#actionLabel").click(function(){
     $("#theMenu3").slideToggle();
     $("#theMenu2").hide();
     $("#theMenu").hide();
+
+    $("#actionMenuItem").addClass("active");
+    $("#reportMenuItem").removeClass("active");
+    $("#infoMenuItem").removeClass("active");
   });
 });

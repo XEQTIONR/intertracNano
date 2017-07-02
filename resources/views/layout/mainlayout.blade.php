@@ -32,7 +32,7 @@
 </head>
 
 
-<body>
+<body style="padding-top: 100px;">
 
 <div class="flex-center position-ref full-height">
 <!--@if (Route::has('login'))
@@ -47,7 +47,7 @@
 @endif-->
 
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -79,7 +79,7 @@
 
                     @else
 
-                        <li class="dropdown">
+                        <li class="dropdown" >
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
@@ -88,9 +88,10 @@
 
                               @if(Auth::user()->admin)
                                 <li>
-                                    I AM AN ADMIN YAY
+                                    <span>Admin Actions</span>
                                 </li>
                                 <li><a href="{{ route('register') }}">Register</a></li>
+                                <hr>
                               @endif
                                 <li>
                                     <a href="{{ route('logout') }}"
@@ -110,12 +111,40 @@
             </div>
         </div>
     </nav>
+  @if(Auth::check())
+    <nav class="navbar navbar-default navbar-fixed-top" style="margin-top: 50px; z-index: 500;">
+      <div class="container">
+        <ul class="nav nav-tabs">
+          <li role="presentation" id="reportMenuItem" class="active">
+            <a id="reportLabel" href="#">
+              <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+              Generate Reports
+            </a>
+          </li>
+
+          <li role="presentation" id="infoMenuItem">
+            <a id="infoLabel" href="#">
+              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+              View Information
+            </a>
+          </li>
+
+          <li role="presentation" id="actionMenuItem">
+            <a id="actionLabel" href="#">
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+              Perform Actions
+            </a>
+          </li>
+        </ul>
+      </div> <!--container-->
+    </nav>
+  @endif
 
 </div>
 
 <div class="container-fluid">
 
-  <div class="row">
+  {{--<div class="row">
 
   <div class="col-md-2 col-md-push-5">
     <h1 class="main-title text-center">nanoDB</h1>
@@ -162,7 +191,7 @@
 
   </div> <!--col-->
 
-  </div> <!--row-->
+</div> <!--row-->--}}
 
 
   <!-- REPORTS -->

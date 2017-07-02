@@ -51,7 +51,7 @@ $(function() {
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
 
@@ -59,12 +59,14 @@ $(function() {
         {{ csrf_field() }}
 
         @if ($errors->any())
-          <div class="alert alert-danger">
-            <ul>
+          <div class="alert alert-danger" role="alert">
+
               @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
+
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                {{$error}}<br>
               @endforeach
-            </ul>
+
           </div>
         @endif
 
@@ -171,7 +173,7 @@ $(function() {
         <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
 
 
-        <div class="well col-md-6">
+        <div class="well col-md-5">
 
           <div id="itemList" class="row">
             <h4>Enter Performa Invoice</h4>
@@ -190,7 +192,7 @@ $(function() {
         </div> <!--well col-md-6-->
 
 
-        <div id=catalogContainer class="col-md-6">
+        <div id=catalogContainer class="col-md-6 col-md-offset-1 well">
           <div id="row">
             <h4>Tyre Catalog</h4>
           </div> <!--row-->
