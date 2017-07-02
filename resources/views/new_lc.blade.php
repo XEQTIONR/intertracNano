@@ -144,9 +144,10 @@ $( function()
 
 
 
-  <button class="btn btn-warning" type="button" onclick="addItem()">Add New Item</button>
-  <button class="btn btn-success" type="submit" value="submit">Submit</button>
-  <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button> <br><br><br>
+  <button class="btn btn-success" type="button" onclick="addItem()">Add New Item</button>
+  <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
+
+  <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
 
 
 
@@ -177,6 +178,7 @@ $( function()
       @endforeach
       </tbody>
     </table>
+    {{$tyres->links()}}
   </div>
 
 

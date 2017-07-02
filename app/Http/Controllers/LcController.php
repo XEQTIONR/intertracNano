@@ -37,7 +37,7 @@ class LcController extends Controller
      */
     public function create()
     {
-        $tyres = Tyre::all();
+        $tyres = Tyre::simplePaginate(5);
         return view('new_lc', compact('tyres'));
     }
 
@@ -66,23 +66,18 @@ class LcController extends Controller
           'ExchangeRate' => 'required|numeric|min:0.0000000001',
         ]);
 
-        if ($validator->fails())
-        {
-          # code...
-          return redirect('lcs/create')
-                  ->withErrors($validator)
-                  ->withInput();
-        }
-        else
-        {
-          # code...
-
-
-
-        //ALLOCATE
+      if ($validator->fails())
+      {
+        return redirect('lcs/create')
+                ->withErrors($validator)
+                ->withInput();
+      }
+      else
+      {
+        //ALLOCATE LC
         $lc = new Lc;
 
-        //INITIALIZE
+        //INITIALIZE LC
         $lc->lc_num = $request->LcNumber; //LC#
         $lc->date_issued = $request->DateIssued;
         $lc->date_expiry = $request->DateExpiry;
@@ -98,14 +93,13 @@ class LcController extends Controller
         $lc->exchange_rate = $request->ExchangeRate;
         $lc->notes = $request->Notes;
 
-
-
-        //STORE
+        //STORE LC
         $lc->save();
 
+        //ALLOCATE Performa_invoice
         $contents = array();
-        $index = 0;
 
+        //INITIALIZE Performa_invoice
         for ($i=0; $i<$request->numItems; $i++) // each tyre
         {
           $item = new Performa_invoice;
@@ -118,14 +112,12 @@ class LcController extends Controller
           array_push($contents, $item);
         }
 
+        //STORE Performa_invoice
         $lc->performaInvoice()->saveMany($contents);
 
-
-        //$var = 'LC0001';
+        //REDIRECT
         return redirect("/lcs/".$lc->lc_num);
-
-        //return $lc->lc_num;
-        }
+      } //endif
     }
 
     /**
