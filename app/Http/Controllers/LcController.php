@@ -26,7 +26,6 @@ class LcController extends Controller
         //
 
         $LCs = Lc::all();
-
         return view('lcs', compact('LCs'));
     }
 
@@ -35,10 +34,19 @@ class LcController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $tyres = Tyre::simplePaginate(5);
+      if ($request->ajax()) //the request is an ajax request
+      {
+        $tyres = Tyre::paginate(5);
+        return view('partials.tyres', compact('tyres'));
+
+      }
+      else
+      {
+        $tyres = Tyre::paginate(5); //non-ajax request
         return view('new_lc', compact('tyres'));
+      }
     }
 
     /**

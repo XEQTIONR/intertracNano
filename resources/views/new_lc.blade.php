@@ -15,6 +15,33 @@ $( function()
   });
 </script>
 
+<script type="text/javascript">
+
+$(function() {
+    $('body').on('click', '.pagination a', function(e) {
+        e.preventDefault();
+
+        $('#load a').css('color', '#dfecf6');
+        $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/spinner.gif" />');
+
+        var url = $(this).attr('href');
+        getArticles(url);
+        window.history.pushState("", "", url);
+    });
+
+    function getArticles(url) {
+        $.ajax({
+            url : url
+        }).done(function (data) {
+            $('#tyreCatalog').html(data);
+        }).fail(function () {
+            alert('Articles could not be loaded.');
+        });
+    }
+});
+
+</script>
+
 <script src="/js/addItem.js"></script>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -153,32 +180,13 @@ $( function()
 
   <div id="itemList" class="well col-md-6">
     <h4>Enter Performa Invoice</h4><br>
+
+
   </div>
 
-  <div class="col-md-6">
-    <h4>Tyre Catalog</h4> <br>
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th>tyre_id</th>
-        <th>Tyre Brand</th>
-        <th>Tyre Size</th>
-        <th>Tyre Pattern</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      @foreach ($tyres as $tyre)
-      <tr>
-        <td>{{$tyre->tyre_id}}</td>
-        <td>{{$tyre->brand}}</td>
-        <td>{{$tyre->size}}</td>
-        <td>{{$tyre->pattern}}</td>
-      </tr>
-      @endforeach
-      </tbody>
-    </table>
-    {{$tyres->links()}}
+  <div id="tyreCatalog" class="col-md-6">
+    {{--<h4>Tyre Catalog</h4> <br>--}}
+    @include('partials.tyres')
   </div>
 
 

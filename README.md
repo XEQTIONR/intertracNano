@@ -1,4 +1,12 @@
 # intertracNano
+<span>July 2, 2017</span>
+Paginator added to the tyres catalog in the 'new_lc' form.
+Paginator now uses ajax requests to only refresh the tyre catalog instead of the entire page.
+
+
+<span>July 1, 2017</span>
+Validation logic for new_lc form.
+We are now using Validators.
 
 <span>June 29, 2017</span>
 Added basic laravel validation to LcController. The error messages use the name from the 'name' attribute of each for field.
