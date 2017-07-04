@@ -115,7 +115,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" style="margin-top: 50px; z-index: 500;">
       <div class="container">
         <ul class="nav nav-tabs">
-          <li role="presentation" id="reportMenuItem" class="active">
+          <li role="presentation" id="reportMenuItem">
             <a id="reportLabel" href="#">
               <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
               Generate Reports

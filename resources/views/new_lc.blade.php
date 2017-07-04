@@ -5,6 +5,11 @@
   .input{
     width : 33%;
   }
+
+  label small{
+    color : #999;
+    font-weight: lighter;
+  }
 </style>
 
 <script>
@@ -70,94 +75,97 @@ $(function() {
           </div>
         @endif
 
+        <div class="panel panel-default" style="margin-top: 1.6em;">
+        <div class="panel-heading">1. LC Information</div>
+        <div class="panel-body">
         <div class="form-group">
-          <label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#</label>
+          <label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#  <small>F20</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="LcNumber" id="inputLCnum" value="{{old('LcNumber')}}">
+            <input type="text" class="form-control" name="LcNumber" id="inputLCnum" value="{{old('LcNumber')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="DateIssued" class="col-md-3 col-md-offset-2 control-label">Date Issued</label>
+          <label for="DateIssued" class="col-md-3 col-md-offset-2 control-label">Date Issued <small>F31C</small></label>
           <div class="col-md-2">
-            <input type="text"  class="form-control pickdate" name="DateIssued" id="inputDateIssue" value="{{old('DateIssued')}}">
+            <input type="text"  class="form-control pickdate" name="DateIssued" id="inputDateIssue" value="{{old('DateIssued')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="DateExpiry" class="col-md-3 col-md-offset-2 control-label">Date Expiry</label>
+          <label for="DateExpiry" class="col-md-3 col-md-offset-2 control-label">Date Expiry <small>F31D</small></label>
           <div class="col-md-2">
-            <input type="text" class="form-control pickdate" name="DateExpiry" id="inputDateExpiry" value="{{old('DateExpiry')}}">
+            <input type="text" class="form-control pickdate" name="DateExpiry" id="inputDateExpiry" value="{{old('DateExpiry')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="Applicant" class="col-md-3 col-md-offset-2 control-label">Applicant</label>
+          <label for="Applicant" class="col-md-3 col-md-offset-2 control-label">Applicant <small>F50</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="Applicant" id="inputApplicant" value="{{old('Applicant')}}">
+            <input type="text" class="form-control" name="Applicant" id="inputApplicant" value="{{old('Applicant')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="Beneficiary" class="col-md-3 col-md-offset-2 control-label">Beneficiary</label>
+          <label for="Beneficiary" class="col-md-3 col-md-offset-2 control-label">Beneficiary <small>F59</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="Beneficiary" id="inputBeneficiary" value="{{old('Beneficiary')}}">
+            <input type="text" class="form-control" name="Beneficiary" id="inputBeneficiary" value="{{old('Beneficiary')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="PortDepart" class="col-md-3 col-md-offset-2 control-label">Departing Port</label>
+          <label for="PortDepart" class="col-md-3 col-md-offset-2 control-label">Departing Port <small>F44E</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="PortDepart" id="inputPortDepart" value="{{old('PortDepart')}}">
+            <input type="text" class="form-control" name="PortDepart" id="inputPortDepart" value="{{old('PortDepart')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="PortArrive" class="col-md-3 col-md-offset-2 control-label">Arrival Port</label>
+          <label for="PortArrive" class="col-md-3 col-md-offset-2 control-label">Arrival Port <small>F44F</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="PortArrive" id="inputPortArrive" value="{{old('PortArrive')}}">
+            <input type="text" class="form-control" name="PortArrive" id="inputPortArrive" value="{{old('PortArrive')}}" required>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="Invoice" class="col-md-3 col-md-offset-2 control-label">Invoice#</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" name="Invoice" id="inputInvoice" value="{{old('Invoice')}}">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="CurrencyCode" class="col-md-3 col-md-offset-2 control-label">Foreign Currency Code</label>
+          <label for="CurrencyCode" class="col-md-3 col-md-offset-2 control-label">Foreign Currency Code <small>F32B</small></label>
           <div class="col-md-2">
-            <input type="text" class="form-control" name="CurrencyCode" id="inputCurrencyCode" value="{{old('CurrencyCode')}}">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="ExchangeRate" class="col-md-3 col-md-offset-2 control-label">Exchange Rate</label>
-          <div class="col-md-3">
-            <input type="text" class="form-control" name="ExchangeRate" id="inputExchangeRate" value="{{old('ExchangeRate')}}">
+            <input type="text" class="form-control" name="CurrencyCode" id="inputCurrencyCode" value="{{old('CurrencyCode')}}" required>
           </div>
         </div>
 
         <div class="form-group">
           <label for="Value" class="col-md-3 col-md-offset-2 control-label">LC Value (Foreign Amount)</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="Value" id="inputValue" value="{{old('Value')}}">
+            <input type="text" class="form-control" name="Value" id="inputValue" value="{{old('Value')}}" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="ExchangeRate" class="col-md-3 col-md-offset-2 control-label">Exchange Rate</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" name="ExchangeRate" id="inputExchangeRate" value="{{old('ExchangeRate')}}" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="Invoice" class="col-md-3 col-md-offset-2 control-label">Invoice#</label>
+          <div class="col-md-3">
+            <input type="text" class="form-control" name="Invoice" id="inputInvoice" value="{{old('Invoice')}}" required>
           </div>
         </div>
 
         <div class="form-group">
           <label for="ForeignExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Foreign)</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="ForeignExpense" id="inputForeignExpense" value="{{old('ForeignExpense')}}">
+            <input type="text" class="form-control" name="ForeignExpense" id="inputForeignExpense" value="{{old('ForeignExpense')}}" required>
           </div>
         </div>
 
         <div class="form-group">
           <label for="LocalExpense" class="col-md-3 col-md-offset-2 control-label">Expenses Paid (Local)</label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="LocalExpense" id="inputLocalExpense" value="{{old('LocalExpense')}}">
+            <input type="text" class="form-control" name="LocalExpense" id="inputLocalExpense" value="{{old('LocalExpense')}}" required>
           </div>
         </div>
 
@@ -168,12 +176,15 @@ $(function() {
           </div>
         </div>
 
-        <button class="btn btn-success" type="button" onclick="addItem()">Add New Item</button>
-        <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
-        <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
+      </div> <!--panel-body-->
+    </div> <!--panel-->
 
 
-        <div class="well col-md-5">
+
+        <div class="panel panel-default">
+        <div class="panel-heading"> 2. Enter Peforma Invoice Information (Optional)</div>
+        <div class="panel-body">
+        <div class="col-md-5">
 
           <div id="itemList" class="row">
             <h4>Enter Performa Invoice</h4>
@@ -186,25 +197,29 @@ $(function() {
               <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
             </div>
           </div>
+        </div> <!--well col-md-5-->
 
 
-
-        </div> <!--well col-md-6-->
-
-
-        <div id=catalogContainer class="col-md-6 col-md-offset-1 well">
-          <div id="row">
+        <div id=catalogContainer class="col-md-6 col-md-offset-1">
+          <div class="panel panel-success">
+          <div class="panel-heading">
             <h4>Tyre Catalog</h4>
-          </div> <!--row-->
+          </div> <!--panel-heading-->
 
-          <div id="row">
+          <div class="panel-body">
             <div id="tyreCatalog" class="col-md-12">
               @include('partials.tyres')
             </div>
-          </div> <!--row-->
-        </div> <!--catalogContainer-->
+          </div> <!--panel-body-->
+        </div> <!--panel-->
+      </div> <!--catalogContainer-->
 
 
+    </div> <!--panel-body-->
+  </div> <!--panel-->
+    <button class="btn btn-default" type="button" onclick="addItem()">Add New Item</button>
+    <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
+    <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
 
 
 
