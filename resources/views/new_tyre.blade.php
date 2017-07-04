@@ -39,7 +39,7 @@
 
     <div class="row">
       <div class="col-md-2 col-md-offset-5">
-        <button type="submit" value="submit">Submit</button>
+        <button class="btn btn-primary" type="submit" value="submit">Submit</button>
       </div>
     </div>
 

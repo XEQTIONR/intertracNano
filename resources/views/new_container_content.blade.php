@@ -106,14 +106,12 @@
 
 <div class="container">
 
-<div class="row">
-<div class="col-md-6 col-md-push-3">
-  <span>ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</span><br><br>
-</div>
-</div>
+<div class="panel panel-default">
+<div class="panel-heading">ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</div>
 
+<div class="panel-body">
 <div class="row">
-<div class="col-md-8">
+<div class="col-md-6">
   <form class="form-horizontal" method="post" action="/container_contents">
 
     {{ csrf_field() }}
@@ -152,7 +150,7 @@
 
     <div class="form-group">
       <label for="numItems" class="col-md-4 control-label">Num items</label>
-      <div class="col-md-1">
+      <div class="col-md-2">
         <input type="text" value="0" class="form-control" name="numItems" id="numItems" readonly>
       </div>
     </div>
@@ -189,5 +187,6 @@
     </table>
   </div><!--col-->
 </div><!--row-->
+</div><!--panel-body-->
 </div> <!--container-->
 @endsection

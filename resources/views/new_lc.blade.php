@@ -184,35 +184,43 @@ $(function() {
         <div class="panel panel-default">
         <div class="panel-heading"> 2. Enter Peforma Invoice Information (Optional)</div>
         <div class="panel-body">
+
+
         <div class="col-md-5">
-
-          <div id="itemList" class="row">
-            <h4>Enter Performa Invoice</h4>
-            <span>None of the fields can be blank</span>
-          </div><!--row-->
-
-          <div class="form-group row">
-            <label for="numItems" class="col-md-4 control-label">Num items</label>
-            <div class="col-md-4">
-              <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
+          <div id="itemList">
+            <div class="row">
+              <div id="col-md-12">
+                <h4>Enter Performa Invoice</h4>
+                <span>None of the fields can be blank</span>
+                  <!-- Javascript adds fields here-->
+                </div><!--col-->
+              </div><!--row-->
+          </div><!--itemList-->
+          <br>
+          <div class="row">
+            <div class="form-group">
+              <label for="numItems" class="col-md-4 control-label">Num items</label>
+              <div class="col-md-4">
+                <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
+              </div>
             </div>
-          </div>
-        </div> <!--well col-md-5-->
+          </div> <!--row-->
+        </div> <!--col-md-5-->
 
 
         <div id=catalogContainer class="col-md-6 col-md-offset-1">
           <div class="panel panel-success">
-          <div class="panel-heading">
-            <h4>Tyre Catalog</h4>
-          </div> <!--panel-heading-->
+            <div class="panel-heading">
+              <h4>Tyre Catalog</h4>
+            </div> <!--panel-heading-->
 
-          <div class="panel-body">
-            <div id="tyreCatalog" class="col-md-12">
-              @include('partials.tyres')
-            </div>
-          </div> <!--panel-body-->
-        </div> <!--panel-->
-      </div> <!--catalogContainer-->
+            <div class="panel-body">
+              <div id="tyreCatalog" class="col-md-12">
+                @include('partials.tyres')
+              </div>
+            </div> <!--panel-body-->
+          </div> <!--panel-->
+        </div> <!--catalogContainer-->
 
 
     </div> <!--panel-body-->
