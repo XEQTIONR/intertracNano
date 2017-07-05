@@ -23,7 +23,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container" style="margin-top: 1.6em">
 <div class="row">
 <div class="col-md-6">
 
@@ -99,7 +99,7 @@
 
 
 <div class="col-md-5">
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel panel-heading">CURRENT STOCK</div>
     <div class="panel-body">
       @include('partials.currentstock')

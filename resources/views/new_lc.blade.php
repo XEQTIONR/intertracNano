@@ -205,6 +205,12 @@ $(function() {
               </div>
             </div>
           </div> <!--row-->
+
+          <div class="row">
+            <button class="btn btn-default" type="button" onclick="addItem()">Add New Item</button>
+            <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
+            <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
+          </div>
         </div> <!--col-md-5-->
 
 
@@ -225,9 +231,7 @@ $(function() {
 
     </div> <!--panel-body-->
   </div> <!--panel-->
-    <button class="btn btn-default" type="button" onclick="addItem()">Add New Item</button>
-    <button class="btn btn-danger" type="button" onclick="removeItem()">Remove Last Item</button>
-    <button class="btn btn-info" type="submit" value="submit">Submit</button><br><br><br>
+
 
 
 
