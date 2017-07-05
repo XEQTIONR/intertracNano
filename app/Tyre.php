@@ -8,7 +8,7 @@ class Tyre extends Model
 {
     //
     public $primaryKey = 'tyre_id';
-  
+
 
 
 }

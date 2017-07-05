@@ -74,8 +74,13 @@ class Order extends Model
                             DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
                             DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
                             )
-                  ->select('container_contents.tyre_id', DB::raw('SUM(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock'))
+                  ->join('tyres', 'container_contents.tyre_id','=','tyres.tyre_id')
+                  ->select('container_contents.tyre_id', 'tyres.brand', 'tyres.size', 'tyres.pattern', DB::raw('SUM(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock'))
                   ->groupBy('container_contents.tyre_id')
+
+
+
+
                   ->get();
 
                   //dd($remaining->toSql());
