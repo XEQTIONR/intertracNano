@@ -17,21 +17,21 @@
       <div class="form-group">
         <label for="inputBrand" class="col-md-3 col-md-offset-2 control-label">Brand</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputBrand" id="inputBrand">
+          <input type="text" class="form-control" name="inputBrand" id="inputBrand" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputSize" class="col-md-3 col-md-offset-2 control-label">Size Code</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputSize" id="inputSize">
+          <input type="text" class="form-control" name="inputSize" id="inputSize" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputPattern" class="col-md-3 col-md-offset-2 control-label">Pattern Code</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputPattern" id="inputPattern">
+          <input type="text" class="form-control" name="inputPattern" id="inputPattern" required>
         </div>
       </div>
 
