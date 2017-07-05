@@ -13,6 +13,10 @@
       margin : auto;
     }
 
+    .input{
+      width: 33%;
+    }
+
   </style>
   <script src="/js/addItem.js"></script>
 @endsection
@@ -21,11 +25,15 @@
 
 <div class="container">
 <div class="row">
-<div class="col-md-7">
+<div class="col-md-6">
 
 <form class="form-horizontal" method="post" action="/orders">
 
   {{ csrf_field() }}
+
+  <div class="panel panel-default">
+    <div class="panel-heading">CREATE A NEW ORDER</div>
+    <div class="panel-body">
 
   <div class="form-group">
     <label for="inputCustomerId" class="col-md-3 control-label">Customer ID</label>
@@ -69,11 +77,12 @@
 
 
 
-  <button type="button" onclick="addItem()">Add New Item</button>
-  <button type="submit" value="submit">Submit</button>
-  <button type="button" onclick="removeItem()">Remove Last Item</button>
+  <button type="button" class="btn btn-default" onclick="addItem()">Add New Item</button>
+  <button type="button" class="btn btn-danger" onclick="removeItem()">Remove Last Item</button>
+  <button type="submit" class="btn btn-primary" value="submit">Submit</button>
 
-  <div id="itemList" style="border: 2px dashed black;"></div> <br>
+
+  <div id="itemList" class="well"></div> <br>
 
 
   <div class="form-group">
@@ -83,14 +92,22 @@
     </div>
   </div>
 
-
+</div> <!--panel-body-->
+</div> <!--panel-->
 </form>
 </div> <!--col-->
 
 
 <div class="col-md-5">
-  @include('partials.currentstock')
-</div>
+  <div class="panel panel-default">
+    <div class="panel panel-heading">CURRENT STOCK</div>
+    <div class="panel-body">
+      @include('partials.currentstock')
+    </div>
+  </div>
+</div><!--col-->
 </div> <!-- row -->
+
+
 </div> <!--container-->
 @endsection
