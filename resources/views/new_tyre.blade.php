@@ -6,6 +6,7 @@
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
 <form class="form-horizontal" method="post" action="/tyres">
+@include('partials.errors')
 <div class="panel panel-default" style="margin-top: 1.6em;">
   <div class="panel-heading">Enter new tyre information to add to database.</div>
   <div class="panel-body">
@@ -17,21 +18,21 @@
       <div class="form-group">
         <label for="inputBrand" class="col-md-3 col-md-offset-2 control-label">Brand</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputBrand" id="inputBrand" required>
+          <input type="text" class="form-control" name="Brand" id="inputBrand" value="{{old('Brand')}}" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputSize" class="col-md-3 col-md-offset-2 control-label">Size Code</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputSize" id="inputSize" required>
+          <input type="text" class="form-control" name="Size" id="inputSize" value="{{old('Size')}}" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="inputPattern" class="col-md-3 col-md-offset-2 control-label">Pattern Code</label>
         <div class="col-md-3">
-          <input type="text" class="form-control" name="inputPattern" id="inputPattern" required>
+          <input type="text" class="form-control" name="Pattern" id="inputPattern" value="{{old('Pattern')}}" required>
         </div>
       </div>
 

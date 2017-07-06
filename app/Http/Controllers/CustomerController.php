@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Collection;
+use Validator;
 class CustomerController extends Controller
 {
     /**
@@ -43,15 +43,31 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+
+        //VALIDATE
+
+        $validator=Validator::make($request->all(),[
+          'Name' => 'required|string',
+          'Address' => 'required|string',
+          'Phone' => 'required|numeric|digits_between:7,12',
+          'Notes' => 'string|nullable',
+        ]);
+
+        if($validator->fails())
+        {
+          return redirect('customers/create')
+                  ->withErrors($validator)
+                  ->withInput();
+        }
         //ALLOCATE
         $customer = new Customer;
 
 
         //INITIAZE
-        $customer->name = $request->inputName;
-        $customer->address = $request->inputAddress;
-        $customer->phone = $request->inputPhone;
-        $customer->notes = $request->inputNotes;
+        $customer->name = $request->Name;
+        $customer->address = $request->Address;
+        $customer->phone = $request->Phone;
+        $customer->notes = $request->Notes;
 
         //STORE
         $customer->save();

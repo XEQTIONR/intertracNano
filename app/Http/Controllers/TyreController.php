@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tyre;
 use Illuminate\Http\Request;
+use Validator;
 
 class TyreController extends Controller
 {
@@ -46,18 +47,37 @@ class TyreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //VALIDATE
 
-        $tyre = new Tyre;
-        $tyre->brand = $request->inputBrand;
-        $tyre->size = $request->inputSize;
-        $tyre->pattern = $request->inputPattern;
+        $validator=Validator::make($request->all(),[
+          'Brand' => 'required|alpha_num',
+          'Size' => 'required|string',
+          'Pattern' => 'required|string',
+        ]);
 
-        $tyre->save();
+        if($validator->fails())
+        {
+          return redirect('tyres/create')
+                  ->withErrors($validator)
+                  ->withInput();
+        }
 
+        else
+        {
+          //ALLOCATE
+          $tyre = new Tyre;
 
-        return redirect('/tyres/'.$tyre->tyre_id);
+          //INITIALIZE
+          $tyre->brand = $request->Brand;
+          $tyre->size = $request->Size;
+          $tyre->pattern = $request->Pattern;
 
+          //STORE
+          $tyre->save();
+
+          //REDIRECT
+          return redirect('/tyres/'.$tyre->tyre_id);
+        }
 
     }
 

@@ -8,6 +8,8 @@
 
       <form class="form-horizontal" method="post" action="/customers">
 
+        @include('partials.errors')
+
         <div class="panel panel-default" style="margin-top: 1.6em;">
           <div class="panel-heading">Enter new customer information to add to database.</div>
 
@@ -17,28 +19,28 @@
               <div class="form-group">
                 <label for="inputName" class="col-md-3 col-md-offset-2 control-label">Customer/Party Name</label>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="inputName" id="inputName">
+                  <input type="text" class="form-control" name="Name" id="inputName" value="{{old('Name')}}">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputAddress" class="col-md-3 col-md-offset-2 control-label">Address</label>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="inputAddress" id="inputAddress">
+                  <input type="text" class="form-control" name="Address" id="inputAddress" value="{{old('Address')}}">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputPhone" class="col-md-3 col-md-offset-2 control-label">Phone#</label>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="inputPhone" id="inputPhone">
+                  <input type="text" class="form-control" name="Phone" id="inputPhone" value="{{old('Phone')}}">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputNotes" class="col-md-3 col-md-offset-2 control-label">Notes</label>
                 <div class="col-md-3">
-                  <input type="text" class="form-control" name="inputNotes" id="inputNotes">
+                  <input type="text" class="form-control" name="Notes" id="inputNotes" value="{{old('Notes')}}">
                 </div>
               </div>
             </div> <!--row-->

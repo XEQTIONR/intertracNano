@@ -63,17 +63,7 @@ $(function() {
       <form class="form-horizontal" method="post" action="/lcs">
         {{ csrf_field() }}
 
-        @if ($errors->any())
-          <div class="alert alert-danger" role="alert">
-
-              @foreach ($errors->all() as $error)
-
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                {{$error}}<br>
-              @endforeach
-
-          </div>
-        @endif
+        @include('partials.errors')
 
         <div class="panel panel-default" style="margin-top: 1.6em;">
         <div class="panel-heading">1. LC Information</div>
