@@ -2,30 +2,43 @@
 @author Ishtehar Hussain
 @desc The main files with all the styles for the app
 **/
-.main-title {
+
+@menu-background: #DDD;
+
+.main-title{
   font-size: 50px;
 }
-.centered {
+
+.centered{
   margin-left: auto;
   margin-right: auto;
+
 }
-.border {
+
+.border{
   border: 1px dashed green;
 }
-.menu-table-cell {
+
+
+
+.menu-table-cell{
   padding: 5px;
   vertical-align: middle;
   text-align: center;
   /*border: 1px solid blue;*/
+
 }
-.subMenu {
+
+.subMenu{
   display: none;
-  background-color: #DDD;
-}
-.subMenu div {
-  margin: 0 auto;
-  text-align: center;
-}
-.subMenu div a {
-  color: #000;
+  background-color: @menu-background;
+
+  div{
+    margin: 0 auto;
+    text-align: center;
+
+    a{
+      color: #000;
+    }
+  }
 }

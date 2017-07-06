@@ -7,7 +7,7 @@
 
   <!-- REPORTS -->
 
-  <div class="row subMenu" id="theMenu" style="background-color: orange;">
+  <div class="row subMenu" id="theMenu">
 
     <div class="col-md-4"><a href="#">Order Report</a></div>
     <div class="col-md-4"><a href="#">Payment Report</a></div>
@@ -19,7 +19,7 @@
 
   <!-- VIEW INFO -->
 
-  <div class="row subMenu" id="theMenu2" style="background-color: red;">
+  <div class="row subMenu" id="theMenu2">
 
     <div class="col-md-4"><a href="/customers">Customer</a></div>
     <div class="col-md-4"><a href="/tyres">Tyre</a></div>
@@ -36,7 +36,7 @@
 
   <!-- ACTIONS -->
 
-  <div class="row subMenu" id="theMenu3" style="background-color: green;">
+  <div class="row subMenu" id="theMenu3">
 
     <div class="col-md-4"><a href="/tyres/create">Add a new Tyre</a></div>
     <div class="col-md-4"><a href="/lcs/create">Add new LC</a></div>

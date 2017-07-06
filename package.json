@@ -11,7 +11,7 @@
     ,
     "css-sass": "node-sass --include-path scss public/scss/test.scss public/css/test.css"
     ,
-    "css-less" : "lessc  public/less/test.less public/less/test.css"
+    "css-less" : "lessc  public/less/app.less public/css/app.css"
   },
   "devDependencies": {
     "axios": "^0.15.3",
