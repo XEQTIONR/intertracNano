@@ -21,77 +21,198 @@
 
   <div class="row subMenu" id="theMenu2">
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/customers">
-        <h5>
-          <span><img src="/images/user.png" width="45" height="45"></span>
-          <strong>Customer</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/user.png" width="45" height="45">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Customers
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+              View all customer information.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/tyres">
-        <h5>
-          <span><img src="/images/tyre.png" width="32" height="32"></span>
-          <strong>Tyre</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2" >
+            <img src="/images/tyre.png" width="35 " height="35">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Tyres
+              </div>
+            </div> <!--row-->
+
+            <div class="row">
+              <div class="col-md-12">
+                View the tyre Catalog
+              </div>
+            </div>
+          </div>
+        </div>
       </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/consignments">
-        <h5>
-          <span><img src="/images/consignment.png" width="45" height="45"></span>
-          <strong>Consignments</strong>
-        </h5>
-      </a>
-    </div>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/consignment.png" width="45" height="45">
+          </div>
 
-    <div class="col-md-3">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Consignments
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-md-12">
+                View all consignments arrived
+                </div>
+              </div>
+            </div>
+          </div> <!--row-->
+        </a>
+      </div>
+
+    <div class="col-md-3 vertical-spaced">
       <a href="/lcs">
-        <h5>
-          <span><img src="/images/lc.png" width="45" height="45"></span>
-          <strong>LCs</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/lc.png" width="45" height="45">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                LCs
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                View all information about LCs applied for.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/consignment_expenses">
-        <h5>
-          <span><img src="/images/expense.png" width="45" height="45"></span>
-          <strong>Expenses</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/expense.png" width="40" height="40">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Expenses
+              </div>
+            </div> <!--row-->
+
+            <div class="row">
+              <div class="col-md-12">
+                View all consignment expenses.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/orders">
-        <h5>
-          <span><img src="/images/order.png" width="40" height="40"></span>
-          <strong>Order</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/order.png" width="40" height="40">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Orders
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+              View all orders placed.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-3 vertical-spaced">
       <a href="/payments">
-        <h5>
-          <span><img src="/images/cash.png" width="50" height="50"></span>
-          <strong>Payment</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/cash.png" width="48" height="48">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Payments
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                View all payments recieved from customers.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
     </div>
 
-    <div class="col-md-3">
+
+    <div class="col-md-3 vertical-spaced">
       <a href="/stock">
-        <h5>
-          <span><img src="/images/stock.png" width="40" height="40"></span>
-          <strong>Stock</strong>
-        </h5>
+        <div class="row">
+          <div class="col-md-2">
+            <img src="/images/stock.png" width="40" height="40">
+          </div>
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Stock
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                View all customer information.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
       </a>
-    </div>
+    </div><!--col-->
+
 
     {{--<div class="col-md-4">
       <a href="/consignment_containers">

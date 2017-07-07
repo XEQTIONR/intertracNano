@@ -2,6 +2,10 @@
 @author Ishtehar Hussain
 @desc The main files with all the styles for the app
 **/
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+}
 .main-title {
   font-size: 50px;
 }
@@ -9,8 +13,20 @@
   margin-left: auto;
   margin-right: auto;
 }
+.left-aligned {
+  margin-left: 1em;
+  margin-right: auto;
+}
+.vertical-spaced {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
 .border {
   border: 1px dashed green;
+}
+.menu-option-title {
+  font-size: 1.5em;
+  font-weight: bolder;
 }
 .menu-table-cell {
   padding: 5px;
@@ -25,12 +41,7 @@
 .subMenu :hover {
   background-color: #EEE;
 }
-.subMenu div {
-  margin: 0 auto;
-}
 .subMenu div a {
   color: #000;
-  line-height: 300%;
   text-decoration: none;
-  font-weight: bolder;
 }
