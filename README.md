@@ -3,12 +3,12 @@
 This is a secondary version of the nanoDB app written by Ishtehar Hussain for Intertrac Nano. The web application is written mostly in PHP on Laravel 5.4 Framework.
 Following are some basic instructions to get you up and running on how to run this app on a local artisan server (or similar).
 
-1. Requirements.
+**1. Requirements.**
 
 Some general requirements. You may have work-arounds on these.
 
  1. PHP, Laravel (>=5.4),
- Basically everything you need to a laravel app.
+ Basically everything you need to launch a laravel app on a local machine.
 
  2. Mysql database.
  You need access to a mysql database where we will create our database schema.
@@ -19,44 +19,50 @@ Some general requirements. You may have work-arounds on these.
  3. Also needs internet to access Bootstrap and Jquery files/scripts/styles etc.
 
 
-2. Set Up.
-  1. Clone or Download the repository
+**2. Set Up.**
+  1. **Clone or Download the repository**
 
-  2. Create a mysql database.
-  We have not used database migrations on this project. A sql creation script called 'default_db.sql' is given. You can use this script to create your database tables. Some basic data is also provided.  
+  2. **Modify the Database creation script.**
 
-  3. Create a ENV file.
-  You must create a (.env) file to hold all your environment variables. The following fields must be set.
+   Since only authenticated users can access the features we are going to create one with admin previledges.
 
+   A sql creation script called 'default_db.sql' is given. Modify one of the insert statements for the users table with your name and email data. Also set the admin field to 1.
 
-<code>    
+  3. **Create a mysql database.**
 
-    DB_CONNECTION=mysql
-    DB_HOST=your-db-host
-    DB_PORT=your-db-port
-    DB_DATABASE=your-db-name
-    DB_USERNAME=your-db-username
-    DB_PASSWORD=your-db-password
+  We have not used database migrations on this project.  You can use this script to create your database tables. Some basic data is also provided.
+  ```   
+      DB_CONNECTION=mysql
+      DB_HOST=your-db-host
+      DB_PORT=your-db-port
+      DB_DATABASE=your-db-name
+      DB_USERNAME=your-db-username
+      DB_PASSWORD=your-db-password
 
-    MAIL_DRIVER=sparkpost
-    SPARKPOST_KEY=your-secret-sparkpost-key
-</code>
-  3. Run your server
+      MAIL_DRIVER=sparkpost
+      SPARKPOST_KEY=your-secret-sparkpost-key
+  </code>
+  ```
+
+  4. **Create a ENV file.**
+
+  You must create a (.env) file to hold all your environment variables. Create it at the root level of your app directory structure. The following fields must be set.
+
+  5. **Run your server**
+
   The simplest way is to use the artisan console to run a local server
   <code>  php artisan serve</code>
 
+  6. **Reset your account password**
 
-  4. Register an admin
-  Insert an entry into the users table.
-  id=1
-  name=some-name
-  email=some-email-you-have-access-to
-  password=anything--not-the-real-password
-  admin=1
+  If you followed the instructions then the user table in the database contains an entry with your email address which has admin privileges.
 
-  This will create an admin associated with an email. Now the password must be reset.
+  Now the password must be reset.
   Go to the homepage and click on log-in and then forgot passwords. Follow the instructions on resetting the password. Once the password has been reset you are ready to use the app using all features and admin privileges.
 
+
+  -- END --
+  ___
 
 
 

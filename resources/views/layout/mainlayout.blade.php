@@ -9,7 +9,7 @@
 <title>Intertrac Nano</title>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Raleway:100,500,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Raleway:100,400,700" rel="stylesheet" type="text/css">
 
 <!-- Styles -->
 <link href="/css/app.css" rel="stylesheet" type="text/css">
