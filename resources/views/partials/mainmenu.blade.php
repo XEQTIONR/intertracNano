@@ -9,11 +9,124 @@
 
   <div class="row subMenu" id="theMenu">
 
-    <div class="col-md-4"><a href="#">Order Report</a></div>
-    <div class="col-md-4"><a href="#">Payment Report</a></div>
-    <div class="col-md-4"><a href="#">Expenditure Report</a></div>
-    <div class="col-md-4"><a href="#">Outstanding Balance Report</a></div>
-    <div class="col-md-4"><a href="#">Profit/Loss Report</a></div>
+    <div class="col-md-3 vertical-spaced">
+      <a href="#">
+        <div class="row">
+          <div class="col-md-2 col-sm-1 col-xs-1">
+            <img src="/images/order.png" width="45" height="45">
+          </div>
+
+          <div class="col-md-10 col-sm-11 col-xs-11">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Order Reports
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+              All reports regarding orders made (monthly, yearly, etc).
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
+      </a>
+    </div>
+
+    <div class="col-md-3 vertical-spaced">
+      <a href="#">
+        <div class="row">
+          <div class="col-md-2 col-sm-1 col-xs-1" >
+            <img src="/images/cash.png" width="48 " height="48">
+          </div>
+
+          <div class="col-md-10 col-sm-11 col-xs-11">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Payment Reports
+              </div>
+            </div> <!--row-->
+
+            <div class="row">
+              <div class="col-md-12">
+                Reports regarding payments made against orders.
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3 vertical-spaced">
+      <a href="#">
+        <div class="row">
+          <div class="col-md-2 col-sm-1 col-xs-1">
+            <img src="/images/expense.png" width="45" height="45">
+          </div>
+
+          <div class="col-md-10 col-sm-11 col-xs-11">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Expenditure Reports
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-md-12">
+                  Reports about all different expenses.
+                </div>
+              </div>
+            </div>
+          </div> <!--row-->
+        </a>
+      </div>
+
+    <div class="col-md-3 vertical-spaced">
+      <a href="#">
+        <div class="row">
+          <div class="col-md-2 col-sm-1 col-xs-1">
+            <img src="/images/outstanding-balance.png" width="45" height="45">
+          </div>
+
+          <div class="col-md-10 col-sm-11 col-xs-11">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Outstanding Balance Report
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                Reports about money owed to us from customers.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
+      </a>
+    </div>
+
+    <div class="col-md-3 vertical-spaced">
+      <a href="#">
+        <div class="row">
+          <div class="col-md-2 col-sm-1 col-xs-1">
+            <img src="/images/profit.png" width="40" height="40">
+          </div>
+
+          <div class="col-md-10 col-sm-11 col-xs-11">
+            <div class="row">
+              <div class="col-md-12 menu-option-title">
+                Profit/Loss Reports
+              </div>
+            </div> <!--row-->
+
+            <div class="row">
+              <div class="col-md-12">
+                Report evaluating how our business ventures are doing financially.
+              </div>
+            </div>
+          </div>
+        </div> <!--row-->
+      </a>
+    </div>
 
   </div>
 
