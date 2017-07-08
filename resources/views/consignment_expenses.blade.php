@@ -6,7 +6,13 @@
 
 <div class="container"> <!-- bootsreap container -->
 
-<span>CONSIGNMENT EXPENSES</span>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="page-header">
+        <h1>Expenses <small>All consignment expenses paid.</small></h1>
+      </div>
+    </div>
+  </div>
 
 <table class="table table-hover table-bordered">
   <tr>

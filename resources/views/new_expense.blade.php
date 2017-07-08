@@ -3,19 +3,29 @@
 
 @section('content')
 
-<span>NEW EXPENSE</span>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="page-header">
+        <h1>New Expense <small>Add a new consignment expense.</small></h1>
+      </div>
+    </div>
+  </div>
 
-<form method="post" action="/consignment_expenses">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
 
-  {{ csrf_field() }}
+      <form method="post" action="/consignment_expenses">
+        {{ csrf_field() }}
+        BOL# <input type="text" name="inputBOL"> <br>
+        Expense Foreign <input type="text"  name="inputExpenseForeign"> <br>
+        Expense Local<input type="text" name="inputExpenseLocal"> <br>
+        Notes  <input type="text" name="inputNote"> <br>
 
-  BOL# <input type="text" name="inputBOL"> <br>
-  Expense Foreign <input type="text"  name="inputExpenseForeign"> <br>
-  Expense Local<input type="text" name="inputExpenseLocal"> <br>
-  Notes  <input type="text" name="inputNote"> <br>
-
-  <button type="submit" value="submit">Submit</button>
-
-</form>
+        <button type="submit" value="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 @endsection

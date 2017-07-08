@@ -61,7 +61,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                View the tyre Catalog
+                View the tyre Catalog.
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@
             </div>
               <div class="row">
                 <div class="col-md-12">
-                View all consignments arrived
+                View all consignments arrived.
                 </div>
               </div>
             </div>
@@ -242,7 +242,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                Add a new kind of tyre to tyre catalog
+                Add a new kind of tyre to tyre catalog.
               </div>
             </div>
           </div>
@@ -288,7 +288,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                The draft invoice provided to the bank when creating a LC
+                The draft invoice provided to the bank when creating a LC.
               </div>
             </div>
           </div>
@@ -310,7 +310,7 @@
             </div>
             <div class="row">
               <div class="col-md-12">
-                Add a new consignment to the database against a LC
+                Add a new consignment to the database against a LC.
               </div>
             </div>
           </div>
@@ -357,7 +357,7 @@
 
             <div class="row">
               <div class="col-md-12">
-              Add a new customer who can order from us
+              Add a new customer who can order from us.
               </div>
             </div>
           </div>
@@ -403,7 +403,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                Create a payment invoice for a new payment
+                Create a payment invoice for a new payment.
               </div>
             </div>
           </div>
@@ -427,7 +427,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                Add a new container arrived to an existing consignment recorded
+                Add a new container arrived to an existing consignment recorded.
               </div>
             </div>
           </div>
@@ -450,7 +450,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                Record information about goods from new containers
+                Record information about goods from new containers.
               </div>
             </div>
           </div>

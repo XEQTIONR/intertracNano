@@ -61,8 +61,17 @@
 
 
 <div class="container">
+
 <div class="row">
-<div class="col-md-4">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+      <h1>New Payment <small>Record a new payment made for an existing order.</small></h1>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+<div class="col-md-4 col-md-offset-2">
 <form class="form-horizontal" method="post" action="/payments">
 
   {{ csrf_field() }}
@@ -89,7 +98,7 @@
 </form>
 </div>
 
-<div class="col-md-8" id="orderDetails"> </div>
+<div class="col-md-4" id="orderDetails"</div>
 
 
 

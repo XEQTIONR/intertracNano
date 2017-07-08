@@ -106,6 +106,17 @@
 
 <div class="container">
 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="page-header">
+        <h1>New Commercial Invoice <small>Record a stock information from new container imported.</small></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
 <div class="panel panel-default">
 <div class="panel-heading">ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</div>
 
@@ -188,5 +199,8 @@
   </div><!--col-->
 </div><!--row-->
 </div><!--panel-body-->
+</div><!--panel-->
+</div><!--col-->
+</div><!--row-->
 </div> <!--container-->
 @endsection

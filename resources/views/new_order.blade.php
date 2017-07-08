@@ -23,7 +23,16 @@
 
 @section('content')
 
-<div class="container" style="margin-top: 1.6em">
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="page-header">
+        <h1>New Order <small>Enter new order placed my customer.</small></h1>
+      </div>
+    </div>
+  </div>
+
 <div class="row">
 <div class="col-md-6">
 
