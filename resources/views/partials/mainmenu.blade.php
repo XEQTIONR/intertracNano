@@ -3,7 +3,7 @@
 @desc The main menu of the app in a partial file.
 --}}
 
-<div class="container-fluid">
+{{--<div class="container-fluid">--}}
 
   <!-- REPORTS -->
 
@@ -574,4 +574,4 @@
     {{--make hscode a field--}}
   </div>
 
-</div> <!--container fluid-->
+{{--</div> <!--container fluid-->--}}

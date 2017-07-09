@@ -36,7 +36,7 @@
 
 <div class="flex-center position-ref full-height">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav id="navMain" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
 
@@ -103,7 +103,7 @@
 
   @if(Auth::check())
     @include('partials.maintabsmenu')
-    @include('partials.mainmenu')
+  {{--  @include('partials.mainmenu') --}}
   @endif
 
 </div>

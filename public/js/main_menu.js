@@ -1,34 +1,48 @@
+/** main_menu.js
+@author Ishtehar Hussain
+@desc The animation for the drop-down menus
+**/
+
 $(document).ready(function(){
 
-  $(".subMenu").hide();         //slideToggle changes this to show
-  $("#reportLabel").click(function(){
-      $("#theMenu").slideToggle();
-      $("#theMenu2").hide();
-      $("#theMenu3").hide();
+//  $(".subMenu").hide();         //slideToggle changes this to show
 
-      $("#reportMenuItem").addClass("active");
-      $("#infoMenuItem").removeClass("active");
-      $("#actionMenuItem").removeClass("active");
+  $("#reportLabel").hover(function(){
+    $("#theMenu2").hide();
+    $("#theMenu3").hide();
+    $("#theMenu").slideDown(500);}, function(){
 
+      if ($("#theMenu").is(':hover')) {}
+      else{
+        $("#theMenu").slideUp(500);
+      }});
 
-  });
-  $("#infoLabel").click(function(){
-    $("#theMenu2").slideToggle();
+  $("#infoLabel").hover(function(){
     $("#theMenu").hide();
     $("#theMenu3").hide();
+    $("#theMenu2").slideDown(500);}, function(){
+      if ($("#thisMenu2").is(':hover')) {}
+      else{
+        $("#theMenu2").slideUp(500);
+      }});
 
-    $("#infoMenuItem").addClass("active");
-    $("#reportMenuItem").removeClass("active");
-    $("#actionMenuItem").removeClass("active");
+    $("#actionLabel").hover(function(){
+      $("#theMenu").hide();
+      $("#theMenu2").hide();
+      $("#theMenu3").slideDown(500);}, function(){
+        if ($("#thisMenu2").is(':hover')) {}
+        else{
+          $("#theMenu2").slideUp(500);
+        }});
 
-  });
-  $("#actionLabel").click(function(){
-    $("#theMenu3").slideToggle();
-    $("#theMenu2").hide();
-    $("#theMenu").hide();
+    $("#navMain").hover(function(){$(".subMenu").slideUp();});
 
-    $("#actionMenuItem").addClass("active");
-    $("#reportMenuItem").removeClass("active");
-    $("#infoMenuItem").removeClass("active");
-  });
+    $("#theMenu").hover(function(){ $("#theMenu").show();},
+                        function(){ $("#theMenu").slideUp();});
+
+    $("#theMenu2").hover(function(){ $("#theMenu2").show();},
+                        function(){ $("#theMenu2").slideUp();});
+
+    $("#theMenu3").hover(function(){ $("#theMenu3").show();},
+                        function(){ $("#theMenu3").slideUp();});
 });
