@@ -12,7 +12,7 @@
 @red:#E25E69;
 @contrast:#7BC2CA;
 @yellow:#EC7;
-@dark: #4D3C44;
+@dark: #494252;
 @purple: #858FB2;
 @a-color:#304269;
 
@@ -49,13 +49,20 @@ body{
 }
 
 .welcome-banner{
-  background-color: lighten(saturate(@purple, 50%),10%);
+  background-color: @red;
   height: 80vh;
   margin: 0;
   h1{
+
     font-size: 100px;
     font-weight: lighter;
-    color: #FFF;
+    color: lighten(@yellow, 10%);
+
+    margin-top: 1em;
+    span{
+      color: #FFF;
+      font-weight: bolder;
+    }
   }
 }
 .main-title{

@@ -97,7 +97,7 @@
   <div class="form-group">
     <label for="inputTaxAmount" class="col-md-3 control-label">Num items</label>
     <div class="col-md-3">
-      <input type="text" class="form-control" name="numItems" id="numItems" placeholder="0" readonly>
+      <input type="text" class="form-control" name="numItems" id="numItems" value="0" readonly>
     </div>
   </div>
 

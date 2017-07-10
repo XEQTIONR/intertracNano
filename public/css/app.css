@@ -3,7 +3,7 @@
 @desc The main files with all the styles for the app
 **/
 body {
-  color: #4D3C44;
+  color: #494252;
   background-color: #FFF;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
@@ -29,14 +29,19 @@ body {
   border-bottom: 5px solid #E25E69;
 }
 .welcome-banner {
-  background-color: #7f97eb;
+  background-color: #E25E69;
   height: 80vh;
   margin: 0;
 }
 .welcome-banner h1 {
   font-size: 100px;
   font-weight: lighter;
+  color: #f4dda4;
+  margin-top: 1em;
+}
+.welcome-banner h1 span {
   color: #FFF;
+  font-weight: bolder;
 }
 .main-title {
   font-size: 50px;
