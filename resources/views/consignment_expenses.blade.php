@@ -14,7 +14,8 @@
     </div>
   </div>
 
-<table class="table table-hover table-bordered">
+<table class="table table-condensed">
+<thead>
   <tr>
     <th>BOL#</th>
     <th>Expense id</th>
@@ -24,8 +25,8 @@
     <th>Created</th>
     <th>Updated</th>
   </tr>
-
-
+</thead>
+<tbody>
   @foreach ($expenses as $expense)
   <tr>
     <td>{{$expense->BOL}}</td>
@@ -37,9 +38,7 @@
     <td>{{$expense->updated_at}}</td>
   </tr>
   @endforeach
-
-
-
+</tbody>
 </table>
 
 </div>

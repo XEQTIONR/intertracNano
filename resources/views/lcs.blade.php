@@ -12,7 +12,7 @@
     </div>
   </div>
 
-<table class="table table-hover table-bordered">
+<table class="table table-hover table-condensed">
   <tr>
     <th>LC#</th>
     <th>Date Issued</th>
@@ -39,7 +39,7 @@
 
 
   @foreach ($LCs as $LC)
-    <tr>
+    <tr style="cursor: pointer;" onclick="location.href='/lcs/{{$LC->lc_num}}'">
       <td>{{$LC->lc_num}}</td>
       <td>{{$LC->date_issued}}</td>
       <td>{{$LC->date_expiry}}</td>
@@ -48,9 +48,6 @@
       <td>{{$LC->foreign_amount}}</td>
       <td>{{$LC->foreign_amount * $LC->exchange_rate}}</td>
       <td>{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
-
-      <td><a href="/lcs/{{$LC->lc_num}}" class="btn btn-primary"> VIEW INFO</a></td>
-
     </tr>
   @endforeach
 

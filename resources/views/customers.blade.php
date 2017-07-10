@@ -12,7 +12,8 @@
     </div>
   </div>
 
-<table class="table table-hover table-bordered">
+<table class="table table-hover table-condensed">
+<thead>
   <tr>
     <th>customer#</th>
     <th>Customer Name</th>
@@ -22,10 +23,10 @@
     <th>Created</th>
     <th>Updated</th>
   </tr>
-
-
+</thead>
+<tbody>
   @foreach ($customers as $customer)
-  <tr>
+  <tr style="cursor: pointer" onclick="location.href='/customers/{{$customer->id}}'">
     <td>{{$customer->id}}</td>
     <td>{{$customer->name}}</td>
     <td>{{$customer->address}}</td>
@@ -33,12 +34,10 @@
     <td>{{$customer->notes}}</td>
     <td>{{$customer->created_at}}</td>
     <td>{{$customer->updated_at}}</td>
-    <td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>
+    {{--<td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>--}}
   </tr>
   @endforeach
-
-
-
+<tbody>
 </table>
 </div>
 

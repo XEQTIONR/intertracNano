@@ -29,7 +29,7 @@ body {
   border-bottom: 5px solid #E25E69;
 }
 .welcome-banner {
-  background-color: #7b89bc;
+  background-color: #7f97eb;
   height: 80vh;
   margin: 0;
 }
@@ -68,6 +68,7 @@ body {
 }
 .nav-intertrac {
   background-color: #FFF;
+  line-height: 1em;
 }
 .nav-intertrac li {
   width: auto;

@@ -8,6 +8,7 @@
     $('.form-control').hide();
     $('#cancelButton').hide();
     $('#submitButton').hide();
+    $('#edit').hide();
 
     $('#editButton').click(function(){
       $(".tyre-info").hide();
@@ -16,6 +17,7 @@
       $(".form-control").show();
       $('#submitButton').show();
       $('.nano-hide').hide();
+      $('#edit').show();
 
     });
 
@@ -26,6 +28,7 @@
       $('#cancelButton').hide();
       $('#submitButton').hide();
       $('.nano-hide').show();
+      $('#edit').hide();
 
     });
 
@@ -47,6 +50,15 @@
 @section('content')
 
 <div class="container">
+
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="page-header">
+        <h1><span id="edit">Edit </span>Customer Information</h1>
+      </div>
+    </div>
+  </div>
+
 <div class="row">
 <div class="col-md-6 col-md-push-3">
 

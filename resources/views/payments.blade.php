@@ -12,7 +12,8 @@
     </div>
   </div>
 
-<table class="table table-hover table-bordered">
+<table class="table table-condensed">
+<thead>
   <tr>
     <th>Invoice#</th>
     <th>Order#</th>
@@ -20,8 +21,8 @@
     <th>Created</th>
     <th>Updated</th>
   </tr>
-
-
+</thead>
+<tbody>
   @foreach ($payments as $payment)
     <tr>
       <td>{{$payment->Invoice_num}}</td>
@@ -32,9 +33,7 @@
 
     </tr>
   @endforeach
-
-
-
+</tbody>
 </table>
 
 </div>
