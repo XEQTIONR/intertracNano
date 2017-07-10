@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use Illuminate\Http\Request;
+use Validator;
 
 class PaymentController extends Controller
 {
@@ -38,16 +39,32 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      $validator=Validator::make($request->all(),[
+        'inputOrderNum' => 'required|numeric',
+        'inputPaidAmount' => 'required|numeric|min:0',
+      ]);
+
+      if ($validator->fails()) {
+        return redirect('payments/create')
+                ->withErrors($validator)
+                ->withInput();
+      }
+      else
+      {
+        //ALLOCATE
         $payment = new Payment;
 
+        //INITIALIZE
         $payment->Order_num = $request->inputOrderNum;
         $payment->payment_amount = $request->inputPaidAmount;
 
+        //STORE
         $payment->save();
 
+        //REDIRECT
         return redirect('/payments');
-
+      }
     }
 
     /**

@@ -45,46 +45,52 @@
     itemInput.setAttribute("class", "input");
     itemInput.setAttribute("name", itemId);
     itemInput.setAttribute("placeholder", "Tyre ID");
+    itemInput.required = true;
 
     //document.getElementById(subDivNum).appendChild(itemInput);
     //$("#"+subDivId).append("Tyre ID: ");
     subDiv.appendChild(itemInput); //insert in the Div
 
     var qtyInput = document.createElement("INPUT");
-    qtyInput.setAttribute("type", "text");
+    qtyInput.setAttribute("type", "number");
     qtyInput.setAttribute("class", "input");
     qtyInput.setAttribute("name", qty);
     qtyInput.setAttribute("placeholder", "Quantity");
+    qtyInput.setAttribute("min", "1");
+    qtyInput.required = true;
 
     //$("#"+subDivId).append("Quantity: ");
     subDiv.appendChild(qtyInput); //insert in the Div
     //document.getElementById(subDivNum).appendChild(qtyInput);
 
     var priceInput = document.createElement("INPUT");
-    priceInput.setAttribute("type", "text");
+    priceInput.setAttribute("type", "number");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
-
+    itemInput.setAttribute("min", "0");
+    priceInput.required = true;
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(priceInput); //insert in the Div
     //document.getElementById(subDivNum).appendChild(priceInput);
 
     var weightInput = document.createElement("INPUT");
-    weightInput.setAttribute("type", "text");
+    weightInput.setAttribute("type", "number");
     weightInput.setAttribute("class", "input");
     weightInput.setAttribute("name", weight);
     weightInput.setAttribute("placeholder", "Total Weight");
-
+    itemInput.setAttribute("min", "0");
+    weightInput.required = true;
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(weightInput); //insert in the Div
 
     var taxInput = document.createElement("INPUT");
-    taxInput.setAttribute("type", "text");
+    taxInput.setAttribute("type", "number");
     taxInput.setAttribute("class", "input");
     taxInput.setAttribute("name", tax);
     taxInput.setAttribute("placeholder", "Total Tax");
-
+    itemInput.setAttribute("min", "0");
+    taxInput.required = true;
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(taxInput); //insert in the Div
 
@@ -116,6 +122,7 @@
 
   <div class="row">
     <div class="col-md-12">
+      @include('partials.errors')
 
 <div class="panel panel-default">
 <div class="panel-heading">ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</div>

@@ -7,6 +7,7 @@ use App\Container_content;
 use App\Consignment_container;
 use App\Tyre;
 use Illuminate\Http\Request;
+use Validator;
 
 class ContainerContentController extends Controller
 {
@@ -53,6 +54,21 @@ class ContainerContentController extends Controller
     public function store(Request $request)
     {
         //
+        $validator=Validator::make($request->all(),[
+          'inputContainerNum' => 'required|string',
+          'inputBOL' => 'required|string',
+
+        ]);
+
+        if($validator->fails())
+        {
+          return redirect('container_contents/create')
+                  ->withErrors($validator)
+                  ->withInput();
+        }
+
+        else
+        {
 
 
 
@@ -113,6 +129,7 @@ class ContainerContentController extends Controller
         //$invoiceRecord->save();
         //ONLY WORKS FOR SINGLE RECORDS
     }
+  }
 
 
 

@@ -75,7 +75,7 @@
 <form class="form-horizontal" method="post" action="/payments">
 
   {{ csrf_field() }}
-
+  @include('partials.errors')
 
 
   <div class="form-group">
