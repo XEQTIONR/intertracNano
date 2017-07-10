@@ -11,6 +11,9 @@ body {
 .nav-topmost {
   background-color: #de4855;
 }
+.nav-topmost .container-fluid {
+  background-color: #7BC2CA;
+}
 .nav-topmost a {
   color: pink;
   text-decoration: none;
@@ -24,6 +27,16 @@ body {
 }
 .dark-border-bottom {
   border-bottom: 5px solid #E25E69;
+}
+.welcome-banner {
+  background-color: #7b89bc;
+  height: 80vh;
+  margin: 0;
+}
+.welcome-banner h1 {
+  font-size: 100px;
+  font-weight: lighter;
+  color: #FFF;
 }
 .main-title {
   font-size: 50px;
@@ -85,4 +98,14 @@ body {
 }
 .subMenu a:hover {
   color: #E25E69;
+}
+#footer {
+  height: 200px;
+  background-color: #57b1bb;
+  border-top: 1em solid #7BC2CA;
+  margin: 0;
+}
+#footer p {
+  color: #FFF;
+  font-weight: bold;
 }

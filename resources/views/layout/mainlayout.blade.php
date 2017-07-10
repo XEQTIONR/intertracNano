@@ -108,10 +108,17 @@
 
 </div>
 
-<div class="mainContent" style="width: 100%; height: auto;">
+<div class="mainContent" style="width: 100%; height: auto; margin: 0;">
 
   @yield('content')
 
+</div>
+
+<div id="footer" class="jumbotron">
+  <div class="container-fluid">
+    <p class="text-center">Copyright 2017 interacNano</p>
+    <p class="text-center">All rights reserved.</p>
+  </div>
 </div>
 
 <!-- Latest compiled and minified JavaScript -->
