@@ -7,6 +7,7 @@ use App\Order;
 use App\Order_content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class OrderController extends Controller
 {
@@ -84,6 +85,23 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
+      //VALIDATE
+      $validator=Validator::make($request->all(),[
+        'inputCustomerId' => 'required|numeric',
+        'inputDiscountPercent' => 'required|numeric|min:0',
+        'inputDiscountAmount' => 'required|numeric|min:0',
+        'inputTaxAmount' => 'required|string|min:0',
+      ]);
+
+      if($validator->fails())
+      {
+        return redirect('orders/create')
+                ->withErrors($validator)
+                ->withInput();
+      }
+
+      else
+      {
         DB::beginTransaction();
         //{
         $order  = new Order;
@@ -133,7 +151,7 @@ class OrderController extends Controller
         //});
         DB::commit();
         return $contents;
-
+      }
     }
 
 
