@@ -17,6 +17,8 @@
 
       <form method="post" action="/consignment_expenses">
         {{ csrf_field() }}
+        @include('partials.errors')
+        <br>
         BOL# <input type="text" name="inputBOL"> <br>
         Expense Foreign <input type="text"  name="inputExpenseForeign"> <br>
         Expense Local<input type="text" name="inputExpenseLocal"> <br>
