@@ -574,4 +574,4 @@
     {{--make hscode a field--}}
   </div>
 
-{{--</div> <!--container fluid-->--}}
+{{--}}</div> <!--container fluid-->--}}

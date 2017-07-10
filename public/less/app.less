@@ -3,13 +3,46 @@
 @desc The main files with all the styles for the app
 **/
 
-@menu-background: #DDD;
+@base: #F26101;
+@body-background-color: #FFF;
+@nav-background-color: #FFF;//#304269;
+@nav-tab-color: #FFF;
+@nav-tab-highlight:#FFD03F;
+
+@red:#E25E69;
+@contrast:#7BC2CA;
+@yellow:#EC7;
+@dark: #4D3C44;
+@light: #858FB2;
+@a-color:#304269;
 
 body{
+  color: @dark;
+  background-color: @body-background-color;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
 }
 
+.nav-topmost{
+  background-color: darken(@red,5%);
+
+  a{
+    color: pink;
+    text-decoration: none;
+  }
+}
+
+.navbar-intertrac{
+  background-color: @nav-background-color;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  z-index: 500;
+  border-bottom: 10px solid @contrast;
+}
+
+.dark-border-bottom{
+  border-bottom: 5px solid @red;
+}
 
 .main-title{
   font-size: 50px;
@@ -47,21 +80,49 @@ body{
   /*border: 1px solid blue;*/
 
 }
+.nav-pills{
+  //border-bottom: 5px solid @base;
+}
 
-.subMenu{
-  display: none;
-  background-color: @menu-background;
-
-  :hover{
-    background-color: #EEE;
-  }
-
-
-  div{
+.nav-intertrac{
+  background-color: #FFF;
+  //line-height: 5em;
+  li{
+      width: auto;
+      display: block;
+      float: left;
+      margin-left: 0;
+      margin-right: 0;
     a{
-      color: #000;
+      color: darken(@contrast,15%);
+      background-color: @nav-tab-color;
+      //border: 0px;
 
-      text-decoration: none;
+      &:hover{
+        color: @red;
+        background-color: #FFF;
+        border-bottom: 5px solid @red;
+      }
+      &:active{
+        color: @red;
+        background-color: #FFF;
+      }
+
     }
   }
 }
+
+.subMenu{
+  display: none;
+  background-color: #FFF;
+  //border-bottom: 5px solid @contrast;
+
+  a{
+    color: darken(@contrast,20%);
+
+    &:hover{
+      color: @red;
+    }
+  }
+
+  }

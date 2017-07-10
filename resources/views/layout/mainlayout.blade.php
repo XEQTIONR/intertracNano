@@ -36,7 +36,7 @@
 
 <div class="flex-center position-ref full-height">
 
-  <nav id="navMain" class="navbar navbar-default navbar-fixed-top">
+  <nav id="navMain" class="navbar nav-topmost navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
 

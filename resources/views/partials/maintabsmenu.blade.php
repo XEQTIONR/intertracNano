@@ -1,7 +1,7 @@
 
-  <nav class="navbar navbar-default navbar-fixed-top" style="margin-top: 50px; margin-bottom: 0px; z-index: 500;">
-    <div class="container-fluid">
-      <ul class="nav nav-tabs">
+  <nav class="navbar navbar-fixed-top navbar-intertrac">
+    <div class="container">
+      <ul class="nav nav-intertrac">
         <li role="presentation" id="reportMenuItem">
           <a id="reportLabel" href="#">
             <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
@@ -26,6 +26,8 @@
           </a>
         </li>
       </ul>
-        @include('partials.mainmenu')
     </div> <!--container-->
+    <div class="container-fluid">
+        @include('partials.mainmenu')
+    </div> <!--container-fluid-->
   </nav>
