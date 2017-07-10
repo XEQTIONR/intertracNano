@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Consignment;
 use App\Consignment_container;
 use Illuminate\Http\Request;
+use Validator;
 
 class ConsignmentController extends Controller
 {
@@ -67,6 +68,26 @@ class ConsignmentController extends Controller
      */
     public function store(Request $request)
     {
+
+      //VALIDATE
+      $validator=Validator::make($request->all(),[
+        'inputBOL' => 'required|alpha_num',
+        'inputLCnum' => 'required|numeric|digits:12',
+        'inputValue' => 'required|numeric|min:0',
+        'inputExchangeRate' => 'required|numeric|min:0',
+        'inputTax' => 'required|numeric|min:0',
+        'inputLandDate' => 'required|date',
+      ]);
+
+      if($validator->fails())
+      {
+        return redirect('consignments/create')
+                ->withErrors($validator)
+                ->withInput();
+      }
+
+      else
+      {
         //ALLOCATE
         $consignment = new Consignment;
 
@@ -85,6 +106,7 @@ class ConsignmentController extends Controller
 
         //REDIRECT
         return redirect('/consignments/'.$consignment->BOL);
+      }
     }
 
     /**

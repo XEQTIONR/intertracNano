@@ -29,6 +29,7 @@ $( function()
     <div class="col-md-8 col-md-offset-2">
 
   <form class="form-horizontal" method="post" action="/consignments">
+    @include('partials.errors')
 
     <div class="panel panel-default" style="margin-top: 1.6em;">
 
@@ -43,7 +44,7 @@ $( function()
               <div class="form-group">
                 <label for="inputBOL" class="col-md-4 col-md-offset-1 control-label">BOL#</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" name="inputBOL" id="inputBOL">
+                  <input type="text" class="form-control" name="inputBOL" id="inputBOL" required>
                 </div>
               </div>
 
@@ -53,9 +54,9 @@ $( function()
                 <label for="inputLCnum" class="col-md-4 col-md-offset-1 control-label">LC#</label>
                 <div class="col-md-4">
                   @if ($lc_num=="")
-                    <input type="text" class="form-control" name="inputLCnum" id="inputLCnum">
+                    <input type="text" class="form-control" name="inputLCnum" id="inputLCnum" required>
                   @else
-                    <input type="text" class="form-control" name="inputLCnum" id="inputLCnum" value="{{$lc_num}}" readonly>
+                    <input type="text" class="form-control" name="inputLCnum" id="inputLCnum"  required value="{{$lc_num}}" readonly>
                   @endif
                 </div>
               </div>
@@ -63,28 +64,28 @@ $( function()
               <div class="form-group">
                 <label for="inputValue" class="col-md-4 col-md-offset-1 control-label">Value($)</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" name="inputValue" id="inputValue">
+                  <input type="text" class="form-control" name="inputValue" id="inputValue" required>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputExchangeRate" class="col-md-4 col-md-offset-1 control-label">Exchange Rate</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" name="inputExchangeRate" id="inputExchangeRate">
+                  <input type="text" class="form-control" name="inputExchangeRate" id="inputExchangeRate" required>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputTax" class="col-md-4 col-md-offset-1 control-label">Tax Paid</label>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" name="inputTax" id="inputTax">
+                  <input type="text" class="form-control" name="inputTax" id="inputTax" required>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputLandDate" class="col-md-4 col-md-offset-1 control-label">Land Date</label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control pickdate" name="inputLandDate" id="inputLandDate">
+                    <input type="text" class="form-control pickdate" name="inputLandDate" id="inputLandDate" required>
                   </div>
               </div>
 
