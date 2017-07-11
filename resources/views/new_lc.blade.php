@@ -101,14 +101,16 @@ $(function() {
         <div class="form-group">
           <label for="Applicant" class="col-md-3 col-md-offset-2 control-label">Applicant <small>F50</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="Applicant" id="inputApplicant" value="{{old('Applicant')}}" required>
+            {{--<input type="text" class="form-control" name="Applicant" id="inputApplicant" value="{{old('Applicant')}}" required>--}}
+            <textarea rows="5" class="form-control" name="Applicant" id="inputApplicant" required>{{old('Applicant')}}</textarea>
           </div>
         </div>
 
         <div class="form-group">
           <label for="Beneficiary" class="col-md-3 col-md-offset-2 control-label">Beneficiary <small>F59</small></label>
           <div class="col-md-3">
-            <input type="text" class="form-control" name="Beneficiary" id="inputBeneficiary" value="{{old('Beneficiary')}}" required>
+            {{--<input type="text" class="form-control" name="Beneficiary" id="inputBeneficiary" value="{{old('Beneficiary')}}" required>--}}
+            <textarea rows="5" class="form-control" name="Beneficiary" id="inputBeneficiary" required>{{old('Beneficiary')}}</textarea>
           </div>
         </div>
 
