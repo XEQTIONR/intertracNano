@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Tyre;
 use Illuminate\Http\Request;
 use Validator;
-
+use Illuminate\Support\Str;
 class TyreController extends Controller
 {
 
@@ -68,9 +68,10 @@ class TyreController extends Controller
           $tyre = new Tyre;
 
           //INITIALIZE
-          $tyre->brand = $request->Brand;
-          $tyre->size = $request->Size;
-          $tyre->pattern = $request->Pattern;
+          $tyre->brand = Str::upper($request->Brand);
+          $tyre->size = Str::upper($request->Size);
+          $tyre->lisi = Str::upper($request->Lisi);
+          $tyre->pattern = Str::upper($request->Pattern);
 
           //STORE
           $tyre->save();

@@ -39,6 +39,13 @@
       </div>
 
       <div class="form-group">
+        <label for="inputLisi" class="col-md-3 col-md-offset-2 control-label">Li/Si</label>
+        <div class="col-md-3">
+          <input type="text" class="form-control" name="Lisi" id="inputLisi" value="{{old('Lisi')}}">
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="inputPattern" class="col-md-3 col-md-offset-2 control-label">Pattern Code</label>
         <div class="col-md-3">
           <input type="text" class="form-control" name="Pattern" id="inputPattern" value="{{old('Pattern')}}" required>

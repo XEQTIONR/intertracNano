@@ -18,6 +18,7 @@
     <th>tyre_id</th>
     <th>Tyre Brand</th>
     <th>Tyre Size</th>
+    <th>Li/Si</th>
     <th>Tyre Pattern</th>
     <th>Created</th>
     <th>Updated</th>
@@ -31,6 +32,7 @@
     <td>{{$tyre->tyre_id}}</td>
     <td>{{$tyre->brand}}</td>
     <td>{{$tyre->size}}</td>
+    <td>{{$tyre->lisi}}</td>
     <td>{{$tyre->pattern}}</td>
     <td>{{$tyre->created_at}}</td>
     <td>{{$tyre->updated_at}}</td>
