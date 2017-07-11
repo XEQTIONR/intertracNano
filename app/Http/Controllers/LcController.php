@@ -38,13 +38,13 @@ class LcController extends Controller
     {
       if ($request->ajax()) //the request is an ajax request
       {
-        $tyres = Tyre::paginate(5);
+        $tyres = Tyre::paginate(7);
         return view('partials.tyres', compact('tyres'));
 
       }
       else
       {
-        $tyres = Tyre::paginate(5); //non-ajax request
+        $tyres = Tyre::paginate(7); //non-ajax request
         return view('new_lc', compact('tyres'));
       }
     }

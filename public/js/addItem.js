@@ -46,7 +46,7 @@
     //document.getElementById(subDivNum).appendChild(qtyInput);
 
     var priceInput = document.createElement("INPUT");
-    priceInput.setAttribute("type", "number");
+    priceInput.setAttribute("type", "text");
     priceInput.setAttribute("min", "0");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);

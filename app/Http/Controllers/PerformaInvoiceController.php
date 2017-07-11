@@ -31,11 +31,20 @@ class PerformaInvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
-        $tyres = Tyre::all();
-        return view('new_performa_invoice', compact('tyres'));
+        if ($request->ajax()) //the request is an ajax request
+        {
+          $tyres = Tyre::paginate(5);
+          return view('partials.tyres', compact('tyres'));
+
+        }
+        else
+        {
+          $tyres = Tyre::paginate(5); //non-ajax request
+          return view('new_performa_invoice', compact('tyres'));
+        }
 
     }
 
@@ -74,7 +83,7 @@ class PerformaInvoiceController extends Controller
         else
         {
           $lc->performaInvoice()->saveMany($invoiceRecord);
-          return redirect('/performa_invoices/create');
+          return redirect('/lcs/'.$request->inputLC);
         }
         //$invoiceRecord->save();
         //ONLY WORKS FOR SINGLE RECORDS

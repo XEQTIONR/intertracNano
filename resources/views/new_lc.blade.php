@@ -20,34 +20,8 @@ $( function()
   });
 </script>
 
-<script type="text/javascript">
-
-$(function() {
-    $('body').on('click', '.pagination a', function(e) {
-        e.preventDefault();
-
-        $('#load a').css('color', '#dfecf6');
-        $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" src="/images/spinner.gif" />');
-
-        var url = $(this).attr('href');
-        getTyres(url);
-        window.history.pushState("", "", url);
-    });
-
-    function getTyres(url) {
-        $.ajax({
-            url : url
-        }).done(function (data) {
-            $('#tyreCatalog').html(data);
-        }).fail(function () {
-            alert('Tyres Catalog could not be loaded.');
-        });
-    }
-});
-
-</script>
-
 <script src="/js/addItem.js"></script>
+<script src="/js/spinner.js"></script>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -59,7 +33,7 @@ $(function() {
 <div class="container">
 
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-12">
       <div class="page-header">
         <h1>New LC <small>Enter new LC information.</small></h1>
       </div>
@@ -67,7 +41,7 @@ $(function() {
   </div>
 
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-12">
 
       <form class="form-horizontal" method="post" action="/lcs">
         {{ csrf_field() }}
