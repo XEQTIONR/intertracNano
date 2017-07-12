@@ -64,7 +64,7 @@
     //document.getElementById(subDivNum).appendChild(qtyInput);
 
     var priceInput = document.createElement("INPUT");
-    priceInput.setAttribute("type", "number");
+    priceInput.setAttribute("type", "text");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
@@ -75,7 +75,7 @@
     //document.getElementById(subDivNum).appendChild(priceInput);
 
     var weightInput = document.createElement("INPUT");
-    weightInput.setAttribute("type", "number");
+    weightInput.setAttribute("type", "text");
     weightInput.setAttribute("class", "input");
     weightInput.setAttribute("name", weight);
     weightInput.setAttribute("placeholder", "Total Weight");
@@ -85,7 +85,7 @@
     subDiv.appendChild(weightInput); //insert in the Div
 
     var taxInput = document.createElement("INPUT");
-    taxInput.setAttribute("type", "number");
+    taxInput.setAttribute("type", "text");
     taxInput.setAttribute("class", "input");
     taxInput.setAttribute("name", tax);
     taxInput.setAttribute("placeholder", "Total Tax");

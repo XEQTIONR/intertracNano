@@ -91,7 +91,7 @@
 
 <div id="accordion" class="container">
 
-  <h3>Performa Invoice</h3>
+  <h3>Proforma Invoice</h3>
   <div>
     {{--SOMETHING RANDOM--}}
     <table class="table table-hover table-bordered">

@@ -92,6 +92,7 @@
       <span>{{$expense->expense_foreign}}</span>
       <span>{{$expense->expense_notes}}</span> <br>
     @endforeach
+    <a href="/consignment_expenses/create/{{$consignment->BOL}}" class="btn btn-primary">Add an expense</a>
   </div>
 
 </div> <!--accordion-->

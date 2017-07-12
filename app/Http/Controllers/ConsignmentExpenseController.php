@@ -29,7 +29,15 @@ class ConsignmentExpenseController extends Controller
     public function create()
     {
         //
-        return view('new_expense');
+        $bol="";
+        return view('new_expense', compact('bol'));
+    }
+
+    public function createGivenBOL($bol)
+    {
+
+      return view('new_expense', compact('bol'));
+
     }
 
     /**
@@ -43,13 +51,14 @@ class ConsignmentExpenseController extends Controller
       //VALIDATE
       $validator=Validator::make($request->all(),[
         'inputBOL' => 'required|string',
-        'inputExpenseLocal' => 'required|numerice|min:0',
-        'inputExpenseForeign' => 'required|numerice|min:0',
+        'inputExpenseLocal' => 'required|numeric|min:0',
+        'inputExpenseForeign' => 'required|numeric|min:0',
+        'inputNote' => 'required|string',
       ]);
 
       if ($validator->fails())
       {
-        return redirect('/consignment_expenses/create')
+        return redirect('/consignment_expenses/create/')
               ->withErrors($validator)
               ->withInput();
       }

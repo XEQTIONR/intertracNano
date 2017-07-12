@@ -35,7 +35,7 @@
         @include('partials.errors')
 
         <div class="panel panel-default" style="margin-top: 1.6em;">
-          <div class="panel-heading">1. Enter a LC number that already exists in the system without a peroforma invoice</div>
+          <div class="panel-heading">1. Enter a LC number that already exists in the system without a proforma invoice</div>
           <div class="panel-body">
 
             <label for="inputLC" class="col-md-3 col-md-offset-2 control-label">LC#  <small>F20</small></label>

@@ -150,7 +150,7 @@ class OrderController extends Controller
         $order->orderContents()->saveMany($contents);
         //});
         DB::commit();
-        return $contents;
+        return redirect('/orders/'.$order->Order_num);
       }
     }
 
