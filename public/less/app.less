@@ -32,15 +32,42 @@ body{
 }
 
 .nav-topmost{
-  background-color: @slate-gray;//darken(@red,5%);
+  background-color: @slate-gray;
 
-  .container-fluid{
-    background-color: #7BC2CA;
-  }
 
   a{
     color: #FFF;
     text-decoration: none;
+
+    &:hover{
+      color: @orange;
+    }
+  }
+}
+
+#NavBootstrapOverride{
+  li{
+
+    a{
+      &:hover
+      {
+        background-color: @orange;
+        color: @slate-gray;
+      }
+
+      &:focus
+      {
+        //background-color: @orange;
+        color: @slate-gray;
+      }
+      &:active
+      {
+        background-color: @orange;
+        color: @slate-gray;
+      }
+
+
+    }
   }
 }
 

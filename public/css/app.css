@@ -14,12 +14,23 @@ body {
 .nav-topmost {
   background-color: #345;
 }
-.nav-topmost .container-fluid {
-  background-color: #7BC2CA;
-}
 .nav-topmost a {
   color: #FFF;
   text-decoration: none;
+}
+.nav-topmost a:hover {
+  color: #FA4;
+}
+#NavBootstrapOverride li a:hover {
+  background-color: #FA4;
+  color: #345;
+}
+#NavBootstrapOverride li a:focus {
+  color: #345;
+}
+#NavBootstrapOverride li a:active {
+  background-color: #FA4;
+  color: #345;
 }
 .navbar-intertrac {
   background-color: #57b1bb;
