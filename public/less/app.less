@@ -16,6 +16,14 @@
 @purple: #858FB2;
 @a-color:#304269;
 
+@slate-gray: #345;
+@orange: #FA4;
+@green: #7C7;
+@light-gray: #DDD;
+
+html{
+  background-color: @slate-gray;
+}
 body{
   color: @dark;
   background-color: @body-background-color;
@@ -24,39 +32,67 @@ body{
 }
 
 .nav-topmost{
-  background-color: darken(@red,5%);
+  background-color: @slate-gray;//darken(@red,5%);
 
   .container-fluid{
     background-color: #7BC2CA;
   }
 
   a{
-    color: pink;
+    color: #FFF;
     text-decoration: none;
   }
 }
 
 .navbar-intertrac{
-  background-color: @nav-background-color;
+  background-color: darken(@contrast, 10%);
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 10px solid @contrast;
+  border-bottom: 12px solid @green;
 }
 
+.nav-intertrac{
+  //background-color: @light-gray;
+  line-height: 3em;
+  li{
+      width: auto;
+      display: block;
+      float: left;
+      margin-left: 0;
+      margin-right: 0;
+    a{
+      color: #FFF;//darken(@contrast,15%);
+      //font-weight: bolder;
+      //background-color: @nav-tab-color;
+      //border: 0px;
+
+      &:hover{
+        //color: @slate-gray;//darken(saturate(@green,100%),20%);
+        background-color: @contrast;//darken(@contrast, 10%);
+        border-bottom: 5px solid @green;//lighten(saturate(@green,100%),10%);
+      }
+      &:active{
+        color: @orange;
+        background-color: #FFF;
+      }
+
+    }
+  }
+}
 .dark-border-bottom{
-  border-bottom: 5px solid @red;
+  border-bottom: 5px solid @orange;
 }
 
 .welcome-banner{
-  background-color: @red;
+  background-color: @slate-gray;
   height: 80vh;
   margin: 0;
   h1{
 
     font-size: 100px;
     font-weight: lighter;
-    color: lighten(@yellow, 10%);
+    color: @orange;//lighten(@yellow, 10%);
 
     margin-top: 1em;
     span{
@@ -101,37 +137,8 @@ body{
   /*border: 1px solid blue;*/
 
 }
-.nav-pills{
-  //border-bottom: 5px solid @base;
-}
 
-.nav-intertrac{
-  background-color: #FFF;
-  line-height: 1em;
-  li{
-      width: auto;
-      display: block;
-      float: left;
-      margin-left: 0;
-      margin-right: 0;
-    a{
-      color: darken(@contrast,15%);
-      background-color: @nav-tab-color;
-      //border: 0px;
 
-      &:hover{
-        color: @red;
-        background-color: #FFF;
-        border-bottom: 5px solid @red;
-      }
-      &:active{
-        color: @red;
-        background-color: #FFF;
-      }
-
-    }
-  }
-}
 
 .subMenu{
   display: none;
@@ -142,7 +149,7 @@ body{
     color: darken(@contrast,20%);
 
     &:hover{
-      color: @red;
+      color: @orange;
     }
   }
 

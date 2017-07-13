@@ -2,6 +2,9 @@
 @author Ishtehar Hussain
 @desc The main files with all the styles for the app
 **/
+html {
+  background-color: #345;
+}
 body {
   color: #494252;
   background-color: #FFF;
@@ -9,34 +12,55 @@ body {
   font-weight: 500;
 }
 .nav-topmost {
-  background-color: #de4855;
+  background-color: #345;
 }
 .nav-topmost .container-fluid {
   background-color: #7BC2CA;
 }
 .nav-topmost a {
-  color: pink;
+  color: #FFF;
   text-decoration: none;
 }
 .navbar-intertrac {
-  background-color: #FFF;
+  background-color: #57b1bb;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 10px solid #7BC2CA;
+  border-bottom: 12px solid #7C7;
+}
+.nav-intertrac {
+  line-height: 3em;
+}
+.nav-intertrac li {
+  width: auto;
+  display: block;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.nav-intertrac li a {
+  color: #FFF;
+}
+.nav-intertrac li a:hover {
+  background-color: #7BC2CA;
+  border-bottom: 5px solid #7C7;
+}
+.nav-intertrac li a:active {
+  color: #FA4;
+  background-color: #FFF;
 }
 .dark-border-bottom {
-  border-bottom: 5px solid #E25E69;
+  border-bottom: 5px solid #FA4;
 }
 .welcome-banner {
-  background-color: #E25E69;
+  background-color: #345;
   height: 80vh;
   margin: 0;
 }
 .welcome-banner h1 {
   font-size: 100px;
   font-weight: lighter;
-  color: #f4dda4;
+  color: #FA4;
   margin-top: 1em;
 }
 .welcome-banner h1 span {
@@ -71,30 +95,6 @@ body {
   text-align: center;
   /*border: 1px solid blue;*/
 }
-.nav-intertrac {
-  background-color: #FFF;
-  line-height: 1em;
-}
-.nav-intertrac li {
-  width: auto;
-  display: block;
-  float: left;
-  margin-left: 0;
-  margin-right: 0;
-}
-.nav-intertrac li a {
-  color: #47a7b1;
-  background-color: #FFF;
-}
-.nav-intertrac li a:hover {
-  color: #E25E69;
-  background-color: #FFF;
-  border-bottom: 5px solid #E25E69;
-}
-.nav-intertrac li a:active {
-  color: #E25E69;
-  background-color: #FFF;
-}
 .subMenu {
   display: none;
   background-color: #FFF;
@@ -103,7 +103,7 @@ body {
   color: #40959f;
 }
 .subMenu a:hover {
-  color: #E25E69;
+  color: #FA4;
 }
 #footer {
   height: 200px;

@@ -32,7 +32,7 @@
 </head>
 
 
-<body style="padding-top: 100px;">
+<body>
 
 <div class="flex-center position-ref full-height">
 
@@ -108,7 +108,7 @@
 
 </div>
 
-<div class="mainContent" style="width: 100%; height: auto; margin: 0;">
+<div class="mainContent" style="width: 100%; height: auto; margin: 100px 0 0 0;">
 
   @yield('content')
 
