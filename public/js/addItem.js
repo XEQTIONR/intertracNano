@@ -40,6 +40,7 @@
     qtyInput.setAttribute("class", "input");
     qtyInput.setAttribute("name", qty);
     qtyInput.setAttribute("placeholder", "Quantity");
+    qtyInput.setAttribute("onchange", "updateTotals()");
     qtyInput.required = true;
     //$("#"+subDivId).append("Quantity: ");
     subDiv.appendChild(qtyInput); //insert in the Div
@@ -78,4 +79,26 @@
     count--;
     document.getElementById("numItems").value = count;
 
+  }
+
+  function updateTotals()
+  {
+    //var count = document.getElementById("numItems").value;
+    var totalQty = 0;
+    for (var i = 0; i<count; i++)
+    {
+      var qtyField = "qty[" + i + "]";
+      var qty  = document.getElementsByName(qtyField)[0].value;
+
+      if (qty=="")
+        qty=0;
+      //if(isInteger(qty))
+      //{
+        totalQty = parseInt(totalQty) + parseInt(qty);
+
+      //}
+    }
+
+    //alert(totalQty);
+    document.getElementById("QtyTotal").innerHTML = totalQty;
   }

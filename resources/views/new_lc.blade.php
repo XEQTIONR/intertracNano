@@ -3,7 +3,7 @@
 @section('scripts')
 <style>
   .input{
-    width : 33%;
+    width : 25%;
   }
 
   label small{
@@ -171,7 +171,19 @@ $( function()
                 </div><!--col-->
               </div><!--row-->
           </div><!--itemList-->
-          <br>
+          <hr>
+          <div class="row">
+            <div class="col-md-3">
+              TOTAL
+            </div>
+            <div id="QtyTotal" class="col-md-3">
+
+            </div>
+            <div class="col-md-3">
+              PRICE
+            </div>
+          </div>
+
           <div class="row">
             <div class="form-group">
               <label for="numItems" class="col-md-4 control-label">Num items</label>
@@ -180,6 +192,8 @@ $( function()
               </div>
             </div>
           </div> <!--row-->
+
+
 
           <div class="row">
             <button class="btn btn-default" type="button" onclick="addItem()">Add New Item</button>
