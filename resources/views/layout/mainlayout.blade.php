@@ -61,13 +61,13 @@
         </ul>
 
         <!-- Right Side Of Navbar -->
-        <ul id="NavBootstrapOverride" class="nav navbar-nav navbar-right">
+        <ul  class="nav navbar-nav navbar-right">
           <!-- Authentication Links -->
           @if (Auth::guest())
-            <li><a href="{{ route('login') }}">Login</a></li>
+            <li id="NavBootstrapOverride"><a href="{{ route('login') }}">Login</a></li>
 
           @else
-            <li class="dropdown" >
+            <li id="NavBootstrapOverride" class="dropdown" >
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 {{ Auth::user()->name }} <span class="caret"></span>
               </a>
@@ -108,7 +108,7 @@
 
 </div>
 
-<div class="mainContent" style="width: 100%; height: auto; margin: 100px 0 0 0;">
+<div id="mainContent">
 
   @yield('content')
 

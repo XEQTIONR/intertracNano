@@ -7,7 +7,6 @@ html {
 }
 body {
   color: #494252;
-  background-color: #FFF;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
 }
@@ -21,23 +20,27 @@ body {
 .nav-topmost a:hover {
   color: #FA4;
 }
-#NavBootstrapOverride li a:hover {
+#NavBootstrapOverride > a:hover {
   background-color: #FA4;
   color: #345;
 }
-#NavBootstrapOverride li a:focus {
-  color: #345;
-}
-#NavBootstrapOverride li a:active {
+#NavBootstrapOverride > a:focus {
   background-color: #FA4;
   color: #345;
+}
+#NavBootstrapOverride > a:active {
+  background-color: #FA4;
+  color: #345;
+}
+.dark-border-bottom {
+  border-bottom: 5px solid #FA4;
 }
 .navbar-intertrac {
   background-color: #57b1bb;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 12px solid #7C7;
+  border-bottom: 12px solid #DDD;
 }
 .nav-intertrac {
   line-height: 3em;
@@ -54,18 +57,20 @@ body {
 }
 .nav-intertrac li a:hover {
   background-color: #7BC2CA;
-  border-bottom: 5px solid #7C7;
+  border-bottom: 5px solid #FA4;
 }
 .nav-intertrac li a:active {
   color: #FA4;
   background-color: #FFF;
 }
-.dark-border-bottom {
-  border-bottom: 5px solid #FA4;
+#mainContent {
+  width: 100%;
+  min-height: 60vh;
+  margin: 100px 0 0 0;
 }
 .welcome-banner {
   background-color: #345;
-  height: 80vh;
+  height: 70vh;
   margin: 0;
 }
 .welcome-banner h1 {
@@ -117,7 +122,7 @@ body {
   color: #FA4;
 }
 #footer {
-  height: 200px;
+  height: auto;
   background-color: #57b1bb;
   border-top: 1em solid #7BC2CA;
   margin: 0;

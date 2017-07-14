@@ -4,7 +4,6 @@
 **/
 
 @base: #F26101;
-@body-background-color: #FFF;
 @nav-background-color: #FFF;//#304269;
 @nav-tab-color: #FFF;
 @nav-tab-highlight:#FFD03F;
@@ -26,7 +25,6 @@ html{
 }
 body{
   color: @dark;
-  background-color: @body-background-color;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
 }
@@ -46,9 +44,9 @@ body{
 }
 
 #NavBootstrapOverride{
-  li{
+  //li{
 
-    a{
+    >a{
       &:hover
       {
         background-color: @orange;
@@ -57,7 +55,7 @@ body{
 
       &:focus
       {
-        //background-color: @orange;
+        background-color: @orange;
         color: @slate-gray;
       }
       &:active
@@ -68,7 +66,11 @@ body{
 
 
     }
-  }
+  //}
+}
+
+.dark-border-bottom{
+  border-bottom: 5px solid @orange;
 }
 
 .navbar-intertrac{
@@ -76,7 +78,7 @@ body{
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 12px solid @green;
+  border-bottom: 12px solid @light-gray;
 }
 
 .nav-intertrac{
@@ -97,7 +99,7 @@ body{
       &:hover{
         //color: @slate-gray;//darken(saturate(@green,100%),20%);
         background-color: @contrast;//darken(@contrast, 10%);
-        border-bottom: 5px solid @green;//lighten(saturate(@green,100%),10%);
+        border-bottom: 5px solid @orange;//lighten(saturate(@green,100%),10%);
       }
       &:active{
         color: @orange;
@@ -107,13 +109,17 @@ body{
     }
   }
 }
-.dark-border-bottom{
-  border-bottom: 5px solid @orange;
+
+#mainContent{
+  width: 100%;
+  //height: auto;
+  min-height: 60vh;
+  margin: 100px 0 0 0;
 }
 
 .welcome-banner{
   background-color: @slate-gray;
-  height: 80vh;
+  height: 70vh;
   margin: 0;
   h1{
 
@@ -183,7 +189,7 @@ body{
   }
 
   #footer{
-    height: 200px;
+    height: auto;
     background-color: darken(@contrast, 10%);
     border-top: 1em solid @contrast;
     margin: 0;
