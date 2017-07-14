@@ -10,6 +10,15 @@
     color : #999;
     font-weight: lighter;
   }
+
+  .tyreDiv span{
+    float : right;
+    width : 10%;
+  }
+
+  #GrandTotal{
+    text-align: right;
+  }
 </style>
 
 <script>
@@ -179,8 +188,7 @@ $( function()
             <div id="QtyTotal" class="col-md-3">
 
             </div>
-            <div class="col-md-3">
-              PRICE
+            <div id= "GrandTotal" class="col-md-3 col-md-offset-3">
             </div>
           </div>
 

@@ -13,15 +13,13 @@
     var qty = "qty[" + count + "]";
     var price = "price[" + count + "]";
 
+    //Divs for every new invice item
     var subDiv = document.createElement("DIV");
     var subDivId = "subDiv" + count;
-
-    //Div for every new invice item
     subDiv.setAttribute("class", "tyreDiv");
     subDiv.setAttribute("id", subDivId);
 
-    //document.getElementById("itemList").append(subDiv);
-    //Items that go inside the Div
+    //Items that go inside the Divs
     var itemInput = document.createElement("INPUT");
     itemInput.setAttribute("type", "number");
     itemInput.setAttribute("min", "1");
@@ -30,10 +28,9 @@
     itemInput.setAttribute("placeholder", "Tyre ID");
     itemInput.required = true;
 
-    //document.getElementById(subDivNum).appendChild(itemInput);
-    //$("#"+subDivId).append("Tyre ID: ");
     subDiv.appendChild(itemInput); //insert in the Div
 
+    //Quantities for items
     var qtyInput = document.createElement("INPUT");
     qtyInput.setAttribute("type", "number");
     qtyInput.setAttribute("min", "0");
@@ -42,23 +39,31 @@
     qtyInput.setAttribute("placeholder", "Quantity");
     qtyInput.setAttribute("onchange", "updateTotals()");
     qtyInput.required = true;
-    //$("#"+subDivId).append("Quantity: ");
-    subDiv.appendChild(qtyInput); //insert in the Div
-    //document.getElementById(subDivNum).appendChild(qtyInput);
 
+    subDiv.appendChild(qtyInput); //insert in the Div
+
+    //Unit prices for items
     var priceInput = document.createElement("INPUT");
     priceInput.setAttribute("type", "text");
     priceInput.setAttribute("min", "0");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
+    priceInput.setAttribute("onchange", "updateTotals()");
     priceInput.required = true;
-    //$("#"+subDivId).append("Unit Price: ");
+
     subDiv.appendChild(priceInput); //insert in the Div
-    //document.getElementById(subDivNum).appendChild(priceInput);
+
+    //Subtotal (quanity * unitPrice)
+    var subTotalLabel = document.createElement("SPAN");
+    subTotalLabel.setAttribute("name", "subTotal");
+    subTotalLabel.setAttribute("id", "subTotal"+count);
+
+
+    subDiv.appendChild(subTotalLabel); //insert in the Div
+
 
     var itemlist = document.getElementById("itemList");
-
     itemlist.appendChild(subDiv);
 
     count++;
@@ -67,38 +72,38 @@
 
   function removeItem()
   {
-    //alert("remove item works");
     var parent = document.getElementById("itemList");
-
     var subDivId = "subDiv" + (count-1);
-    //alert(subDivId);
     var child = document.getElementById(subDivId);
-    //child.innerHTML = "<button>THE BUTTON</button>";
 
     parent.removeChild(child);
     count--;
     document.getElementById("numItems").value = count;
-
   }
 
   function updateTotals()
   {
-    //var count = document.getElementById("numItems").value;
     var totalQty = 0;
+    var grandTotal = 0;
+
     for (var i = 0; i<count; i++)
     {
       var qtyField = "qty[" + i + "]";
+      var unitPriceField = "price[" + i + "]";
       var qty  = document.getElementsByName(qtyField)[0].value;
+      var unitprice = document.getElementsByName(unitPriceField)[0].value;
 
       if (qty=="")
         qty=0;
-      //if(isInteger(qty))
-      //{
-        totalQty = parseInt(totalQty) + parseInt(qty);
+      if(unitprice=="")
+        unitprice=0;
 
-      //}
+        totalQty = parseInt(totalQty) + parseInt(qty);
+        var subTotal =  Number(unitprice) * Number(qty);
+        grandTotal+= Number(subTotal);
+        document.getElementById("subTotal"+i).innerHTML = subTotal.toFixed(2);
     }
 
-    //alert(totalQty);
     document.getElementById("QtyTotal").innerHTML = totalQty;
+    document.getElementById("GrandTotal").innerHTML = grandTotal.toFixed(2);
   }
