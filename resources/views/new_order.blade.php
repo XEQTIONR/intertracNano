@@ -14,7 +14,7 @@
     }
 
     .input{
-      width: 33%;
+      width: 25%;
     }
 
   </style>

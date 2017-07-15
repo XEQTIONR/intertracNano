@@ -46,6 +46,7 @@
     var priceInput = document.createElement("INPUT");
     priceInput.setAttribute("type", "number");
     priceInput.setAttribute("min", "0");
+    priceInput.setAttribute("step", "0.01");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
