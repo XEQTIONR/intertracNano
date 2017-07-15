@@ -4,7 +4,7 @@
 @section('scripts')
 <style>
   .input{
-    width : 33%;
+    width : 25%;
   }
 
   label small{
@@ -62,6 +62,17 @@
                       </div><!--row-->
                   </div><!--itemList-->
                   <br>
+
+                  <div class="row">
+                    <div class="col-xs-3 col-md-3">
+                      TOTAL
+                    </div>
+                    <div id="QtyTotal" class="col-xs-3 col-md-3">
+
+                    </div>
+                    <div id= "GrandTotal" class="col-xs-3 col-md-3 col-xs-offset-3 col-md-offset-3">
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="form-group">
                       <label for="numItems" class="col-md-4 control-label">Num items</label>

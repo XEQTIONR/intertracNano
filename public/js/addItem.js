@@ -44,7 +44,7 @@
 
     //Unit prices for items
     var priceInput = document.createElement("INPUT");
-    priceInput.setAttribute("type", "text");
+    priceInput.setAttribute("type", "number");
     priceInput.setAttribute("min", "0");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);

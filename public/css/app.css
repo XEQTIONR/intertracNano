@@ -70,7 +70,8 @@ body {
 }
 .welcome-banner {
   background-color: #345;
-  height: 70vh;
+  min-height: 545px;
+  overflow: hidden;
   margin: 0;
 }
 .welcome-banner h1 {

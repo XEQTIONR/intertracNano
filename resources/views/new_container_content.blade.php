@@ -14,7 +14,7 @@
   }
 
   .input{
-    width : 20%;
+    width : 15%;
   }
 
 </style>
@@ -41,7 +41,8 @@
     //document.getElementById("itemList").append(subDiv);
     //Items that go inside the Div
     var itemInput = document.createElement("INPUT");
-    itemInput.setAttribute("type", "text");
+    itemInput.setAttribute("type", "number");
+    itemInput.setAttribute("min", "1");
     itemInput.setAttribute("class", "input");
     itemInput.setAttribute("name", itemId);
     itemInput.setAttribute("placeholder", "Tyre ID");
@@ -53,10 +54,11 @@
 
     var qtyInput = document.createElement("INPUT");
     qtyInput.setAttribute("type", "number");
+    qtyInput.setAttribute("min", "0");
     qtyInput.setAttribute("class", "input");
     qtyInput.setAttribute("name", qty);
     qtyInput.setAttribute("placeholder", "Quantity");
-    qtyInput.setAttribute("min", "1");
+    qtyInput.setAttribute("onchange", "updateTotals()");
     qtyInput.required = true;
 
     //$("#"+subDivId).append("Quantity: ");
@@ -64,18 +66,20 @@
     //document.getElementById(subDivNum).appendChild(qtyInput);
 
     var priceInput = document.createElement("INPUT");
-    priceInput.setAttribute("type", "text");
+    priceInput.setAttribute("type", "number");
+    priceInput.setAttribute("min", "0");
     priceInput.setAttribute("class", "input");
     priceInput.setAttribute("name", price);
     priceInput.setAttribute("placeholder", "Unit Price");
-    itemInput.setAttribute("min", "0");
+    priceInput.setAttribute("onchange", "updateTotals()");
     priceInput.required = true;
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(priceInput); //insert in the Div
     //document.getElementById(subDivNum).appendChild(priceInput);
 
     var weightInput = document.createElement("INPUT");
-    weightInput.setAttribute("type", "text");
+    weightInput.setAttribute("type", "number");
+    priceInput.setAttribute("min", "0");
     weightInput.setAttribute("class", "input");
     weightInput.setAttribute("name", weight);
     weightInput.setAttribute("placeholder", "Total Weight");
@@ -85,7 +89,8 @@
     subDiv.appendChild(weightInput); //insert in the Div
 
     var taxInput = document.createElement("INPUT");
-    taxInput.setAttribute("type", "text");
+    taxInput.setAttribute("type", "number");
+    priceInput.setAttribute("min", "0");
     taxInput.setAttribute("class", "input");
     taxInput.setAttribute("name", tax);
     taxInput.setAttribute("placeholder", "Total Tax");
@@ -94,6 +99,12 @@
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(taxInput); //insert in the Div
 
+    var subTotalLabel = document.createElement("SPAN");
+    subTotalLabel.setAttribute("name", "subTotal");
+    subTotalLabel.setAttribute("id", "subTotal"+count);
+
+
+    subDiv.appendChild(subTotalLabel); //insert in the Div
 
 
     var itemlist = document.getElementById("itemList");
@@ -104,6 +115,31 @@
     document.getElementById("numItems").value = count;
   }
 
+  function updateTotals()
+  {
+    var totalQty = 0;
+    var grandTotal = 0;
+
+    for (var i = 0; i<count; i++)
+    {
+      var qtyField = "qty[" + i + "]";
+      var unitPriceField = "price[" + i + "]";
+      var qty  = document.getElementsByName(qtyField)[0].value;
+      var unitprice = document.getElementsByName(unitPriceField)[0].value;
+
+      if (qty=="")
+        qty=0;
+      if(unitprice=="")
+        unitprice=0;
+
+        totalQty = parseInt(totalQty) + parseInt(qty);
+        var subTotal =  Number(unitprice) * Number(qty);
+        grandTotal+= Number(subTotal);
+        document.getElementById("subTotal"+i).innerHTML = subTotal.toFixed(2);
+    }
+    document.getElementById("QtyTotal").innerHTML = totalQty;
+    document.getElementById("GrandTotal").innerHTML = grandTotal.toFixed(2);
+  }
   </script>
 @endsection
 
@@ -164,7 +200,20 @@
 
     <div class="well" id="itemList">
 
-    </div> <br>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-md-3">
+        TOTAL
+      </div>
+      <div id="QtyTotal" class="col-md-3">
+
+      </div>
+      <div id= "GrandTotal" class="col-md-3 col-md-offset-3">
+      </div>
+    </div>
 
     <div class="form-group">
       <label for="numItems" class="col-md-4 control-label">Num items</label>
@@ -180,29 +229,7 @@
 
 
   <div class="col-md-4">
-    <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>tyre_id</th>
-        <th>Tyre Brand</th>
-        <th>Tyre Size</th>
-        <th>Tyre Pattern</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      @foreach ($tyres as $tyre)
-        <tr>
-        <td>{{$tyre->tyre_id}}</td>
-        <td>{{$tyre->brand}}</td>
-        <td>{{$tyre->size}}</td>
-        <td>{{$tyre->pattern}}</td>
-      </tr>
-      @endforeach
-    </tbody>
-
-
-    </table>
+    @include('partials.tyres')
   </div><!--col-->
 </div><!--row-->
 </div><!--panel-body-->

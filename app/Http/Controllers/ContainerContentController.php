@@ -30,12 +30,20 @@ class ContainerContentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
-        $bol="";
-        $tyres = Tyre::all();
-        return view('new_container_content', compact('tyres','bol'));
+        if ($request->ajax()) {
+          $tyres = Tyre::paginate(7);
+          return view('partials.tyres', compact('tyres'));
+        }
+
+        else
+        {
+          $bol="";
+          $tyres = Tyre::paginate(7);
+          return view('new_container_content', compact('tyres','bol'));
+        }
     }
 
     public function createGivenBOL($bol)
