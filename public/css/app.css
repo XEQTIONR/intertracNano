@@ -65,13 +65,14 @@ body {
 }
 #mainContent {
   width: 100%;
-  min-height: 60vh;
+  height: auto;
+  min-height: 70vh;
   margin: 100px 0 0 0;
+  background-color: #EEE;
 }
 .welcome-banner {
   background-color: #345;
-  min-height: 545px;
-  overflow: hidden;
+  min-height: 60vh;
   margin: 0;
 }
 .welcome-banner h1 {
@@ -123,10 +124,11 @@ body {
   color: #FA4;
 }
 #footer {
-  height: auto;
+  postion: absolute;
   background-color: #57b1bb;
   border-top: 1em solid #7BC2CA;
   margin: 0;
+  bottom: 0;
 }
 #footer p {
   color: #FFF;

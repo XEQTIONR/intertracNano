@@ -34,7 +34,7 @@
 
 <body>
 
-<div class="flex-center position-ref full-height">
+
 
   <nav id="navMain" class="navbar nav-topmost navbar-fixed-top">
     <div class="container">
@@ -106,7 +106,6 @@
   {{--  @include('partials.mainmenu') --}}
   @endif
 
-</div>
 
 <div id="mainContent">
 

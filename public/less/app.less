@@ -27,6 +27,7 @@ body{
   color: @dark;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
+  //min-height: 100vh;
 }
 
 .nav-topmost{
@@ -112,15 +113,17 @@ body{
 
 #mainContent{
   width: 100%;
-  //height: auto;
-  min-height: 60vh;
+  height: auto;
+  min-height: 70vh;
   margin: 100px 0 0 0;
+  background-color: #EEE;
 }
 
 .welcome-banner{
   background-color: @slate-gray;
-  min-height: 545px;
-  overflow: hidden;
+  //height: 100vh -100px;
+  min-height: 60vh;
+  //overflow: hidden;
   margin: 0;
   h1{
 
@@ -190,10 +193,13 @@ body{
   }
 
   #footer{
-    height: auto;
+    postion: absolute;
     background-color: darken(@contrast, 10%);
     border-top: 1em solid @contrast;
     margin: 0;
+
+
+    bottom: 0;
 
     p{
       color: #FFF;
