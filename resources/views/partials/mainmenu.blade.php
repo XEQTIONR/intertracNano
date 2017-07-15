@@ -395,7 +395,7 @@
           <div class="col-md-10 col-sm-11 col-xs-11">
             <div class="row">
               <div class="col-md-12 menu-option-title">
-                Add a new performa invoice
+                Add a new proforma invoice
               </div>
             </div>
 
