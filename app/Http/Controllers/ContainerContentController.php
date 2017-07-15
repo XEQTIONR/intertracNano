@@ -48,7 +48,7 @@ class ContainerContentController extends Controller
 
     public function createGivenBOL($bol)
     {
-      $tyres = Tyre::all();
+      $tyres = Tyre::paginate(7);
       return view('new_container_content', compact('tyres','bol'));
 
     }
