@@ -98,7 +98,7 @@
 </form>
 </div>
 
-<div class="col-md-4" id="orderDetails"</div>
+<div class="col-md-4" id="orderDetails"></div>
 
 
 
