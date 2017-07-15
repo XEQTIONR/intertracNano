@@ -91,11 +91,10 @@
 
     var taxInput = document.createElement("INPUT");
     taxInput.setAttribute("type", "number");
-    priceInput.setAttribute("min", "0");
+    taxInput.setAttribute("min", "0");
     taxInput.setAttribute("class", "input");
     taxInput.setAttribute("name", tax);
     taxInput.setAttribute("placeholder", "Total Tax");
-    itemInput.setAttribute("min", "0");
     taxInput.required = true;
     //$("#"+subDivId).append("Unit Price: ");
     subDiv.appendChild(taxInput); //insert in the Div
