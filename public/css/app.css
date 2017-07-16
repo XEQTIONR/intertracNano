@@ -42,6 +42,9 @@ body {
   z-index: 500;
   border-bottom: 12px solid #DDD;
 }
+.navbar-intertrac:hover {
+  border-bottom: 12px solid #FA4;
+}
 .nav-intertrac {
   line-height: 3em;
 }
@@ -68,6 +71,7 @@ body {
   height: auto;
   min-height: 60vh;
   margin: 100px 0 0 0;
+  background-color: #EEE;
 }
 .welcome-banner {
   background-color: #345;

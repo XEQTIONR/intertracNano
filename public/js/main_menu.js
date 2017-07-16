@@ -33,7 +33,7 @@ $(document).ready(function(){
         }});
 
     $("#navMain").hover(function(){$(".subMenu").slideUp();});
-    //$(".nav-intertrac").hover(function(){$(".subMenu").slideUp();});
+    
 
     $("#theMenu").hover(function(){
       $("#theMenu").show();
