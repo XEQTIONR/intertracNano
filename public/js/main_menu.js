@@ -18,7 +18,7 @@ $(document).ready(function(){
     $("#theMenu").hide();
     $("#theMenu3").hide();
     $("#theMenu2").slideDown(500);}, function(){
-      if ($("#thisMenu2").is(':hover')) {}
+      if ($("#theMenu2").is(':hover')) {}
       else{
         $("#theMenu2").slideUp(500);
       }});
@@ -27,31 +27,32 @@ $(document).ready(function(){
       $("#theMenu").hide();
       $("#theMenu2").hide();
       $("#theMenu3").slideDown(500);}, function(){
-        if ($("#thisMenu2").is(':hover')) {}
+        if ($("#theMenu3").is(':hover')) {}
         else{
-          $("#theMenu2").slideUp(500);
+          $("#theMenu3").slideUp(500);
         }});
 
     $("#navMain").hover(function(){$(".subMenu").slideUp();});
+    //$(".nav-intertrac").hover(function(){$(".subMenu").slideUp();});
 
     $("#theMenu").hover(function(){
-                          $("#theMenu").show();
-                          $("#reportLabel").addClass("dark-border-bottom");},
-                        function(){
-                          $("#theMenu").slideUp();
-                        $("#reportLabel").removeClass("dark-border-bottom");});
+      $("#theMenu").show();
+      $("#reportLabel").addClass("dark-border-bottom");},
+      function(){
+        $("#theMenu").slideUp();
+        $("#reportLabel").removeClass("dark-border-bottom");});
 
     $("#theMenu2").hover(function(){
-                          $("#theMenu2").show();
-                          $("#infoLabel").addClass("dark-border-bottom");},
-                        function(){
-                          $("#theMenu2").slideUp();
-                          $("#infoLabel").removeClass("dark-border-bottom");});
+      $("#theMenu2").show();
+      $("#infoLabel").addClass("dark-border-bottom");},
+      function(){
+        $("#theMenu2").slideUp();
+        $("#infoLabel").removeClass("dark-border-bottom");});
 
     $("#theMenu3").hover(function(){
-                          $("#theMenu3").show();
-                          $("#actionLabel").addClass("dark-border-bottom");},
-                        function(){
-                          $("#theMenu3").slideUp();
-                          $("#actionLabel").removeClass("dark-border-bottom");});
+      $("#theMenu3").show();
+      $("#actionLabel").addClass("dark-border-bottom");},
+    function(){
+      $("#theMenu3").slideUp();
+      $("#actionLabel").removeClass("dark-border-bottom");});
 });
