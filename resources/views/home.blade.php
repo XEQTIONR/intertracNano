@@ -9,16 +9,17 @@
 
                 <div class="panel-body">
                     You are logged in!<br>
-                    {{$date}}<br>
-                    {{$date->year}}<br>
-                    {{$date->month}}<br>
-                    {{$date->day}}<br>
+                    Date{{$date}}<br>
+                    Year{{$date->year}}<br>
+                    Month{{$date->month}}<br>
+                    Day{{$date->day}}<br>
 
                     We have {{$count}} orders on the month of {{$date->month}} year of {{$date->year}} <br>
-                    {{$count_tyres}}<br>
-                    {{$total_value}}<br>
-                    {{$avg_value}}<br>
-                    {{$orders_with_payments}}
+                    Total tyres sold{{$count_tyres}}<br>
+                    Total Value{{$total_value}}<br>
+                    Avg Value per tyre{{$avg_value}}<br>
+                    No of order with payment{{$orders_with_payments}}<br>
+                    
                 </div>
             </div>
         </div>
