@@ -69,6 +69,20 @@ Route::get('stock', function()
   return view('stock', compact('in_stock'));
 });
 
+
+
+Route::get('reports/order/', 'ReportController@showOrderReport');
+
+Route::get('reports/payment', 'ReportController@showPaymentReport');
+
+Route::get('reports/expense', 'ReportController@showExpenseReport');
+
+Route::get('reports/outstanding_balance', 'ReportController@showBalanceReport');
+
+Route::get('reports/profit', 'ReportController@showProfitReport');
+
+
+
 Route::get('layout2', function()
 {
   return view('layout.layout2');

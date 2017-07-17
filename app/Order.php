@@ -89,4 +89,13 @@ class Order extends Model
 
 
     }
+
+    public static function ordersInMonth($month, $year)
+    {
+      $orders = DB::table('orders')
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->get();
+      return $orders;
+    }
 }
