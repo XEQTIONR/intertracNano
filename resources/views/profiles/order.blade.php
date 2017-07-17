@@ -38,7 +38,7 @@
     <dd>{{$customer->name}}</dd>
 
     <dt>Total Order Value</dt>
-    <dd>{{$subtotal}}</dd>
+    <dd>{{$order->subtotal}}</dd>
 
     <dt>Discount%</dt>
     <dd>{{$order->discount_percent}}</dd>
@@ -47,10 +47,10 @@
     <dd>{{$order->discount_amount}}</dd>
 
     <dt>Total Discount</dt>
-    <dd>{{$totalDiscount}}</dd>
+    <dd>{{$order->totalDiscount}}</dd>
 
     <dt>Order Value(After Discount)</dt>
-    <dd>{{$subtotal-$totalDiscount}}</dd>
+    <dd>{{$order->subtotal-$order->totalDiscount}}</dd>
 
     <dt>Tax %</dt>
     <dd>{{$order->tax_percentage}}</dd>
@@ -59,13 +59,13 @@
     <dd>{{$order->tax_amount}}</dd>
 
     <dt>Total Tax</dt>
-    <dd>{{$totalTax}}</dd>
+    <dd>{{$order->totalTax}}</dd>
 
     <dt>Grand Total</dt>
-    <dd>{{$subtotal-$totalDiscount+$totalTax}}</dd>
+    <dd>{{$order->subtotal-$order->totalDiscount+$order->totalTax}}</dd>
 
     <dt>Still payable</dt>
-    <dd>{{$payable}}</dd>
+    <dd>{{$order->payable}}</dd>
 
     <dt>created_at</dt>
     <dd>{{$order->created_at}}</dd>

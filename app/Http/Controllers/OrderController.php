@@ -173,16 +173,13 @@ class OrderController extends Controller
         $payments = $order->payment()
                           ->get();
 
-        $subtotal = $order->totalValueBeforeDiscountAndTax();
+        //INITILIZE some calculated values
+        $order->totalValueBeforeDiscountAndTax();
+        $order->calculateAndSetDiscount();
+        $order->calculateAndSetTax();
+        $order->calculatePayable();
 
-        $totalDiscount = ((($subtotal*$order->discount_percent)/100.0)+$order->discount_amount);
-
-        $totalTax = (($order->tax_percentage*$subtotal/100.0) + $order->tax_amount);
-
-        $payable = $order->calculatePayable();
-        return view('profiles.order', compact('order','contents','customer','payments','subtotal','totalDiscount','totalTax','payable'));
-
-
+        return view('profiles.order', compact('order','contents','customer','payments'));
     }
 
     public function showJSON($order_num)

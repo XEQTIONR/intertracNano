@@ -20,17 +20,22 @@ class Order extends Model
       return $this->hasMany('App\Payment','Order_num');
     }
 
+    public function calculateAndSetDiscount()
+    {
+      $discount_percent = ($this->subtotal * ($this->discount_percent/100.0));
+      $this->totalDiscount = $discount_percent + $this->discount_amount;
+    }
+
+    public function calculateAndSetTax()
+    {
+      $tax_percent_amt = ($this->subtotal * ($this->tax_percentage/100.0));
+      $this->totalTax = $tax_percent_amt + $this->tax_amount;
+
+    }
+
     public function calculatePayable()
     {
-        $tax_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->tax_percentage/100.0));
-        $total_tax = $tax_percent + $this->tax_amount;
-
-        $discount_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->discount_percent/100.0));
-        $total_discount = $discount_percent + $this->discount_amount;
-
-
-        $total = ($this->totalValueBeforeDiscountAndTax()+$total_tax-$total_discount);
-
+        $total = ($this->subtotal+$this->totalTax-$this->totalDiscount);
         $payments = $this->payment()
                         ->get();
         foreach ($payments as $payment)
@@ -38,8 +43,7 @@ class Order extends Model
           $total -= $payment->payment_amount;
         }
 
-        return $total;
-
+        $this->payable = $total;
     }
 
     /* Total value before tax and discount */
@@ -54,7 +58,7 @@ class Order extends Model
           $total_value+= ($content->qty * $content->unit_price);
         }
 
-        return $total_value;
+        $this->subtotal = $total_value;
     }
 
 
