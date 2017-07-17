@@ -73,6 +73,9 @@ Route::get('stock', function()
 
 Route::get('reports/order/', 'ReportController@showOrderReport');
 
+Route::get('reports/order/{time_frame}/{year}', 'ReportController@showOrderReport');
+
+
 Route::get('reports/payment', 'ReportController@showPaymentReport');
 
 Route::get('reports/expense', 'ReportController@showExpenseReport');

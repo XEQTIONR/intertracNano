@@ -22,10 +22,34 @@ class ReportController extends Controller
 
     }
 
-    public function showOrderReport()
+    public function showOrderReport($time_frame, $year)
     {
-      $orders = Order::ordersInMonth($this->month, $this->year);
-      return $this->stats($orders);
+
+      if(is_numeric($time_frame)) //monthly report
+      {
+        $orders = Order::ordersInMonth($time_frame, $this->year);
+        return $this->stats($orders);
+
+      }
+
+      else if($time_frame=="yearly")   //yearly report;
+      {
+        $orders = Order::ordersInYear($year);
+        return $this->stats($orders);
+      }
+
+      else  //quarterly report
+      {
+        $pieces = explode("Q", $time_frame);
+
+        if(is_numeric($pieces[1]))
+        {
+          $orders = Order::ordersInQuarter($pieces[1], $year);
+          return $this->stats($orders);
+          //return $orders;
+
+        }
+      }
     }
 
     public function stats($orders)
@@ -65,8 +89,12 @@ class ReportController extends Controller
           }
       }
       $date = Carbon::now('America/Toronto');
-      $avg_value = $total_value/$count_tyres; //5. Avg value of orders.
-      $avg_tyre = $count_tyres/$count; //4. Avg number of tyres per order
+      if($count_tyres>0)
+        $avg_value = $total_value/$count_tyres; //5. Avg value of orders.
+      else $avg_value=0;
+      if($count>0)
+        $avg_tyre = $count_tyres/$count; //4. Avg number of tyres per order
+      else $avg_tyre=0;
       return view('home', compact('date','time_frame','count','count_tyres','total_value','avg_value','orders_with_payments'));
     }
 
