@@ -25,6 +25,11 @@ class ReportController extends Controller
     public function showOrderReport()
     {
       $orders = Order::ordersInMonth($this->month, $this->year);
+      return $this->stats($orders);
+    }
+
+    public function stats($orders)
+    {
 
       $total_value = 0;
       foreach($orders as $item)
