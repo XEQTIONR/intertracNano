@@ -56,6 +56,7 @@ class ReportController extends Controller
     {
 
       $total_value = 0;
+      $orders_full_paid = 0;
       foreach($orders as $item)
       {
 
@@ -68,12 +69,17 @@ class ReportController extends Controller
         $order->calculateAndSetTax();
         $order->calculatePayable();
         $total_value += $order->subtotal+$order->totalTax-$order->totalDiscount;// 3. Total value of orders
+
+        if ($order->payable==0) {
+          $orders_full_paid++;
+        }
       }
 
       $count = count($orders); //1. No of orders
       $count_tyres = 0;
 
       $orders_with_payments = 0;
+
       foreach ($orders as $item)
       {
           //cannot directly use $item->orderContents()
@@ -83,6 +89,8 @@ class ReportController extends Controller
           $orders_with_payments+= (count($payments)>0); //6.num orders with payments
           $contents = $order->orderContents()
                             ->get();
+
+
           foreach ($contents as $content)
           {
             $count_tyres += $content->qty; //2. No of tyres sold
@@ -95,7 +103,7 @@ class ReportController extends Controller
       if($count>0)
         $avg_tyre = $count_tyres/$count; //4. Avg number of tyres per order
       else $avg_tyre=0;
-      return view('home', compact('date','time_frame','count','count_tyres','total_value','avg_value','orders_with_payments'));
+      return view('home', compact('date','time_frame','count','count_tyres','total_value','avg_value','orders_with_payments','orders_full_paid'));
     }
 
     public function orderReport()

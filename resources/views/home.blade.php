@@ -19,7 +19,8 @@
                     Total Value{{$total_value}}<br>
                     Avg Value per tyre{{$avg_value}}<br>
                     No of order with payment{{$orders_with_payments}}<br>
-                    
+                    Orders fully paid{{$orders_full_paid}}
+
                 </div>
             </div>
         </div>
