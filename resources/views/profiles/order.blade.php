@@ -6,7 +6,9 @@
   $( function() {
     $( "#accordion" ).accordion({
       collapsible: true,
-      active: false
+      active: false,
+      heightStyle: "content"
+
     });
   });
 </script>
@@ -36,7 +38,7 @@
     <dd>{{$customer->name}}</dd>
 
     <dt>Total Order Value</dt>
-    <dd></dd>
+    <dd>{{$subtotal}}</dd>
 
     <dt>Discount%</dt>
     <dd>{{$order->discount_percent}}</dd>
@@ -45,10 +47,10 @@
     <dd>{{$order->discount_amount}}</dd>
 
     <dt>Total Discount</dt>
-    <dd></dd>
+    <dd>{{$totalDiscount}}</dd>
 
     <dt>Order Value(After Discount)</dt>
-    <dd></dd>
+    <dd>{{$subtotal-$totalDiscount}}</dd>
 
     <dt>Tax %</dt>
     <dd>{{$order->tax_percentage}}</dd>
@@ -57,10 +59,13 @@
     <dd>{{$order->tax_amount}}</dd>
 
     <dt>Total Tax</dt>
-    <dd>{{$order->tax_percentage + $order->tax_amount}}</dd>
+    <dd>{{$totalTax}}</dd>
 
-    <dt>Final Payable</dt>
-    <dd></dd>
+    <dt>Grand Total</dt>
+    <dd>{{$subtotal-$totalDiscount+$totalTax}}</dd>
+
+    <dt>Still payable</dt>
+    <dd>{{$payable}}</dd>
 
     <dt>created_at</dt>
     <dd>{{$order->created_at}}</dd>

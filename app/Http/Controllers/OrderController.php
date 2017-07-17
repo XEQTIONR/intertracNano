@@ -173,7 +173,14 @@ class OrderController extends Controller
         $payments = $order->payment()
                           ->get();
 
-        return view('profiles.order', compact('order','contents','customer','payments'));
+        $subtotal = $order->totalValueBeforeDiscountAndTax();
+
+        $totalDiscount = ((($subtotal*$order->discount_percent)/100.0)+$order->discount_amount);
+
+        $totalTax = (($order->tax_percentage*$subtotal/100.0) + $order->tax_amount);
+
+        $payable = $order->calculatePayable();
+        return view('profiles.order', compact('order','contents','customer','payments','subtotal','totalDiscount','totalTax','payable'));
 
 
     }

@@ -20,6 +20,46 @@ class Order extends Model
       return $this->hasMany('App\Payment','Order_num');
     }
 
+    public function calculatePayable()
+    {
+        $tax_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->tax_percentage/100.0));
+        $total_tax = $tax_percent + $this->tax_amount;
+
+        $discount_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->discount_percent/100.0));
+        $total_discount = $discount_percent + $this->discount_amount;
+
+
+        $total = ($this->totalValueBeforeDiscountAndTax()+$total_tax-$total_discount);
+
+        $payments = $this->payment()
+                        ->get();
+        foreach ($payments as $payment)
+        {
+          $total -= $payment->payment_amount;
+        }
+
+        return $total;
+
+    }
+
+    /* Total value before tax and discount */
+    public function totalValueBeforeDiscountAndTax()
+    {
+        $total_value=0;
+        $contents = $this->orderContents()
+                        ->get();
+        foreach ($contents as $content)
+        {
+
+          $total_value+= ($content->qty * $content->unit_price);
+        }
+
+        return $total_value;
+    }
+
+
+
+//HELPER FUNCTIONS
     public static function tyreInContRemaining($id)
     {
       $remaining = DB::table('container_contents')
