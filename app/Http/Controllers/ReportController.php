@@ -106,7 +106,21 @@ class ReportController extends Controller
 
       $year = $this->year;
       $time_frame = $this->time_frame;
-      return view('home', compact('date','time_frame','year','count','count_tyres','total_value','avg_value','avg_tyre','orders_with_payments','orders_full_paid'));
+
+      $total_value = number_format($total_value,2);
+      $avg_value = number_format($avg_value,2);
+      $avg_tyre = number_format($avg_tyre,2);
+
+      return view('reports.order', compact('date',
+                                  'time_frame',
+                                  'year',
+                                  'count',
+                                  'count_tyres',
+                                  'total_value',
+                                  'avg_value',
+                                  'avg_tyre',
+                                  'orders_with_payments',
+                                  'orders_full_paid'));
     }
 
     public function orderReport()
