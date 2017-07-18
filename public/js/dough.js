@@ -2,13 +2,13 @@
 * @desc Builds the doughnut based on data
 Depends on d3.js
 */
-function build(value, total, outformat)
+function build(value, total, outformat, div)
 {
 var duration = 1500,
     transition = 200,
     //value = 70, //
-    width = window.innerWidth * 0.70,
-    height = window.innerHeight * 0.70;
+    width = document.getElementsByClassName('white-card')[0].clientHeight,
+    height = document.getElementsByClassName('white-card')[0].clientHeight;
 
 var dataset = {
             lower: [0,value],//calcPercent(0), [lowest, score]
@@ -22,7 +22,7 @@ var arc = d3.svg.arc()   // radii of inner and outer circle
         .innerRadius(radius * .7)
         .outerRadius(radius);
 
-var svg = d3.select("#myDiv").append("svg") //append to a DOM element
+var svg = d3.select(div).append("svg") //append to a DOM element
         .attr("width", width)
         .attr("height", height)
         .append("g")
@@ -53,7 +53,7 @@ var timeout = setTimeout(function () {
         var i2 = d3.interpolate(progress, value)
         this._current = i(0);
         return function (t) {
-            text.text(format(i2(t))); // /100 creates precentage
+            text.text(format(i2(t)/100)); // /100 creates precentage
             return arc(i(t));
         };
     });

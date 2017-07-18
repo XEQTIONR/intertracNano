@@ -12,7 +12,6 @@ body {
 }
 .white-card {
   width: 100%;
-  min-height: 75px;
   background-color: #FFF;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -22,7 +21,7 @@ body {
   text-align: center;
 }
 .stat-figure {
-  font-size: 1.5em;
+  font-size: 4em;
 }
 .stat-diagram {
   height: 5em;
