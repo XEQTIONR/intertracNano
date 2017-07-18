@@ -24,7 +24,7 @@ class ReportController extends Controller
 
     public function showOrderReport($time_frame, $year)
     {
-
+      $this->time_frame = $time_frame;
       if(is_numeric($time_frame)) //monthly report
       {
         $orders = Order::ordersInMonth($time_frame, $this->year);
@@ -103,7 +103,10 @@ class ReportController extends Controller
       if($count>0)
         $avg_tyre = $count_tyres/$count; //4. Avg number of tyres per order
       else $avg_tyre=0;
-      return view('home', compact('date','time_frame','count','count_tyres','total_value','avg_value','orders_with_payments','orders_full_paid'));
+
+      $year = $this->year;
+      $time_frame = $this->time_frame;
+      return view('home', compact('date','time_frame','year','count','count_tyres','total_value','avg_value','avg_tyre','orders_with_payments','orders_full_paid'));
     }
 
     public function orderReport()
