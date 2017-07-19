@@ -93,7 +93,12 @@ class CustomerController extends Controller
         foreach ($orders as $order)
         {
           $some_payments = $order->payment()->get();
-          $payments = $payments->union($some_payments);
+          //$payments = $payments->union($some_payments); //WHY DOES THIS NOT WORK??
+
+          foreach ($some_payments as $payment)
+          {
+            $payments->push($payment);
+          }
         }
 
         return view('profiles.customer', compact('customer', 'orders', 'payments'));
