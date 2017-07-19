@@ -19,8 +19,14 @@
 
       var quarter = document.getElementById("quarter").value;
       var year = document.getElementById("year").value;
-
-      window.location.href="/reports/" + report_type + "/Q" + quarter + "/" + year;
+      if (!(quarter>=1 && quarter<=4))
+      {
+        alert("Invalid input for quarter");
+      }
+      else
+      {
+        window.location.href="/reports/" + report_type + "/Q" + quarter + "/" + year;
+      }
     }
 
     function generateYearlyReport(report_type)
