@@ -7,8 +7,8 @@ function build(value, total, outformat, div)
 var duration = 1500,
     transition = 200,
     //value = 70, //
-    width = document.getElementsByClassName('white-card')[0].clientHeight,
-    height = document.getElementsByClassName('white-card')[0].clientHeight;
+    width = document.getElementsByClassName('stat-diagram')[0].clientHeight,
+    height = document.getElementsByClassName('stat-diagram')[0].clientHeight;
 
 var dataset = {
             lower: [0,value],//calcPercent(0), [lowest, score]

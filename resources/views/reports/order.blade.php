@@ -7,16 +7,16 @@
 
   <style>
   path.color0 {
-      fill: red;  /*filled section color*/
+      fill: teal;  /*filled section color*/
   }
   path.color1 {
       fill: #AAA; /*unfilled section color*/
   }
   text {
-      font-size: 1em;
+      font-size: 2em;
       font-weight: 400;
       line-height: 16em;
-      fill: red;
+      fill: teal;
   }
   </style>
 @endsection
@@ -76,10 +76,10 @@
             </div>
           </div>
         </div>
-      </div> <!--first-row-->
+      </div>
     </div> <!--white-card-->
   </div> <!--col-md-12-->
-</div>
+</div> <!--first-row-->
 
 <div class="row">
       <div class="col-md-6">
@@ -106,43 +106,57 @@
           </div>
           <div class="row">
             <div class="col-md-12 stat stat-text">
-                AVERAGE VALUE PER TYRE
+                AVERAGE NUMBER OF TYRES IN EACH ORDER
             </div>
           </div>
         </div>
       </div>
-</div>
+</div> <!-- second  row-->
 
 <div class="row">
   <div class="col-md-6">
     <div class="white-card">
       <div class="row">
-        <div class="col-md-12 stat stat-figure">
-          {{$orders_with_payments}}
+        <div id="myDiv2" class="col-md-2 stat-diagram">
+          <script>
+            @if ($count>0)
+              build({{$orders_with_payments*100.0/$count}}, 100, ".1%","#myDiv2");
+            @else
+              build(0, 100, ".1%","#myDiv2");
+            @endif
+          </script>
+        </div>
+        <div class="col-md-5 col-md-offset-2">
+          <div class="row" style="margin-top: 5em;">
+            <div class="col-md-12 stat stat-figure">
+              {{$orders_with_payments}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 stat stat-text">
+              ORDERS WITH PAYMENTS
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12 stat stat-text">
-          ORDERS WITH PAYMENTS
-        </div>
-      </div>
-    </div>
+    </div><!--white-card-->
   </div>
 
   <div class="col-md-6">
     <div class="white-card">
       <div class="row">
-
-        <div id="myDiv" class="col-md-2 col-md-offset-2 stat-diagram" style="border: 2px solid red;">
+        <div id="myDiv" class="col-md-2 stat-diagram" {{--style="border: 2px solid red;"--}}>
 
           <script>
-            build({{$orders_full_paid*100.0/$count}}, 100, ".1%","#myDiv");
-          //build();
+            @if ($count>0)
+              build({{$orders_full_paid*100.0/$count}}, 100, ".1%","#myDiv");
+            @else
+              build(0, 100, ".1%","#myDiv");
+            @endif
           </script>
-
         </div>
-        <div class="col-md-6">
-          <div class="row">
+        <div class="col-md-5 col-md-offset-2">
+          <div class="row" style="margin-top: 5em;">
             <div class="col-md-12 stat stat-figure">
               {{$orders_full_paid}}
             </div>
@@ -155,28 +169,11 @@
         </div>
 
 
-      </div>
-    </div>
+      </div> <!--row-->
+    </div> <!--white-card-->
   </div>
 </div><!--row-->
 
-<div class="row">
-  <div class="col-md-4">
-    <div class="white-card">
-      HEY
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="white-card">
-      HEY
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="white-card">
-      HEY
-    </div>
-  </div>
-</div>
 </div><!--container-->
 
   {{--  <div class="row">

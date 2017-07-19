@@ -28,14 +28,14 @@ class ReportController extends Controller
       if(is_numeric($time_frame)) //monthly report
       {
         $orders = Order::ordersInMonth($time_frame, $this->year);
-        return $this->stats($orders);
+        return $this->calculateOrderStats($orders);
 
       }
 
       else if($time_frame=="yearly")   //yearly report;
       {
         $orders = Order::ordersInYear($year);
-        return $this->stats($orders);
+        return $this->calculateOrderStats($orders);
       }
 
       else  //quarterly report
@@ -45,14 +45,14 @@ class ReportController extends Controller
         if(is_numeric($pieces[1]))
         {
           $orders = Order::ordersInQuarter($pieces[1], $year);
-          return $this->stats($orders);
+          return $this->calculateOrderStats($orders);
           //return $orders;
 
         }
       }
     }
 
-    public function stats($orders)
+    public function calculateOrderStats($orders)
     {
 
       $total_value = 0;
