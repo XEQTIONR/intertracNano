@@ -21,6 +21,11 @@ class Order extends Model
       return $this->hasMany('App\Payment','Order_num');
     }
 
+    public function customer()
+    {
+      return $this->belongsTo('App\Customer','customer_id');
+    }
+
     public function calculateAndSetDiscount()
     {
       $discount_percent = ($this->subtotal * ($this->discount_percent/100.0));
