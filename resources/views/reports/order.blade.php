@@ -5,38 +5,7 @@
   <script src="/js/dough.js" type="text/javascript"></script>
   <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
-<script>
-    function generateMonthlyReport(report_type)
-    {
-      var month = document.getElementById("month").value;
-      var year = document.getElementById("year").value;
-
-      window.location.href="/reports/" + report_type + "/" + month + "/" + year;
-    }
-
-    function generateQuarterlyReport(report_type)
-    {
-
-      var quarter = document.getElementById("quarter").value;
-      var year = document.getElementById("year").value;
-      if (!(quarter>=1 && quarter<=4))
-      {
-        alert("Invalid input for quarter");
-      }
-      else
-      {
-        window.location.href="/reports/" + report_type + "/Q" + quarter + "/" + year;
-      }
-    }
-
-    function generateYearlyReport(report_type)
-    {
-      var quarter = document.getElementById("quarter").value;
-      var year = document.getElementById("year").value;
-
-      window.location.href="/reports/" + report_type + "/year/" + year;
-    }
-</script>
+  <script src="/js/reports.js" type="text/javascript"></script>
 
 
 
