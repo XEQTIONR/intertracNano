@@ -26,3 +26,7 @@
   @endforeach
 </tbody>
 </table>
+
+@if (method_exists($orders, 'links'))
+  {{$orders->links()}}
+@endif
