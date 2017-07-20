@@ -179,7 +179,7 @@ class Order extends Model
       $end_date = new Carbon ("Last day of ". $endmonth. " ".$year);
       $end_date = $end_date->addHours(23);
       $end_date = $end_date->addMinutes(59);
-      $end_date = $end_date->addHours(59);
+      $end_date = $end_date->addSeconds(59);
     /*
                 ->whereYear('created_at', '=', $year)
                 ->whereMonth('created_at', '>', 3*$quarter-1);
