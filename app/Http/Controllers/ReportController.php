@@ -46,7 +46,7 @@ class ReportController extends Controller
 
       else if($time_frame=="year")   //yearly report;
       {
-        $payments = Order::paymentsInYear($year);
+        $payments = Payment::paymentsInYear($year);
         return $this->calculatePaymentStats($payments);
       }
 
