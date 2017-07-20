@@ -100,14 +100,50 @@ class ReportController extends Controller
     public function calculatePaymentStats($payments)
     {
       $total_value = 0;
-      //$orders = collect(0)
+      $avg_payment = 0;
+      $orders = collect();
       foreach ($payments as $item)
       {
           $payment = Payment::find($item->Invoice_num);
           $total_value+= $payment->payment_amount;
-
+          $orders->push($payment->Order_num);
       }
-      return $total_value;
+
+      $year = $this->year;
+      $report_year = $this->report_year;
+      $time_frame = $this->time_frame;
+
+      $unique = $orders->unique();
+      $num_payments = count($payments);
+      $num_orders = count($unique);
+
+      if($num_payments>0)
+        $avg_payment = $total_value/floatval($num_payments);
+      // or use the default value of zero
+
+      $date = Carbon::now('America/Toronto');
+
+      $total_value = number_format($total_value,2);
+      $avg_payment = number_format($avg_payment,2);
+
+      return view('reports.payment', compact('unique',
+                                            'num_payments',
+                                            'num_orders',
+                                            'total_value',
+                                            'avg_payment',
+                                            'year',
+                                            'report_year',
+                                            'time_frame',
+                                            'date'));
+    /*  return compact('unique',
+                                            'num_payments',
+                                            'num_orders',
+                                            'total_value',
+                                            'avg_payment',
+                                            'year',
+                                            'report_year',
+                                            'time_frame');*/
+      //return [count($payments), count($unique), $total_value, $total_value/floatval(count($payments))];
     }
 
     public function calculateOrderStats($orders)
