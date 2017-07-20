@@ -219,7 +219,7 @@ $( function()
 
             <div class="panel-body">
               <div id="tyreCatalog" class="col-md-12">
-                @include('partials.tyres')
+                @include('partials.tables.tyre_catalog')
               </div>
             </div> <!--panel-body-->
           </div> <!--panel-->
