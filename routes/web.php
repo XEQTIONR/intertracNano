@@ -76,6 +76,8 @@ Route::get('reports/order/', 'ReportController@defaultOrderReport');
 Route::get('reports/order/{time_frame}/{year}', 'ReportController@showOrderReport');
 
 
+Route::get('reports/payment/', 'ReportController@defaultPaymentReport');
+
 Route::get('reports/payment/{time_frame}/{year}', 'ReportController@showPaymentReport');
 
 Route::get('reports/expense', 'ReportController@showExpenseReport');

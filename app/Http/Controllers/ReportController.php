@@ -33,6 +33,12 @@ class ReportController extends Controller
       return $this->calculateOrderStats($orders);
     }
 
+    public function defaultPaymentReport()
+    {
+      $payments = Payment::paymentsInYear($this->year);
+      return $this->calculatePaymentStats($payments);
+    }
+
     public function showPaymentReport($time_frame, $year)
     {
       $this->time_frame = $time_frame;
