@@ -20,6 +20,16 @@ class ReportController extends Controller
       $this->month = $date->month;
       $this->year = $date->year;
 
+      //some defaults
+      $this->report_year = $date->year;
+      $this->time_frame = 'year';
+
+    }
+
+    public function defaultOrderReport()
+    {
+      $orders = Order::ordersInYear($this->year);
+      return $this->calculateOrderStats($orders);
     }
 
     public function showOrderReport($time_frame, $year)
@@ -98,7 +108,7 @@ class ReportController extends Controller
             $count_tyres += $content->qty; //2. No of tyres sold
           }
       }
-      $date = Carbon::now('America/Toronto');
+      $date = Carbon::now('America/Toronto');//
       if($count_tyres>0)
         $avg_value = $total_value/$count_tyres; //5. Avg value of orders.
       else $avg_value=0;

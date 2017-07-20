@@ -10,7 +10,7 @@
   <div class="row subMenu" id="theMenu">
 
     <div class="col-md-3 vertical-spaced">
-      <a href="#">
+      <a href="/reports/order">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
             <img src="/images/order.png" width="45" height="45">

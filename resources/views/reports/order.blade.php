@@ -86,6 +86,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="white-card">
+        <h6>Report generated on {{$date}}</h6>
         <h1 class="stat">ORDER REPORT FOR {{$time_frame}} OF {{$report_year}}</h1>
       </div>
     </div>
