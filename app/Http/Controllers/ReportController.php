@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Order;
+use App\Payment;
 use App\Order_content;
 
 class ReportController extends Controller
@@ -30,6 +31,38 @@ class ReportController extends Controller
     {
       $orders = Order::ordersInYear($this->year);
       return $this->calculateOrderStats($orders);
+    }
+
+    public function showPaymentReport($time_frame, $year)
+    {
+      $this->time_frame = $time_frame;
+      $this->report_year = $year;
+      if(is_numeric($time_frame)) //monthly report
+      {
+        $payments = Payment::paymentsInMonth($time_frame, $this->year);
+        return $this->calculatePaymentStats($payments);
+
+      }
+
+      else if($time_frame=="year")   //yearly report;
+      {
+        $payments = Order::paymentsInYear($year);
+        return $this->calculatePaymentStats($payments);
+      }
+
+      else  //quarterly report
+      {
+        $pieces = explode("Q", $time_frame);
+
+        if(is_numeric($pieces[1]))
+        {
+          $payments = Payment::paymentsInQuarter($pieces[1], $year);
+          return $this->calculatePaymentStats($payments);
+          //return $orders;
+
+        }
+      }
+
     }
 
     public function showOrderReport($time_frame, $year)
@@ -62,6 +95,19 @@ class ReportController extends Controller
         }
       }
 
+    }
+
+    public function calculatePaymentStats($payments)
+    {
+      $total_value = 0;
+      //$orders = collect(0)
+      foreach ($payments as $item)
+      {
+          $payment = Payment::find($item->Invoice_num);
+          $total_value+= $payment->payment_amount;
+
+      }
+      return $total_value;
     }
 
     public function calculateOrderStats($orders)
