@@ -134,7 +134,8 @@ class ReportController extends Controller
                                   'avg_value',
                                   'avg_tyre',
                                   'orders_with_payments',
-                                  'orders_full_paid'));
+                                  'orders_full_paid',
+                                  'orders'));
     }
 
     public function orderReport()
