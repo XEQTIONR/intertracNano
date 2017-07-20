@@ -134,7 +134,8 @@ class ReportController extends Controller
                                             'year',
                                             'report_year',
                                             'time_frame',
-                                            'date'));
+                                            'date',
+                                            'payments'));
     /*  return compact('unique',
                                             'num_payments',
                                             'num_orders',
