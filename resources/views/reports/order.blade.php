@@ -234,7 +234,7 @@
   <div class="col-md-12">
   <div class="white-card">
 
-    @include('partials.orders')
+    @include('partials.tables.orders')
 
   </div>
   </div>
