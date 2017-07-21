@@ -74,7 +74,7 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12 stat stat-figure">
-                {{$total_value}}
+                {{$total_value_formatted}}
               </div>
             </div>
             <div class="row">
@@ -141,7 +141,7 @@
         <div class="stat-text col-md-6" style="border:1px dashed blue;">
           <div class="row marg-top">
             <div class="col-md-12 stat stat-figure">
-              {{$total_owed}}
+              {{$total_owed_formatted}}
             </div>
           </div>
           <div class="row">

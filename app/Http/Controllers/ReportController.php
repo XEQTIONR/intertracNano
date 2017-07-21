@@ -144,10 +144,20 @@ class ReportController extends Controller
 
       $unique = $customers->unique();
       $num_customers = count($unique); //1. No. customer with outstanding balances
-      $avg_per_customer = $total_owed/floatval($num_customers);
-      $avg_per_order = $total_owed/floatval($num_orders);
+      if ($num_customers>0)
+        $avg_per_customer = number_format($total_owed/floatval($num_customers),2);
+      else
+        $avg_per_customer = 0;
+
+      if($num_orders>0)
+        $avg_per_order = number_format($total_owed/floatval($num_orders),2);
+      else
+        $avg_per_order = 0;
+
       $orders = $pending;
-      return view('reports.outstanding_balance', compact('orders', 'unique', 'total_owed', 'total_value', 'num_orders', 'num_customers', 'avg_per_customer', 'avg_per_order'));
+      $total_value_formatted = number_format($total_value,2);
+      $total_owed_formatted = number_format($total_owed,2);
+      return view('reports.outstanding_balance', compact('orders', 'unique', 'total_owed', 'total_owed_formatted','total_value','total_value_formatted', 'num_orders', 'num_customers', 'avg_per_customer', 'avg_per_order'));
     }
 
     public function calculatePaymentStats($payments)
