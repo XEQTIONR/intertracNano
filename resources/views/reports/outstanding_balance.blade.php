@@ -154,5 +154,12 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="white-card">
+        @include('partials.tables.orders')
+      </div>
+    </div>
+  </div>
 </div><!--container-->
 @endsection
