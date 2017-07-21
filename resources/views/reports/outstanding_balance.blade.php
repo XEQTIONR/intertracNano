@@ -132,10 +132,24 @@
   <div class="row">
     <div class="col-md-12">
       <div class="white-card">
-        <div class="stat-diagram" id="doughnut">
-          <script>
+        <div class="row">
+        <div class="stat-diagram col-md-4" id="doughnut">
+        <script>
           build({{$total_value-$total_owed}}, {{$total_value}},".2f","TK ",0,"#doughnut");
-          </script>
+        </script>
+        </div>
+        <div class="stat-text col-md-6" style="border:1px dashed blue;">
+          <div class="row marg-top">
+            <div class="col-md-12 stat stat-figure">
+              {{$total_owed}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 stat stat-text">
+              AMOUNT OWED
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
