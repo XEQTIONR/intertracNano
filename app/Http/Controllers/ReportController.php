@@ -114,7 +114,8 @@ class ReportController extends Controller
     public function calculateOutstandingBalanceStats($orders)
     {
 
-      $customers = collect();
+      $customers = collect(); // customers who owes money
+      $pending = collect(); //orders pending full payment
       $num_orders=0;
       $total_owed=0;
       $total_value=0;
@@ -131,9 +132,10 @@ class ReportController extends Controller
         if ($order->payable>0)
         {
 
+          $pending->push($order);
           $customers->push($order->customer_id);
           $num_orders++;
-          $total_owed+= $order->payable;
+          $total_owed+= $order->payable; //2. $total money owed
           $total_value+= $order->final_value;
         }
         //$customer = $order->customer()->get();
@@ -141,8 +143,10 @@ class ReportController extends Controller
       }
 
       $unique = $customers->unique();
-      $num_customers = count($unique);
-      return [$orders, $customers, $unique, $total_owed, $total_value, $num_orders, $num_customers];
+      $num_customers = count($unique); //1. No. customer with outstanding balances
+      $avg_per_customer = $total_owed/floatval($num_customers);
+      $avg_per_order = $total_owed/floatval($num_orders);
+      return view('reports.outstanding_balance', compact('pending', 'unique', 'total_owed', 'total_value', 'num_orders', 'num_customers', 'avg_per_customer', 'avg_per_order'));
     }
 
     public function calculatePaymentStats($payments)

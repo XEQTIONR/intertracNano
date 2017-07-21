@@ -2,7 +2,7 @@
 * @desc Builds the doughnut based on data
 Depends on d3.js
 */
-function build(value, total, outformat, div)
+function build(value, total, outformat,prefix ,ratio_flag ,div)
 {
 var duration = 1500,
     transition = 200,
@@ -53,7 +53,10 @@ var timeout = setTimeout(function () {
         var i2 = d3.interpolate(progress, value)
         this._current = i(0);
         return function (t) {
-            text.text(format(i2(t)/100)); // /100 creates precentage
+          if(ratio_flag)
+            text.text(prefix+format(i2(t)/100)); // /100 creates precentage
+          else
+            text.text(prefix+format(i2(t)));
             return arc(i(t));
         };
     });

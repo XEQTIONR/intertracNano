@@ -114,9 +114,9 @@
         <div id="myDiv2" class="col-md-2 stat-diagram">
           <script>
             @if ($count>0)
-              build({{$orders_with_payments*100.0/$count}}, 100, ".1%","#myDiv2");
+              build({{$orders_with_payments*100.0/$count}}, 100, ".1%","",1,"#myDiv2");
             @else
-              build(0, 100, ".1%","#myDiv2");
+              build(0, 100, ".1%",1,"#myDiv2");
             @endif
           </script>
         </div>
@@ -143,9 +143,9 @@
 
           <script>
             @if ($count>0)
-              build({{$orders_full_paid*100.0/$count}}, 100, ".1%","#myDiv");
+              build({{$orders_full_paid*100.0/$count}}, 100, ".1%","",1,"#myDiv");
             @else
-              build(0, 100, ".1%","#myDiv");
+              build(0, 100, ".1%","",1,"#myDiv");
             @endif
           </script>
         </div>
