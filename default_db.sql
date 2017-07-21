@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 05, 2017 at 09:57 AM
+-- Generation Time: Jul 20, 2017 at 08:40 PM
 -- Server version: 5.5.51-38.2
 -- PHP Version: 5.6.20
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `default_db`
+-- Database: `xeqtionr_testdb`
 --
 
 -- --------------------------------------------------------
@@ -42,12 +42,7 @@ CREATE TABLE IF NOT EXISTS `consignments` (
 --
 
 INSERT INTO `consignments` (`BOL`, `value`, `exchange_rate`, `tax`, `land_date`, `lc`, `created_at`, `updated_at`) VALUES
-('BOL1', '2500.00', 0, '200.00', '2017-05-17', 'LC0001', '2017-05-06 11:44:59', '2017-05-06 11:44:59'),
-('BOL2', '500.00', 0, '25.00', '2017-05-18', 'LC0001', '2017-05-07 09:13:15', '2017-05-07 09:13:15'),
-('BOL4', '5000.00', 0, '500.00', '2017-06-20', 'LC2', '2017-06-19 09:24:27', '2017-06-19 09:24:27'),
-('BOL5', '5000.00', 0, '0.00', '2017-06-22', 'LC3', '2017-06-22 13:18:35', '2017-06-22 13:18:35'),
-('BOL7', '5000.00', 0, '500.00', '2017-06-22', 'LC2', '2017-06-23 04:08:57', '2017-06-23 04:08:57'),
-('BOLC3', '10000.00', 50, '25000.00', '2017-06-24', 'LC3', '2017-06-23 10:38:54', '2017-06-23 10:38:54');
+('COAU7040755540', '13535.60', 79, '26583.00', '2016-12-30', '350316010267', '2017-07-12 08:55:37', '2017-07-12 08:55:37');
 
 -- --------------------------------------------------------
 
@@ -67,16 +62,7 @@ CREATE TABLE IF NOT EXISTS `consignment_containers` (
 --
 
 INSERT INTO `consignment_containers` (`Container_num`, `BOL`, `created_at`, `updated_at`) VALUES
-('c10', 'BOL2', '2017-05-24 18:48:02', '2017-05-24 18:48:02'),
-('c4', 'BOL2', '2017-05-24 07:06:34', '2017-05-24 07:06:34'),
-('c7', 'BOL2', '2017-05-24 18:41:05', '2017-05-24 18:41:05'),
-('c8', 'BOL2', '2017-05-24 18:41:30', '2017-05-24 18:41:30'),
-('c9', 'BOL2', '2017-05-24 18:47:07', '2017-05-24 18:47:07'),
-('Cont3', 'BOL2', '2017-05-23 02:04:42', '2017-05-23 02:04:42'),
-('cont5', 'BOL2', '2017-05-24 18:35:11', '2017-05-24 18:35:11'),
-('cont6', 'BOL1', '2017-05-24 18:39:30', '2017-05-24 18:39:30'),
-('Container 1', 'BOL1', '2017-05-07 10:41:23', '2017-05-07 10:41:23'),
-('Container 2', 'BOL2', '2017-05-17 00:33:20', NULL);
+('FCIU5053430/K37917', 'COAU7040755540', '2017-07-12 09:03:09', '2017-07-12 09:03:09');
 
 -- --------------------------------------------------------
 
@@ -92,16 +78,14 @@ CREATE TABLE IF NOT EXISTS `consignment_expenses` (
   `expense_notes` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `consignment_expenses`
 --
 
 INSERT INTO `consignment_expenses` (`BOL`, `expense_id`, `expense_foreign`, `expense_local`, `expense_notes`, `created_at`, `updated_at`) VALUES
-('BOL1', 1, '2500.00', '500.00', NULL, '2017-05-07 09:11:34', '2017-05-07 09:11:34'),
-('BOL1', 3, '600.00', '0.00', 'some note also', '2017-05-07 09:12:20', '2017-05-07 09:12:20'),
-('BOL2', 4, '50.00', '6000.00', NULL, '2017-05-07 09:14:10', '2017-05-07 09:14:10');
+('COAU7040755540', 5, '200.00', '500.00', 'A dummy expense', '2017-07-12 09:44:26', '2017-07-12 09:44:26');
 
 -- --------------------------------------------------------
 
@@ -126,21 +110,8 @@ CREATE TABLE IF NOT EXISTS `container_contents` (
 --
 
 INSERT INTO `container_contents` (`Container_num`, `BOL`, `tyre_id`, `qty`, `unit_price`, `total_tax`, `total_weight`, `created_at`, `updated_at`) VALUES
-('c10', 'BOL2', 4, 10, '50.000', '700.000', '500.000', '2017-05-24 18:48:02', '2017-05-24 18:48:02'),
-('c7', 'BOL2', 4, 50, '1000.000', '500.000', '400.000', '2017-05-24 18:41:05', '2017-05-24 18:41:05'),
-('c8', 'BOL2', 4, 10, '500.000', '200.000', '400.000', '2017-05-24 18:41:30', '2017-05-24 18:41:30'),
-('c9', 'BOL2', 1, 43, '54.000', '78.000', '65.000', '2017-05-24 18:47:07', '2017-05-24 18:47:07'),
-('Cont3', 'BOL2', 1, 30, '10.000', '2400.000', '500.000', '2017-05-23 02:51:13', '2017-05-23 02:51:13'),
-('Cont3', 'BOL2', 2, 60, '12.000', '2400.000', '700.000', '2017-05-23 02:51:13', '2017-05-23 02:51:13'),
-('Cont3', 'BOL2', 3, 90, '14.000', '2400.000', '900.000', '2017-05-23 02:51:13', '2017-05-23 02:51:13'),
-('cont5', 'BOL2', 1, 30, '400.000', '700.000', '900.000', '2017-05-24 18:35:11', '2017-05-24 18:35:11'),
-('cont5', 'BOL2', 2, 50, '500.000', '750.000', '1000.000', '2017-05-24 18:35:11', '2017-05-24 18:35:11'),
-('cont6', 'BOL1', 1, 40, '400.000', '700.000', '500.000', '2017-05-24 18:39:30', '2017-05-24 18:39:30'),
-('Container 1', 'BOL1', 1, 10, '20.000', '0.000', '0.000', '2017-05-15 06:30:21', '2017-05-15 06:30:21'),
-('Container 1', 'BOL1', 2, 20, '30.000', '0.000', '0.000', '2017-05-15 06:30:21', '2017-05-15 06:30:21'),
-('Container 1', 'BOL1', 3, 30, '30.000', '0.000', '0.000', '2017-05-16 08:57:01', '2017-05-16 08:57:01'),
-('Container 2', 'BOL2', 1, 10, '40.000', '0.000', '0.000', '2017-05-17 00:35:07', NULL),
-('Container 2', 'BOL2', 2, 10, '50.000', '0.000', '0.000', '2017-05-17 00:35:07', NULL);
+('FCIU5053430/K37917', 'COAU7040755540', 1, 20, '12.500', '9999.999', '7500.000', '2017-07-12 09:03:09', '2017-07-12 09:03:09'),
+('FCIU5053430/K37917', 'COAU7040755540', 2, 20, '13.000', '9999.999', '7000.000', '2017-07-12 09:03:09', '2017-07-12 09:03:09');
 
 -- --------------------------------------------------------
 
@@ -156,17 +127,14 @@ CREATE TABLE IF NOT EXISTS `customers` (
   `notes` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`id`, `name`, `address`, `phone`, `notes`, `created_at`, `updated_at`) VALUES
-(1, 'Tyre Buyer 3', '100 TB Road', '678888', 'Test Note 2', '2017-05-06 03:32:32', '2017-06-22 00:39:39'),
-(2, 'Second Buyer', '2 sbuyer Street', '656666', 'some note.', '2017-05-06 05:51:55', NULL),
-(3, '3 Guys Tyre Buyers', '3 guy street', '3374878', 'We sell burgers too.', '2017-05-06 10:53:36', '2017-06-22 00:40:35'),
-(4, 'A New Customer', 'New Address', '6777777', 'A new note about a new customer', '2017-06-22 00:38:51', '2017-06-22 00:39:16');
+(5, 'First Customer', '1 Address road', '5677876', 'Some note.', '2017-07-12 10:01:09', '2017-07-12 10:01:09');
 
 -- --------------------------------------------------------
 
@@ -218,13 +186,7 @@ CREATE TABLE IF NOT EXISTS `lcs` (
 --
 
 INSERT INTO `lcs` (`lc_num`, `date_issued`, `date_expiry`, `applicant`, `beneficiary`, `currency_code`, `foreign_amount`, `foreign_expense`, `domestic_expense`, `exchange_rate`, `port_depart`, `port_arrive`, `invoice_no`, `notes`, `created_at`, `updated_at`) VALUES
-('000000', '2017-07-01', '2017-07-31', 'Ishtehar', 'Ovi', 'CAD', '5000.00', '300.00', '2000.00', '60.00', 'TOR', 'DHK', '00110000', NULL, '2017-07-01 17:45:48', '2017-07-01 17:45:48'),
-('009988776655', '2017-06-09', '2017-06-20', 'ME', 'you', 'USD', '5000.00', '400.00', '3000.00', '61.00', 'aad', 'asd', '2333456', NULL, '2017-07-01 04:05:17', '2017-07-01 04:05:17'),
-('1234556789012', '2017-06-01', '2017-06-14', 'df', 'dsf', 'das', '5000.00', '50.00', '0.00', '50.00', 'sfd', 'sfd', '9878', NULL, '2017-07-01 07:24:38', '2017-07-01 07:24:38'),
-('67666678', '2017-06-01', '2017-06-30', 'yui', 'yui', 'CAD', '5000.00', '200.00', '3000.00', '60.00', 'yiu', 'yui', '767666', NULL, '2017-07-01 07:01:37', '2017-07-01 07:01:37'),
-('LC0001', '2017-05-06', '2017-05-29', 'Me', 'You', 'CAD', '5000.00', '200.00', '12000.00', '60.00', 'PIA', 'DAC', '11111111', NULL, '2017-05-06 10:28:38', '2017-05-06 10:28:38'),
-('LC2', '2017-06-01', '2017-06-04', 'A', 'B', 'USD', '5000.00', '200.00', '2000.00', '60.90', 'C', 'D', '222', NULL, '2017-06-05 02:17:50', '2017-06-05 02:17:50'),
-('LC3', '2017-06-21', '2017-06-24', 'A', 'B', 'USD', '5000.00', '200.00', '2000.00', '60.90', 'C', 'D', '333', NULL, '2017-06-05 02:30:45', '2017-06-05 02:30:45');
+('350316010267', '2016-12-22', '2017-03-16', 'M/S. Intertrac Nano\r\n7/5 RIng Road Shyamoly,\r\nDhaka-1207, Bangladesh.', 'Qingdao Keter International Co. Ltd. \r\nADD: 2-1401, Shenghe Mansion,\r\nNo. 58 Shandongtou Road, Qingd', 'USD', '29736.20', '0.00', '0.00', '60.00', 'Any seaport of China', 'ICD Kamlapur Dhaka Via Chittag', 'KT162N04FY177LI72/946', 'Qingdao Phone# +86-532-55579147', '2017-07-11 07:26:39', '2017-07-11 07:26:39');
 
 -- --------------------------------------------------------
 
@@ -261,23 +223,16 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `tax_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`Order_num`, `customer_id`, `discount_percent`, `discount_amount`, `tax_percentage`, `tax_amount`, `created_at`, `updated_at`) VALUES
-(1, 1, '0.00', '0.00', '15.00', '0.00', '2017-05-10 09:14:28', '2017-05-10 09:14:28'),
-(2, 1, '15.00', '0.00', '15.00', '0.00', '2017-05-10 09:14:59', '2017-05-10 09:14:59'),
-(3, 2, '15.00', '0.00', '0.00', '200.00', '2017-05-10 09:18:45', '2017-05-10 09:18:45'),
-(12, 3, '0.00', '0.00', '0.00', '0.00', '2017-05-20 19:29:34', '2017-05-20 19:29:34'),
-(13, 3, '10.00', '0.00', '0.00', '0.00', '2017-05-20 19:31:40', '2017-05-20 19:31:40'),
-(20, 3, '0.00', '0.00', '15.00', '0.00', '2017-05-22 08:38:12', '2017-05-22 08:38:12'),
-(28, 1, '0.00', '0.00', '15.00', '0.00', '2017-05-22 08:58:55', '2017-05-22 08:58:55'),
-(30, 2, '0.00', '0.00', '0.00', '0.00', '2017-06-06 21:07:30', '2017-06-06 21:07:30'),
-(31, 3, '15.00', '0.00', '15.00', '0.00', '2017-06-19 02:08:43', '2017-06-19 02:08:43'),
-(32, 1, '12.00', '0.00', '15.00', '0.00', '2017-07-01 02:38:52', '2017-07-01 02:38:52');
+(33, 5, '10.00', '50.00', '15.00', '0.00', '2017-07-12 10:02:58', '2017-07-12 10:02:58'),
+(34, 5, '0.00', '0.00', '15.00', '0.00', '2017-07-12 10:08:01', '2017-07-12 10:08:01'),
+(35, 5, '0.00', '0.00', '0.00', '100.00', '2017-07-19 04:45:29', '2017-07-19 04:45:29');
 
 -- --------------------------------------------------------
 
@@ -301,41 +256,10 @@ CREATE TABLE IF NOT EXISTS `order_contents` (
 --
 
 INSERT INTO `order_contents` (`Order_num`, `tyre_id`, `container_num`, `bol`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Container 1', 'BOL1', 5, '500.00', '2017-05-16 03:00:22', NULL),
-(1, 2, 'Container 1', 'BOL1', 10, '450.00', '2017-05-16 03:00:22', NULL),
-(2, 1, 'Container 1', 'BOL1', 2, '500.00', '2017-05-17 00:29:06', NULL),
-(12, 3, 'Container 1', 'BOL1', 10, '1000.00', '2017-05-20 19:29:34', '2017-05-20 19:29:34'),
-(13, 3, 'Container 1', 'BOL1', 7, '1000.00', '2017-05-20 19:31:40', '2017-05-20 19:31:40'),
-(20, 3, 'Container 1', 'BOL1', 3, '500.00', '2017-05-22 08:38:13', '2017-05-22 08:38:13'),
-(28, 1, 'Container 1', 'BOL1', 3, '500.00', '2017-05-22 08:58:55', '2017-05-22 08:58:55'),
-(28, 2, 'Container 1', 'BOL1', 5, '1000.00', '2017-05-22 08:58:56', '2017-05-22 08:58:56'),
-(28, 3, 'Container 1', 'BOL1', 5, '700.00', '2017-05-22 08:58:56', '2017-05-22 08:58:56'),
-(30, 1, 'Cont3', 'BOL2', 30, '500.00', '2017-06-06 21:07:31', '2017-06-06 21:07:31'),
-(30, 1, 'cont5', 'BOL2', 13, '500.00', '2017-06-06 21:07:31', '2017-06-06 21:07:31'),
-(30, 1, 'Container 1', 'BOL1', 0, '500.00', '2017-06-06 21:07:31', '2017-06-06 21:07:31'),
-(30, 1, 'Container 2', 'BOL2', 10, '500.00', '2017-06-06 21:07:31', '2017-06-06 21:07:31'),
-(30, 2, 'Cont3', 'BOL2', 10, '500.00', '2017-06-06 21:07:32', '2017-06-06 21:07:32'),
-(30, 2, 'Container 1', 'BOL1', 5, '500.00', '2017-06-06 21:07:31', '2017-06-06 21:07:31'),
-(30, 2, 'Container 2', 'BOL2', 10, '500.00', '2017-06-06 21:07:32', '2017-06-06 21:07:32'),
-(31, 1, 'Cont3', 'BOL2', 0, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 1, 'cont5', 'BOL2', 17, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 1, 'cont6', 'BOL1', 33, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 1, 'Container 1', 'BOL1', 0, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 1, 'Container 2', 'BOL2', 0, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 2, 'Cont3', 'BOL2', 50, '250.00', '2017-06-19 02:08:45', '2017-06-19 02:08:45'),
-(31, 2, 'Container 1', 'BOL1', 0, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 2, 'Container 2', 'BOL2', 0, '250.00', '2017-06-19 02:08:44', '2017-06-19 02:08:44'),
-(31, 3, 'Container 1', 'BOL1', 5, '300.00', '2017-06-19 02:08:45', '2017-06-19 02:08:45'),
-(32, 1, 'c9', 'BOL2', 3, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 1, 'Cont3', 'BOL2', 0, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 1, 'cont5', 'BOL2', 0, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 1, 'cont6', 'BOL1', 7, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 1, 'Container 1', 'BOL1', 0, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 1, 'Container 2', 'BOL2', 0, '450.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 2, 'Cont3', 'BOL2', 0, '500.00', '2017-07-01 02:38:54', '2017-07-01 02:38:54'),
-(32, 2, 'cont5', 'BOL2', 10, '500.00', '2017-07-01 02:38:54', '2017-07-01 02:38:54'),
-(32, 2, 'Container 1', 'BOL1', 0, '500.00', '2017-07-01 02:38:53', '2017-07-01 02:38:53'),
-(32, 2, 'Container 2', 'BOL2', 0, '500.00', '2017-07-01 02:38:54', '2017-07-01 02:38:54');
+(33, 1, 'FCIU5053430/K37917', 'COAU7040755540', 5, '500.00', '2017-07-12 10:02:59', '2017-07-12 10:02:59'),
+(33, 2, 'FCIU5053430/K37917', 'COAU7040755540', 5, '1000.00', '2017-07-12 10:02:59', '2017-07-12 10:02:59'),
+(34, 1, 'FCIU5053430/K37917', 'COAU7040755540', 5, '750.00', '2017-07-12 10:08:01', '2017-07-12 10:08:01'),
+(35, 2, 'FCIU5053430/K37917', 'COAU7040755540', 5, '450.00', '2017-07-19 04:45:29', '2017-07-19 04:45:29');
 
 -- --------------------------------------------------------
 
@@ -355,7 +279,6 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 --
 
 INSERT INTO `password_resets` (`username`, `token`, `created_at`, `email`) VALUES
-('', '$2y$10$Hp76xXR2ANcAH1R8Qj/ET.quvNKr7wjWwLGFUA0ackaIFJeM7EZFa', '2017-06-28 23:25:40', 'ishteharhussain@gmail.com'),
 ('', '$2y$10$mNaRi05MLw5RHUV3Di/4A.DNQ0c4kStG2J03/yreR9D5ipO1qNmua', '2017-07-03 07:40:41', 'tshahriyer@gmail.com');
 
 -- --------------------------------------------------------
@@ -370,17 +293,16 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `payment_amount` decimal(10,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
 INSERT INTO `payments` (`Invoice_num`, `Order_num`, `payment_amount`, `created_at`, `updated_at`) VALUES
-(00000000000000000001, 1, '500.00', '2017-05-10 10:51:53', '2017-05-10 10:51:53'),
-(00000000000000000002, 2, '200.00', '2017-05-10 10:54:15', '2017-05-10 10:54:15'),
-(00000000000000000003, 3, '2700.00', '2017-05-10 10:56:13', '2017-05-10 10:56:13'),
-(00000000000000000004, 1, '1000.00', '2017-06-17 13:49:41', '2017-06-17 13:49:41');
+(00000000000000000005, 33, '1000.00', '2017-07-12 10:09:53', '2017-07-12 10:09:53'),
+(00000000000000000006, 33, '6825.00', '2017-07-17 22:58:05', '2017-07-17 22:58:05'),
+(00000000000000000007, 35, '2000.00', '2017-07-19 04:47:22', '2017-07-19 04:47:22');
 
 -- --------------------------------------------------------
 
@@ -402,19 +324,25 @@ CREATE TABLE IF NOT EXISTS `performa_invoices` (
 --
 
 INSERT INTO `performa_invoices` (`lc_num`, `tyre_id`, `qty`, `unit_price`, `created_at`, `updated_at`) VALUES
-('000000', 1, 10, '45.00', '2017-07-01 17:45:48', '2017-07-01 17:45:48'),
-('000000', 2, 20, '55.00', '2017-07-01 17:45:48', '2017-07-01 17:45:48'),
-('009988776655', 5, 10, '50.00', '2017-07-01 04:06:28', '2017-07-01 04:06:28'),
-('009988776655', 6, 20, '50.00', '2017-07-01 04:06:28', '2017-07-01 04:06:28'),
-('67666678', 1, 10, '50.00', '2017-07-01 07:05:21', '2017-07-01 07:05:21'),
-('67666678', 2, 10, '50.00', '2017-07-01 07:05:21', '2017-07-01 07:05:21'),
-('LC0001', 1, 10, '100.00', '2017-05-10 08:11:44', '2017-05-10 08:11:44'),
-('LC0001', 2, 20, '200.00', '2017-05-10 08:11:44', '2017-05-10 08:11:44'),
-('LC0001', 3, 24, '300.00', '2017-05-10 08:23:31', '2017-05-10 08:23:31'),
-('LC2', 1, 10, '50.00', '2017-06-05 02:17:51', '2017-06-05 02:17:51'),
-('LC2', 2, 20, '60.00', '2017-06-05 02:17:51', '2017-06-05 02:17:51'),
-('LC3', 2, 10, '50.00', '2017-06-05 02:30:46', '2017-06-05 02:30:46'),
-('LC3', 3, 10, '60.00', '2017-06-05 02:30:46', '2017-06-05 02:30:46');
+('350316010267', 1, 30, '12.10', '2017-07-11 10:27:20', '2017-07-11 10:27:20'),
+('350316010267', 2, 60, '14.60', '2017-07-11 10:27:20', '2017-07-11 10:27:20'),
+('350316010267', 3, 50, '15.70', '2017-07-11 10:27:20', '2017-07-11 10:27:20'),
+('350316010267', 4, 60, '15.20', '2017-07-11 10:27:20', '2017-07-11 10:27:20'),
+('350316010267', 5, 60, '15.00', '2017-07-11 10:27:21', '2017-07-11 10:27:21'),
+('350316010267', 6, 30, '16.00', '2017-07-11 10:39:16', '2017-07-11 10:39:16'),
+('350316010267', 7, 320, '18.10', '2017-07-12 06:58:08', '2017-07-12 06:58:08'),
+('350316010267', 8, 20, '19.40', '2017-07-12 06:58:08', '2017-07-12 06:58:08'),
+('350316010267', 9, 16, '18.20', '2017-07-12 06:58:08', '2017-07-12 06:58:08'),
+('350316010267', 10, 20, '22.50', '2017-07-12 06:58:08', '2017-07-12 06:58:08'),
+('350316010267', 11, 150, '18.50', '2017-07-12 06:58:08', '2017-07-12 06:58:08'),
+('350316010267', 12, 150, '19.50', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 13, 16, '21.30', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 14, 16, '26.20', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 15, 16, '24.20', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 16, 12, '25.20', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 17, 16, '31.20', '2017-07-12 06:58:09', '2017-07-12 06:58:09'),
+('350316010267', 18, 16, '40.20', '2017-07-12 06:58:10', '2017-07-12 06:58:10'),
+('350316010267', 19, 300, '27.60', '2017-07-12 06:58:10', '2017-07-12 06:58:10');
 
 -- --------------------------------------------------------
 
@@ -426,23 +354,36 @@ CREATE TABLE IF NOT EXISTS `tyres` (
   `tyre_id` int(11) NOT NULL,
   `brand` varchar(15) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'INTERTRAC',
   `size` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `lisi` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pattern` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tyres`
 --
 
-INSERT INTO `tyres` (`tyre_id`, `brand`, `size`, `pattern`, `created_at`, `updated_at`) VALUES
-(1, 'INTERTRAC', 'SIZE1', 'PAT1', '2017-05-06 10:43:40', '2017-05-06 10:43:40'),
-(2, 'BOL1', 'LC001', '20', '2017-05-06 11:32:44', '2017-05-06 11:32:44'),
-(3, 'BOL1', 'LC001', '20', '2017-05-06 11:34:10', '2017-05-06 11:34:10'),
-(4, 'INTERTRAC', '', '', '2017-05-10 03:42:02', '2017-05-10 03:42:02'),
-(5, 'HUSSAIN', 'H', 'P', '2017-06-06 20:54:29', '2017-06-06 20:54:29'),
-(6, 'TYRE BRAND', 'TYRE SIZE', 'TYRE PATTE', '2017-06-19 09:06:18', '2017-06-19 09:06:18'),
-(7, 'NABILA', 'XS', 'POLKA', '2017-06-23 04:06:27', '2017-06-23 04:06:27');
+INSERT INTO `tyres` (`tyre_id`, `brand`, `size`, `lisi`, `pattern`, `created_at`, `updated_at`) VALUES
+(1, 'BRIGHTWAY', '145R12LT/C', '8PR', 'LRP178', '2017-07-11 08:30:04', '2017-07-11 08:30:04'),
+(2, 'BRIGHTWAY', '155R13LT', '8PR', 'LRP118', '2017-07-11 08:31:07', '2017-07-11 08:31:07'),
+(3, 'BRIGHTWAY', '165R13LT', '8PR', 'LRP118', '2017-07-11 03:35:59', '2017-07-11 03:35:59'),
+(4, 'SPORTRAK', '165/80R13', '83H', 'FRD16', '2017-07-11 03:35:59', '2017-07-11 03:35:59'),
+(5, 'INTERTRAC', '175/70R13', '82T', 'TC515', '2017-07-11 03:37:37', '2017-07-11 03:37:37'),
+(6, 'INTERTRAC', '175/70R14', '84H', 'TC515', '2017-07-11 03:37:37', '2017-07-11 03:37:37'),
+(7, 'INTERTRAC', '185/70R14', '88H', 'TC515', '2017-07-11 03:41:31', '2017-07-11 03:41:31'),
+(8, 'INTERTRAC', '195/70R14', '91H', 'TC515', '2017-07-11 03:41:31', '2017-07-11 03:41:31'),
+(9, 'INTERTRAC', '195/55R15', '85V', 'TC515', '2017-07-11 03:42:56', '2017-07-11 03:42:56'),
+(10, 'INTERTRAC', '205/60R', '91H', 'TC515', '2017-07-11 03:42:56', '2017-07-11 03:42:56'),
+(11, 'INTERTRAC', '185/65R16', '88H', 'TC515', '2017-07-11 03:48:57', '2017-07-11 03:48:57'),
+(12, 'INTERTRAC', '195/65R16', '91V', 'TC515', '2017-07-11 03:48:57', '2017-07-11 03:48:57'),
+(13, 'INTERTRAC', '205/50ZR16', '87W', 'TC515', '2017-07-11 03:50:52', NULL),
+(14, 'INTERTRAC', '215/65R16', '98H', 'TC515', '2017-07-11 03:50:52', '2017-07-11 03:50:52'),
+(15, 'INTERTRAC', '225/40ZR18', '92WXL', 'TC525', '2017-07-11 03:53:28', '2017-07-11 03:53:28'),
+(16, 'INTERTRAC', '225/45ZR18', '95WXL', 'TC525', '2017-07-11 03:53:28', '2017-07-11 03:53:28'),
+(17, 'INTERTRAC', '225/65R17', '106H', 'TC565', '2017-07-11 03:56:07', '2017-07-11 03:56:07'),
+(18, 'INTERTRAC', '265/65R17', '116H', 'TC565', '2017-07-11 03:56:07', '2017-07-11 03:56:07'),
+(19, 'INTERTRAC', '195R16C-8PR', '106/104S', 'TC595', '2017-07-11 03:57:11', '2017-07-11 03:57:11');
 
 -- --------------------------------------------------------
 
@@ -472,17 +413,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `admin`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'Ovi', 'x.e.q.tionrz@gmail.com', '$2y$10$EqyfChB2OS2JfTpxH5piT.5xUSE974uCyZOXGpF84Y3MVZi1kUZuS', 0, 'S2Hy3WJLKEiHkXmHgSKD1uzMUkdCknPJ3baW93jZfjndIU74GnI08wvu8Jj7', '2017-06-27 08:24:48', '2017-06-28 23:28:39'),
-(3, 'Ishtehar Hussain', 'ishteharhussain@gmail.com', '$2y$10$oLMoIqRFBR8.nVlHZDweveCQt7WAxFRYgC0fCVkRTwGLCAePJyxzS', 1, 'RFw7kxrr8w7tMkTDgRW4jvjmkqqm12X1MML1JNWruXzlkgR1HdbFlHgDsolp', '2017-06-28 23:16:59', '2017-06-28 23:16:59'),
-(4, 'Nabila', 'tasnimnh@hotmail.com', '$2y$10$Tx235LhKdh8RzwdK8SWfO.9B4bhoHcqu1ueEfPQNUv8m9SybBKhhq', 0, 'I2edbuYsNF5C5LTDh5MUhkVxwXCHqqBA3wR1xjtHnPNWAFszn70fWysJ2tve', '2017-06-29 03:14:57', '2017-06-29 03:14:57'),
-(5, 'Tausif', 'tshahriyer@gmail.com', '$2y$10$muIAyEbGF68v9APN9caUGOZZZEr4cG6iN3wCEsvkAqPa1Vj.RBYxG', 0, 'eqOSqg5M7C26sGCKxKHDtLGNwDX74zCjYC7l76JgVEYdVXhmoO2S15dBJsBw', '2017-07-03 07:40:19', '2017-07-03 07:40:19');
+(1, 'Ishtehar Hussain', 'ishteharhussain@gmail.com', '$2y$10$ZsrubQE/5LYr5VHPGlexcOKOOnAdzkGrx8.AgIGrlTghK5H7kzwwa', 1, 'Y5EUmH3dVSbzv6yjomeYP5cqXqKs9rbg839jUePJk0nqNgufPJW60gg6ueMA', NULL, '2017-07-11 08:17:07'),
+(2, 'Ovi', 'x.e.q.tionrz@gmail.com', 'asdfsfdsd', 0, 'ddasasadsda', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -570,7 +509,7 @@ ALTER TABLE `performa_invoices`
 -- Indexes for table `tyres`
 --
 ALTER TABLE `tyres`
-  ADD PRIMARY KEY (`tyre_id`);
+  ADD PRIMARY KEY (`tyre_id`), ADD UNIQUE KEY `unique_tyre` (`brand`,`size`,`lisi`,`pattern`);
 
 --
 -- Indexes for table `tyre_hscodes`
@@ -592,12 +531,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `consignment_expenses`
 --
 ALTER TABLE `consignment_expenses`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
@@ -607,22 +546,22 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `Order_num` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+  MODIFY `Order_num` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `Invoice_num` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `Invoice_num` bigint(20) unsigned zerofill NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tyres`
 --
 ALTER TABLE `tyres`
-  MODIFY `tyre_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `tyre_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
