@@ -81,7 +81,7 @@
       </div>
 
     <div class="col-md-3 vertical-spaced">
-      <a href="#">
+      <a href="/reports/outstanding_balance">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
             <img src="/images/outstanding-balance.png" width="45" height="45">
