@@ -160,10 +160,10 @@
     <div class="col-md-12">
       @include('partials.errors')
 
-<div class="panel panel-default">
+<!--<div class="panel panel-default">
 <div class="panel-heading">ENTER COMMERCIAL ITEMS INVOICE FOR CONSIGNMENT</div>
 
-<div class="panel-body">
+<div class="panel-body">-->
 <div class="row">
 <div class="col-md-6">
   <form class="form-horizontal" method="post" action="/container_contents">
@@ -232,8 +232,8 @@
     @include('partials.tyres')
   </div><!--col-->
 </div><!--row-->
-</div><!--panel-body-->
-</div><!--panel-->
+<!--</div>panel-body-->
+<!--</div>panel-->
 </div><!--col-->
 </div><!--row-->
 </div> <!--container-->

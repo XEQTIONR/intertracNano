@@ -98,9 +98,6 @@ body h1 {
 .nav-intertrac li a:hover {
   color: white;
   background-color: #fe8d41;
-  border-top: 3px solid #0295C6;
-  border-left: 3px solid #0295C6;
-  border-right: 3px solid #0295C6;
 }
 .nav-intertrac li a:active {
   color: #F26101;

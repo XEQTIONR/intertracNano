@@ -57,9 +57,9 @@ $( function()
 
         @include('partials.errors')
 
-        <div class="panel panel-default" style="margin-top: 1.6em;">
+        <!--<div class="panel panel-default" style="margin-top: 1.6em;">
         <div class="panel-heading">1. LC Information</div>
-        <div class="panel-body">
+        <div class="panel-body">-->
         <div class="form-group">
           <label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#  <small>F20</small></label>
           <div class="col-md-3">
@@ -160,14 +160,14 @@ $( function()
           </div>
         </div>
 
-      </div> <!--panel-body-->
-    </div> <!--panel-->
+      <!--</div> panel-body-->
+    <!--</div> panel-->
 
 
 
-        <div class="panel panel-default">
+        <!--<div class="panel panel-default">
         <div class="panel-heading"> 2. Enter Peforma Invoice Information (Optional)</div>
-        <div class="panel-body">
+        <div class="panel-body">-->
 
 
         <div class="col-md-5">
@@ -226,8 +226,8 @@ $( function()
         </div> <!--catalogContainer-->
 
 
-    </div> <!--panel-body-->
-  </div> <!--panel-->
+  <!--  </div> panel-body-->
+  <!--</div> panel-->
 
 
 

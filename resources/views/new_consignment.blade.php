@@ -31,12 +31,12 @@ $( function()
   <form class="form-horizontal" method="post" action="/consignments">
     @include('partials.errors')
 
-    <div class="panel panel-default" style="margin-top: 1.6em;">
+    <!--<div class="panel panel-default" style="margin-top: 1.6em;">
 
 
 
       <div class="panel-heading">1. Enter New Consignment Information </div>
-      <div class="panel-body">
+      <div class="panel-body">-->
 
             <div class="row">
               {{ csrf_field() }}
@@ -98,8 +98,8 @@ $( function()
             </div><!--row-->
 
 
-      </div> <!--panel-body-->
-    </div> <!--panel-->
+    <!--  </div> panel-body-->
+    <!--</div> panel-->
 
 
   </form>

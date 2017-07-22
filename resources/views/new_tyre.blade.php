@@ -16,8 +16,8 @@
 <div class="col-md-8 col-md-offset-2">
 <form class="form-horizontal" method="post" action="/tyres">
 @include('partials.errors')
-<div class="panel panel-default" style="margin-top: 1.6em;">
-  <div class="panel-heading">Enter new tyre information to add to database.</div>
+<!--<div class="panel panel-default" style="margin-top: 1.6em;">-->
+  <!--<div class="panel-heading">Enter new tyre information to add to database.</div>-->
   <div class="panel-body">
 
 
@@ -60,8 +60,8 @@
       </div>
     </div>
 
-</div><!--panel-body-->
-</div> <!--panel-->
+<!--</div>panel-body-->
+<!--</div> panel-->
 </form>
 </div> <!--col-->
 </div><!--row-->
