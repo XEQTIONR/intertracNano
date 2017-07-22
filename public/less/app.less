@@ -2,12 +2,6 @@
 @author Ishtehar Hussain
 @desc The main files with all the styles for the app
 **/
-
-@base: #F26101;
-@nav-background-color: #FFF;//#304269;
-@nav-tab-color: #FFF;
-@nav-tab-highlight:#FFD03F;
-
 @red:#E25E69;
 @contrast:#7BC2CA;
 @yellow:#EC7;
@@ -35,6 +29,9 @@
 @gray1: #EBF2E8;
 @gray0: #F7FFF5;
 
+@pt:#0295C6;
+@vg:#45C770;
+
 
 ::-webkit-scrollbar {
 display: none;
@@ -47,10 +44,16 @@ html
 body
 {
   color: @dark;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   background-color: @gray2;
   margin-top: 100px;
+
+  h1
+  {
+    font-family: 'Montserrat', sans-serif;
+  }
 }
 
 .white-card
@@ -70,9 +73,9 @@ body
 
 .stat
 {
-  font-family: 'Oswald', serif;
+  //font-family: 'Oswald', serif;
   text-align: center;
-  font-weight: bolder;
+  font-weight: 100;
 }
 .stat-figure
 {
@@ -83,13 +86,14 @@ body
 {
   height: 20em;
   border: 1px sold red;
-  font-family: 'Oswald', serif;
+  //font-family: 'Oswald', serif;
 }
 
 .stat-text
 {
   font-size: 1em;
   margin-bottom: 2em;
+  font-weight: 100;
 }
 .nav-topmost
 {
@@ -138,7 +142,7 @@ body
 
 .navbar-intertrac
 {
-  background-color: white;
+  background-color: @pt;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
@@ -152,8 +156,11 @@ body
 
 .nav-intertrac
 {
-  //background-color: @light-gray;
-  line-height: 3em;
+  //background-color: @pt;
+  font-family: 'Montserrat', sans-serif;
+  text-transform:uppercase;
+  font-weight: bolder;
+  line-height: 2em;
   li
   {
       width: auto;
@@ -163,14 +170,17 @@ body
       margin-right: 0;
       a
       {
-        color: @orange2;//darken(@contrast,15%);
+        color: white;//darken(@contrast,15%);
         //font-weight: bolder;
         //background-color: @nav-tab-color;
         //border: 0px;
         &:hover
         {
-          color: @orange2;//darken(saturate(@green,100%),20%);
-          background-color: white;//darken(@contrast, 10%);
+          color: white;//darken(saturate(@green,100%),20%);
+          background-color: lighten(@orange2, 15%);
+          border-top: 3px solid @pt;
+          border-left: 3px solid @pt;
+          border-right: 3px solid @pt;
           //border-bottom: 5px solid @orange;//lighten(saturate(@green,100%),10%);
         }
         &:active
@@ -182,6 +192,45 @@ body
       }
     }
   }
+
+  .subMenu
+  {
+    display: none;
+    background-color: lighten(@orange, 30%);
+    //border-bottom: 5px solid @contrast;
+
+    a
+    {
+      color: @pt ;
+
+      &:hover
+      {
+        color: @orange2;
+      }
+    }
+
+  }
+
+
+
+    .menu-option-title
+    {
+      font-size: 1.2em;
+      //text-transform: uppercase;
+      font-family: 'Montserrat', serif;
+      font-weight: 600;
+    }
+
+    .menu-table-cell
+    {
+      padding: 5px;
+      vertical-align: middle;
+      text-align: center;
+      /*border: 1px solid blue;*/
+
+    }
+
+
 
 #mainContent
 {
@@ -204,14 +253,14 @@ body
   {
 
     font-size: 100px;
-    font-weight: lighter;
+    font-weight: 500;
     color: @orange2;//lighten(@yellow, 10%);
 
     margin-top: 1em;
     span
     {
       color: #FFF;
-      font-weight: bolder;
+      font-weight: 500;
     }
   }
 }
@@ -236,7 +285,9 @@ body
 .vertical-spaced
 {
    margin-top: 1em;
-   margin-bottom: 1em;
+   margin-bottom: 2.5em;
+   height: 4em;
+  // border: 1px dashed @pt;
 }
 
 .border
@@ -244,54 +295,19 @@ body
   border: 1px dashed green;
 }
 
-.menu-option-title
-{
-  font-size: 1.5em;
-  font-weight: bolder;
-}
-
-.menu-table-cell
-{
-  padding: 5px;
-  vertical-align: middle;
-  text-align: center;
-  /*border: 1px solid blue;*/
-
-}
-
-
-
-.subMenu
-{
-  display: none;
-  background-color: white;//lighten(@green0, 30%);
-  //border-bottom: 5px solid @contrast;
-
-  a
-  {
-    color: @orange2 ;
-
-    &:hover
-    {
-      color: @orange2;
-    }
-  }
-
-}
-
   #footer
   {
     postion: absolute;
-    background-color: white;
-    border-top: 1px solid @orange2;
+    background-color: desaturate(@pt, 15%);
+    border-top: 1px solid @pt;
     margin: 0;
-    padding-top: 10vh;
-
+    padding-top: 7vh;
+    padding-bottom: 3vh;
     bottom: 0;
 
     p
     {
-      color: @orange2;
+      color: white;
       font-weight: bold;
     }
   }

@@ -9,7 +9,7 @@
 
   <div class="row subMenu" id="theMenu">
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/reports/order">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -33,7 +33,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/reports/payment">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1" >
@@ -57,7 +57,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="#">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -80,7 +80,7 @@
         </a>
       </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/reports/outstanding_balance">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -104,7 +104,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="#">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -134,7 +134,7 @@
 
   <div class="row subMenu" id="theMenu2">
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/customers">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -158,7 +158,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/tyres">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1" >
@@ -182,7 +182,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/consignments">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -205,7 +205,7 @@
         </a>
       </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/lcs">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -229,7 +229,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/consignment_expenses">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -253,7 +253,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/orders">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -277,7 +277,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/payments">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -302,7 +302,7 @@
     </div>
 
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/stock">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -339,7 +339,7 @@
 
   <div class="row subMenu" id="theMenu3">
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/tyres/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1" >
@@ -362,7 +362,7 @@
         </div>
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/lcs/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -385,7 +385,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/performa_invoices/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -408,7 +408,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/consignments/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -430,7 +430,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/consignment_expenses/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -454,7 +454,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/customers/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -477,7 +477,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/orders/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -500,7 +500,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/payments/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -524,7 +524,7 @@
       </a>
     </div>
 
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/consignment_containers/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
@@ -547,7 +547,7 @@
         </div> <!--row-->
       </a>
     </div>
-    <div class="col-md-3 vertical-spaced">
+    <div class="col-md-4 col-lg-3 vertical-spaced">
       <a href="/container_contents/create">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">

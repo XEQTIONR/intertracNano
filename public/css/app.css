@@ -10,10 +10,14 @@ html {
 }
 body {
   color: #494252;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   background-color: #C4CCC3;
   margin-top: 100px;
+}
+body h1 {
+  font-family: 'Montserrat', sans-serif;
 }
 .white-card {
   width: 100%;
@@ -25,9 +29,8 @@ body {
   margin-top: 2em;
 }
 .stat {
-  font-family: 'Oswald', serif;
   text-align: center;
-  font-weight: bolder;
+  font-weight: 100;
 }
 .stat-figure {
   font-size: 4em;
@@ -35,11 +38,11 @@ body {
 .stat-diagram {
   height: 20em;
   border: 1px sold red;
-  font-family: 'Oswald', serif;
 }
 .stat-text {
   font-size: 1em;
   margin-bottom: 2em;
+  font-weight: 100;
 }
 .nav-topmost {
   background-color: white;
@@ -67,7 +70,7 @@ body {
   background-color: #F26101;
 }
 .navbar-intertrac {
-  background-color: white;
+  background-color: #0295C6;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
@@ -77,7 +80,10 @@ body {
   border-bottom: 10px solid #F26101;
 }
 .nav-intertrac {
-  line-height: 3em;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: bolder;
+  line-height: 2em;
 }
 .nav-intertrac li {
   width: auto;
@@ -87,15 +93,39 @@ body {
   margin-right: 0;
 }
 .nav-intertrac li a {
-  color: #F26101;
+  color: white;
 }
 .nav-intertrac li a:hover {
-  color: #F26101;
-  background-color: white;
+  color: white;
+  background-color: #fe8d41;
+  border-top: 3px solid #0295C6;
+  border-left: 3px solid #0295C6;
+  border-right: 3px solid #0295C6;
 }
 .nav-intertrac li a:active {
   color: #F26101;
   background-color: #FFF;
+}
+.subMenu {
+  display: none;
+  background-color: #fff0dd;
+}
+.subMenu a {
+  color: #0295C6;
+}
+.subMenu a:hover {
+  color: #F26101;
+}
+.menu-option-title {
+  font-size: 1.2em;
+  font-family: 'Montserrat', serif;
+  font-weight: 600;
+}
+.menu-table-cell {
+  padding: 5px;
+  vertical-align: middle;
+  text-align: center;
+  /*border: 1px solid blue;*/
 }
 #mainContent {
   width: 100%;
@@ -110,13 +140,13 @@ body {
 }
 .welcome-banner h1 {
   font-size: 100px;
-  font-weight: lighter;
+  font-weight: 500;
   color: #F26101;
   margin-top: 1em;
 }
 .welcome-banner h1 span {
   color: #FFF;
-  font-weight: bolder;
+  font-weight: 500;
 }
 .main-title {
   font-size: 50px;
@@ -131,41 +161,23 @@ body {
 }
 .vertical-spaced {
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 2.5em;
+  height: 4em;
 }
 .border {
   border: 1px dashed green;
 }
-.menu-option-title {
-  font-size: 1.5em;
-  font-weight: bolder;
-}
-.menu-table-cell {
-  padding: 5px;
-  vertical-align: middle;
-  text-align: center;
-  /*border: 1px solid blue;*/
-}
-.subMenu {
-  display: none;
-  background-color: white;
-}
-.subMenu a {
-  color: #F26101;
-}
-.subMenu a:hover {
-  color: #F26101;
-}
 #footer {
   postion: absolute;
-  background-color: white;
-  border-top: 1px solid #F26101;
+  background-color: #118eb7;
+  border-top: 1px solid #0295C6;
   margin: 0;
-  padding-top: 10vh;
+  padding-top: 7vh;
+  padding-bottom: 3vh;
   bottom: 0;
 }
 #footer p {
-  color: #F26101;
+  color: white;
   font-weight: bold;
 }
 .icon-bar {
