@@ -212,12 +212,12 @@ $( function()
 
 
         <div id=catalogContainer class="col-md-6 col-md-offset-1">
-          <div class="panel panel-success">
-            <div class="panel-heading">
+          <!--<div class="panel panel-success">
+            <div class="panel-heading">-->
               <h4>Tyre Catalog</h4>
-            </div> <!--panel-heading-->
+            <!--</div> panel-heading
 
-            <div class="panel-body">
+            <div class="panel-body">-->
               <div id="tyreCatalog" class="col-md-12">
                 @include('partials.tables.tyre_catalog')
               </div>

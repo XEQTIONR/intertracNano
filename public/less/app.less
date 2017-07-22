@@ -48,7 +48,7 @@ body
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   background-color: @gray2;
-  margin-top: 100px;
+  //margin-top: 100px;
 
   h1
   {
@@ -119,6 +119,7 @@ body
       {
         background-color: white;
         color: @orange2;
+        border-bottom: 3px solid @orange2;
       }
 
       &:focus
@@ -142,16 +143,12 @@ body
 
 .navbar-intertrac
 {
-  background-color: @pt;
+  background-color: #FFF;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 10px solid lighten(@orange2, 30%);
+  border-bottom: 6px solid @orange2;//lighten(@orange2, 30%);
 
-  &:hover
-  {
-    border-bottom: 10px solid @orange2;
-  }
 }
 
 .nav-intertrac
@@ -170,18 +167,18 @@ body
       margin-right: 0;
       a
       {
-        color: white;//darken(@contrast,15%);
+        color: @pt;//darken(@contrast,15%);
         //font-weight: bolder;
         //background-color: @nav-tab-color;
         //border: 0px;
         &:hover
         {
-          color: white;//darken(saturate(@green,100%),20%);
-          background-color: lighten(@orange2, 15%);
+          color: @orange2;//darken(saturate(@green,100%),20%);
+          background-color: #FFF;//lighten(#EEE, 15%);
           //border-top: 3px solid @pt;
           //border-left: 3px solid @pt;
           //border-right: 3px solid @pt;
-          //border-bottom: 5px solid @orange;//lighten(saturate(@green,100%),10%);
+          //border-bottom: 3px solid @orange2;//lighten(saturate(@green,100%),10%);
         }
         &:active
         {
@@ -196,7 +193,7 @@ body
   .subMenu
   {
     display: none;
-    background-color: lighten(@orange, 30%);
+    background-color: #EEE;//lighten(@orange, 30%);
     //border-bottom: 5px solid @contrast;
 
     a
@@ -237,8 +234,25 @@ body
   width: 100%;
   height: auto;
   min-height: vh;
-  //margin: 100px 0 0 0;
+  margin-top: 100px;
+  background-color: #FFF;
+
+  hr{
+    background-color: #DDD;
+  }
+table{
   background-color: #EEE;
+  thead{
+    tr{
+      font-family: 'Montserrat', serif;
+      background-color: @orange2;
+      //border-bottom: 3px solid @orange2;
+      color: #FFF;
+      text-transform: uppercase;
+      //font-size: .75em;
+    }
+  }
+}
 }
 
 .welcome-banner

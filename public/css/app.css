@@ -14,7 +14,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   background-color: #C4CCC3;
-  margin-top: 100px;
 }
 body h1 {
   font-family: 'Montserrat', sans-serif;
@@ -57,6 +56,7 @@ body h1 {
 #NavBootstrapOverride > a:hover {
   background-color: white;
   color: #F26101;
+  border-bottom: 3px solid #F26101;
 }
 #NavBootstrapOverride > a:focus {
   background-color: white;
@@ -70,14 +70,11 @@ body h1 {
   background-color: #F26101;
 }
 .navbar-intertrac {
-  background-color: #0295C6;
+  background-color: #FFF;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 10px solid #ffbb8d;
-}
-.navbar-intertrac:hover {
-  border-bottom: 10px solid #F26101;
+  border-bottom: 6px solid #F26101;
 }
 .nav-intertrac {
   font-family: 'Montserrat', sans-serif;
@@ -93,11 +90,11 @@ body h1 {
   margin-right: 0;
 }
 .nav-intertrac li a {
-  color: white;
+  color: #0295C6;
 }
 .nav-intertrac li a:hover {
-  color: white;
-  background-color: #fe8d41;
+  color: #F26101;
+  background-color: #FFF;
 }
 .nav-intertrac li a:active {
   color: #F26101;
@@ -105,7 +102,7 @@ body h1 {
 }
 .subMenu {
   display: none;
-  background-color: #fff0dd;
+  background-color: #EEE;
 }
 .subMenu a {
   color: #0295C6;
@@ -128,7 +125,20 @@ body h1 {
   width: 100%;
   height: auto;
   min-height: vh;
+  margin-top: 100px;
+  background-color: #FFF;
+}
+#mainContent hr {
+  background-color: #DDD;
+}
+#mainContent table {
   background-color: #EEE;
+}
+#mainContent table thead tr {
+  font-family: 'Montserrat', serif;
+  background-color: #F26101;
+  color: #FFF;
+  text-transform: uppercase;
 }
 .welcome-banner {
   background-color: #DDD;
