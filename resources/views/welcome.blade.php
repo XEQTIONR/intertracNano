@@ -5,7 +5,7 @@
   <div class="jumbotron welcome-banner">
 <div class="container-fluid">
 
-    <h1 class="text-center">
+    <h1 class="text-center" style="margin-bottom: 25vh;">
       <img src="/images/white/tyre-white.png" width="100" height="100">
       nano<span>DB</span>
     </h1>

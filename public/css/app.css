@@ -2,13 +2,18 @@
 @author Ishtehar Hussain
 @desc The main files with all the styles for the app
 **/
+::-webkit-scrollbar {
+  display: none;
+}
 html {
-  background-color: #345;
+  background-color: #333634;
 }
 body {
   color: #494252;
   font-family: 'Raleway', sans-serif;
   font-weight: 500;
+  background-color: #C4CCC3;
+  margin-top: 100px;
 }
 .white-card {
   width: 100%;
@@ -37,39 +42,39 @@ body {
   margin-bottom: 2em;
 }
 .nav-topmost {
-  background-color: #345;
+  background-color: white;
 }
 .nav-topmost a {
-  color: #FFF;
+  color: black;
   text-decoration: none;
 }
 .nav-topmost a:hover {
-  color: #FA4;
+  color: #F26101;
 }
 #NavBootstrapOverride > a:hover {
-  background-color: #FA4;
-  color: #345;
+  background-color: white;
+  color: #F26101;
 }
 #NavBootstrapOverride > a:focus {
-  background-color: #FA4;
-  color: #345;
+  background-color: white;
+  color: #F26101;
 }
 #NavBootstrapOverride > a:active {
-  background-color: #FA4;
-  color: #345;
+  background-color: white;
+  color: #F26101;
 }
 .dark-border-bottom {
-  border-bottom: 5px solid #FA4;
+  background-color: #F26101;
 }
 .navbar-intertrac {
-  background-color: #57b1bb;
+  background-color: white;
   margin-top: 50px;
   margin-bottom: 0px;
   z-index: 500;
-  border-bottom: 12px solid #DDD;
+  border-bottom: 10px solid #ffbb8d;
 }
 .navbar-intertrac:hover {
-  border-bottom: 12px solid #FA4;
+  border-bottom: 10px solid #F26101;
 }
 .nav-intertrac {
   line-height: 3em;
@@ -82,32 +87,31 @@ body {
   margin-right: 0;
 }
 .nav-intertrac li a {
-  color: #FFF;
+  color: #F26101;
 }
 .nav-intertrac li a:hover {
-  background-color: #7BC2CA;
-  border-bottom: 5px solid #FA4;
+  color: #F26101;
+  background-color: white;
 }
 .nav-intertrac li a:active {
-  color: #FA4;
+  color: #F26101;
   background-color: #FFF;
 }
 #mainContent {
   width: 100%;
   height: auto;
-  min-height: 60vh;
-  margin: 100px 0 0 0;
+  min-height: vh;
   background-color: #EEE;
 }
 .welcome-banner {
-  background-color: #345;
-  min-height: 60vh;
+  background-color: #DDD;
+  height: auto;
   margin: 0;
 }
 .welcome-banner h1 {
   font-size: 100px;
   font-weight: lighter;
-  color: #FA4;
+  color: #F26101;
   margin-top: 1em;
 }
 .welcome-banner h1 span {
@@ -144,22 +148,26 @@ body {
 }
 .subMenu {
   display: none;
-  background-color: #FFF;
+  background-color: white;
 }
 .subMenu a {
-  color: #40959f;
+  color: #F26101;
 }
 .subMenu a:hover {
-  color: #FA4;
+  color: #F26101;
 }
 #footer {
   postion: absolute;
-  background-color: #57b1bb;
-  border-top: 1em solid #7BC2CA;
+  background-color: white;
+  border-top: 1px solid #F26101;
   margin: 0;
+  padding-top: 10vh;
   bottom: 0;
 }
 #footer p {
-  color: #FFF;
+  color: #F26101;
   font-weight: bold;
+}
+.icon-bar {
+  background-color: black;
 }

@@ -33,26 +33,32 @@ $(document).ready(function(){
         }});
 
     $("#navMain").hover(function(){$(".subMenu").slideUp();});
-    
+
 
     $("#theMenu").hover(function(){
       $("#theMenu").show();
-      $("#reportLabel").addClass("dark-border-bottom");},
+      //$("#reportLabel").addClass("dark-border-bottom");
+    },
       function(){
         $("#theMenu").slideUp();
-        $("#reportLabel").removeClass("dark-border-bottom");});
+        //$("#reportLabel").removeClass("dark-border-bottom");
+      });
 
     $("#theMenu2").hover(function(){
       $("#theMenu2").show();
-      $("#infoLabel").addClass("dark-border-bottom");},
+      //$("#infoLabel").addClass("dark-border-bottom");
+    },
       function(){
         $("#theMenu2").slideUp();
-        $("#infoLabel").removeClass("dark-border-bottom");});
+        //$("#infoLabel").removeClass("dark-border-bottom");
+      });
 
     $("#theMenu3").hover(function(){
       $("#theMenu3").show();
-      $("#actionLabel").addClass("dark-border-bottom");},
+      //$("#actionLabel").addClass("dark-border-bottom");
+    },
     function(){
       $("#theMenu3").slideUp();
-      $("#actionLabel").removeClass("dark-border-bottom");});
+      //$("#actionLabel").removeClass("dark-border-bottom");
+    });
 });

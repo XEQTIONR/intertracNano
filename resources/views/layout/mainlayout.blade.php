@@ -113,7 +113,7 @@
 
 </div>
 
-<div id="footer" class="jumbotron">
+<div id="footer">
   <div class="container-fluid">
     <p class="text-center">Copyright 2017 interacNano</p>
     <p class="text-center">All rights reserved.</p>
