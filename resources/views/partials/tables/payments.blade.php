@@ -1,9 +1,9 @@
 <table class="table table-condensed">
 <thead>
   <tr>
-    <th>Invoice#</th>
-    <th>Order#</th>
-    <th>Amount Paid</th>
+    <th>Invoice #</th>
+    <th>Order #</th>
+    <th>Amount Paid (&#2547)</th>
     <th>Created</th>
     <th>Updated</th>
   </tr>
@@ -11,11 +11,11 @@
 <tbody>
   @foreach ($payments as $payment)
     <tr>
-      <td>{{$payment->Invoice_num}}</td>
-      <td><a href="orders/{{$payment->Order_num}}">{{$payment->Order_num}}</a></td>
-      <td>{{$payment->payment_amount}}</td>
-      <td>{{$payment->created_at}}</td>
-      <td>{{$payment->updated_at}}</td>
+      <td class="text-center">{{$payment->Invoice_num}}</td>
+      <td class="text-center"><a href="orders/{{$payment->Order_num}}">{{$payment->Order_num}}</a></td>
+      <td class="text-right">{{$payment->payment_amount}}</td>
+      <td class="text-center">{{$payment->created_at}}</td>
+      <td class="text-center">{{$payment->updated_at}}</td>
 
     </tr>
   @endforeach

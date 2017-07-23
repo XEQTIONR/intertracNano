@@ -11,7 +11,7 @@
 <tbody>
   @foreach ($tyres as $tyre)
     <tr style="cursor: pointer" onclick="location.href='/tyres/{{$tyre->tyre_id}}'">
-      <td>{{$tyre->tyre_id}}</td>
+      <td class="text-center">{{$tyre->tyre_id}}</td>
       <td>{{$tyre->brand}}</td>
       <td>{{$tyre->size}}</td>
       <td>{{$tyre->lisi}}</td>

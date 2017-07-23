@@ -3,25 +3,25 @@
   <tr>
     <th>Order#</th>
     <th>Customer ID</th>
-    <th>Discount%</th>
-    <th>Discount Amount</th>
-    <th>Tax Percentage</th>
-    <th>Tax Amount</th>
-    <th>Created</th>
-    <th>Updated</th>
+    <th>Discount %</th>
+    <th>Discount Amount(&#2547)</th>
+    <th>Tax %</th>
+    <th>Tax Amount(&#2547)</th>
+    <th>Created At</th>
+    <th>Updated At</th>
   </tr>
 </thead>
 <tbody>
   @foreach ($orders as $order)
     <tr style="cursor: pointer;" onclick="location.href='/orders/{{$order->Order_num}}'">
-      <td>{{$order->Order_num}}</td>
-      <td>{{$order->customer_id}}</td>
-      <td>{{$order->discount_percent}}</td>
-      <td>{{$order->discount_amount}}</td>
-      <td>{{$order->tax_percentage}}</td>
-      <td>{{$order->tax_amount}}</td>
-      <td>{{$order->created_at}}</td>
-      <td>{{$order->updated_at}}</td>
+      <td class="text-center">{{$order->Order_num}}</td>
+      <td class="text-center">{{$order->customer_id}}</td>
+      <td class="text-right">{{$order->discount_percent}}</td>
+      <td class="text-right">{{$order->discount_amount}}</td>
+      <td class="text-right">{{$order->tax_percentage}}</td>
+      <td class="text-right">{{$order->tax_amount}}</td>
+      <td class="text-center">{{$order->created_at}}</td>
+      <td class="text-center">{{$order->updated_at}}</td>
     </tr>
   @endforeach
 </tbody>

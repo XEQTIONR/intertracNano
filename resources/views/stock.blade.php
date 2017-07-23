@@ -13,7 +13,9 @@
     </div>
 
     <div class="row">
-      @include('partials.currentstock');
+      <div class="col-md-8 col-md-offset-2">
+        @include('partials.currentstock')
+      </div>
     </div>
   </div>
 @endsection

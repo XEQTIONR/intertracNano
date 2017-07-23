@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table table-hover table-condensed">
 <thead>
   <tr>
     <th> Tyre ID </th>
@@ -6,7 +6,7 @@
     <th> Size </th>
     <th> Pattern </th>
 
-    <th> #remaining </th>
+    <th> # remaining </th>
 
   </tr>
 </thead>
@@ -14,12 +14,12 @@
   @foreach ($in_stock as $item)
     <tr>
 
-      <td>{{$item->tyre_id}}</td>
-      <td>{{$item->brand}}</td>
-      <td>{{$item->size}}</td>
-      <td>{{$item->pattern}}</td>
+      <td class="text-center">{{$item->tyre_id}}</td>
+      <td class="text-center">{{$item->brand}}</td>
+      <td class="text-center">{{$item->size}}</td>
+      <td class="text-center">{{$item->pattern}}</td>
 
-      <td>{{$item->in_stock}}</td>
+      <td class="text-center">{{$item->in_stock}}</td>
 
 
     </tr>

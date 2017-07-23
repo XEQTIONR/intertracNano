@@ -27,13 +27,13 @@
 <tbody>
   @foreach ($customers as $customer)
   <tr style="cursor: pointer" onclick="location.href='/customers/{{$customer->id}}'">
-    <td>{{$customer->id}}</td>
+    <td class="text-center">{{$customer->id}}</td>
     <td>{{$customer->name}}</td>
     <td>{{$customer->address}}</td>
-    <td>{{$customer->phone}}</td>
+    <td class="text-center">{{$customer->phone}}</td>
     <td>{{$customer->notes}}</td>
-    <td>{{$customer->created_at}}</td>
-    <td>{{$customer->updated_at}}</td>
+    <td class="text-center">{{$customer->created_at}}</td>
+    <td class="text-center">{{$customer->updated_at}}</td>
     {{--<td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>--}}
   </tr>
   @endforeach
