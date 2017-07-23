@@ -18,9 +18,83 @@ body {
 body h1 {
   font-family: 'Montserrat', sans-serif;
 }
+.nav-topmost {
+  background-color: #373C6E;
+}
+.nav-topmost a {
+  color: #FFF;
+  text-decoration: none;
+}
+.nav-topmost a:hover {
+  color: #5BB234;
+}
+#NavBootstrapOverride > a:hover {
+  background-color: transparent;
+  color: #5BB234;
+}
+#NavBootstrapOverride > a:focus {
+  background-color: transparent;
+  color: #5BB234;
+}
+#NavBootstrapOverride > a:active {
+  background-color: transparent;
+  color: #5BB234;
+}
+.navbar-intertrac {
+  background-color: #26294c;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  z-index: 500;
+}
+.nav-intertrac {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 2em;
+}
+.nav-intertrac li {
+  width: auto;
+  display: block;
+  float: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+.nav-intertrac li a {
+  color: #FFF;
+}
+.nav-intertrac li a:hover {
+  color: #5BB234;
+  background-color: transparent;
+}
+.nav-intertrac li a:active {
+  color: #F26101;
+  background-color: #FFF;
+}
+.subMenu {
+  display: none;
+  background-color: white;
+}
+.subMenu a {
+  color: #373C6E;
+}
+.subMenu a:hover {
+  color: #5BB234;
+}
+.menu-option-title {
+  font-size: 1.2em;
+  font-family: 'Montserrat', serif;
+  font-weight: 600;
+}
+.menu-table-cell {
+  padding: 5px;
+  vertical-align: middle;
+  text-align: center;
+  /*border: 1px solid blue;*/
+}
 .white-card {
   width: 100%;
-  background-color: #FFF;
+  background-color: #ffffff;
   margin-top: 1em;
   margin-bottom: 1em;
 }
@@ -43,105 +117,33 @@ body h1 {
   margin-bottom: 2em;
   font-weight: 100;
 }
-.nav-topmost {
-  background-color: white;
-}
-.nav-topmost a {
-  color: black;
-  text-decoration: none;
-}
-.nav-topmost a:hover {
-  color: #F26101;
-}
-#NavBootstrapOverride > a:hover {
-  background-color: white;
-  color: #F26101;
-  border-bottom: 3px solid #F26101;
-}
-#NavBootstrapOverride > a:focus {
-  background-color: white;
-  color: #F26101;
-}
-#NavBootstrapOverride > a:active {
-  background-color: white;
-  color: #F26101;
-}
-.dark-border-bottom {
-  background-color: #F26101;
-}
-.navbar-intertrac {
-  background-color: #FFF;
-  margin-top: 50px;
-  margin-bottom: 0px;
-  z-index: 500;
-  border-bottom: 6px solid #F26101;
-}
-.nav-intertrac {
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  font-weight: bolder;
-  line-height: 2em;
-}
-.nav-intertrac li {
-  width: auto;
-  display: block;
-  float: left;
-  margin-left: 0;
-  margin-right: 0;
-}
-.nav-intertrac li a {
-  color: #0295C6;
-}
-.nav-intertrac li a:hover {
-  color: #F26101;
-  background-color: #FFF;
-}
-.nav-intertrac li a:active {
-  color: #F26101;
-  background-color: #FFF;
-}
-.subMenu {
-  display: none;
-  background-color: #EEE;
-}
-.subMenu a {
-  color: #0295C6;
-}
-.subMenu a:hover {
-  color: #F26101;
-}
-.menu-option-title {
-  font-size: 1.2em;
-  font-family: 'Montserrat', serif;
-  font-weight: 600;
-}
-.menu-table-cell {
-  padding: 5px;
-  vertical-align: middle;
-  text-align: center;
-  /*border: 1px solid blue;*/
-}
 #mainContent {
   width: 100%;
   height: auto;
   min-height: vh;
-  margin-top: 100px;
+  margin-top: 90px;
   background-color: #FFF;
 }
 #mainContent hr {
   background-color: #DDD;
 }
 #mainContent table {
-  background-color: #EEE;
+  background-color: #ffffff;
 }
 #mainContent table thead tr {
   font-family: 'Montserrat', serif;
-  background-color: #F26101;
+  font-size: .7em;
+  background-color: #373C6E;
   color: #FFF;
   text-transform: uppercase;
 }
+#mainContent table thead th {
+  text-align: center;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+}
 .welcome-banner {
-  background-color: #DDD;
+  background-color: #373C6E;
   height: auto;
   margin: 0;
 }
@@ -175,17 +177,20 @@ body h1 {
   border: 1px dashed green;
 }
 #footer {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
   postion: absolute;
-  background-color: #118eb7;
-  border-top: 1px solid #0295C6;
+  background-color: #444;
+  border-top: 1px solid #5BB234;
   margin: 0;
   padding-top: 7vh;
   padding-bottom: 3vh;
   bottom: 0;
 }
 #footer p {
-  color: white;
-  font-weight: bold;
+  color: #5BB234;
+  font-weight: 300;
 }
 .icon-bar {
   background-color: black;

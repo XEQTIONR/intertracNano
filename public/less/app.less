@@ -6,13 +6,13 @@
 @contrast:#7BC2CA;
 @yellow:#EC7;
 @dark: #494252;
-@purple: #858FB2;
+@purple: #373C6E;//#2D2757;
 @a-color:#304269;
 
 @slate-gray: #345;
 @orange: #FA4;
 @orange2: #F26101;
-@green: #7C7;
+@green: #5BB234;
 @light-gray: #DDD;
 
 @green4: #325443;
@@ -56,11 +56,143 @@ body
   }
 }
 
+.nav-topmost
+{
+  background-color: @purple;
+
+  a
+  {
+    color: #FFF;
+    text-decoration: none;
+
+    &:hover
+    {
+      color: @green;
+    }
+  }
+}
+
+#NavBootstrapOverride
+{
+  //li{
+    >a{
+      &:hover
+      {
+        background-color: transparent;
+        color: @green;
+        //border-bottom: 3px solid @green;
+      }
+
+      &:focus
+      {
+        background-color: transparent;
+        color: @green;
+      }
+      &:active
+      {
+        background-color: transparent;
+        color: @green;
+      }
+    }
+  //}
+}
+
+.navbar-intertrac
+{
+  background-color: darken(@purple, 10%);
+  margin-top: 50px;
+  margin-bottom: 0px;
+  z-index: 500;
+  //border-bottom: 6px solid @orange2;//lighten(@orange2, 30%);
+
+}
+
+.nav-intertrac
+{
+  //background-color: @pt;
+  font-family: 'Montserrat', sans-serif;
+  text-transform:uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 2em;
+  //height: 5em;
+  li
+  {
+      width: auto;
+      display: block;
+      float: left;
+      margin-left: 0;
+      margin-right: 0;
+      a
+      {
+        color: #FFF;//darken(@contrast,15%);
+        //font-weight: bolder;
+        //background-color: @nav-tab-color;
+        //border: 0px;
+        &:hover
+        {
+          color: @green;//darken(saturate(@green,100%),20%);
+          background-color: transparent;//lighten(#EEE, 15%);
+          //border-top: 3px solid @pt;
+          //border-left: 3px solid @pt;
+          //border-right: 3px solid @pt;
+          //border-bottom: 3px solid @orange2;//lighten(saturate(@green,100%),10%);
+        }
+        &:active
+        {
+          color: @orange2;
+          background-color: #FFF;
+        }
+
+      }
+    }
+  }
+
+  .subMenu
+  {
+    display: none;
+    background-color: white;//lighten(@orange, 30%);
+    //border-bottom: 5px solid @contrast;
+
+    a
+    {
+      color: @purple ;
+
+      &:hover
+      {
+
+        color: @green;
+      }
+    }
+
+  }
+
+
+
+    .menu-option-title
+    {
+      font-size: 1.2em;
+      //text-transform: uppercase;
+      font-family: 'Montserrat', serif;
+      font-weight: 600;
+    }
+
+    .menu-table-cell
+    {
+      padding: 5px;
+      vertical-align: middle;
+      text-align: center;
+      /*border: 1px solid blue;*/
+
+    }
+
+
+
 .white-card
 {
   width: 100%;
   //min-height: 200px;
-  background-color: #FFF;
+  background-color: lighten(@purple, 70%);
   //border: 1px solid red;
   margin-top: 1em;
   margin-bottom: 1em;
@@ -95,138 +227,6 @@ body
   margin-bottom: 2em;
   font-weight: 100;
 }
-.nav-topmost
-{
-  background-color: white;
-
-  a
-  {
-    color: black;
-    text-decoration: none;
-
-    &:hover
-    {
-      color: @orange2;
-    }
-  }
-}
-
-#NavBootstrapOverride
-{
-  //li{
-    >a{
-      &:hover
-      {
-        background-color: white;
-        color: @orange2;
-        border-bottom: 3px solid @orange2;
-      }
-
-      &:focus
-      {
-        background-color: white;
-        color: @orange2;
-      }
-      &:active
-      {
-        background-color: white;
-        color: @orange2;
-      }
-    }
-  //}
-}
-
-.dark-border-bottom
-{
-  background-color: @orange2;
-}
-
-.navbar-intertrac
-{
-  background-color: #FFF;
-  margin-top: 50px;
-  margin-bottom: 0px;
-  z-index: 500;
-  border-bottom: 6px solid @orange2;//lighten(@orange2, 30%);
-
-}
-
-.nav-intertrac
-{
-  //background-color: @pt;
-  font-family: 'Montserrat', sans-serif;
-  text-transform:uppercase;
-  font-weight: bolder;
-  line-height: 2em;
-  li
-  {
-      width: auto;
-      display: block;
-      float: left;
-      margin-left: 0;
-      margin-right: 0;
-      a
-      {
-        color: @pt;//darken(@contrast,15%);
-        //font-weight: bolder;
-        //background-color: @nav-tab-color;
-        //border: 0px;
-        &:hover
-        {
-          color: @orange2;//darken(saturate(@green,100%),20%);
-          background-color: #FFF;//lighten(#EEE, 15%);
-          //border-top: 3px solid @pt;
-          //border-left: 3px solid @pt;
-          //border-right: 3px solid @pt;
-          //border-bottom: 3px solid @orange2;//lighten(saturate(@green,100%),10%);
-        }
-        &:active
-        {
-          color: @orange2;
-          background-color: #FFF;
-        }
-
-      }
-    }
-  }
-
-  .subMenu
-  {
-    display: none;
-    background-color: #EEE;//lighten(@orange, 30%);
-    //border-bottom: 5px solid @contrast;
-
-    a
-    {
-      color: @pt ;
-
-      &:hover
-      {
-        color: @orange2;
-      }
-    }
-
-  }
-
-
-
-    .menu-option-title
-    {
-      font-size: 1.2em;
-      //text-transform: uppercase;
-      font-family: 'Montserrat', serif;
-      font-weight: 600;
-    }
-
-    .menu-table-cell
-    {
-      padding: 5px;
-      vertical-align: middle;
-      text-align: center;
-      /*border: 1px solid blue;*/
-
-    }
-
 
 
 #mainContent
@@ -234,22 +234,30 @@ body
   width: 100%;
   height: auto;
   min-height: vh;
-  margin-top: 100px;
+  margin-top: 90px;
   background-color: #FFF;
 
   hr{
     background-color: #DDD;
   }
 table{
-  background-color: #EEE;
+  background-color: lighten(@purple, 70%);
   thead{
     tr{
       font-family: 'Montserrat', serif;
-      background-color: @orange2;
+      font-size: .7em;
+      background-color: @purple;
       //border-bottom: 3px solid @orange2;
       color: #FFF;
       text-transform: uppercase;
+
       //font-size: .75em;
+    }
+    th{
+      text-align: center;
+      border-left: 1px solid white;
+      border-right: 1px solid white;
+
     }
   }
 }
@@ -257,7 +265,7 @@ table{
 
 .welcome-banner
 {
-  background-color: #DDD;//desaturate(@orange, 10%);
+  background-color: @purple;//desaturate(@orange, 10%);
   //height: 100vh -100px;
   height:auto;
   //min-height: 60vh;
@@ -311,9 +319,13 @@ table{
 
   #footer
   {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+
+    text-transform: uppercase;
     postion: absolute;
-    background-color: desaturate(@pt, 15%);
-    border-top: 1px solid @pt;
+    background-color: #444;//desaturate(@pt, 15%);
+    border-top: 1px solid @green;
     margin: 0;
     padding-top: 7vh;
     padding-bottom: 3vh;
@@ -321,8 +333,8 @@ table{
 
     p
     {
-      color: white;
-      font-weight: bold;
+      color: @green;
+      font-weight: 300;
     }
   }
 

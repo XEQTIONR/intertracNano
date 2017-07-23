@@ -1,5 +1,5 @@
 
-  <nav class="navbar navbar-fixed-top navbar-intertrac">
+  <nav class="navbar-fixed-top navbar-intertrac">
     <div class="container">
       <ul class="nav nav-intertrac">
         <li role="presentation" id="reportMenuItem">

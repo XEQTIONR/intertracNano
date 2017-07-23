@@ -1,4 +1,4 @@
-<table class="table table-hover table-condensed">
+<table class="table table-hover table-condensed table-responsive">
 <thead>
   <tr>
     <th>Tyre ID</th>
