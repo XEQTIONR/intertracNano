@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use App\Order;
 use App\Payment;
 use App\Order_content;
+use App\Lc;
+use App\Consignment_expense;
+use App\Consignment;
 
 class ReportController extends Controller
 {
@@ -109,6 +112,85 @@ class ReportController extends Controller
 
 
       return $this->calculateOutstandingBalanceStats($orders);
+    }
+
+    public function showExpenseReport($time_frame, $year)
+    {
+      $this->time_frame = $time_frame;
+      $this->report_year = $year;
+      if(is_numeric($time_frame)) //monthly report
+      {
+        $lcs = Lc::lcsInMonth($this->time_frame, $this->report_year);
+        $c_exp = Consignment_expense::expensesInMonth($this->time_frame, $this->year);
+        return $this->calculateExpenseStats($lcs, $c_exp);
+        //return compact('lcs');
+      }
+
+      else if($time_frame=="year")   //yearly report;
+      {
+        $lcs = Lc::lcsInYear($this->report_year);
+        $c_exp = Consignment_expense::expensesInYear($this->report_year);
+        return $this->calculateExpenseStats($lcs, $c_exp);
+        //return compact('lcs');
+      }
+
+      else  //quarterly report
+      {
+        $pieces = explode("Q", $time_frame);
+
+        if(is_numeric($pieces[1]))
+        {
+          $lcs = Lc::lcsInQuarter($pieces[1], $this->report_year);
+          $c_exp = Consignment_expense::expensesInYear($pieces[1], $this->report_year);
+          return $this->calculateExpenseStats($lcs, $c_exp);
+          //return compact('lcs');
+
+        }
+      }
+    }
+
+    public function calculateExpenseStats($lcs, $c_exp)
+    {
+      $exp_local = 0; //Total local expense
+      $exp_foreign = 0; //Total foreign_expense
+      $exp_lc = 0; //Total lc expenses (local)
+      $exp_consignment = 0; //Total consignment expenses (local)
+
+      $count_lc = 0; //# of LC expenses
+      $count_con_exp = count($c_exp); //# of consignment expenses
+
+      foreach ($lcs as $item)
+      {
+          $lc = Lc::find($item->lc_num);
+          $foreign = $lc->foreign_expense;
+          $local = $lc->local_expense;
+          $rate = $lc->exchange_rate;
+
+          $exp_local += $local;
+          $exp_foreign += $foreign;
+
+          $exp_lc+= ($exp_local + ($rate*$exp_foreign));
+
+          if($exp_local>0||$exp_foreign>0)
+            $count_lc++;
+      }
+
+      foreach ($c_exp as $expense)
+      {
+        $consignment = Consignment::find($expense->BOL);
+        $rate = $consignment->exchange_rate;
+        $exp_local += $expense->expense_local;
+        $exp_foreign += $expense->expense_foreign;
+        $exp_consignment += ($expense->expense_local + (floatval($rate)*$expense->expense_foreign));
+      }
+
+      //return compact('lcs', 'c_exp');
+      return compact('exp_local',
+      'exp_foreign',
+      'exp_lc',
+      'exp_consignment',
+      'count_lc',
+      'count_con_exp');
     }
 
     public function calculateOutstandingBalanceStats($orders)
@@ -283,10 +365,4 @@ class ReportController extends Controller
                                   'orders_full_paid',
                                   'orders'));
     }
-
-    public function orderReport()
-    {
-
-    }
-
 }
