@@ -8,29 +8,17 @@ $(document).ready(function(){
   $("#reportLabel").hover(function(){
     $("#theMenu2").hide();
     $("#theMenu3").hide();
-    $("#theMenu").slideDown(500);}, function(){
-      if ($("#theMenu").is(':hover')) {}
-      else{
-        $("#theMenu").slideUp(500);
-      }});
+    $("#theMenu").slideDown(500);});
 
   $("#infoLabel").hover(function(){
     $("#theMenu").hide();
     $("#theMenu3").hide();
-    $("#theMenu2").slideDown(500);}, function(){
-      if ($("#theMenu2").is(':hover')) {}
-      else{
-        $("#theMenu2").slideUp(500);
-      }});
+    $("#theMenu2").slideDown(500);});
 
     $("#actionLabel").hover(function(){
       $("#theMenu").hide();
       $("#theMenu2").hide();
-      $("#theMenu3").slideDown(500);}, function(){
-        if ($("#theMenu3").is(':hover')) {}
-        else{
-          $("#theMenu3").slideUp(500);
-        }});
+      $("#theMenu3").slideDown(500);});
 
     $("#navMain").hover(function(){$(".subMenu").slideUp();});
 
