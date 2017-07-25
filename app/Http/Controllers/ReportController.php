@@ -30,6 +30,14 @@ class ReportController extends Controller
 
     }
 
+    public function defaultExpenseReport()
+    {
+      $lcs = Lc::lcsInYear($this->report_year);
+      $c_exp = Consignment_expense::expensesInYear($this->report_year);
+      return $this->calculateExpenseStats($lcs, $c_exp);
+      //return "HI";
+    }
+
     public function defaultOrderReport()
     {
       $orders = Order::ordersInYear($this->year);

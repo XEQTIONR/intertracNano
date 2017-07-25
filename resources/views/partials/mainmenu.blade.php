@@ -58,7 +58,7 @@
     </div>
 
     <div class="col-md-4 col-lg-3 vertical-spaced">
-      <a href="#">
+      <a href="/reports/expense">
         <div class="row">
           <div class="col-md-2 col-sm-1 col-xs-1">
             <img src="/images/expense.png" width="45" height="45">

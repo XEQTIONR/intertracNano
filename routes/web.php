@@ -70,6 +70,7 @@ Route::get('stock', function()
 });
 
 
+Route::get('reports/expense', 'ReportController@defaultExpenseReport');
 
 Route::get('reports/expense/{time_frame}/{year}', 'ReportController@showExpenseReport');
 
@@ -82,7 +83,6 @@ Route::get('reports/payment/', 'ReportController@defaultPaymentReport');
 
 Route::get('reports/payment/{time_frame}/{year}', 'ReportController@showPaymentReport');
 
-Route::get('reports/expense', 'ReportController@showExpenseReport');
 
 Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalanceReport');
 
