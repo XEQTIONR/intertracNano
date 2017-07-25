@@ -13,6 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,800" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:200,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,700" rel="stylesheet">
 <!-- Styles -->
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css">
@@ -132,7 +133,6 @@
 </div>
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>

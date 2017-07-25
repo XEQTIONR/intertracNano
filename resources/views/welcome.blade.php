@@ -13,6 +13,9 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Muli:200,300,400" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans:900" rel="stylesheet">
+
 <!-- Styles -->
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css">
@@ -110,27 +113,19 @@
 
 
 
-  <div class="jumbotron welcome-banner" style="height: 75vh;">
+  <div class="jumbotron welcome-banner" style="height: 100vh;">
   <div class="container-fluid">
 
     <h1 class="text-center">
       <img src="/images/white/tyre-white.png" width="100" height="100">
-      nano<span>DB</span>
+      <span>nano</span>DB
     </h1>
 
+    <p>A custom IaaS for Intertrac Nano</p>
+
   </div>
   </div>
 
-
-<div id="footer">
-  <div class="container-fluid">
-    <p class="text-center">Copyright 2017 interacNano</p>
-    <p class="text-center">All rights reserved.</p>
-  </div>
-</div>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>
