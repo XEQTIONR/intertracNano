@@ -49,8 +49,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="white-card">
-        <h6>Report generated on {{$date}}</h6>
-        <h1 class="stat">EXPENSE REPORT FOR {{$time_frame}} OF {{$report_year}}</h1>
+        <h6>Report generated on {{--$date--}}</h6>
+        <h1 class="stat">EXPENSE REPORT FOR {{--$time_frame--}} OF {{--$report_year--}}</h1>
       </div>
     </div>
   </div>
@@ -62,31 +62,31 @@
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12 stat stat-figure">
-                {{$count}}
+                {{$exp_local}}
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 stat stat-text">
-                NO OF CONSIGNMENT EXPENSES
+                TOTAL LOCAL EXPENSE
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12 stat stat-figure">
-                {{$count_tyres}}
+                {{$exp_foreign}}
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 stat stat-text">
-                TOTAL CONSIGNMENT EXPENSES
+                TOTAL FOREIGN EXPENSES
               </div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="row">
               <div class="col-md-12 stat stat-figure">
-                {{$total_value}}
+                {{$exp_lc}}
               </div>
             </div>
             <div class="row">
@@ -101,77 +101,16 @@
   </div> <!--first-row-->
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="white-card">
-      <div class="row">
-        <div id="myDiv2" class="col-md-2 stat-diagram">
-          <script>
-            @if ($count>0)
-              build({{$orders_with_payments*100.0/$count}}, 100, ".1%","",1,"#myDiv2");
-            @else
-              build(0, 100, ".1%",1,"#myDiv2");
-            @endif
-          </script>
-        </div>
-        <div class="col-md-4 col-md-offset-4">
-          <div class="row marg-top">
-            <div class="col-md-12 stat stat-figure">
-              {{$orders_with_payments}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 stat stat-text">
-              ORDERS WITH PAYMENTS
-            </div>
-          </div>
-        </div>
-      </div>
-    </div><!--white-card-->
-  </div>
-
-  <div class="col-md-6">
-    <div class="white-card">
-      <div class="row">
-        <div id="myDiv" class="col-md-2 stat-diagram" {{--style="border: 2px solid red;"--}}>
-
-          <script>
-            @if ($count>0)
-              build({{$orders_full_paid*100.0/$count}}, 100, ".1%","",1,"#myDiv");
-            @else
-              build(0, 100, ".1%","",1,"#myDiv");
-            @endif
-          </script>
-        </div>
-        <div class="col-md-4 col-md-offset-4 col-sm-2 col-sm-offset-5">
-          <div class="row marg-top">
-            <div class="col-md-12 stat stat-figure">
-              {{$orders_full_paid}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 stat stat-text">
-              ORDERS PAID IN FULL
-            </div>
-          </div>
-        </div>
-
-
-      </div> <!--row-->
-    </div> <!--white-card-->
-  </div>
-</div><!--row-->
-
-<div class="row">
       <div class="col-md-6">
         <div class="white-card">
           <div class="row">
             <div class="col-md-12 stat stat-figure">
-                 {{$avg_value}}
+                 {{$exp_consignment}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 stat stat-text">
-                AVERAGE VALUE PER ORDER
+              TOTAL CONSIGNMENT EXPENSES
             </div>
           </div>
         </div>
@@ -181,29 +120,17 @@
         <div class="white-card">
           <div class="row">
             <div class="col-md-12 stat stat-figure">
-                 {{$avg_tyre}}
+                 {{$count_con_exp}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 stat stat-text">
-                AVERAGE NUMBER OF TYRES IN EACH ORDER
+                NO OF CONSIGNMENT EXPENSES
             </div>
           </div>
         </div>
       </div>
 </div> <!-- second  row-->
-
-<div class="row">
-  <div class="col-md-12">
-  <div class="white-card">
-
-    @include('partials.tables.orders')
-
-  </div>
-  </div>
-</div>
-
-
 
 </div><!--container-->
 

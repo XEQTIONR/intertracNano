@@ -141,9 +141,9 @@ class ReportController extends Controller
         if(is_numeric($pieces[1]))
         {
           $lcs = Lc::lcsInQuarter($pieces[1], $this->report_year);
-          $c_exp = Consignment_expense::expensesInYear($pieces[1], $this->report_year);
+          $c_exp = Consignment_expense::expensesInQuarter($pieces[1], $this->report_year);
           return $this->calculateExpenseStats($lcs, $c_exp);
-          //return compact('lcs');
+          //return compact('lcs', 'c_exp');
 
         }
       }
@@ -185,12 +185,21 @@ class ReportController extends Controller
       }
 
       //return compact('lcs', 'c_exp');
-      return compact('exp_local',
+
+      $year = $this->year;
+      $report_year = $this->report_year;
+      $time_frame = $this->time_frame;
+
+
+      return view('reports.expense', compact('exp_local',
       'exp_foreign',
       'exp_lc',
       'exp_consignment',
       'count_lc',
-      'count_con_exp');
+      'count_con_exp',
+      'year',
+      'report_year',
+      'time_frame'));
     }
 
     public function calculateOutstandingBalanceStats($orders)
