@@ -40,9 +40,9 @@
 
   <div class="row" style="margin-top: 1em;">
   <div class="col-md-12">
-    <button class="btn btn-default" onclick="generateMonthlyReport('order');">Generate Monthly Report</button>
-    <button class="btn btn-default" onclick="generateQuarterlyReport('order');">Generate Quarterly Report</button>
-    <button class="btn btn-default" onclick="generateYearlyReport('order')">Generate Yearly Report</button>
+    <button class="btn btn-default" onclick="generateMonthlyReport('expense');">Generate Monthly Report</button>
+    <button class="btn btn-default" onclick="generateQuarterlyReport('expense');">Generate Quarterly Report</button>
+    <button class="btn btn-default" onclick="generateYearlyReport('expense')">Generate Yearly Report</button>
   </div>
   </div>
 
