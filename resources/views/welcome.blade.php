@@ -13,9 +13,6 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Muli:200,300,400" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Fira+Sans:900" rel="stylesheet">
-
 <!-- Styles -->
 <link href="/css/app.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/css/jquery-ui.css" type="text/css">
@@ -113,19 +110,18 @@
 
 
 
-  <div class="jumbotron welcome-banner" style="height: 100vh;">
+  <div class="jumbotron welcome-banner" style="height: 75vh;">
   <div class="container-fluid">
 
     <h1 class="text-center">
       <img src="/images/white/tyre-white.png" width="100" height="100">
-      <span>nano</span>DB
+      nano<span>DB</span>
     </h1>
 
-    <p>A custom IaaS for Intertrac Nano</p>
-
   </div>
   </div>
 
+@include('partials.footer')
 
 </body>
 </html>

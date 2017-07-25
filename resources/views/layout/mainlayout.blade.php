@@ -116,21 +116,8 @@
 
 </div>
 
-<div id="footer">
-  <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-3">
-      <p class="text-left">Webmaster ishteharhussain@gmail.com</p>
-    </div>
-    <div class="col-md-3 col-md-offset-4">
-      <p class="text-right">&copy Copyright 2017 interacNano</p>
-    </div>
-    <div class="col-md-2">
-      <p class="text-right">All rights reserved.</p>
-    </div>
-  </div>
-  </div>
-</div>
+@include('partials.footer')
+
 
 <!-- Latest compiled and minified JavaScript -->
 
