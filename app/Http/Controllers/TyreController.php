@@ -114,7 +114,15 @@ class TyreController extends Controller
      */
     public function update(Request $request, Tyre $tyre)
     {
-        //
+
+        $tyre->brand    = $request->inputTyreBrand;
+        $tyre->size     = $request->inputTyreSize;
+        $tyre->pattern  = $request->inputTyrePattern;
+
+        $tyre->save();
+
+        return redirect("/tyres/".$tyre->id);
+        //echo "UPDATE TYRE";
     }
 
     /**

@@ -126,8 +126,8 @@
 <div class="col-md-1">
   <button id="submitButton" class="btn btn-primary" value="submit" type="submit">Submit Changes</button>
 </div>
-</form>
 </div>
+</form>
 </div> <!--container-->
 
 
