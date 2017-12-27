@@ -90,7 +90,8 @@
     </div>
   </div>
 
-
+  <input type="hidden" id="removedDivs" value="">
+  <input type="hidden" id="runningCount" value="">
 
   <button type="button" class="btn btn-default" onclick="addItem()">Add New Item</button>
   <button type="button" class="btn btn-danger" onclick="removeItem()">Remove Last Item</button>

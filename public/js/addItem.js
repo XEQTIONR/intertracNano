@@ -5,17 +5,18 @@
 */
 
   var count=0;
+  var running_count=0;
   function addItem()
   {
 
     //names of parameters.
-    var itemId = "tyre[" + count + "]";
-    var qty = "qty[" + count + "]";
-    var price = "price[" + count + "]";
+    var itemId = "tyre[" + running_count + "]";
+    var qty = "qty[" + running_count + "]";
+    var price = "price[" + running_count + "]";
 
     //Divs for every new invice item
     var subDiv = document.createElement("DIV");
-    var subDivId = "subDiv" + count;
+    var subDivId = "subDiv" + running_count;
     subDiv.setAttribute("class", "tyreDiv");
     subDiv.setAttribute("id", subDivId);
 
@@ -58,7 +59,8 @@
     //Subtotal (quanity * unitPrice)
     var subTotalLabel = document.createElement("SPAN");
     subTotalLabel.setAttribute("name", "subTotal");
-    subTotalLabel.setAttribute("id", "subTotal"+ count);
+    subTotalLabel.setAttribute("id", "subTotal"+ running_count);
+    subTotalLabel.innerHTML = "0.00";
 
 
     subDiv.appendChild(subTotalLabel); //insert in the Div
@@ -78,6 +80,8 @@
 
     count++;
     document.getElementById("numItems").value = count;
+    running_count++;
+    document.getElementById("runningCount").value = running_count;
   }
 
   /* Used to remove an item from the list
@@ -86,10 +90,13 @@
   */
   function remove(subDivId)
   {
+    var id = subDivId.id;
     var parent = document.getElementById("itemList");
     parent.removeChild(subDivId); // but why is the subDiv passed instead of id?
     count--;
     document.getElementById("numItems").value = count;
+    document.getElementById("removedDivs").value = document.getElementById("removedDivs").value
+                                                    + "," + id;
   }
 
   /* Used to remove last item
@@ -112,22 +119,24 @@
     var totalQty = 0;
     var grandTotal = 0;
 
-    for (var i = 0; i<count; i++)
+    for (var i = 0; i<running_count; i++)
     {
       var qtyField = "qty[" + i + "]";
       var unitPriceField = "price[" + i + "]";
-      var qty  = document.getElementsByName(qtyField)[0].value;
-      var unitprice = document.getElementsByName(unitPriceField)[0].value;
+      if(  document.getElementsByName(qtyField).length > 0  ) //if an element is found
+      {
+        var qty  = document.getElementsByName(qtyField)[0].value;
+        var unitprice = document.getElementsByName(unitPriceField)[0].value;
 
-      if (qty=="")
-        qty=0;
-      if(unitprice=="")
-        unitprice=0;
-
+        if (qty=="")
+          qty=0;
+        if(unitprice=="")
+          unitprice=0;
         totalQty = parseInt(totalQty) + parseInt(qty);
         var subTotal =  Number(unitprice) * Number(qty);
         grandTotal+= Number(subTotal);
         document.getElementById("subTotal"+i).innerHTML = subTotal.toFixed(2);
+      }
     }
 
     document.getElementById("QtyTotal").innerHTML = totalQty;
