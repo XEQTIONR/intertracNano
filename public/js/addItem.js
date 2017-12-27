@@ -55,10 +55,19 @@
 
     subDiv.appendChild(priceInput); //insert in the Div
 
+    //Delete button - Replaces Remove Last Item Button
+    var deleteButton = document.createElement("BUTTON");
+    var func  = "remove(" + subDivId + ")";
+    deleteButton.setAttribute("type", "button");
+    deleteButton.setAttribute("onclick", func);
+    deleteButton.innerHTML = "Delete";
+
+    subDiv.appendChild(deleteButton);
+
     //Subtotal (quanity * unitPrice)
     var subTotalLabel = document.createElement("SPAN");
     subTotalLabel.setAttribute("name", "subTotal");
-    subTotalLabel.setAttribute("id", "subTotal"+count);
+    subTotalLabel.setAttribute("id", "subTotal"+ count);
 
 
     subDiv.appendChild(subTotalLabel); //insert in the Div
@@ -71,6 +80,22 @@
     document.getElementById("numItems").value = count;
   }
 
+  /* Used to remove an item from the list
+  *  Replaces old function removeItem
+  *  Not because bugs, just better UX
+  */
+  function remove(subDivId)
+  {
+    var parent = document.getElementById("itemList");
+    parent.removeChild(subDivId); // but why is the subDiv passed instead of id?
+    count--;
+    document.getElementById("numItems").value = count;
+  }
+
+  /* Used to remove last item
+  *  We are going to replace this with remove() function
+  *  to remove whichever div specified
+  */
   function removeItem()
   {
     var parent = document.getElementById("itemList");
