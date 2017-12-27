@@ -38,11 +38,9 @@ class OrderController extends Controller
 
         $item->qty = $qty_remain;
         $qty_remain = 0;
-
       }
       else // more entries needed keep looping
       {
-
         $item->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
         $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
       }
@@ -119,36 +117,42 @@ class OrderController extends Controller
 
 
 
-        for ($i=0; $i<$request->numItems; $i++) // each tyre
+        for ($i=0; $i<$request->runningCount; $i++) // each tyre
         {
+          $subdiv_value = 'subDiv'.$i;
+          $removed = $request->removedDivs;
 
-          $full_qty = $request->qty[$i]; //total number of tyre[i] ordered
-          $qty_remain = $full_qty; //remaining qty to be filled
-
-          $in_stock = Order::tyreInContRemaining($request->tyre[$i]); // stock info for tyre_id i
-
-
-          foreach ($in_stock as $stock_listing) // each stock entry
+          /** ARRGH - WHY DOES $request->has('name') NOT WORK on objects inside
+          *  divs that have been removed by Javascript. Always returns TRUE
+          *  should be FALSE for divs removed.
+          */
+          if(strpos($removed,$subdiv_value)===FALSE) //Do Only for divs not removed
           {
-            //Create a new order_content entry
-            $qty_remain = OrderController::setContents($contents, $index, $order->Order_num, $request->tyre[$i], $request->price[$i], $stock_listing, $qty_remain);
+            $full_qty = $request->qty[$i]; //total number of tyre[i] ordered
+            $qty_remain = $full_qty; //remaining qty to be filled
 
-            if ($qty_remain==0)
+            $in_stock = Order::tyreInContRemaining($request->tyre[$i]); // stock info for tyre_id i
+
+            foreach ($in_stock as $stock_listing) // each stock entry
             {
-              break;
-            }
+              //Create a new order_content entry
+              $qty_remain = OrderController::setContents($contents,
+                                                          $index,
+                                                          $order->Order_num,
+                                                          $request->tyre[$i],
+                                                          $request->price[$i],
+                                                          $stock_listing, 
+                                                          $qty_remain);
 
-            else
-            {
-              $index++;
-            }
-
-          }
-
-        }
+              if ($qty_remain==0)
+                break;
+              else
+                $index++;
+            }//endforeach
+          } //endif
+        } //endfor
 
         $order->orderContents()->saveMany($contents);
-        //});
         DB::commit();
         return redirect('/orders/'.$order->Order_num);
       }
