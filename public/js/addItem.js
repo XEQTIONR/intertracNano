@@ -55,6 +55,14 @@
 
     subDiv.appendChild(priceInput); //insert in the Div
 
+    //Subtotal (quanity * unitPrice)
+    var subTotalLabel = document.createElement("SPAN");
+    subTotalLabel.setAttribute("name", "subTotal");
+    subTotalLabel.setAttribute("id", "subTotal"+ count);
+
+
+    subDiv.appendChild(subTotalLabel); //insert in the Div
+
     //Delete button - Replaces Remove Last Item Button
     var deleteButton = document.createElement("BUTTON");
     var func  = "remove(" + subDivId + ")";
@@ -63,14 +71,6 @@
     deleteButton.innerHTML = "Delete";
 
     subDiv.appendChild(deleteButton);
-
-    //Subtotal (quanity * unitPrice)
-    var subTotalLabel = document.createElement("SPAN");
-    subTotalLabel.setAttribute("name", "subTotal");
-    subTotalLabel.setAttribute("id", "subTotal"+ count);
-
-
-    subDiv.appendChild(subTotalLabel); //insert in the Div
 
 
     var itemlist = document.getElementById("itemList");
