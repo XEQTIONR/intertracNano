@@ -107,16 +107,22 @@ class LcController extends Controller
         $contents = array();
 
         //INITIALIZE Performa_invoice
-        for ($i=0; $i<$request->numItems; $i++) // each tyre
+        for ($i=0; $i<$request->runningCount; $i++) // each tyre
         {
-          $item = new Performa_invoice;
+          $subdiv_value = 'subDiv'.$i;
+          $removed = $request->removedDivs;
 
-          $item->lc_num = $lc->lc_num;
-          $item->tyre_id = $request->tyre[$i];
-          $item->qty = $request->qty[$i];
-          $item->unit_price = $request->price[$i];
+          if(strpos($removed,$subdiv_value)===FALSE) //Do Only for divs not removed
+          {
+            $item = new Performa_invoice;
 
-          array_push($contents, $item);
+            $item->lc_num = $lc->lc_num;
+            $item->tyre_id = $request->tyre[$i];
+            $item->qty = $request->qty[$i];
+            $item->unit_price = $request->price[$i];
+
+            array_push($contents, $item);
+          }
         }
 
         //STORE Performa_invoice

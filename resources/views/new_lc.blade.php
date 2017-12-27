@@ -228,7 +228,8 @@ $( function()
 
   <!--  </div> panel-body-->
   <!--</div> panel-->
-
+    <input type="hidden" id="removedDivs" name="removedDivs" value="">
+    <input type="hidden" id="runningCount" name="runningCount" value=""> 
 
 
 
