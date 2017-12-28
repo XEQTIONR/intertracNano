@@ -98,23 +98,28 @@ class ContainerContentController extends Controller
       //  echo "inputBOL";
         //echo $request->inputBOL;
 
-        for ($i=0; $i<$request->numItems; $i++)
+        for ($i=0; $i<$request->runningCount; $i++)
         {
 
           //echo "forloop<br>"
           //echo $request->inputBOL;
-          $container_content_records[$i] = new Container_content;
+          $subdiv_value = 'subDiv'.$i;
+          $removed = $request->removedDivs;
 
+          if(strpos($removed,$subdiv_value)===FALSE) //Do Only for divs not removed
+          {
+            $item = new Container_content;
 
-          $container_content_records[$i]->tyre_id = $request->tyre[$i];
-          $container_content_records[$i]->qty = $request->qty[$i];
-          $container_content_records[$i]->unit_price = $request->price[$i];
+            $item->tyre_id = $request->tyre[$i];
+            $item->qty = $request->qty[$i];
+            $item->unit_price = $request->price[$i];
+            $item->total_tax = $request->tax[$i];
+            $item->total_weight = $request->weight[$i];
+            $item->Container_num = $request->inputContainerNum;
+            $item->BOL = $request->inputBOL;
 
-          $container_content_records[$i]->total_tax = $request->tax[$i];
-          $container_content_records[$i]->total_weight = $request->weight[$i];
-
-          $container_content_records[$i]->Container_num = $request->inputContainerNum;
-          $container_content_records[$i]->BOL = $request->inputBOL;
+            array_push($container_content_records, $item);
+          }
         }
 
         if(is_null($container_content_records))

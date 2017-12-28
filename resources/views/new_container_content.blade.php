@@ -21,21 +21,21 @@
   <script>
   // javascript included in layout file.
   var count=0;
-
+  var running_count=0;
   /* Custom addItem function
   *  Similar to function in addItem.js
   */
   function addItem()
   {
     //Names of parameters.
-    var itemId = "tyre[" + count + "]";
-    var qty = "qty[" + count + "]";
-    var price = "price[" + count + "]";
-    var weight = "weight[" + count + "]";
-    var tax = "tax[" + count + "]";
+    var itemId = "tyre[" + running_count + "]";
+    var qty = "qty[" + running_count + "]";
+    var price = "price[" + running_count + "]";
+    var weight = "weight[" + running_count + "]";
+    var tax = "tax[" + running_count + "]";
 
     var subDiv = document.createElement("DIV");
-    var subDivId = "subDiv" + count;
+    var subDivId = "subDiv" + running_count;
 
     //Div for every new invice item
     subDiv.setAttribute("class", "tyreDiv");
@@ -116,6 +116,8 @@
     itemlist.appendChild(subDiv); //insert in Container itemlist
     count++;
     document.getElementById("numItems").value = count;
+    running_count++;
+    document.getElementById("runningCount").value = running_count;
   }
   /* Custom updateTotal function
   *  Similar to function in addItem.js
@@ -129,18 +131,21 @@
     {
       var qtyField = "qty[" + i + "]";
       var unitPriceField = "price[" + i + "]";
-      var qty  = document.getElementsByName(qtyField)[0].value;
-      var unitprice = document.getElementsByName(unitPriceField)[0].value;
+      if(  document.getElementsByName(qtyField).length > 0  ) //if an element is found
+      {
+        var qty  = document.getElementsByName(qtyField)[0].value;
+        var unitprice = document.getElementsByName(unitPriceField)[0].value;
 
-      if (qty=="")
-        qty=0;
-      if(unitprice=="")
-        unitprice=0;
+        if (qty=="")
+          qty=0;
+        if(unitprice=="")
+          unitprice=0;
 
         totalQty = parseInt(totalQty) + parseInt(qty);
         var subTotal =  Number(unitprice) * Number(qty);
         grandTotal+= Number(subTotal);
         document.getElementById("subTotal"+i).innerHTML = subTotal.toFixed(2);
+      }
     }
     document.getElementById("QtyTotal").innerHTML = totalQty;
     document.getElementById("GrandTotal").innerHTML = grandTotal.toFixed(2);
@@ -151,10 +156,13 @@
   */
   function remove(subDivId)
   {
+    var id = subDivId.id;
     var parent = document.getElementById("itemList");
     parent.removeChild(subDivId); // but why is the subDiv passed instead of id?
     count--;
     document.getElementById("numItems").value = count;
+    document.getElementById("removedDivs").value = document.getElementById("removedDivs").value
+                                                    + "," + id;
   }
 
   </script>
@@ -239,7 +247,8 @@
       </div>
     </div>
 
-
+    <input type="hidden" id="removedDivs" name="removedDivs" value="">
+    <input type="hidden" id="runningCount" name="runningCount" value="">
 
   </form>
 </div><!--col-->
