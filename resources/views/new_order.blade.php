@@ -94,7 +94,7 @@
   <input type="hidden" id="runningCount" name="runningCount" value="">
 
   <button type="button" class="btn btn-default" onclick="addItem()">Add New Item</button>
-  <button type="button" class="btn btn-danger" onclick="removeItem()">Remove Last Item</button>
+
   <button type="submit" class="btn btn-primary" value="submit">Submit</button>
 
 
