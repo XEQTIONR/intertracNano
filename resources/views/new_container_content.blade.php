@@ -166,6 +166,7 @@
   }
 
   </script>
+  <script src="/js/spinner.js"></script>
 @endsection
 
 
@@ -255,7 +256,11 @@
 
 
   <div class="col-md-4">
-    @include('partials.tyres')
+    <h4>Tyre Catalog</h4>
+    <div id="tyreCatalog">
+
+      @include('partials.tables.tyre_catalog')
+    </div>
   </div><!--col-->
 </div><!--row-->
 <!--</div>panel-body-->
