@@ -174,7 +174,7 @@ $( function()
           <div id="itemList">
             <div class="row">
               <div id="col-md-12">
-                <h4>Enter Performa Invoice</h4>
+                <h4>Enter Proforma Invoice</h4>
                 <span>None of the fields can be blank</span>
                   <!-- Javascript adds fields here-->
                 </div><!--col-->
