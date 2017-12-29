@@ -318,7 +318,7 @@
 
             <div class="row">
               <div class="col-md-12">
-                View all customer information.
+                View current stock.
               </div>
             </div>
           </div>
