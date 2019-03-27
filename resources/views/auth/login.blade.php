@@ -68,6 +68,9 @@
 {{--@endsection--}}
 @extends('layouts.auth')
 
+@section('title')
+    Login
+@endsection
 @section('body')
 <body class="hold-transition login-page">
 <div class="login-box">

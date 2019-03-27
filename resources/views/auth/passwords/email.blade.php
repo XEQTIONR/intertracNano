@@ -47,6 +47,9 @@
 
 @extends('layouts.auth')
 
+@section('title')
+    Password Reset Link
+@endsection
 @section('body')
     <body class="hold-transition login-page">
     <div class="login-box">
@@ -61,7 +64,7 @@
         @endif
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Enter your email to send password reset link</p>
 
             <form action="{{ route('password.email') }}" method="POST">
                 {{ csrf_field() }}
