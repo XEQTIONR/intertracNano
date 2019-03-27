@@ -19,6 +19,10 @@ Route::get('/', function()
   return view('welcome');
 });
 
+Route::get('/admin-test', function(){
+
+  return view('test');
+});
 
 Route::resource('tyres','TyreController');
 
