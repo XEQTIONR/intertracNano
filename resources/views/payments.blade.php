@@ -1,20 +1,24 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
-@section('content')
+@section('title')
+  Payments
+@endsection
+@section('subtitle')
+  All recorded payments made by customers.
+@endsection
 
-<div class="container"> <!-- bootstrap container -->
+@section('level')
+  @component('components.level',
+    ['crumb' => 'Payments',
+    'subcrumb' => 'All payments',
+    'link'  =>  route('payments.index')])
+  @endcomponent
+@endsection
 
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>Payments <small>List of payments made by customers</small></h1>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      @include('partials.tables.payments')
-    </div>
-  </div>
-</div>
+
+
+@section('body')
+
+  @include('partials.tables.payments')
+
 @endsection

@@ -1,23 +1,19 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
+
+@section('title')
+  Orders
+@endsection
+@section('subtitle')
+  All orders placed.
+@endsection
+
+@section('level')
+  @component('components.level',['crumb' => 'Orders', 'subcrumb' => 'All orders'])
+  @endcomponent
+@endsection
 
 
 
-
-
-@section('content')
-
-<div class="container"> <!-- bootsreap container -->
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>Orders <small>All orders placed by customers.</small></h1>
-      </div>
-    </div>
-  </div>
-
-
-@include('partials.tables.orders')
-
-</div>
-
+@section('body')
+  @include('partials.tables.orders')
 @endsection

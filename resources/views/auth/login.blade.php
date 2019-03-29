@@ -102,6 +102,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-8">
+                    <a href="{{ route('password.request') }}">I forgot my password</a><br>
                     {{--<div class="checkbox icheck">--}}
                         {{--<label>--}}
                             {{--<input type="checkbox"> Remember Me--}}
@@ -125,7 +126,7 @@
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="{{ route('password.request') }}">I forgot my password</a><br>
+        {{--<a href="{{ route('password.request') }}">I forgot my password</a><br>--}}
         {{--<a href="register.html" class="text-center">Register a new membership</a>--}}
 
     </div>

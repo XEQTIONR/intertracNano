@@ -1,24 +1,24 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
-@section('scripts')
-
-
+@section('title')
+  Consignments
+@endsection
+@section('subtitle')
+  All Consignemnts arrived.
 @endsection
 
-@section('content')
+@section('level')
+  @component('components.level',
+    ['crumb' => 'Consignments',
+    'subcrumb' => 'All Consignments',
+    'link'  =>  route('consignments.index')])
+  @endcomponent
+@endsection
 
-<div class="container">
 
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>Consignments <small>List of consignments imported.</small></h1>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-hover table-condensed">
+
+@section('body')
+      <table id="table_id" class="table table-hover table-bordered">
         <thead>
           <tr>
             <th>BOL#</th>
@@ -49,7 +49,5 @@
           @endforeach
         </tbody>
       </table>
-    </div>
-  </div>
-</div>
+
 @endsection

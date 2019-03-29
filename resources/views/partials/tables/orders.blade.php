@@ -1,4 +1,4 @@
-<table class="table table-hover table-condensed">
+<table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
     <th>Order#</th>

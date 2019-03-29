@@ -71,7 +71,7 @@ Route::get('stock', function()
 {
   $in_stock = App\Order::tyresRemaining();
   return view('stock', compact('in_stock'));
-});
+})->name('stock');
 
 
 Route::get('reports/expense', 'ReportController@defaultExpenseReport');

@@ -1,18 +1,32 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
-@section('content')
+@section('title')
+  LCs
+@endsection
+@section('subtitle')
+  All LCs applied for.
+@endsection
 
-<div class="container"> <!-- bootsreap container -->
+@section('level')
+  @component('components.level',
+    ['crumb' => 'Letters of Credit',
+    'subcrumb' => 'All LCs',
+     'link' => route('lcs.index')])
+  @endcomponent
+@endsection
 
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>LCs <small>All LCs applied for.</small></h1>
-      </div>
-    </div>
-  </div>
 
-<table class="table table-hover table-condensed">
+{{--<div class="container"> <!-- bootsreap container -->--}}
+
+  {{--<div class="row">--}}
+    {{--<div class="col-md-10 col-md-offset-1">--}}
+      {{--<div class="page-header">--}}
+        {{--<h1>LCs <small>All LCs applied for.</small></h1>--}}
+      {{--</div>--}}
+    {{--</div>--}}
+  {{--</div>--}}
+@section('body')
+<table id ="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
     <th>LC#</th>
@@ -42,5 +56,4 @@
 </tbody>
 </table>
 
-</div>
 @endsection

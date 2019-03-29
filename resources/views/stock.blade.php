@@ -1,21 +1,20 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
+@section('title')
+  Current Stock
+@endsection
+@section('subtitle')
+  Our current inventory, items we can sell.
+@endsection
 
-@section('content')
-  <div class="container"> <!-- bootsreap container -->
+@section('level')
+  @component('components.level',
+    ['crumb' => 'Stock',
+    'subcrumb' => 'Current inventory',
+    'link' => route('stock')])
+  @endcomponent
+@endsection
 
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="page-header">
-          <h1>Current Stock  <small>Tyres currently available.</small></h1>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+@section('body')
         @include('partials.currentstock')
-      </div>
-    </div>
-  </div>
 @endsection

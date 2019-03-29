@@ -1,22 +1,22 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
-@section('content')
+@section('title')
+  Tyre Catalog
+@endsection
+@section('subtitle')
+  All kinds of tyres imported.
+  @endsection
 
-<div class="container"> <!-- bootsreap container -->
+  @section('level')
+    @component('components.level',
+      ['crumb' => 'Tyres',
+      'subcrumb' => 'All tyres',
+      'link' => route('tyres.index')])
+    @endcomponent
+  @endsection
 
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>Tyre Catalog  <small>Complete list of tyres.</small></h1>
-      </div>
-    </div>
-  </div>
+@section('body')
 
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      @include('partials.tables.tyres')
-    </div>
-  </div>
+  @include('partials.tyres')
 
-</div>
 @endsection
