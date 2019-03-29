@@ -25,6 +25,7 @@
         <th>BOL#</th>
         <th>Created</th>
         <th>Updated</th>
+        <th>Progress</th>
       </tr>
     </thead>
     <tbody>
@@ -34,6 +35,11 @@
         <td>{{$container->BOL}}</td>
         <td>{{$container->created_at}}</td>
         <td>{{$container->updated_at}}</td>
+        <td>
+          <div class="progress progress-xs">
+            <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+          </div>
+        </td>
       </tr>
     @endforeach
     </tbody>

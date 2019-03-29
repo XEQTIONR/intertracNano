@@ -22,14 +22,15 @@
         <thead>
           <tr>
             <th>BOL#</th>
-            <th>Exchange Rate</th>
+            <th>LC#</th>
+            <th>$ Rate</th>
             <th>Value($)</th>
             <th>Value(&#2547)</th>
-            <th>Tax</th>
+            <th>Tax(&#2547)</th>
             <th>Land Date</th>
-            <th>LC#</th>
             <th>Created</th>
-            <th>Updated</th>
+            {{--<th>Updated</th>--}}
+            <th>Progress</th>
           </tr>
         </thead>
 
@@ -37,14 +38,20 @@
           @foreach ($consignments as $consignment)
             <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
               <td class="text-center">{{$consignment->BOL}}</td>
+              <td class="text-center">{{$consignment->lc}}</td>
               <td class="text-right">{{$consignment->exchange_rate}}</td>
               <td class="text-right">{{$consignment->value}}</td>
               <td class="text-right">{{$consignment->value * $consignment->exchange_rate}}</td>
               <td class="text-right">{{$consignment->tax}}</td>
               <td class="text-center">{{$consignment->land_date}}</td>
-              <td class="text-center">{{$consignment->lc}}</td>
               <td class="text-center">{{$consignment->created_at}}</td>
-              <td class="text-center">{{$consignment->updated_at}}</td>
+              {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}
+              <td>
+                <div class="progress progress-xs">
+                  <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+                </div>
+              </td>
+
             </tr>
           @endforeach
         </tbody>
