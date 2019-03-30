@@ -16,5 +16,10 @@
 @endsection
 
 @section('body')
-        @include('partials.currentstock')
+  <div class="box">
+    <div class="box-body">
+      @include('partials.currentstock')
+    </div>
+  </div>
+
 @endsection

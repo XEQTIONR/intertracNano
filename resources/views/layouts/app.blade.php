@@ -517,6 +517,10 @@
 <script>
     $(document).ready(function() {
         $('#table_id').DataTable();
+
+        // $('#table_id_filter label')
+        //     .html('<label><input type="search" class="form-control input-sm" placeholder="" aria-controls="table_id"></label>');
+
     } );
 </script>
 

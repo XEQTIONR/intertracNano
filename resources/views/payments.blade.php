@@ -18,7 +18,11 @@
 
 
 @section('body')
+  <div class="box">
+    <div class="box-body">
+      @include('partials.tables.payments')
+    </div>
+  </div>
 
-  @include('partials.tables.payments')
 
 @endsection

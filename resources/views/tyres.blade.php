@@ -16,7 +16,11 @@
   @endsection
 
 @section('body')
+  <div class="box">
+    <div class="box-body">
+      @include('partials.tyres')
+    </div>
+  </div>
 
-  @include('partials.tyres')
 
 @endsection
