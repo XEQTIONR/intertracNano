@@ -11,20 +11,25 @@ let  mix  = require('laravel-mix');
  |
  */
 
-mix.less('public/less/app.less', 'public/css')
+mix.less('resources/assets/less/main.less', '../resources/assets/css')
 
     .combine([
     'node_modules/admin-lte/bower_components/jquery/dist/jquery.min.js',
+    'node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.js',
+    'node_modules/admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
+
+        //'resources/assets/js/jquerydataTables.min.js',
     'node_modules/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/admin-lte/dist/js/adminlte.min.js',
-    'public/js/jquerydataTables.min.js'], 'public/js/app.js')
+    'node_modules/admin-lte/dist/js/adminlte.min.js'], 'public/js/app.js')
 
     .styles([
         'node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css',
 
         'resources/assets/css/dataTables.bootstrap.css',
+        //'node_modules/admin-lte/bower_components/datatables.net-bs/dataTables.bootstrap.css',
         //'http://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css',
         'node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css',
         'node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css',
         'node_modules/admin-lte/dist/css/AdminLTE.min.css',
-        'node_modules/admin-lte/dist/css/skins/skin-black.min.css'], 'public/css/app2.css');
+        'node_modules/admin-lte/dist/css/skins/skin-black.min.css',
+        'resources/assets/css/main.css',], 'public/css/app2.css');

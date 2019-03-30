@@ -15,5 +15,10 @@
 
 
 @section('body')
-  @include('partials.tables.orders')
+  <div class="box">
+    <div class="box-body">
+      @include('partials.tables.orders')
+    </div>
+  </div>
+
 @endsection

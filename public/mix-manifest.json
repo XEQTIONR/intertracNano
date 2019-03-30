@@ -2,5 +2,8 @@
   "/mix.js": "/mix.js",
   "/js/app.js": "/js/app.js",
   "/css/app2.css": "/css/app2.css",
-  "/css/app.css": "/css/app.css"
+  "/css/app.css": "/css/app.css",
+  "/resources/css/main.css": "/resources/css/main.css",
+  "/resources/assets/css/main.css": "/resources/assets/css/main.css",
+  "/../resources/assets/css/main.css": "/../resources/assets/css/main.css"
 }
