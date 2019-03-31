@@ -13,14 +13,36 @@ let  mix  = require('laravel-mix');
 
 mix.less('resources/assets/less/main.less', '../resources/assets/css')
 
-    .combine([
+    .scripts([
     'node_modules/admin-lte/bower_components/jquery/dist/jquery.min.js',
-    'node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.js',
-    'node_modules/admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
 
-        //'resources/assets/js/jquerydataTables.min.js',
+        'resources/assets/js/jquery.inputmask.bundle.js',
+
+        'node_modules/admin-lte/bower_components/datatables.net/js/jquery.dataTables.js',
+
+
+        // 'node_modules/inputmask/dependencyLibs/inputmask.dependencyLib.jquery.js',
+
+    // 'node_modules/inputmask/dist/inputmask/inputmask.js',
+    //     'node_modules/inputmask/dist/inputmask/jquery.inputmask.js',
+    // 'node_modules/inputmask/dist/inputmask/inputmask.extensions.js',
+    // 'node_modules/inputmask/dist/inputmask/inputmask.numeric.extensions.js',
+    // 'node_modules/inputmask/dist/inputmask/inputmask.date.extensions.js',
+
+    //'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
+
+      // 'node_modules/inputmask/dist/jquery.inputmask.bundle.js',
+      // 'node_modules/inputmask/dist/inputmask/bindings/inputmask.binding.js',
+
+    'node_modules/admin-lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
+        'resources/assets/js/currencies.js',
     'node_modules/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js',
-    'node_modules/admin-lte/dist/js/adminlte.min.js'], 'public/js/app.js')
+    'node_modules/admin-lte/dist/js/adminlte.min.js',
+
+    //"https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js",
+        //'node_modules/currency-symbol-map/map.js',
+        //'node_modules/currency-symbol-map/currency-symbol-map.js'
+    ], 'public/js/app.js')
 
     .styles([
         'node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -32,4 +54,5 @@ mix.less('resources/assets/less/main.less', '../resources/assets/css')
         'node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css',
         'node_modules/admin-lte/dist/css/AdminLTE.min.css',
         'node_modules/admin-lte/dist/css/skins/skin-black.min.css',
-        'resources/assets/css/main.css',], 'public/css/app2.css');
+        // 'node_modules/inputmask/css/inputmask.css',
+        'resources/assets/css/main.css'], 'public/css/app2.css');

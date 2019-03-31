@@ -50,7 +50,7 @@
             {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}
             <td>
               <div class="progress progress-xs">
-                <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+                {{--<div class="progress-bar progress-bar-danger" style="width: 80%"></div>--}}
               </div>
             </td>
 

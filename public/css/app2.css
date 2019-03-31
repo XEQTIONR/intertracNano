@@ -42,3 +42,8 @@ table {
 .p-0 {
   padding: 0 !important;
 }
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

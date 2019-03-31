@@ -512,16 +512,30 @@
 <!-- AdminLTE App -->
 {{--<script src="dist/js/adminlte.min.js"></script>--}}
 {{--<script src="js/adminlte.min.js"></script>--}}
-<script src="js/app.js"></script>
+<script src="/js/app.js"></script>
+{{--<script src="/js/jquery.inputmask.bundle.js"></script>--}}
 {{--<script src='js/jquerydataTables.min.js'></script>--}}
+{{--<script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>--}}
+
 <script>
+
+    var target = document.querySelector('.content-wrapper');
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutationRecord) {
+            $('.content-wrapper').css('min-height', '100vh');
+        });
+    });
+
+    observer.observe(target, { attributes : true });
+
     $(document).ready(function() {
         $('#table_id').DataTable();
-
-        // $('#table_id_filter label')
-        //     .html('<label><input type="search" class="form-control input-sm" placeholder="" aria-controls="table_id"></label>');
-
+        $(".date").inputmask("dd/mm/yyyy");
+        //  /Inputmask("dd/mm/yyyy").mask(document.querySelectorAll("input"));
     } );
+
+    console.log("CURRENCY : " + currencies.BDT);
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
