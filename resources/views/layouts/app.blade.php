@@ -513,6 +513,7 @@
 {{--<script src="dist/js/adminlte.min.js"></script>--}}
 {{--<script src="js/adminlte.min.js"></script>--}}
 <script src="/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 {{--<script src="/js/jquery.inputmask.bundle.js"></script>--}}
 {{--<script src='js/jquerydataTables.min.js'></script>--}}
 {{--<script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>--}}
@@ -537,6 +538,8 @@
 
     console.log("CURRENCY : " + currencies.BDT);
 </script>
+
+@yield('footer-scripts')
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

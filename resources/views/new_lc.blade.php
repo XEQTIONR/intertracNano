@@ -25,7 +25,7 @@
         </div>
         <div class="box-body">
 
-          <form>
+          <form id="lcForm">
             <div class="box-body">
 
               <div class="col-xs-12">
@@ -169,7 +169,7 @@
                   <label>Notes</label>
                   {{--<div class="input-group">--}}
                     {{--<span class="input-group-addon">F50</span>--}}
-                    <textarea class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
+                    <textarea v-model="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                   {{--</div>--}}
 
                 </div>
@@ -194,6 +194,17 @@
       </div>
     </div>
   </div>
+@endsection
+
+@section('footer-scripts')
+  <script>
+    var lcApp = new Vue({
+        el: '#lcForm',
+        data: {
+            notes : ''
+        }
+    })
+  </script>
 @endsection
 
 
