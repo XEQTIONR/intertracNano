@@ -29,32 +29,6 @@
 
     <style>
 
-      ol{
-        list-style-type: none;
-      }
-      .list-enter-active, .list-leave-active { transition: all 1s; }
-      .list-enter, .list-leave-to { opacity: 0; }
-
-      input{
-        max-width: 100%;
-      }
-
-      .mt-1{
-        margin-top: .25rem;
-      }
-      .mt-2{
-        margin-top : .5rem;
-      }
-
-      .pt-2{
-        padding-top : .5rem;
-      }
-      .pr-2{
-        margin-right: .5rem;
-      }
-      .pr-3{
-        margin-right: 1rem;
-      }
     </style>
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -289,7 +263,7 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Add a LC</a></li>
+                        <li><a href="{{route('lcs.create')}}"><i class="fa fa-angle-right"></i>Add a LC</a></li>
                         <li><a href="{{route('lcs.index')}}"><i class="fa fa-angle-right"></i>View LCs</a></li>
                         <li><a href="#"><i class="fa fa-angle-right"></i>Add a Proforma invoice</a></li>
                     </ul>

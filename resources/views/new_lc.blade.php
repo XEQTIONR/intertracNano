@@ -4,7 +4,7 @@
   Letters of credit
 @endsection
 @section('subtitle')
-  All LCs applied for.
+  Add a new LC.
 @endsection
 
 @section('level')
@@ -23,11 +23,11 @@
                   {{--enter-class = "mimi"--}}
                   enter-active-class="animated fadeInRight fast"
                   leave-active-class="animated fadeOutLeft fast ">
-        <div  v-if="showForm == 0" key="1" class="col-xs-12 col-md-6">
+        <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">1. Enter LC Information</h3>
+          <div class="box box-primary">
+            <div class="box-header">
+              <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar"></i> Enter LC Information</h3>
             </div>
             <div class="box-body">
 
@@ -39,7 +39,7 @@
                       <label>LC#</label>
                       <div class="input-group">
                         <span class="input-group-addon">F20</span>
-                        <input id="lcNum" v-model="lc.lc_num" type="text" class="form-control" placeholder="Enter letter of credit number">
+                        <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter letter of credit number">
                       </div>
                     </div>
                   </div>
@@ -49,7 +49,7 @@
                       <label>Date Issued</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
-                        <input  v-model="lc.date_issued" id="dateIssued" type="text" class="form-control date">
+                        <input v-model="date1"  @click="datetify()" id="dateIssued" type="text" class="form-control date">
                         <div class="input-group-addon">
                           <i class="fas fa-calendar-alt"></i>
                         </div>
@@ -62,7 +62,7 @@
                       <label>Date Expiry</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
-                        <input  v-model="lc.date_expired" id="dateExpiry" type="text" class="form-control date">
+                        <input v-model="date2" @click="datetify()" id="dateExpiry" type="text" class="form-control date">
                         <div class="input-group-addon">
                           <i class="fas fa-calendar-alt"></i>
                         </div>
@@ -75,7 +75,7 @@
                       <label>Applicant</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
-                        <textarea v-model="lc.applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
+                        <textarea v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
                       </div>
                     </div>
                   </div>
@@ -85,7 +85,7 @@
                       <label>Beneficiary</label>
                       <div class="input-group">
                         <span class="input-group-addon">F50</span>
-                        <textarea  v-model="lc.beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
+                        <textarea  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
                       </div>
                     </div>
                   </div>
@@ -95,7 +95,7 @@
                       <label>Departing Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44E</span>
-                        <input v-model="lc.departing_port" type="text" class="form-control" placeholder="Enter departing port">
+                        <input v-model="departing_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
                     </div>
                   </div>
@@ -105,7 +105,7 @@
                       <label>Arriving Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44F</span>
-                        <input v-model="lc.arriving_port" type="text" class="form-control" placeholder="Enter departing port">
+                        <input v-model="arriving_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
                     </div>
                   </div>
@@ -115,7 +115,7 @@
                       <label>Foreign currency code</label>
                       <div class="input-group">
                         <span class="input-group-addon">F32B</span>
-                        <input v-model="lc.currency_code" type="number" class="form-control" placeholder="Currency Code">
+                        <input v-model="currency_code" type="text" class="form-control" placeholder="Currency Code">
                       </div>
                     </div>
                   </div>
@@ -124,8 +124,8 @@
                     <div class="form-group">
                       <label>LC Value (in foreign currency)</label>
                       <div class="input-group">
-                        <span class="input-group-addon"><strong>$</strong></span>
-                        <input v-model="lc.lc_value" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
+                        <input v-model="lc_value" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
                       </div>
                     </div>
                   </div>
@@ -134,8 +134,8 @@
                       <label>Exchange Rate</label>
                       <div class="input-group">
 
-                        <input v-model="lc.exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">
-                        <span class="input-group-addon"><strong>/ $</strong></span>
+                        <input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">
+                        <span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>
                       </div>
                     </div>
                   </div>
@@ -145,7 +145,7 @@
                       <label>LC Value (in local currency) </label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00" disabled>
+                        <input type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" :value="lc_local_value | currency" disabled>
                       </div>
                     </div>
                   </div>
@@ -154,8 +154,8 @@
                     <div class="form-group">
                       <label>Expenses Paid (Foreign)</label>
                       <div class="input-group">
-                        <span class="input-group-addon"><strong>$</strong></span>
-                        <input v-model="lc.expense_foreign" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
+                        <input v-model="expense_foreign" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
                       </div>
                     </div>
                   </div>
@@ -165,7 +165,7 @@
                       <label>Expenses Paid (Local)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input v-model="lc.expense_local" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <input v-model="expense_local" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
                       </div>
                     </div>
                   </div>
@@ -175,7 +175,7 @@
                       <label>Notes</label>
                       {{--<div class="input-group">--}}
                       {{--<span class="input-group-addon">F50</span>--}}
-                      <textarea v-model="lc.notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
+                      <textarea v-model="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                       {{--</div>--}}
 
                     </div>
@@ -201,7 +201,7 @@
         </div>
         {{--</transition>--}}
         {{--<transition name="custom-classes-transition" enter-active-class="animated zoomin" leave-active-class="animated fadeOutRight">--}}
-        <div  v-if="showForm == 1" key="0"  class="col-xs-7">
+        <div  v-if="showForm == 1" key="1"  class="col-xs-7">
           {{--<div class="col-xs-7">--}}
             {{--<div class="box">--}}
               {{--<button @click="add()">Click Me!</button>--}}
@@ -212,18 +212,18 @@
               {{--</transition-group>--}}
             {{--</div>--}}
             <div class="box">
-              <div class="box-header with-border">
-                <h3 class="box-title">2. Enter Proforma Invoice</h3>
+              <div class="box-header">
+                <h3 class="page-header ml-3"><i class="far fa-receipt"></i> Enter Proforma Invoice</h3>
               </div>
-              <div class="box-body">
+              <div class="box-body p-5">
 
                 <form style="padding: 1rem;">
-                  <div class="row">
+                  <div class="row pb-1">
                     <div class="col-xs-1 text-center"><strong>#</strong></div>
                     <div class="col-xs-4 text-center"><strong>Tyre</strong></div>
                     <div class="col-xs-2 text-center"><strong>Qty</strong></div>
-                    <div  class="col-xs-2 text-center"><strong>Unit Price</strong></div>
-                    <div  class="col-xs-2 text-center"><strong>Sub Total</strong></div>
+                    <div  class="col-xs-2 text-right"><strong>Unit Price</strong></div>
+                    <div  class="col-xs-2 text-right"><strong>Sub Total</strong></div>
                     <div class="col-xs-1"></div>
                   </div>
                   {{--<ol class="table ">--}}
@@ -238,39 +238,58 @@
                                  {{--enter-class="animated tada"--}}
                                  leave-active-class="animated fadeOutUp fast "
                     >
-                    <div class="row list-item" v-for="(item,index) in proforma_invoice" v-bind:key="item.tyre_id" >
+                    <div v-if="!proforma_invoice.length" key="default" class="row list-item justify-content-center my-4">
+                      <span class="text-center "> Nothing in the proforma invoice yet</span>
+                    </div>
+                    <div class="row list-item pt-4" :class="{'bg-light-gray' : !(index%2)}" v-for="(item,index) in proforma_invoice" :key="item.tyre_id" >
                       {{--<div class="row">--}}
                       <div class="col-xs-1 text-center">
                         @{{ index+1 }}
                       </div>
-                      <div class="col-xs-5">
+                      <div class="col-xs-4">
                         @{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}
                       </div>
-                      <div class="col-xs-2">
-                        <input class="text-right" v-model="item.qty" type="number" step="1" min="1" value="1">
+                      <div class="col-xs-2 form-group" :class="{'has-error' : item.qty==0}">
+                        <input class="text-right form-control" v-model="item.qty" type="number" step="1" min="1" value="1">
                       </div>
-                      <div class="col-xs-2">
-                        <input class="text-right" v-model="item.unit_price" type="number" step="0.01" min="0.01" value="0.01">
+                      <div class="col-xs-2 form-group"  :class="{'has-error' : item.unit_price==0}">
+                        <input class="text-right form-control" v-model="item.unit_price" type="number" step="0.01" min="0.01" value="0.01">
                       </div>
                       <div class="col-xs-2 text-right">
-                        @{{ subTotal(index) }}
+                        @{{ currency_symbol }} @{{ subTotal(index) | currency}}
                       </div>
                       <div class="col-xs-1">
                         <a class="text-danger" @click="removeTyre(index)">
-                          <i class="fas fa-minus-circle"></i>
+                          <i class="fas fa-minus-circle mt-1"></i>
                         </a>
                       </div>
                       {{--</div>--}}
                     </div>
                     </transition-group>
-                    <div class="row list-item mt-2 pt-2" style="border-top: 2px solid black;">
-                      <div class="col-xs-8">
-                        <strong>Grand Total</strong>
+                    <div class="row list-item pt-2 border-light-gray" style="border-top: 1px solid">
+                      <div class="col-xs-8 col-sm-3 col-sm-offset-5">
+                        <strong class="font-light-gray">Grand Total</strong>
                       </div>
-                      <div class="col-xs-3 text-right">
-                        <strong>@{{grand_total}}</strong>
+                      <div class="col-xs-4 text-right mr-invoice">
+                        <strong>@{{ currency_symbol }} @{{grand_total | currency}}/-</strong>
                       </div>
-                      <div class="col-xs-1"></div>
+                    </div>
+
+                    <div class="row list-item mt-2 pt-2">
+                      <div class="col-xs-8 col-sm-3 col-sm-offset-5">
+                        <strong>Grand Total <br>(in Taka)</strong>
+                      </div>
+                      <div class="col-xs-4 text-right mr-invoice">
+                       ৳ @{{(grand_total* exchange_rate) | currency}}/-
+                      </div>
+                    </div>
+                    <div class="row list-item mt-2 pt-2">
+                      <div class="col-xs-8 col-sm-3 col-sm-offset-5">
+                        <strong>Total Qty</strong>
+                      </div>
+                      <div class="col-xs-4 text-right mr-invoice pr-1">
+                        @{{ total_qty }}
+                      </div>
                     </div>
 
 
@@ -282,11 +301,157 @@
 
         </div>
 
+        <div v-if="showForm == 2" key="2" class="col-xs-12">
+          <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 class="page-header">
+                  <i class="fas fa-check"></i></i>Confirm new LC information
+                  <small class="pull-right">Date: 2/10/2014</small>
+                </h2>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                <b>LC # @{{ lc_num }}</b><br>
+                <b>Date Issued:</b> @{{ date_issued }}<br>
+                <b>Date Expiry:</b> @{{ date_expired }}<br>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                Applicant
+                <address>
+                  @{{ applicant }}
+                </address>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                Beneficiary
+                <address>
+                  @{{ beneficiary }}
+                </address>
+              </div>
+
+            </div>
+            <div class="row invoice-info mt-3">
+              <div class="col-sm-4 invoice-col">
+                <b>Departing Port:</b> @{{ departing_port }}<br>
+                <b>Arriving Port:</b> @{{ arriving_port }}<br>
+                <br>
+                <b>Expenses Foreign:</b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
+                <b>Expenses Local:</b> @{{ expense_local }}<br>
+              </div>
+
+              <div class="col-sm-4 invoice-col">
+                <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
+                <b>Exchange Rate:</b> @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
+              </div>
+
+              <div class="col-sm-4 invoice-col">
+                <b>LC Value :</b>@{{ currency_symbol }} @{{ lc_value | currency }}<br>
+                <b>LC Value in TK:</b> @{{ currency_symbol }} @{{ lc_value*exchange_rate | currency }}<br>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Table row -->
+            <div class="row">
+              <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tyre</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Subtotal</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="(record, index) in proforma_invoice">
+                    <td>@{{ index+1 }}</td>
+                    <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
+                    <td>@{{ record.qty }}</td>
+                    <td>@{{ record.unit_price }}</td>
+                    <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
+                  </tr>
+
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+              <!-- accepted payments column -->
+              {{--<div class="col-xs-6">--}}
+                {{--<p class="lead">Payment Methods:</p>--}}
+                {{--<img src="../../dist/img/credit/visa.png" alt="Visa">--}}
+                {{--<img src="../../dist/img/credit/mastercard.png" alt="Mastercard">--}}
+                {{--<img src="../../dist/img/credit/american-express.png" alt="American Express">--}}
+                {{--<img src="../../dist/img/credit/paypal2.png" alt="Paypal">--}}
+
+                {{--<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">--}}
+                  {{--Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg--}}
+                  {{--dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.--}}
+                {{--</p>--}}
+              {{--</div>--}}
+              <!-- /.col -->
+              <div class="col-xs-6 col-xs-offset-6">
+                {{--<p class="lead">Amount Due 2/22/2014</p>--}}
+
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody><tr>
+                      <th style="width:50%">Grand Total</th>
+                      <td>@{{ currency_symbol }} @{{ grand_total | currency }}</td>
+                    </tr>
+                    <tr>
+                      <th>Grand Total in TK</th>
+                      <td>@{{ grand_total*exchange_rate | currency }}</td>
+                    </tr>
+                    <tr>
+                      <th>Expenses Foreign</th>
+                      <td>@{{ currency_symbol }} @{{ expense_foreign }}</td>
+                    </tr>
+                    <tr>
+                      <th>Expense Local:</th>
+                      <td>TK @{{ expense_local }}</td>
+                    </tr>
+                    </tbody></table>
+                </div>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+              <div class="col-xs-12">
+                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+                </button>
+                <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+                  <i class="fa fa-download"></i> Generate PDF
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+
 
       </transition>
       <transition name="custom-classes-transition" enter-active-class="animated fadeInRight delay-1s" leave-active-class="animated fadeOutLeft" >
         <div v-show="showForm == 1" class="col-xs-5">
-          <div class="box">
+          <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Tyre Catalog</h3>
             </div>
@@ -344,10 +509,13 @@
 @section('footer-scripts')
 
   <script>
-      var tyre_catalog = JSON.parse('{!! json_encode($tyres) !!}');
+
+   var tyre_catalog = JSON.parse('{!! json_encode($tyres) !!}');
 
 
-
+   Vue.filter('currency', function (value) {
+          return parseFloat(value).toFixed(2);
+      });
 
     var app = new Vue({
         el: '#app',
@@ -356,28 +524,40 @@
             showCatalog : false,
             tyre_catalog : tyre_catalog,
 
-            lc : {
-              lc_num : null,
-                date_issued : null,
-                date_expired : null,
-                applicant : null,
-                beneficiary : null,
-                departing_port : null,
-                arriving_port : null,
-                currency_code : null,
-                exchange_rate : null,
-                lc_value : null,
-                expense_foreign : null,
-                expense_local : null,
-                notes : null
-            },
+            lc_num : null,
+            date_issued : null,
+            date_expired : null,
+            applicant : null,
+            beneficiary : null,
+            departing_port : null,
+            arriving_port : null,
+            currency_code : null,
+            exchange_rate : null,
+            lc_value : null,
+            expense_foreign : null,
+            expense_local : null,
+            notes : null,
 
             proforma_invoice : [],
 
-            invoice_record : {}
+            invoice_record : {},
+
+            date_flag: false,
+            date1: null,
+            date2: null,
+            currency_symbol: '$'
 
         },
         computed:{
+
+            lc_local_value : function()
+            {
+                var ret_val = 0;
+                if(!isNaN(this.lc_value)  && !isNaN(this.exchange_rate))
+                    ret_val = this.lc_value * this.exchange_rate;
+                return ret_val;
+            },
+
             grand_total : function(){
 
                 var ret_val = 0;
@@ -400,8 +580,43 @@
                 }
                 return ret_val;
             }
+            ,
+
+            total_qty : function(){
+
+                var ret_val = 0;
+
+                this.proforma_invoice.forEach(function(value){
+                   ret_val += parseInt(value.qty);
+                });
+
+                return ret_val;
+
+            }
         },
+        watch : {
+            currency_code : function(new_val, old_val)
+            {
+                console.log("new_val upper :" + new_val.toUpperCase());
+                if (typeof currencies[new_val] !== 'undefined')
+                    this.currency_symbol = currencies[new_val.toUpperCase()];
+                else
+                    this.currency_symbol = '$';
+
+                 if(new_val.toUpperCase() != new_val)
+                     this.currency_code = new_val.toUpperCase();
+            }
+        },
+
         methods: {
+
+            datetify : function(){
+              if(this.date_flag)
+              {
+                  this.date_flag = false;
+                  $('.date').inputmask('dd/mm/yyyy');
+              }
+            },
             subTotal : function(i){
 
                 if(this.proforma_invoice.length>i &&
@@ -415,14 +630,48 @@
                 return 0;
             },
 
-            add: function() {
-                this.jaitems.push({ id: 6, name: "Zoe" });
-            },
-
             toggle : function(){
-                (this.showForm  == 1) ? this.showForm = 0 : this.showForm++;
-                $(".date").inputmask("dd/mm/yyyy");
-                 //$('#table_id').DataTable();
+                if(this.showForm==0)
+                {
+                    this.date_flag = false;
+                    this.date_issued = document.getElementById('dateIssued').value;
+                    this.date_expired = document.getElementById('dateExpiry').value;
+                }
+                else
+                {
+                    this.date_flag = true;
+
+                    this.date1 = this.date_issued;
+                    this.date2 = this.date_expired;
+                    // if(this.date_issued && this.date_expired
+                    //     && document.getElementById('dateIssued') && document.getElementById('dateExpiry'))
+                    // {
+                    //     document.getElementById('dateIssued').value  =  this.date_issued;
+                    //     document.getElementById('dateExpiry').value  =  this.date_expired;
+                    // }
+
+                }
+
+
+                (this.showForm  == 2) ? this.showForm = 0 : this.showForm++;
+
+                // if(this.showForm == 0)
+                // {
+                //     this.$nextTick(function() {
+                // //
+                //
+                //           if(document.getElementById('dateIssued') && document.getElementById('dateExpiry'))
+                //         {
+                //             $(".date").inputmask("dd/mm/yyyy");
+                //             console.log('set value value');
+                //             document.getElementById('dateIssued').value  =  app.date_issued;
+                //             document.getElementById('dateExpiry').value  =  app.date_expired;
+                //         }
+                // //
+                //     });
+                // //
+                // }
+
             },
 
             tyreCatalog : function(){
@@ -437,8 +686,6 @@
                     if(tyre_catalog[i].tyre_id == id)
                     {
                         var obj = Object.assign ({}, tyre_catalog[i]);
-                        // Not sure why, but Object.assign sets tyre_id to 1 and actual id to new field 'id'
-                        //obj.tyre_id = obj.id;
                         console.log('obj');
                         console.log(obj);
                         this.proforma_invoice.push(obj);
@@ -450,11 +697,11 @@
             removeTyre : function(index){
 
                 this.proforma_invoice = this.proforma_invoice.filter(function(value, i, array){
-
+                    // all items except for the current index
                     return index != i;
                 });
             }
-        },
+        }
 
     })
   </script>
