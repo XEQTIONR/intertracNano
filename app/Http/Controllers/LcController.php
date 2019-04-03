@@ -43,7 +43,16 @@ class LcController extends Controller
       }
       else
       {
-        $tyres = Tyre::paginate(7); //non-ajax request
+
+        $tyres = Tyre::all(); //non-ajax request
+
+        foreach($tyres as $tyre)
+        {
+          $tyre->qty = 0;
+          $tyre->unit_price = 0;
+        }
+
+        //dd($tyres);
         return view('new_lc', compact('tyres'));
       }
     }

@@ -27,6 +27,35 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+
+      ol{
+        list-style-type: none;
+      }
+      .list-enter-active, .list-leave-active { transition: all 1s; }
+      .list-enter, .list-leave-to { opacity: 0; }
+
+      input{
+        max-width: 100%;
+      }
+
+      .mt-1{
+        margin-top: .25rem;
+      }
+      .mt-2{
+        margin-top : .5rem;
+      }
+
+      .pt-2{
+        padding-top : .5rem;
+      }
+      .pr-2{
+        margin-right: .5rem;
+      }
+      .pr-3{
+        margin-right: 1rem;
+      }
+    </style>
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
@@ -401,7 +430,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content container-fluid">
+        <section id="app" class="content container-fluid">
 
             @yield('body')
 
@@ -533,7 +562,6 @@
     $(document).ready(function() {
         $('#table_id').DataTable();
         $(".date").inputmask("dd/mm/yyyy");
-        //  /Inputmask("dd/mm/yyyy").mask(document.querySelectorAll("input"));
     } );
 
     console.log("CURRENCY : " + currencies.BDT);
