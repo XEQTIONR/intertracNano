@@ -3769,10 +3769,10 @@ input {
 .pb-1 {
   padding-bottom: 1rem;
 }
-.fal,
-.far,
-.fas,
-.fab {
+a .fal,
+a .far,
+a .fas,
+a .fab {
   margin-right: .75rem;
 }
 .p-0 {

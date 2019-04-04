@@ -28,9 +28,9 @@
       >
         <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
-          <div class="box box-primary">
+          <div class="box box-info">
             <div class="box-header">
-              <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar"></i> Enter LC Information</h3>
+              <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>
             </div>
             <div class="box-body">
 
@@ -183,7 +183,10 @@
 
                     </div>
                     <div class="col-12">
-                      <button type="button" onclick="console.log(document.getElementById('dateIssued').value)" class="btn btn-primary btn-lg pull-right">Submit</button>
+                      <button type="button" class="btn btn-info pull-right" @click="toggle(true)">
+                        Continue
+                        <i class="fa fa-chevron-right pt-1 ml-2"></i>
+                      </button>
                     </div>
                   </div>
 
@@ -214,9 +217,9 @@
                 {{--</span>--}}
               {{--</transition-group>--}}
             {{--</div>--}}
-            <div class="box">
+            <div class="box box-info">
               <div class="box-header">
-                <h3 class="page-header ml-3"><i class="far fa-receipt"></i> Enter Proforma Invoice</h3>
+                <h3 class="page-header ml-3"><i class="far fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
               </div>
               <div class="box-body p-5">
 
@@ -299,8 +302,17 @@
                     {{--</tbody>--}}
                   {{--</ol>--}}
                 </form>
+                <button type="button" class="btn btn-default" @click="toggle(false)">
+                  <i class="fa fa-chevron-left pt-1 mr-2"></i>
+                  Back
+                </button>
+                <button type="button" class="btn btn-info pull-right" @click="toggle(true)">
+                  Continue
+                  <i class="fa fa-chevron-right pt-1 ml-2"></i>
+                </button>
               </div>
             </div>
+
 
         </div>
 
@@ -310,7 +322,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <h2 class="page-header">
-                  <i class="fas fa-check"></i></i>Confirm new LC information
+                  <i class="fas fa-check mr-3 text-success"></i>Confirm new LC information
                   <small class="pull-right">Date: 2/10/2014</small>
                 </h2>
               </div>
@@ -340,16 +352,17 @@
             </div>
             <div class="row invoice-info mt-3">
               <div class="col-sm-4 invoice-col">
+                <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
+                <b>Exchange Rate:</b> @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
+                <br>
                 <b>Departing Port:</b> @{{ departing_port }}<br>
                 <b>Arriving Port:</b> @{{ arriving_port }}<br>
-                <br>
-                <b>Expenses Foreign:</b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
-                <b>Expenses Local:</b> @{{ expense_local }}<br>
+
               </div>
 
               <div class="col-sm-4 invoice-col">
-                <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
-                <b>Exchange Rate:</b> @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
+                <b>Expenses Foreign:</b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
+                <b>Expenses Local:</b> @{{ expense_local }}<br>
               </div>
 
               <div class="col-sm-4 invoice-col">
@@ -435,15 +448,25 @@
             <!-- this row will not appear when printing -->
             <div class="row no-print">
               <div class="col-xs-12">
-                <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+                <button type="button" class="btn btn-default" @click="toggle(false)">
+                  <i class="fa fa-chevron-left pt-1 mr-2"></i>
+                  Back
                 </button>
-                <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-                  <i class="fa fa-download"></i> Generate PDF
+                <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
+                  <i class="fas fa-check mr-2"></i>
+                  Confirm
                 </button>
+                {{--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>--}}
+                {{--<button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment--}}
+                {{--</button>--}}
+                {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
+                  {{--<i class="fa fa-download"></i> Generate PDF--}}
+                {{--</button>--}}
               </div>
             </div>
           </section>
+
+
         </div>
 
 
@@ -454,7 +477,7 @@
                   :enter-active-class="direction? 'animated fadeInRight delay-1s fast' : 'animated fadeInLeft delay-1s fast'"
                   :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'" >
         <div v-show="showForm == 1" class="col-xs-5">
-          <div class="box box-success">
+          <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">Tyre Catalog</h3>
             </div>
@@ -506,8 +529,8 @@
     {{--</div>--}}
 
   </div>
-    <button type="button" class="btn btn-default" @click="toggle(false)">Back</button>
-    <button type="button" class="btn btn-primary pull-right" @click="toggle(true)">Toggle</button>
+
+    {{--<button type="button" class="btn btn-primary pull-right" @click="toggle(true)">Toggle</button>--}}
 @endsection
 
 @section('footer-scripts')
