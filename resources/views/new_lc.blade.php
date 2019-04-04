@@ -21,8 +21,11 @@
       <transition  name="custom-classes-transition"
                   mode="out-in"
                   {{--enter-class = "mimi"--}}
-                  enter-active-class="animated fadeInRight fast"
-                  leave-active-class="animated fadeOutLeft fast ">
+                   :enter-active-class="direction? 'animated fadeInRight fast' : 'animated fadeInLeft fast'"
+                   :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'"
+                   {{--enter-active-class="animated fadeInRight fast"--}}
+                   {{--leave-active-class="animated fadeOutLeft fast"--}}
+      >
         <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
           <div class="box box-primary">
@@ -49,7 +52,7 @@
                       <label>Date Issued</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
-                        <input v-model="date1"  @click="datetify()" id="dateIssued" type="text" class="form-control date">
+                        <input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">
                         <div class="input-group-addon">
                           <i class="fas fa-calendar-alt"></i>
                         </div>
@@ -62,7 +65,7 @@
                       <label>Date Expiry</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
-                        <input v-model="date2" @click="datetify()" id="dateExpiry" type="text" class="form-control date">
+                        <input v-model="date2" @click="datetify()" @blur="copyDate(2)" id="dateExpiry" type="text" class="form-control date">
                         <div class="input-group-addon">
                           <i class="fas fa-calendar-alt"></i>
                         </div>
@@ -75,7 +78,7 @@
                       <label>Applicant</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
-                        <textarea v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
+                        <textarea id="applicant" v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
                       </div>
                     </div>
                   </div>
@@ -85,7 +88,7 @@
                       <label>Beneficiary</label>
                       <div class="input-group">
                         <span class="input-group-addon">F50</span>
-                        <textarea  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
+                        <textarea id="beneficiary"  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
                       </div>
                     </div>
                   </div>
@@ -175,7 +178,7 @@
                       <label>Notes</label>
                       {{--<div class="input-group">--}}
                       {{--<span class="input-group-addon">F50</span>--}}
-                      <textarea v-model="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
+                      <textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                       {{--</div>--}}
 
                     </div>
@@ -323,16 +326,14 @@
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
-                Applicant
-                <address>
-                  @{{ applicant }}
+                <b>Applicant</b>
+                <address v-html="applicant">
                 </address>
               </div>
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
-                Beneficiary
-                <address>
-                  @{{ beneficiary }}
+                <b>Beneficiary</b>
+                <address v-html="beneficiary">
                 </address>
               </div>
 
@@ -449,7 +450,9 @@
 
 
       </transition>
-      <transition name="custom-classes-transition" enter-active-class="animated fadeInRight delay-1s" leave-active-class="animated fadeOutLeft" >
+      <transition name="custom-classes-transition"
+                  :enter-active-class="direction? 'animated fadeInRight delay-1s fast' : 'animated fadeInLeft delay-1s fast'"
+                  :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'" >
         <div v-show="showForm == 1" class="col-xs-5">
           <div class="box box-success">
             <div class="box-header with-border">
@@ -503,7 +506,8 @@
     {{--</div>--}}
 
   </div>
-  <button type="button" @click="toggle()">Toggle</button>
+    <button type="button" class="btn btn-default" @click="toggle(false)">Back</button>
+    <button type="button" class="btn btn-primary pull-right" @click="toggle(true)">Toggle</button>
 @endsection
 
 @section('footer-scripts')
@@ -540,7 +544,7 @@
 
             proforma_invoice : [],
 
-            invoice_record : {},
+            direction : true,
 
             date_flag: false,
             date1: null,
@@ -549,6 +553,8 @@
 
         },
         computed:{
+
+
 
             lc_local_value : function()
             {
@@ -579,8 +585,7 @@
 
                 }
                 return ret_val;
-            }
-            ,
+            },
 
             total_qty : function(){
 
@@ -605,6 +610,13 @@
 
                  if(new_val.toUpperCase() != new_val)
                      this.currency_code = new_val.toUpperCase();
+            },
+
+            date_issued : function(new_val){
+                this.date1 = new_val;
+            },
+            date_expired : function(new_val){
+                this.date2 = new_val;
             }
         },
 
@@ -617,6 +629,31 @@
                   $('.date').inputmask('dd/mm/yyyy');
               }
             },
+
+            copyDate : function(i){
+
+                if(i==1)
+                    this.date_issued = document.getElementById('dateIssued').value;
+                if(i==2)
+                    this.date_expired = document.getElementById('dateExpiry').value;
+
+            },
+
+            copyDates : function(){
+                this.copyDate(1);
+                this.copyDate(2);
+            },
+
+            validate : function(){
+                return true;
+            },
+
+            submit : function(){
+
+                if(this.validate)
+                    this.toggle(true);
+            },
+
             subTotal : function(i){
 
                 if(this.proforma_invoice.length>i &&
@@ -630,12 +667,18 @@
                 return 0;
             },
 
-            toggle : function(){
+
+            toggle : function(direction){
                 if(this.showForm==0)
                 {
                     this.date_flag = false;
-                    this.date_issued = document.getElementById('dateIssued').value;
-                    this.date_expired = document.getElementById('dateExpiry').value;
+                    this.copyDates();
+
+                    this.applicant = $("#applicant").val().replace(/(\r\n|\n)/g, "<br/>");
+                    this.beneficiary = $("#beneficiary").val().replace(/(\r\n|\n)/g, "<br/>");
+                    this.notes = $("#notes").val().replace(/(\r\n|\n)/g, "<br/>");
+
+
                 }
                 else
                 {
@@ -653,7 +696,12 @@
                 }
 
 
-                (this.showForm  == 2) ? this.showForm = 0 : this.showForm++;
+                this.direction = direction;
+
+                if(direction)
+                    (this.showForm  == 2) ? this.showForm = 0 : this.showForm++;
+                else
+                    (this.showForm  == 0) ? this.showForm = 2 : this.showForm--;
 
                 // if(this.showForm == 0)
                 // {
