@@ -31,9 +31,9 @@
         </div>
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>
-          You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.
-          <button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to continue</button>
+          <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+          New letter of credit information has been recorded.
+          <a href="{{ route('lcs.index') }}"  class="btn btn-success ml-5">Click here to view all LCs</a>
         </div>
         </transition>
       </div>
@@ -847,6 +847,37 @@
 
             },
 
+            save : function(){
+
+                $.post("{{route('lcs.store')}}",
+                    {
+                        "_token" : "{{csrf_token()}}",
+
+                        "lc_num" : this.lc_num,
+                        "invoice_num" : this.invoice_num ,
+                        "date_issued" : this.date_issued ,
+                        "date_expired" : this.date_expired,
+                        "applicant" : this.applicant,
+                        "beneficiary" : this.beneficiary,
+                        "departing_port" : this.departing_port,
+                        "arriving_port" : this.arriving_port,
+                        "currency_code" : this.currency_code,
+                        "exchange_rate" : this.exchange_rate,
+                        "lc_value" : this.lc_value,
+                        "expense_foreign" : this.expense_foreign,
+                        "expense_local" : this.expense_local,
+                        "notes" : this.notes,
+
+                        "proforma_invoice": this.proforma_invoice
+                    } ,
+                    function(data)
+                    {
+                      if(data.status == 'success')
+                          app.is_complete = true;
+                    });
+
+            },
+
             subTotal : function(i){
 
                 if(this.proforma_invoice.length>i &&
@@ -864,6 +895,7 @@
             toggle : function(direction){
 
                 this.errors = null;
+                this.is_alert = false;
                 if(this.showForm==0)
                 {
                     this.date_flag = false;
@@ -887,9 +919,11 @@
                 this.direction = direction;
 
                 if(direction)
-                    (this.showForm  == 2) ? this.showForm = 0 : this.showForm++;
+                    (this.showForm  == 2) ? this.save() : this.showForm++;
                 else
                     (this.showForm  == 0) ? this.showForm = 2 : this.showForm--;
+
+                window.scrollTo(0,0);
 
             },
 
