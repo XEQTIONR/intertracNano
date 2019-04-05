@@ -10,13 +10,34 @@
 @section('level')
   @component('components.level',
     ['crumb' => 'Letters of Credit',
-    'subcrumb' => 'All LCs',
+    'subcrumb' => 'An a LC',
      'link' => route('lcs.index')])
   @endcomponent
 @endsection
 
 @section('body')
 
+    <div class="row justify-content-center">
+      <div class="col-xs-12">
+        <transition name="custom-classes-transition"
+          enter-active-class="animated fadeIn faster"
+          leave-active-class="animated fadeOut faster"
+        >
+        <div v-if="is_alert" id="alert" class="alert" :class="alert_class" role="alert">
+          <button type="button" class="close" aria-label="Close"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
+          <h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>
+          You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.
+          <button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to skip (not recommended)</button>
+        </div>
+        <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
+          <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
+          <h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>
+          You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.
+          <button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to continue</button>
+        </div>
+        </transition>
+      </div>
+    </div>
     <div class="row justify-content-center">
       <transition  name="custom-classes-transition"
                   mode="out-in"
@@ -28,6 +49,7 @@
       >
         <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
+
           <div class="box box-info">
             <div class="box-header">
               <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>
@@ -36,19 +58,22 @@
 
               <form>
                 <div class="box-body">
-
-                  <div class="col-xs-12">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.lc_num }">
                       <label>LC#</label>
                       <div class="input-group">
                         <span class="input-group-addon">F20</span>
-                        <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter letter of credit number">
+                        <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter Document Credit Number">
                       </div>
+                      <span v-if="errors && errors.lc_num" class="help-block text-danger">@{{ errors.lc_num }}</span>
                     </div>
                   </div>
+                  </div>
 
-                  <div class="col-xs-12 col-md-6">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12 col-md-6">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.date_issued }">
                       <label>Date Issued</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
@@ -57,11 +82,12 @@
                           <i class="fas fa-calendar-alt"></i>
                         </div>
                       </div>
+                      <span v-if="errors && errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>
                     </div>
                   </div>
 
-                  <div class="col-xs-12 col-md-6">
-                    <div class="form-group">
+                    <div class="col-xs-12 col-md-6">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.date_expired }">
                       <label>Date Expiry</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
@@ -70,80 +96,105 @@
                           <i class="fas fa-calendar-alt"></i>
                         </div>
                       </div>
+                      <span v-if="errors && errors.date_expired" class="help-block text-danger">@{{ errors.date_expired }}</span>
                     </div>
                   </div>
+                  </div>
 
-                  <div class="col-xs-12">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.applicant }">
                       <label>Applicant</label>
                       <div class="input-group">
-                        <span class="input-group-addon">F31D</span>
+                        <span class="input-group-addon">F50</span>
                         <textarea id="applicant" v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
                       </div>
+                      <span v-if="errors && errors.applicant" class="help-block text-danger">@{{ errors.applicant }}</span>
                     </div>
+
+                  </div>
                   </div>
 
-                  <div class="col-xs-12">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.beneficiary }">
                       <label>Beneficiary</label>
                       <div class="input-group">
-                        <span class="input-group-addon">F50</span>
+                        <span class="input-group-addon">F59</span>
                         <textarea id="beneficiary"  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
                       </div>
+                      <span v-if="errors && errors.beneficiary" class="help-block text-danger">@{{ errors.beneficiary }}</span>
                     </div>
+
+                  </div>
                   </div>
 
-                  <div class="col-xs-12">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.departing_port }">
                       <label>Departing Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44E</span>
                         <input v-model="departing_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
+                      <span v-if="errors && errors.departing_port" class="help-block text-danger">@{{ errors.departing_port }}</span>
                     </div>
+
+                  </div>
                   </div>
 
-                  <div class="col-xs-12">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.arriving_port }">
                       <label>Arriving Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44F</span>
                         <input v-model="arriving_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
+                      <span v-if="errors && errors.arriving_port" class="help-block text-danger">@{{ errors.arriving_port }}</span>
                     </div>
+
+                  </div>
                   </div>
 
-                  <div class="col-xs-4">
-                    <div class="form-group">
+                  <div class="row mx-2">
+                    <div class="col-xs-4">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.currency_code }">
                       <label>Foreign currency code</label>
                       <div class="input-group">
                         <span class="input-group-addon">F32B</span>
                         <input v-model="currency_code" type="text" class="form-control" placeholder="Currency Code">
                       </div>
+                      <span v-if="errors && errors.currency_code" class="help-block text-danger">@{{ errors.currency_code }}</span>
                     </div>
                   </div>
 
-                  <div class="col-xs-8">
-                    <div class="form-group">
+                    <div class="col-xs-8">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.lc_value }">
                       <label>LC Value (in foreign currency)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
-                        <input v-model="lc_value" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <input v-model="lc_value" type="number" step="0.01" class="form-control" placeholder="0.00" min="0.00">
                       </div>
+                      <span v-if="errors && errors.lc_value" class="help-block text-danger">@{{ errors.lc_value }}</span>
                     </div>
+
                   </div>
-                  <div class="col-xs-4">
-                    <div class="form-group">
+                  </div>
+                  <div class="row mx-2">
+                    <div class="col-xs-4">
+                    <div class="form-group" :class="{ 'has-error' : errors && errors.exchange_rate }">
                       <label>Exchange Rate</label>
                       <div class="input-group">
 
                         <input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">
                         <span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>
                       </div>
+                      <span v-if="errors && errors.exchange_rate" class="help-block text-danger">@{{ errors.exchange_rate }}</span>
                     </div>
                   </div>
 
-                  <div class="col-xs-8">
+                    <div class="col-xs-8">
                     <div class="form-group">
                       <label>LC Value (in local currency) </label>
                       <div class="input-group">
@@ -152,28 +203,32 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="col-xs-12 col-md-6">
+                  </div>
+                  <div class="row mx-2">
+                    <div class="col-xs-12 col-md-6">
                     <div class="form-group">
                       <label>Expenses Paid (Foreign)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
-                        <input v-model="expense_foreign" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <input v-model="expense_foreign" type="number" step="0.01" class="form-control" placeholder="Enter foreign expenses paid" value="0.00">
                       </div>
+                      <span class="help-block"></span>
                     </div>
                   </div>
 
-                  <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12 col-md-6">
                     <div class="form-group">
                       <label>Expenses Paid (Local)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input v-model="expense_local" type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" value="0.00">
+                        <input v-model="expense_local" type="number" step="0.01" class="form-control" placeholder="Enter local expenses paid" value="0.00">
                       </div>
+                      <span class="help-block"></span>
                     </div>
                   </div>
-
-                  <div class="col-xs-12">
+                  </div>
+                  <div class="row mx-2">
+                    <div class="col-xs-12">
                     <div class="form-group">
                       <label>Notes</label>
                       {{--<div class="input-group">--}}
@@ -182,14 +237,15 @@
                       {{--</div>--}}
 
                     </div>
+                    <span class="help-block"></span>
                     <div class="col-12">
-                      <button type="button" class="btn btn-info pull-right" @click="toggle(true)">
+                      <button type="button" class="btn btn-info pull-right" @click="submit()">
                         Continue
                         <i class="fa fa-chevron-right pt-1 ml-2"></i>
                       </button>
                     </div>
                   </div>
-
+                  </div>
 
 
                   <!-- /.input group -->
@@ -221,9 +277,23 @@
               <div class="box-header">
                 <h3 class="page-header ml-3"><i class="far fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
               </div>
-              <div class="box-body p-5">
+              <div class="box-body pb-5 pl-5 pr-5">
 
                 <form style="padding: 1rem;">
+                  <div class="row">
+                    <div class="col-xs-12 mb-5">
+
+                      <div class="form-group" :class="{ 'has-error' : errors && errors.invoice_num }">
+                        <label>Invoice #</label>
+                        {{--<div class="input-group">--}}
+                          <input v-model="invoice_num" type="text" class="form-control" placeholder="Enter the proforma invoice #">
+                        {{--</div>--}}
+                        <span v-if="errors && errors.invoice_num" class="help-block text-danger">@{{ errors.invoice_num }}</span>
+                      </div>
+                    </div>
+                  </div>
+                      <div v-if="errors && errors.qty" class="row ml-3 mb-2 text-danger">@{{ errors.qty }}</div>
+                      <div v-if="errors && errors.unit_price" class="row ml-3 mb-2 text-danger">@{{ errors.unit_price }}</div>
                   <div class="row pb-1">
                     <div class="col-xs-1 text-center"><strong>#</strong></div>
                     <div class="col-xs-4 text-center"><strong>Tyre</strong></div>
@@ -272,7 +342,7 @@
                       {{--</div>--}}
                     </div>
                     </transition-group>
-                    <div class="row list-item pt-2 border-light-gray" style="border-top: 1px solid">
+                    <div class="row list-item pt-2 border-light-gray">
                       <div class="col-xs-8 col-sm-3 col-sm-offset-5">
                         <strong class="font-light-gray">Grand Total</strong>
                       </div>
@@ -306,7 +376,7 @@
                   <i class="fa fa-chevron-left pt-1 mr-2"></i>
                   Back
                 </button>
-                <button type="button" class="btn btn-info pull-right" @click="toggle(true)">
+                <button type="button" class="btn btn-info pull-right" @click="submit()">
                   Continue
                   <i class="fa fa-chevron-right pt-1 ml-2"></i>
                 </button>
@@ -330,12 +400,7 @@
             </div>
             <!-- info row -->
             <div class="row invoice-info">
-              <!-- /.col -->
-              <div class="col-sm-4 invoice-col">
-                <b>LC # @{{ lc_num }}</b><br>
-                <b>Date Issued:</b> @{{ date_issued }}<br>
-                <b>Date Expiry:</b> @{{ date_expired }}<br>
-              </div>
+
               <!-- /.col -->
               <div class="col-sm-4 invoice-col">
                 <b>Applicant</b>
@@ -349,32 +414,20 @@
                 </address>
               </div>
 
-            </div>
-            <div class="row invoice-info mt-3">
-              <div class="col-sm-4 invoice-col">
-                <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
-                <b>Exchange Rate:</b> @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
-                <br>
-                <b>Departing Port:</b> @{{ departing_port }}<br>
-                <b>Arriving Port:</b> @{{ arriving_port }}<br>
-
-              </div>
-
-              <div class="col-sm-4 invoice-col">
-                <b>Expenses Foreign:</b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
-                <b>Expenses Local:</b> @{{ expense_local }}<br>
-              </div>
-
-              <div class="col-sm-4 invoice-col">
-                <b>LC Value :</b>@{{ currency_symbol }} @{{ lc_value | currency }}<br>
-                <b>LC Value in TK:</b> @{{ currency_symbol }} @{{ lc_value*exchange_rate | currency }}<br>
-              </div>
               <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                <b>LC # @{{ lc_num }}</b><br>
+                <br>
+                <b>Invoice # </b> @{{ invoice_num }}<br>
+
+                <b>Date Issued:</b> @{{ date_issued }}<br>
+                <b>Date Expiry:</b> @{{ date_expired }}<br>
+              </div>
+
             </div>
-            <!-- /.row -->
 
             <!-- Table row -->
-            <div class="row">
+            <div class="row mt-4">
               <div class="col-xs-12 table-responsive">
                 <table class="table table-striped">
                   <thead>
@@ -403,24 +456,36 @@
             <!-- /.row -->
 
             <div class="row">
-              <!-- accepted payments column -->
-              {{--<div class="col-xs-6">--}}
-                {{--<p class="lead">Payment Methods:</p>--}}
-                {{--<img src="../../dist/img/credit/visa.png" alt="Visa">--}}
-                {{--<img src="../../dist/img/credit/mastercard.png" alt="Mastercard">--}}
-                {{--<img src="../../dist/img/credit/american-express.png" alt="American Express">--}}
-                {{--<img src="../../dist/img/credit/paypal2.png" alt="Paypal">--}}
+              <div class="col-xs-6">
+                <div class="row">
+                  <p class="lead ml-5">Additional information</p>
+                </div>
+                <div class="row invoice-info well ml-1 mr-1 mb-4">
+                  <div class="col-sm-6 invoice-col">
+                    <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
+                    <b>Exchange Rate:</b> ৳ @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
+                    <br>
+                    <b>Departing Port:</b> @{{ departing_port }}<br>
+                    <b>Arriving Port:</b> @{{ arriving_port }}<br>
 
-                {{--<p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">--}}
-                  {{--Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg--}}
-                  {{--dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.--}}
-                {{--</p>--}}
-              {{--</div>--}}
-              <!-- /.col -->
-              <div class="col-xs-6 col-xs-offset-6">
+                  </div>
+
+                  <div class="col-sm-6 invoice-col">
+                    <b>Expenses Foreign: </b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
+                    <b>Expenses Local: </b> ৳ @{{ expense_local }}<br>
+                    <br>
+                    <b>LC Value : </b>@{{ currency_symbol }} @{{ lc_value | currency }}<br>
+                    <b>LC Value in Taka: </b> ৳ @{{ lc_value*exchange_rate | currency }}<br>
+
+                  </div>
+
+                  <!-- /.col -->
+                </div>
+              </div>
+              <div class="col-xs-6">
                 {{--<p class="lead">Amount Due 2/22/2014</p>--}}
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-5 pt-3">
                   <table class="table">
                     <tbody><tr>
                       <th style="width:50%">Grand Total</th>
@@ -428,7 +493,7 @@
                     </tr>
                     <tr>
                       <th>Grand Total in TK</th>
-                      <td>@{{ grand_total*exchange_rate | currency }}</td>
+                      <td>৳ @{{ grand_total*exchange_rate | currency }}</td>
                     </tr>
                     <tr>
                       <th>Expenses Foreign</th>
@@ -436,7 +501,7 @@
                     </tr>
                     <tr>
                       <th>Expense Local:</th>
-                      <td>TK @{{ expense_local }}</td>
+                      <td>৳ @{{ expense_local }}</td>
                     </tr>
                     </tbody></table>
                 </div>
@@ -446,8 +511,8 @@
             <!-- /.row -->
 
             <!-- this row will not appear when printing -->
-            <div class="row no-print">
-              <div class="col-xs-12">
+            <div v-if="!is_complete" class="row no-print">
+              <div class="col-xs-12 border-light-gray pt-3">
                 <button type="button" class="btn btn-default" @click="toggle(false)">
                   <i class="fa fa-chevron-left pt-1 mr-2"></i>
                   Back
@@ -456,12 +521,6 @@
                   <i class="fas fa-check mr-2"></i>
                   Confirm
                 </button>
-                {{--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>--}}
-                {{--<button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment--}}
-                {{--</button>--}}
-                {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
-                  {{--<i class="fa fa-download"></i> Generate PDF--}}
-                {{--</button>--}}
               </div>
             </div>
           </section>
@@ -481,13 +540,7 @@
             <div class="box-header with-border">
               <h3 class="box-title">Tyre Catalog</h3>
             </div>
-            {{--<div v-if="showCatalog == false" class="box-body">--}}
-            {{--<button @click="tyreCatalog()" class="btn btn-primary">The button</button>--}}
-            {{--</div>--}}
             <div class="box-body">
-              {{--<keep-alive>--}}
-              {{--<tyre-catalog></tyre-catalog>--}}
-              {{--</keep-alive>--}}
               <table id ="table_id" class="table table-hover table-bordered">
                 <thead>
                 <tr>
@@ -526,11 +579,8 @@
         </div>
       </transition>
 
-    {{--</div>--}}
-
   </div>
 
-    {{--<button type="button" class="btn btn-primary pull-right" @click="toggle(true)">Toggle</button>--}}
 @endsection
 
 @section('footer-scripts')
@@ -552,6 +602,7 @@
             tyre_catalog : tyre_catalog,
 
             lc_num : null,
+            invoice_num : null,
             date_issued : null,
             date_expired : null,
             applicant : null,
@@ -572,7 +623,14 @@
             date_flag: false,
             date1: null,
             date2: null,
-            currency_symbol: '$'
+            currency_symbol: '$',
+
+            errors : null,
+            is_alert : false,
+            is_complete : false,
+            alert_class : 'alert-warning',
+
+
 
         },
         computed:{
@@ -625,7 +683,6 @@
         watch : {
             currency_code : function(new_val, old_val)
             {
-                console.log("new_val upper :" + new_val.toUpperCase());
                 if (typeof currencies[new_val] !== 'undefined')
                     this.currency_symbol = currencies[new_val.toUpperCase()];
                 else
@@ -640,11 +697,19 @@
             },
             date_expired : function(new_val){
                 this.date2 = new_val;
+            },
+
+            invoice_num : function(new_val){
+                if(new_val.indexOf(" "))
+                    this.invoice_num = new_val.replace(/\s/g, "");
             }
         },
 
         methods: {
+            dismiss_warning : function(){
+                this.is_alert = false;
 
+            },
             datetify : function(){
               if(this.date_flag)
               {
@@ -668,13 +733,118 @@
             },
 
             validate : function(){
-                return true;
+
+                var errors = [];
+
+                switch (this.showForm)
+                {
+                    case 0 :
+                        if(!this.lc_num || !this.lc_num.length)
+                            errors['lc_num'] = 'Enter a LC number';
+
+                        if(!this.applicant || !this.applicant.length)
+                            errors['applicant'] = 'Enter applicant information.';
+
+                        if(!this.beneficiary || !this.beneficiary.length)
+                            errors['beneficiary'] = 'Enter beneficiary information';
+
+                        if(!this.departing_port || !this.departing_port.length)
+                            errors['departing_port'] = 'Enter departing port';
+
+                        if(!this.arriving_port || !this.arriving_port.length)
+                            errors['arriving_port'] = 'Enter arriving port';
+
+                        if(!this.currency_code || this.currency_code.length != 3)
+                            errors['currency_code'] = 'Enter a valid currency code';
+
+                        if( !this.lc_value || !(this.lc_value > 0) )
+                            errors['lc_value'] = 'Enter a valid LC value';
+
+                        if( !this.exchange_rate || !(this.exchange_rate > 0) )
+                            errors['exchange_rate'] = 'Enter a valid exchange rate.';
+
+                        var regEx = /\d\d\/\d\d\/\d\d\d/;
+                        var issued = this.date1;
+                        var expires = this.date2;
+
+                        if(!regEx.test(issued))
+                        {
+                          errors['date_issued'] = 'Enter a valid issue date';
+                        }
+                        if(!regEx.test(expires))
+                        {
+                          errors['date_expired'] = 'Enter a valid expiry date';
+                        }
+
+                        if(!errors.date_issued && !errors.date_expired)
+                        {
+                            var i_array = issued.split("/");
+                            var e_array = expires.split("/");
+                            var date_error = false;
+
+                            for(var i = 2; i>=0; i--)
+                                if (parseInt(i_array[i]) > parseInt(e_array[i])) {
+                                    date_error = true;
+                                    break;
+                                }
+                                else if (parseInt(i_array[i]) < parseInt(e_array[i]))
+                                    break;
+
+                            if(date_error)
+                                errors['date_issued'] = 'Date issued must be before date expiry';
+
+                        }
+                        break;
+                    case 1 :
+                        if((!this.invoice_num || !this.invoice_num.length) && this.proforma_invoice.length )
+                            errors['invoice_num'] = 'The proforma invoice number is required.';
+
+
+                        else if ( (!this.invoice_num || !this.invoice_num.length) && !this.proforma_invoice.length )
+                        {
+                            errors['warning'] = 'Blank proforma invoice';
+                            this.is_alert = true;
+                        }
+
+                        else if(this.invoice_num && this.invoice_num.length && !this.proforma_invoice.length)
+                        {
+                            //re-using
+                            errors['qty'] = 'Enter listing information for the above Proforma invoice # ' +
+                                'by selecting items from the Tyre Catalog.';
+                        }
+                        else{
+                            this.proforma_invoice.forEach(function(value){
+
+                                if(value.unit_price<=0)
+                                  errors['unit_price'] = 'Unit price must be greater than zero.';
+                                if(value.qty<=0)
+                                  errors['qty'] = 'Quantity must be greater than zero.';
+                            });
+                        }
+                        break;
+
+                    case 2:
+                        break;
+                }
+
+                if(errors && Object.entries(errors).length) // because errors is an obj and does not have length
+                    return { status : 'error', 'errors' : errors };
+                 return {status : 'success'};
             },
 
             submit : function(){
 
-                if(this.validate)
+                this.is_alert = false;
+                this.errors = null;
+
+                var validate = this.validate();
+
+                if(validate.status == 'success')
                     this.toggle(true);
+
+                else if(validate.errors)//errors
+                    this.errors = validate.errors;
+
             },
 
             subTotal : function(i){
@@ -692,6 +862,8 @@
 
 
             toggle : function(direction){
+
+                this.errors = null;
                 if(this.showForm==0)
                 {
                     this.date_flag = false;
@@ -709,13 +881,6 @@
 
                     this.date1 = this.date_issued;
                     this.date2 = this.date_expired;
-                    // if(this.date_issued && this.date_expired
-                    //     && document.getElementById('dateIssued') && document.getElementById('dateExpiry'))
-                    // {
-                    //     document.getElementById('dateIssued').value  =  this.date_issued;
-                    //     document.getElementById('dateExpiry').value  =  this.date_expired;
-                    // }
-
                 }
 
 
@@ -726,23 +891,6 @@
                 else
                     (this.showForm  == 0) ? this.showForm = 2 : this.showForm--;
 
-                // if(this.showForm == 0)
-                // {
-                //     this.$nextTick(function() {
-                // //
-                //
-                //           if(document.getElementById('dateIssued') && document.getElementById('dateExpiry'))
-                //         {
-                //             $(".date").inputmask("dd/mm/yyyy");
-                //             console.log('set value value');
-                //             document.getElementById('dateIssued').value  =  app.date_issued;
-                //             document.getElementById('dateExpiry').value  =  app.date_expired;
-                //         }
-                // //
-                //     });
-                // //
-                // }
-
             },
 
             tyreCatalog : function(){
@@ -751,14 +899,12 @@
             },
 
             addTyre : function(id){
-                console.log("addTyre("+id+")");
                 for(var i=0; i<this.tyre_catalog.length; i++)
                 {
                     if(tyre_catalog[i].tyre_id == id)
                     {
                         var obj = Object.assign ({}, tyre_catalog[i]);
-                        console.log('obj');
-                        console.log(obj);
+
                         this.proforma_invoice.push(obj);
                         break;
                     }
