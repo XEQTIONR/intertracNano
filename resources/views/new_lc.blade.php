@@ -210,7 +210,7 @@
                       <label>Expenses Paid (Foreign)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
-                        <input v-model="expense_foreign" type="number" step="0.01" class="form-control" placeholder="Enter foreign expenses paid" value="0.00">
+                        <input v-model="expense_foreign" type="number" step="0.01" min="0" class="form-control" placeholder="Enter foreign expenses paid">
                       </div>
                       <span class="help-block"></span>
                     </div>
@@ -221,7 +221,7 @@
                       <label>Expenses Paid (Local)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input v-model="expense_local" type="number" step="0.01" class="form-control" placeholder="Enter local expenses paid" value="0.00">
+                        <input v-model="expense_local" type="number" step="0.01" min="0" class="form-control" placeholder="Enter local expenses paid">
                       </div>
                       <span class="help-block"></span>
                     </div>
@@ -612,8 +612,8 @@
             currency_code : null,
             exchange_rate : null,
             lc_value : null,
-            expense_foreign : null,
-            expense_local : null,
+            expense_foreign : "0.00",
+            expense_local : "0.00",
             notes : null,
 
             proforma_invoice : [],
@@ -681,7 +681,7 @@
             }
         },
         watch : {
-            currency_code : function(new_val, old_val)
+            currency_code : function(new_val)
             {
                 if (typeof currencies[new_val] !== 'undefined')
                     this.currency_symbol = currencies[new_val.toUpperCase()];
@@ -690,6 +690,21 @@
 
                  if(new_val.toUpperCase() != new_val)
                      this.currency_code = new_val.toUpperCase();
+            },
+            expense_foreign : function(new_val, old)
+            {
+
+                // reject negative & non numeric
+                if(!(parseFloat(new_val)>= 0 ) )
+                {
+                    app.expense_foreign = "";
+                }
+
+            },
+            expense_local : function(new_val)
+            {
+                if(!(parseFloat(new_val)>= 0 ))
+                    app.expense_local = "";
             },
 
             date_issued : function(new_val){
