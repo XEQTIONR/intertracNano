@@ -800,63 +800,63 @@
 
                 switch (this.showForm)
                 {
-                    case 0 :
-                        if(!this.lc_num || !this.lc_num.length)
-                            errors['lc_num'] = 'Enter a LC number';
-
-                        if(!this.applicant || !this.applicant.length)
-                            errors['applicant'] = 'Enter applicant information.';
-
-                        if(!this.beneficiary || !this.beneficiary.length)
-                            errors['beneficiary'] = 'Enter beneficiary information';
-
-                        if(!this.departing_port || !this.departing_port.length)
-                            errors['departing_port'] = 'Enter departing port';
-
-                        if(!this.arriving_port || !this.arriving_port.length)
-                            errors['arriving_port'] = 'Enter arriving port';
-
-                        if(!this.currency_code || this.currency_code.length != 3)
-                            errors['currency_code'] = 'Enter a valid currency code';
-
-                        if( !this.lc_value || !(this.lc_value > 0) )
-                            errors['lc_value'] = 'Enter a valid LC value';
-
-                        if( !this.exchange_rate || !(this.exchange_rate > 0) )
-                            errors['exchange_rate'] = 'Enter a valid exchange rate.';
-
-                        var regEx = /\d\d\/\d\d\/\d\d\d/;
-                        var issued = this.date1;
-                        var expires = this.date2;
-
-                        if(!regEx.test(issued))
-                        {
-                          errors['date_issued'] = 'Enter a valid issue date';
-                        }
-                        if(!regEx.test(expires))
-                        {
-                          errors['date_expired'] = 'Enter a valid expiry date';
-                        }
-
-                        if(!errors.date_issued && !errors.date_expired)
-                        {
-                            var i_array = issued.split("/");
-                            var e_array = expires.split("/");
-                            var date_error = false;
-
-                            for(var i = 2; i>=0; i--)
-                                if (parseInt(i_array[i]) > parseInt(e_array[i])) {
-                                    date_error = true;
-                                    break;
-                                }
-                                else if (parseInt(i_array[i]) < parseInt(e_array[i]))
-                                    break;
-
-                            if(date_error)
-                                errors['date_issued'] = 'Date issued must be before date expiry';
-
-                        }
-                        break;
+                    // case 0 :
+                    //     if(!this.lc_num || !this.lc_num.length)
+                    //         errors['lc_num'] = 'Enter a LC number';
+                    //
+                    //     if(!this.applicant || !this.applicant.length)
+                    //         errors['applicant'] = 'Enter applicant information.';
+                    //
+                    //     if(!this.beneficiary || !this.beneficiary.length)
+                    //         errors['beneficiary'] = 'Enter beneficiary information';
+                    //
+                    //     if(!this.departing_port || !this.departing_port.length)
+                    //         errors['departing_port'] = 'Enter departing port';
+                    //
+                    //     if(!this.arriving_port || !this.arriving_port.length)
+                    //         errors['arriving_port'] = 'Enter arriving port';
+                    //
+                    //     if(!this.currency_code || this.currency_code.length != 3)
+                    //         errors['currency_code'] = 'Enter a valid currency code';
+                    //
+                    //     if( !this.lc_value || !(this.lc_value > 0) )
+                    //         errors['lc_value'] = 'Enter a valid LC value';
+                    //
+                    //     if( !this.exchange_rate || !(this.exchange_rate > 0) )
+                    //         errors['exchange_rate'] = 'Enter a valid exchange rate.';
+                    //
+                    //     var regEx = /\d\d\/\d\d\/\d\d\d/;
+                    //     var issued = this.date1;
+                    //     var expires = this.date2;
+                    //
+                    //     if(!regEx.test(issued))
+                    //     {
+                    //       errors['date_issued'] = 'Enter a valid issue date';
+                    //     }
+                    //     if(!regEx.test(expires))
+                    //     {
+                    //       errors['date_expired'] = 'Enter a valid expiry date';
+                    //     }
+                    //
+                    //     if(!errors.date_issued && !errors.date_expired)
+                    //     {
+                    //         var i_array = issued.split("/");
+                    //         var e_array = expires.split("/");
+                    //         var date_error = false;
+                    //
+                    //         for(var i = 2; i>=0; i--)
+                    //             if (parseInt(i_array[i]) > parseInt(e_array[i])) {
+                    //                 date_error = true;
+                    //                 break;
+                    //             }
+                    //             else if (parseInt(i_array[i]) < parseInt(e_array[i]))
+                    //                 break;
+                    //
+                    //         if(date_error)
+                    //             errors['date_issued'] = 'Date issued must be before date expiry';
+                    //
+                    //     }
+                    //     break;
                     case 1 :
                         if((!this.invoice_num || !this.invoice_num.length) && this.proforma_invoice.length )
                             errors['invoice_num'] = 'The proforma invoice number is required.';
@@ -926,8 +926,8 @@
                         "currency_code" : this.currency_code,
                         "exchange_rate" : this.exchange_rate,
                         "lc_value" : this.lc_value,
-                        "expense_foreign" : this.expense_foreign,
-                        "expense_local" : this.expense_local,
+                        "expense_foreign" : this.expense_foreign ? this.expense_foreign : 0,
+                        "expense_local" : this.expense_local  ? this.expense_local : 0,
                         "notes" : this.notes,
 
                         "proforma_invoice": this.proforma_invoice

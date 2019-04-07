@@ -265,7 +265,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{route('lcs.create')}}"><i class="fa fa-angle-right"></i>Add a LC</a></li>
                         <li><a href="{{route('lcs.index')}}"><i class="fa fa-angle-right"></i>View LCs</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Add a Proforma invoice</a></li>
+                        <li><a href="{{route('proforma_invoice.create')}}"><i class="fa fa-angle-right"></i>Add a Proforma invoice</a></li>
                     </ul>
                 </li>
 

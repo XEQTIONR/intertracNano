@@ -6,6 +6,7 @@ use App\Tyre;
 use App\Lc;
 use App\Performa_invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Validator;
 use Carbon\Carbon;
@@ -37,14 +38,6 @@ class LcController extends Controller
      */
     public function create(Request $request)
     {
-      if ($request->ajax()) //the request is an ajax request
-      {
-        $tyres = Tyre::paginate(7);
-        return view('partials.tyres', compact('tyres'));
-
-      }
-      else
-      {
 
         $tyres = Tyre::all(); //non-ajax request
 
@@ -56,7 +49,41 @@ class LcController extends Controller
 
         //dd($tyres);
         return view('new_lc', compact('tyres'));
+    }
+
+    public function createProformaInvoice()
+    {
+      $lcs = DB::select('
+          SELECT K.* 
+          FROM lcs K
+          WHERE K.lc_num NOT IN
+            (SELECT L.lc_num
+            FROM lcs L, performa_invoices P
+            WHERE L.lc_num = P.lc_num
+            GROUP BY lc_num)
+      ');
+
+      $tyres = Tyre::all();
+
+      foreach ($tyres as $tyre)
+      {
+        $tyre->qty = 0;
+        $tyre->unit_price = 0;
       }
+
+      return view('new_proforma_invoice', compact('lcs', 'tyres'));
+    }
+
+    public function storeProformaInvoice(Request $request)
+    {
+      $response = array();
+      $lc = Lc::find($request->lc_num);
+      $this->_storeProformaInvoiceRecords($lc, $request->proforma_invoice,$request->invoice_num);
+
+      $response['status'] = 'success';
+
+      return $response;
+
     }
 
     /**
@@ -121,23 +148,10 @@ class LcController extends Controller
 
         //ALLOCATE Performa_invoice
         $contents = array();
-
-        foreach($request->proforma_invoice as $record)
+        if(isset($request->proforma_invoice) && count($request->proforma_invoice))
         {
-            $item = new Performa_invoice;
-
-            $item->lc_num = $lc->lc_num;
-            $item->tyre_id = $record['tyre_id'];
-            $item->qty = $record['qty'];
-            $item->unit_price = $record['unit_price'];
-
-            //push
-            $contents[] = $item;
+          $this->_storeProformaInvoiceRecords($lc, $request->proforma_invoice);
         }
-
-        //STORE Performa_invoice
-        $lc->performaInvoice()->saveMany($contents);
-
         $response = array();
 
         $response['status'] = 'success';
@@ -216,5 +230,38 @@ class LcController extends Controller
 
       return $response;
 
+    }
+
+
+    //helper functions
+
+    private function _storeProformaInvoiceRecords(Lc $lc, $proforma_invoice, $invoice_num = null)
+    {
+      $contents = array();
+      if(isset($proforma_invoice) && count($proforma_invoice))
+      {
+
+        if(!is_null($invoice_num))
+        {
+          $lc->invoice_no = $invoice_num;
+          $lc->save();
+        }
+
+        foreach ($proforma_invoice as $record)
+        {
+          $item = new Performa_invoice;
+
+          $item->lc_num=$lc->lc_num;
+          $item->tyre_id=$record[ 'tyre_id' ];
+          $item->qty=$record[ 'qty' ];
+          $item->unit_price=$record[ 'unit_price' ];
+
+          //push
+          $contents[]=$item;
+        }
+
+        //STORE Performa_invoice
+        $lc->performaInvoice()->saveMany($contents);
+      }
     }
 }

@@ -28,6 +28,9 @@ Route::resource('tyres','TyreController');
 
 Route::resource('lcs','LcController');
 
+Route::get('/proforma_invoice/create', 'LcController@createProformaInvoice')->name('proforma_invoice.create');
+
+Route::post('/proforma_invoice/store', 'LcController@storeProformaInvoice')->name('proforma_invoice.store');
 
 //To pass the lc_num
 Route::get('/consignments/create/{lc}', 'ConsignmentController@createGivenLC');

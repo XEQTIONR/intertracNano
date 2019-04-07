@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-  LCs
+  Letters of credit
 @endsection
 @section('subtitle')
   All LCs applied for.
