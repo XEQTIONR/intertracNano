@@ -13,7 +13,7 @@
 //Route::get('/', 'WelcomeController@show');
 
 //Route::get('test', 'WelcomeController@show');
-  Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
+
 Route::get('/', function()
 {
   return view('welcome');
