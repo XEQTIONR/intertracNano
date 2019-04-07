@@ -60,20 +60,23 @@
                 <div class="box-body">
                   <div class="row mx-2">
                     <div class="col-xs-12">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.lc_num }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.lc_num }">
                       <label>LC#</label>
                       <div class="input-group">
-                        <span class="input-group-addon">F20</span>
+                        <span class="input-group-addon">
+                          <span v-if="!is_verifying">F20</span>
+                          <i v-else class="fas fa-spinner fa-pulse"></i>
+                        </span>
                         <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter Document Credit Number">
                       </div>
-                      <span v-if="errors && errors.lc_num" class="help-block text-danger">@{{ errors.lc_num }}</span>
+                      <span v-if=" errors.lc_num" class="help-block text-danger">@{{ errors.lc_num }}</span>
                     </div>
                   </div>
                   </div>
 
                   <div class="row mx-2">
                     <div class="col-xs-12 col-md-6">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.date_issued }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.date_issued }">
                       <label>Date Issued</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
@@ -82,12 +85,12 @@
                           <i class="fas fa-calendar-alt"></i>
                         </div>
                       </div>
-                      <span v-if="errors && errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>
+                      <span v-if=" errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>
                     </div>
                   </div>
 
                     <div class="col-xs-12 col-md-6">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.date_expired }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.date_expired }">
                       <label>Date Expiry</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31D</span>
@@ -96,20 +99,20 @@
                           <i class="fas fa-calendar-alt"></i>
                         </div>
                       </div>
-                      <span v-if="errors && errors.date_expired" class="help-block text-danger">@{{ errors.date_expired }}</span>
+                      <span v-if=" errors.date_expired" class="help-block text-danger">@{{ errors.date_expired }}</span>
                     </div>
                   </div>
                   </div>
 
                   <div class="row mx-2">
                     <div class="col-xs-12">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.applicant }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.applicant }">
                       <label>Applicant</label>
                       <div class="input-group">
                         <span class="input-group-addon">F50</span>
                         <textarea id="applicant" v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>
                       </div>
-                      <span v-if="errors && errors.applicant" class="help-block text-danger">@{{ errors.applicant }}</span>
+                      <span v-if=" errors.applicant" class="help-block text-danger">@{{ errors.applicant }}</span>
                     </div>
 
                   </div>
@@ -117,13 +120,13 @@
 
                   <div class="row mx-2">
                     <div class="col-xs-12">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.beneficiary }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.beneficiary }">
                       <label>Beneficiary</label>
                       <div class="input-group">
                         <span class="input-group-addon">F59</span>
                         <textarea id="beneficiary"  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>
                       </div>
-                      <span v-if="errors && errors.beneficiary" class="help-block text-danger">@{{ errors.beneficiary }}</span>
+                      <span v-if=" errors.beneficiary" class="help-block text-danger">@{{ errors.beneficiary }}</span>
                     </div>
 
                   </div>
@@ -131,13 +134,13 @@
 
                   <div class="row mx-2">
                     <div class="col-xs-12">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.departing_port }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.departing_port }">
                       <label>Departing Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44E</span>
                         <input v-model="departing_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
-                      <span v-if="errors && errors.departing_port" class="help-block text-danger">@{{ errors.departing_port }}</span>
+                      <span v-if=" errors.departing_port" class="help-block text-danger">@{{ errors.departing_port }}</span>
                     </div>
 
                   </div>
@@ -145,13 +148,13 @@
 
                   <div class="row mx-2">
                     <div class="col-xs-12">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.arriving_port }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.arriving_port }">
                       <label>Arriving Port</label>
                       <div class="input-group">
                         <span class="input-group-addon">F44F</span>
                         <input v-model="arriving_port" type="text" class="form-control" placeholder="Enter departing port">
                       </div>
-                      <span v-if="errors && errors.arriving_port" class="help-block text-danger">@{{ errors.arriving_port }}</span>
+                      <span v-if=" errors.arriving_port" class="help-block text-danger">@{{ errors.arriving_port }}</span>
                     </div>
 
                   </div>
@@ -159,38 +162,38 @@
 
                   <div class="row mx-2">
                     <div class="col-xs-4">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.currency_code }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.currency_code }">
                       <label>Foreign currency code</label>
                       <div class="input-group">
                         <span class="input-group-addon">F32B</span>
                         <input v-model="currency_code" type="text" class="form-control" placeholder="Currency Code">
                       </div>
-                      <span v-if="errors && errors.currency_code" class="help-block text-danger">@{{ errors.currency_code }}</span>
+                      <span v-if=" errors.currency_code" class="help-block text-danger">@{{ errors.currency_code }}</span>
                     </div>
                   </div>
 
                     <div class="col-xs-8">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.lc_value }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.lc_value }">
                       <label>LC Value (in foreign currency)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
                         <input v-model="lc_value" type="number" step="0.01" class="form-control" placeholder="0.00" min="0.00">
                       </div>
-                      <span v-if="errors && errors.lc_value" class="help-block text-danger">@{{ errors.lc_value }}</span>
+                      <span v-if=" errors.lc_value" class="help-block text-danger">@{{ errors.lc_value }}</span>
                     </div>
 
                   </div>
                   </div>
                   <div class="row mx-2">
                     <div class="col-xs-4">
-                    <div class="form-group" :class="{ 'has-error' : errors && errors.exchange_rate }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.exchange_rate }">
                       <label>Exchange Rate</label>
                       <div class="input-group">
 
                         <input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">
                         <span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>
                       </div>
-                      <span v-if="errors && errors.exchange_rate" class="help-block text-danger">@{{ errors.exchange_rate }}</span>
+                      <span v-if=" errors.exchange_rate" class="help-block text-danger">@{{ errors.exchange_rate }}</span>
                     </div>
                   </div>
 
@@ -210,7 +213,7 @@
                       <label>Expenses Paid (Foreign)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
-                        <input v-model="expense_foreign" type="number" step="0.01" min="0" class="form-control" placeholder="Enter foreign expenses paid">
+                        <input v-model="expense_foreign" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">
                       </div>
                       <span class="help-block"></span>
                     </div>
@@ -221,7 +224,7 @@
                       <label>Expenses Paid (Local)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input v-model="expense_local" type="number" step="0.01" min="0" class="form-control" placeholder="Enter local expenses paid">
+                        <input v-model="expense_local" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">
                       </div>
                       <span class="help-block"></span>
                     </div>
@@ -239,7 +242,7 @@
                     </div>
                     <span class="help-block"></span>
                     <div class="col-12">
-                      <button type="button" class="btn btn-info pull-right" @click="submit()">
+                      <button v-if="!is_duplicate" type="button" class="btn btn-info pull-right" @click="submit()">
                         Continue
                         <i class="fa fa-chevron-right pt-1 ml-2"></i>
                       </button>
@@ -283,17 +286,17 @@
                   <div class="row">
                     <div class="col-xs-12 mb-5">
 
-                      <div class="form-group" :class="{ 'has-error' : errors && errors.invoice_num }">
+                      <div class="form-group" :class="{ 'has-error' :  errors.invoice_num }">
                         <label>Invoice #</label>
                         {{--<div class="input-group">--}}
                           <input v-model="invoice_num" type="text" class="form-control" placeholder="Enter the proforma invoice #">
                         {{--</div>--}}
-                        <span v-if="errors && errors.invoice_num" class="help-block text-danger">@{{ errors.invoice_num }}</span>
+                        <span v-if=" errors.invoice_num" class="help-block text-danger">@{{ errors.invoice_num }}</span>
                       </div>
                     </div>
                   </div>
-                      <div v-if="errors && errors.qty" class="row ml-3 mb-2 text-danger">@{{ errors.qty }}</div>
-                      <div v-if="errors && errors.unit_price" class="row ml-3 mb-2 text-danger">@{{ errors.unit_price }}</div>
+                      <div v-if=" errors.qty" class="row ml-3 mb-2 text-danger">@{{ errors.qty }}</div>
+                      <div v-if=" errors.unit_price" class="row ml-3 mb-2 text-danger">@{{ errors.unit_price }}</div>
                   <div class="row pb-1">
                     <div class="col-xs-1 text-center"><strong>#</strong></div>
                     <div class="col-xs-4 text-center"><strong>Tyre</strong></div>
@@ -612,8 +615,8 @@
             currency_code : null,
             exchange_rate : null,
             lc_value : null,
-            expense_foreign : "0.00",
-            expense_local : "0.00",
+            expense_foreign : "",
+            expense_local : "",
             notes : null,
 
             proforma_invoice : [],
@@ -625,9 +628,13 @@
             date2: null,
             currency_symbol: '$',
 
-            errors : null,
+            errors : [],
             is_alert : false,
             is_complete : false,
+            is_duplicate : false,
+
+            is_verifying : false,
+
             alert_class : 'alert-warning',
 
 
@@ -681,6 +688,43 @@
             }
         },
         watch : {
+
+            lc_num : function(new_val){
+
+                if(new_val.length>5)
+                {
+                    app.is_verifying = true;
+                    $.post("{{route('lcs.check')}}",
+                        {
+                            "_token" : "{{csrf_token()}}",
+                            "lc_num" : this.lc_num,
+                        } ,
+                        function(data)
+                        {
+                            app.is_verifying = false;
+
+                            if(data.status == 'error')
+                            {
+                                if(app.errors == null)
+                                    app.errors = [];
+
+                                Vue.set(app.errors, 'lc_num', 'This LC number already exists.');
+
+                                app.is_duplicate = true;
+
+                                // app.errors['lc_num'] = 'This LC number already exists.';
+                            }
+                            if(data.status == 'success' && app.errors)
+                            {
+                                app.errors = app.errors.filter(function(value, index){
+                                    index != 'lc_num';
+                                });
+                                app.is_duplicate = false;
+                            }
+
+                        });
+                }
+            },
             currency_code : function(new_val)
             {
                 if (typeof currencies[new_val] !== 'undefined')
@@ -691,20 +735,23 @@
                  if(new_val.toUpperCase() != new_val)
                      this.currency_code = new_val.toUpperCase();
             },
-            expense_foreign : function(new_val, old)
+            expense_foreign : function(new_val)
             {
-
-                // reject negative & non numeric
-                if(!(parseFloat(new_val)>= 0 ) )
-                {
-                    app.expense_foreign = "";
-                }
-
+                app.helperPositiveFloat(new_val, "expense_foreign");
             },
             expense_local : function(new_val)
             {
-                if(!(parseFloat(new_val)>= 0 ))
-                    app.expense_local = "";
+                app.helperPositiveFloat(new_val, "expense_local");
+            },
+
+            exchange_rate : function(new_val)
+            {
+                app.helperPositiveFloat(new_val, "exchange_rate");
+            },
+
+            lc_value : function(new_val)
+            {
+                app.helperPositiveFloat(new_val, "lc_value");
             },
 
             date_issued : function(new_val){
@@ -842,7 +889,7 @@
                         break;
                 }
 
-                if(errors && Object.entries(errors).length) // because errors is an obj and does not have length
+                if( Object.entries(errors).length) // because errors is an obj and does not have length
                     return { status : 'error', 'errors' : errors };
                  return {status : 'success'};
             },
@@ -850,7 +897,7 @@
             submit : function(){
 
                 this.is_alert = false;
-                this.errors = null;
+                this.errors = [];
 
                 var validate = this.validate();
 
@@ -909,7 +956,7 @@
 
             toggle : function(direction){
 
-                this.errors = null;
+                this.errors = [];
                 this.is_alert = false;
                 if(this.showForm==0)
                 {
@@ -966,6 +1013,43 @@
                     // all items except for the current index
                     return index != i;
                 });
+            },
+
+            helperPositiveFloat : function(new_val, who){
+                if(!(parseFloat(new_val)>= 0 ) )
+                {
+                    app[who] = 0;
+                }
+
+                var leading = 0;
+                var lead_mid = false;
+                var decimal_count = 0;
+                var lead_or_trail = "lead";
+
+                for(var i=0; i<new_val.length; new_val++)
+                {
+                    if(new_val[i] == '0')
+                    {
+                        if(lead_or_trail == "lead" && !lead_mid)
+                            leading++;
+                    }
+                    else if(new_val[i] == '.')
+                    {
+                        decimal_count++;
+                        lead_or_trail = "trail";
+                    }
+                    else{
+                        if(lead_or_trail == "lead")
+                            lead_mid = true;
+                    }
+                }
+
+                if(decimal_count>1)
+                    app[who] = 0;
+                else if(leading>0)
+                            app[who] = app[who].substr(leading);
+
+
             }
         }
 

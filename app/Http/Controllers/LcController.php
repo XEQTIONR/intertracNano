@@ -197,4 +197,24 @@ class LcController extends Controller
     {
         //
     }
+
+    //api functions
+    public function checkLCNumber(Request $request)
+    {
+
+      $lc = Lc::find($request->lc_num);
+
+      $response = array();
+
+      if($lc)
+      {
+        $response[ 'status' ]='error';
+        $response[ 'error' ]='duplicate';
+      }
+      else
+        $response['status'] = 'success';
+
+      return $response;
+
+    }
 }

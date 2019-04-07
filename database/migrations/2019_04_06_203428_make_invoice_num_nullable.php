@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordResetsTable extends Migration
+class MakeInvoiceNumNullable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('password_resets', function (Blueprint $table) {
-            $table->string('username')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
+        //
+      \DB::statement('ALTER TABLE `lcs`
+        MODIFY `invoice_no` VARCHAR(30)  DEFAULT NULL;
+          ');
     }
 
     /**
@@ -27,6 +26,9 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        //
+      \DB::statement('ALTER TABLE `lcs`
+        MODIFY `invoice_no` VARCHAR(30) NOT NULL;
+          ');
     }
 }
