@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Consignment;
+use App\Tyre;
 use App\Consignment_container;
+use App\Lc;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -52,7 +54,18 @@ class ConsignmentController extends Controller
         //Pass a blank lc_num so we cant re-use the same code as below.
         $lc_num="";
 
-        return view ('new_consignment', compact('lc_num'));
+        $lcs = Lc::orderBy('created_at', 'desc')->get();
+        $tyres = Tyre::all();
+
+        foreach($tyres as $tyre)
+        {
+          $tyre->qty = 0;
+          $tyre->unit_price = 0;
+          $tyre->total_tax = 0;
+          $tyre->total_weight = 0;
+        }
+
+        return view ('new_consignment', compact('lc_num', 'tyres', 'lcs'));
     }
 
     public function createGivenLC($lc_num)

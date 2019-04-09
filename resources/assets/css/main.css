@@ -1,3 +1,13 @@
+body,
+table {
+  font-size: 15px !important;
+}
+.w-100 {
+  width: 100%;
+}
+.btn-success input {
+  color: black;
+}
 .bg-light-gray {
   background-color: #EBEBEB;
 }
@@ -55,6 +65,9 @@ input {
 .mx-5 {
   margin-left: 2.5rem;
   margin-right: 2.5rem;
+}
+.m-0 {
+  margin: 0 !important;
 }
 .m-1 {
   margin: .25rem;
@@ -172,6 +185,46 @@ input {
 .p-5 {
   padding: 2.5rem;
 }
+.py-1 {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+.py-2 {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.py-3 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-4 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.py-5 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+.px-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.px-1 {
+  padding-left: .25rem;
+  padding-right: .25rem;
+}
+.px-2 {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+.px-3 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.px-4 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
 .px-5 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -194,8 +247,14 @@ input {
 .pr-3 {
   margin-right: 1rem;
 }
+.pb-0 {
+  padding-bottom: 0;
+}
 .pb-1 {
   padding-bottom: 1rem;
+}
+.pb-3 {
+  padding-bottom: 1.5rem;
 }
 .pb-5 {
   padding-bottom: 2.5rem;
@@ -232,10 +291,18 @@ a .fab {
 .w-auto {
   width: auto;
 }
+.border-dash {
+  border: 2px solid red;
+}
 .justify-content-center {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+.align-items-center {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .border-bottom-header {
   border-bottom: 1px solid #ddd;

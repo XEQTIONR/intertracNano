@@ -274,7 +274,7 @@
                     active
                   @endif
               ">
-                      <a href="#"><i class="far fa-ship"></i> <span>Consignments</span>
+                      <a href="#"><i class="far fa-anchor"></i> <span>Consignments</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -282,7 +282,7 @@
                     <ul class="treeview-menu">
                       <li><a href="{{  route('consignments.index')  }}"><i class="fa fa-angle-right"></i>View consignments</a></li>
                       <li><a href="{{  route('consignment_containers.index'  )}}"><i class="fa fa-angle-right"></i>View containers</a></li>
-                      <li><a href="#"><i class="fa fa-angle-right"></i>Add a consignment</a></li>
+                      <li><a href="{{ route('consignments.create')  }}"><i class="fa fa-angle-right"></i>Add a consignment</a></li>
                       <li><a href="#"><i class="fa fa-angle-right"></i>Add a container</a></li>
                       <li><a href="#"><i class="fa fa-angle-right"></i>Add an expense</a></li>
                     </ul>
