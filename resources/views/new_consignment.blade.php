@@ -17,7 +17,7 @@
 
 @section('body')
 
-  <div class="row justify-content-center">
+  <div v-cloak class="row justify-content-center">
     <div class="col-xs-12">
       <transition name="custom-classes-transition"
                   enter-active-class="animated fadeIn faster"
@@ -38,7 +38,7 @@
       </transition>
     </div>
   </div>
-  <div class="row justify-content-center">
+  <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
                  {{--enter-class = "mimi"--}}
@@ -56,10 +56,6 @@
               <i class="far fa-anchor mr-3"></i>
               Enter Consignment Information
             </h3>
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-            </div>
           </div>
           <div class="box-body">
 
@@ -71,7 +67,7 @@
                       <label>Bill of Lading #</label>
                         <input id="bol" v-model="bol" type="text" class="form-control" placeholder="Enter Bill of lading number">
                       {{--</div>--}}
-                      <span v-if=" errors.bol" class="help-block text-danger">@{{ errors.bol }}</span>
+                      <span v-if=" errors.bol" class="help-block">@{{ errors.bol }}</span>
                     </div>
                   </div>
                 </div>
@@ -88,18 +84,18 @@
                         {{--<input type="text" class="form-control" placeholder="Enter LC number">--}}
                       <select id="lc_num" v-model="lc_num" class="form-control" placeholder="select an LC">
                         <option disabled :value="null">Select a LC</option>
-                        <option v-for="lc in lcs" :value="lc.lc_num">@{{lc.lc_num}}</option>
+                        <option  v-for="lc in lcs" :value="lc.lc_num">@{{lc.lc_num}}</option>
                       </select>
 
                       {{--</div>--}}
-                      {{--<span v-if=" errors.bol" class="help-block text-danger">@{{ errors.bol }}</span>--}}
+                      <span v-if=" errors.lc_num" class="help-block">@{{ errors.lc_num }}</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="row mx-2">
                   <div class="col-xs-12 col-md-5">
-                    <div class="form-group" :class="{ 'has-error' :  errors.date_issued }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.date_landed }">
                       <label>Land Date</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
@@ -108,18 +104,18 @@
                           <i class="fas fa-calendar-alt"></i>
                         </div>
                       </div>
-                      <span v-if=" errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>
+                      <span v-if=" errors.date_landed" class="help-block">@{{ errors.date_landed }}</span>
                     </div>
                   </div>
 
                   <div class="col-xs-7">
-                    <div class="form-group" :class="{ 'has-error' :  errors.lc_value }">
+                    <div class="form-group" :class="{ 'has-error' :  errors.value }">
                       <label>Value (in foreign currency)</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
                         <input v-model="value" type="number" step="0.01" class="form-control" placeholder="0.00" min="0.00">
                       </div>
-                      <span v-if=" errors.value" class="help-block text-danger">@{{ errors.lc_value }}</span>
+                      <span v-if=" errors.value" class="help-block">@{{ errors.value }}</span>
                     </div>
 
                   </div>
@@ -136,7 +132,7 @@
                         <input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">
                         <span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>
                       </div>
-                      <span v-if=" errors.exchange_rate" class="help-block text-danger">@{{ errors.exchange_rate }}</span>
+                      <span v-if=" errors.exchange_rate" class="help-block">@{{ errors.exchange_rate }}</span>
                     </div>
                   </div>
 
@@ -155,30 +151,17 @@
                 <div class="row mx-2">
 
                   <div class="col-xs-12 col-md-5">
-                    <div class="form-group">
+                    <div class="form-group" :class="{ 'has-error' :  errors.tax }">
                       <label>Tax Paid</label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
                         <input v-model="tax" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">
                       </div>
-                      <span class="help-block"></span>
+                      <span v-if=" errors.tax" class="help-block">@{{ errors.tax }}</span>
                     </div>
                   </div>
 
                   <div class="col-xs-12 col-md-7">
-                    <div class="form-group">
-                      <label>Expenses Paid (Foreign)</label>
-                      <div class="input-group">
-                        <span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>
-                        <input v-model="expense_foreign" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">
-                      </div>
-                      <span class="help-block"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mx-2">
-
-                  <div class="col-xs-12">
                     <div class="form-group">
                       <label>Total Cost to obtain consignment</label>
                       <div class="input-group">
@@ -204,27 +187,42 @@
 
 
           </div>
+
         </div>
       </div>
 
       <div  v-if="showForm == 1" key="1"  class="col-xs-7">
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="far fa-container-storage mr-3"></i> Add containers to your consignment</h3>
+            <h3 class="page-header ml-3">
+              <i class="far fa-container-storage mr-3"></i>
+              Add containers to your consignment
+            </h3>
           </div>
-          <div class="box-body pb-5 pl-5 pr-5">
+          <div class="box-body pb-5 px-5">
 
-
+            <div class="form-group" :class="{ 'has-error' :  Object.entries(errors).length }">
+              <ul>
+                <li class="help-block" v-for="error in errors">@{{ error }}</li>
+              </ul>
+            </div>
             <form style="padding: 1rem;">
-
-              <div v-for="(container, index) in containers" @click="select_container(index)" class="row" {{--:Class="{'border-dash' : selected_container == index}"--}}  style="flex-direction: column">
+              <transition-group  name="custom-classes-transition"
+                                 {{--tag="ol"--}}
+                                 {{--mode="out-in"--}}
+                                 {{--enter-class = "mimi"--}}
+                                 enter-active-class="animated fadeInDown"
+                                 {{--enter-class="animated tada"--}}
+                                 leave-active-class="animated fadeOut fast "
+              >
+              <div v-for="(container, index) in containers" key="container.container_num" @click="select_container(index)" class="row" {{--:Class="{'border-dash' : selected_container == index}"--}}  style="flex-direction: column">
                 <div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-warning' : 'box-default']">
 
                   <div class="box-header">
                     <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
                     <div class="box-tools pull-right">
-                      <button type="button" class="btn btn-box-tool" :id="container.container_num + '_close'"><i class="fa fa-minus"></i>
-                      </button>
+                      <button type="button" class="btn btn-box-tool" :id="container.container_num + '_close'"><i class="fa fa-minus"></i></button>
+                      <button @click="remove_container(index)" type="button" class="btn btn-box-tool"><i class="fa fa-times"></i></button>
                     </div>
                   </div>
 
@@ -237,142 +235,135 @@
                           <div class="col-xs-2 text-center"><strong>Qty</strong></div>
                           <div  class="col-xs-2 text-right"><strong>Unit Price</strong></div>
                           <div class="col-xs-2 text-center"><strong>Total Weight (kg)</strong></div>
-                          <div class="col-xs-2 text-center"><strong>Total Tax</strong></div>
+                          <div class="col-xs-2 text-center"><strong>Total Tax (৳)</strong></div>
                           <div  class="col-xs-1 text-right"><strong>Sub Total</strong></div>
                           <div  class="col-xs-1 text-right"></div>
                         </div>
-
-                        <div v-for="(item, item_index) in container.contents"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
+                        <transition-group  name="custom-classes-transition"
+                                           {{--tag="ol"--}}
+                                           {{--mode="out-in"--}}
+                                           {{--enter-class = "mimi"--}}
+                                           enter-active-class="animated fadeInDown"
+                                           {{--enter-class="animated tada"--}}
+                                           leave-active-class="animated fadeOutUp fast "
+                        >
+                        <div v-for="(item, item_index) in container.contents" key="index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
                           <div class="col-xs-1 text-center"><strong>@{{ item_index + 1 }}</strong></div>
                           <div class="col-xs-2 text-center">@{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}</div>
-                          <div class="col-xs-2 text-center"><input class="form-control" v-model="item.qty" type="number" min="0" step="1"></div>
-                          <div class="col-xs-2 text-center"><input class="form-control" v-model="item.unit_price" type="number" min="0" step="1"></div>
-                          <div class="col-xs-2 text-center"><input class="form-control" v-model="item.total_weight" type="number" min="0" step="1"></div>
-                          <div  class="col-xs-2 text-right"><input class="form-control" v-model="item.total_tax" type="number" min="0" step="1"></div>
-                          <div  class="col-xs-1 text-right"><strong>@{{ exchange_rate * item.unit_price * item.qty | currency }}</strong></div>
+                          <div class="col-xs-2 text-center">
+                            <div class="form-group"  :class="{ 'has-error' :  errors.qty && parseInt(item.qty)<=0 }">
+                              <input class="form-control" v-model="item.qty" type="number" min="0" step="1">
+                            </div>
+                          </div>
+                          <div class="col-xs-2 text-center">
+                            <div class="form-group" :class="{ 'has-error' :  errors.unit_price && parseFloat(item.unit_price)<=0 }">
+                              <input class="form-control" v-model="item.unit_price" type="number" min="0" step="0.01">
+                            </div>
+                          </div>
+                          <div class="col-xs-2 text-center">
+                            <div class="form-group">
+                              <input class="form-control" v-model="item.total_weight" type="number" min="0" step="0.01">
+                            </div>
+                          </div>
+                          <div  class="col-xs-2 text-right">
+                            <div class="form-group">
+                              <input class="form-control" v-model="item.total_tax" type="number" min="0" step="0.01">
+                            </div>
+                          </div>
+                          <div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>
                           <div class="col-xs-1">
                             <a class="text-danger" @click="removeTyre(index, item_index)">
                               <i class="fas fa-minus-circle mt-1"></i>
                             </a>
                           </div>
                         </div>
-
+                        </transition-group>
 
                       </div>
 
                   </div>
+                  <div class="box-footer" >
+                    {{--<div class="row justify-content-center">--}}
+                      <div class="col-xs-3">
+                        <b>Container Totals</b>
+                      </div>
+                      <div class="col-xs-2 pl-3">
+                        @{{ container_total_qty(index) }}
+                      </div>
+                      <div class="col-xs-1 mr-5"></div>
+                      <div class="col-xs-2">
+                        @{{ container_total_weight(index) }}
+                      </div>
+                      <div class="col-xs-2 pr-0">
+                        @{{ container_total_tax(index) | currency }}
+                      </div>
+
+                      <div class="col-xs-1 px-0">
+                        @{{ container_total_value(index) | currency }}
+                      </div>
+                    {{--</div>--}}
+                  </div>
                 </div>
               </div>
-                  <div class="mb-4 btn btn-success btn-block">
-                <transition  name="custom-classes-transition"
-                                   {{--tag="ol"--}}
-                                   mode="out-in"
-                                   {{--enter-class = "mimi"--}}
-                                   enter-active-class="animated fadeIn fast"
-                                   {{--enter-class="animated tada"--}}
-                                   leave-active-class="animated fadeOutRight fast "
-                >
-                  <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
-                        <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
-                        <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
-                        <span style="font-size : 15px;"><b> Add a container</b></span>
-                  </div>
-                  <div v-if="container_step==1" key="1" class="row justify-content-center align-items-center p-5 ">
+              </transition-group>
+              <div v-if="containers.length" class="row">
+                <div class="col-xs-3 px-5">
+                  <b>Grand Total</b>
+                </div>
+                <div class="col-xs-2 pl-5 pr-0">
+                  <b> @{{ total_qty }}</b>
 
-                    <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
-                    <span style="font-size : 15px;"><b>#</b></span>
-                    <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">
-                    <button @click="add_container()" type="button" class="btn btn-success ml-2">Add</button>
-                    <button @click="container_step=0" type="button" class="btn btn-warning mr-2">Cancel</button>
-                  </div>
-                </transition>
+                </div>
+                <div class="col-xs-2">
+                </div>
+                <div class="col-xs-2 pr-2">
+                  <b> @{{ total_weight }}</b>
+
+                </div>
+
+                <div class="col-xs-2 pl-4-5">
+                 <b>  @{{ total_tax | currency }}</b>
+
+                </div>
+
+                <div class="col-xs-2 pl-3">
+                 <b>  @{{ total_value | currency }}   </b>
+                </div>
               </div>
 
-              {{--<div v-if=" errors.qty" class="row ml-3 mb-2 text-danger">@{{ errors.qty }}</div>--}}
-              {{--<div v-if=" errors.unit_price" class="row ml-3 mb-2 text-danger">@{{ errors.unit_price }}</div>--}}
-              {{--<div class="row pb-1">--}}
-                {{--<div class="col-xs-1 text-center"><strong>#</strong></div>--}}
-                {{--<div class="col-xs-4 text-center"><strong>Tyre</strong></div>--}}
-                {{--<div class="col-xs-2 text-center"><strong>Qty</strong></div>--}}
-                {{--<div class="col-xs-2 text-center"><strong>Total Weight</strong></div>--}}
-                {{--<div class="col-xs-2 text-center"><strong>Total Tax</strong></div>--}}
-                {{--<div  class="col-xs-2 text-right"><strong>Unit Price</strong></div>--}}
-                {{--<div  class="col-xs-2 text-right"><strong>Sub Total</strong></div>--}}
-                {{--<div class="col-xs-1"></div>--}}
-              {{--</div>--}}
-              {{--<ol class="table ">--}}
 
-
-              {{--<tbody>--}}
-              {{--<transition-group  name="custom-classes-transition"--}}
-                                 {{--tag="ol"--}}
-                                 {{--mode="out-in"--}}
-                                 {{--enter-class = "mimi"--}}
-                                 {{--enter-active-class="animated fadeInDown"--}}
-                                 {{--enter-class="animated tada"--}}
-                                 {{--leave-active-class="animated fadeOutUp fast "--}}
-              {{-->--}}
-                {{--<div v-if="!proforma_invoice.length" key="default" class="row list-item justify-content-center my-4">--}}
-                  {{--<span class="text-center "> Nothing in the proforma invoice yet</span>--}}
-                {{--</div>--}}
-                {{--<div class="row list-item pt-4" :class="{'bg-light-gray' : !(index%2)}" v-for="(item,index) in proforma_invoice" :key="item.tyre_id" >--}}
-                  {{--<div class="row">--}}
-                  {{--<div class="col-xs-1 text-center">--}}
-                    {{--@{{ index+1 }}--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-4">--}}
-                    {{--@{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-2 form-group" :class="{'has-error' : item.qty==0}">--}}
-                    {{--<input class="text-right form-control" v-model="item.qty" type="number" step="1" min="1" value="1">--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-2 form-group"  :class="{'has-error' : item.unit_price==0}">--}}
-                    {{--<input class="text-right form-control" v-model="item.unit_price" type="number" step="0.01" min="0.01" value="0.01">--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-2 form-group"  :class="{'has-error' : item.unit_price==0}">--}}
-                    {{--<input class="text-right form-control" v-model="item.total_weight" type="number" step="0.01" min="0.01" value="0.01">--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-2 form-group"  :class="{'has-error' : item.unit_price==0}">--}}
-                    {{--<input class="text-right form-control" v-model="item.total_tax" type="number" step="0.01" min="0.01" value="0.01">--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-2 text-right">--}}
-                    {{--@{{ currency_symbol }} @{{ subTotal(index) | currency}}--}}
-                  {{--</div>--}}
-                  {{--<div class="col-xs-1">--}}
-                    {{--<a class="text-danger" @click="removeTyre(index)">--}}
-                      {{--<i class="fas fa-minus-circle mt-1"></i>--}}
-                    {{--</a>--}}
-                  {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</transition-group>--}}
-              {{--<div class="row list-item pt-2 border-light-gray">--}}
-                {{--<div class="col-xs-8 col-sm-3 col-sm-offset-5">--}}
-                  {{--<strong class="font-light-gray">Grand Total</strong>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-4 text-right mr-invoice">--}}
-                  {{--<strong>@{{ currency_symbol }} @{{grand_total | currency}}/-</strong>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-              {{--<div class="row list-item mt-2 pt-2">--}}
-                {{--<div class="col-xs-8 col-sm-3 col-sm-offset-5">--}}
-                  {{--<strong>Grand Total <br>(in Taka)</strong>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-4 text-right mr-invoice">--}}
-                  {{--৳ @{{(grand_total* exchange_rate) | currency}}/---}}
-                {{--</div>--}}
-              {{--</div>--}}
-              {{--<div class="row list-item mt-2 pt-2">--}}
-                {{--<div class="col-xs-8 col-sm-3 col-sm-offset-5">--}}
-                  {{--<strong>Total Qty</strong>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-4 text-right mr-invoice pr-1">--}}
-                  {{--@{{ total_qty }}--}}
-                {{--</div>--}}
-              {{--</div>--}}
             </form>
 
+
+
+          </div>
+          <div class="box-footer px-4">
+
+
+            <div class="my-4 btn btn-success btn-block">
+              <transition  name="custom-classes-transition"
+                           {{--tag="ol"--}}
+                           mode="out-in"
+                           {{--enter-class = "mimi"--}}
+                           enter-active-class="animated fadeIn fast"
+                           {{--enter-class="animated tada"--}}
+                           leave-active-class="animated fadeOutRight fast "
+              >
+                <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
+                  <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
+                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <span style="font-size : 15px;"><b> Add a container</b></span>
+                </div>
+                <div v-if="container_step==1" key="1" class="row justify-content-center align-items-center p-5 ">
+
+                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <span style="font-size : 15px;"><b>#</b></span>
+                  <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">
+                  <button @click="add_container()" type="button" class="btn btn-success ml-2">Add</button>
+                  <button @click="cancel()" type="button" class="btn btn-warning mr-2">Cancel</button>
+                </div>
+              </transition>
+            </div>
 
             <button type="button" class="btn btn-default" @click="toggle(false)">
               <i class="fa fa-chevron-left pt-1 mr-2"></i>
@@ -394,7 +385,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new LC information
+                <i class="fas fa-check mr-3 text-success"></i>Confirm new Consignment information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -404,48 +395,52 @@
           <div class="row invoice-info">
 
             <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              <b>Applicant</b>
-              <address v-html="applicant">
-              </address>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              <b>Beneficiary</b>
-              <address v-html="beneficiary">
-              </address>
-            </div>
-
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              <b>LC # @{{ lc_num }}</b><br>
+            <div class="col-sm-6 invoice-col">
+              <b>Bill of lading # @{{ bol }}</b><br>
               <br>
+              <b>LC # </b> @{{ lc_num }}<br>
+              <b>Land Date : </b> @{{ date_landed }}<br>
+            </div>
 
-              <b>Date Issued:</b> @{{ date_issued }}<br>
-              <b>Date Expiry:</b> @{{ date_expired }}<br>
+            <div class="col-sm-6 invoice-col">
+              <b>Exchange Rate :</b> ৳ @{{ exchange_rate }} / @{{ currency_symbol }}<br>
+              <br>
+              <b>Consignment Value : </b>@{{ currency_symbol }} @{{ value | currency }}<br>
+              <b>Value in local currency</b> ৳ @{{ value * exchange_rate | currency }}<br>
             </div>
 
           </div>
 
           <!-- Table row -->
-          <div class="row mt-4">
+          <div v-for="container in containers" class="row mt-4">
             <div class="col-xs-12 table-responsive">
               <table class="table table-striped">
                 <thead>
+                <tr>
+                  <th colspan="5">
+                    <i class="far fa-container-storage mr-2"></i>
+                    <span class="">#</span>
+                    @{{ container.container_num }}
+                  </th>
+                </tr>
                 <tr>
                   <th>#</th>
                   <th>Tyre</th>
                   <th>Qty</th>
                   <th>Unit Price</th>
-                  <th>Subtotal</th>
+                  <th>Total Weight</th>
+                  <th>Total Tax</th>
+                  <th>Sub-total</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(record, index) in proforma_invoice">
-                  <td>@{{ index+1 }}</td>
+                <tr v-for="(record, index) in container.contents">
+                  <td>@{{ index + 1 }}</td>
                   <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
                   <td>@{{ record.qty }}</td>
-                  <td>@{{ record.unit_price }}</td>
+                  <td>@{{ record.unit_price | currency }}</td>
+                  <td>@{{ record.total_weight }}</td>
+                  <td>@{{ record.total_tax }}</td>
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
 
@@ -456,27 +451,36 @@
           </div>
           <!-- /.row -->
 
-          <div class="row">
+          <div class="row mt-3">
             <div class="col-xs-6">
               <div class="row">
-                <p class="lead ml-5">Additional information</p>
+                <p class="lead ml-5">Actual Values</p>
               </div>
               <div class="row invoice-info well ml-1 mr-1 mb-4">
                 <div class="col-sm-6 invoice-col">
-                  <b>Foreign Currency Code:</b> @{{ currency_code }}<br>
-                  <b>Exchange Rate:</b> ৳ @{{ exchange_rate | currency }} / @{{ currency_symbol }}<br>
+                  <b>Foreign Currency Code:</b> <br>
+                  @{{ currency_code }}<br>
                   <br>
-                  <b>Departing Port:</b> @{{ departing_port }}<br>
-                  <b>Arriving Port:</b> @{{ arriving_port }}<br>
+                  <b>Exchange Rate:</b> <br>
+                  ৳ @{{ exchange_rate | currency }} / @{{ currency_symbol }}
+                  <br>
+                  <br>
+                  <b>Tax Paid :</b> <br>
+                  ৳ @{{ tax | currency }}
+                  {{--<b>Arriving Port:</b> @{{ arriving_port }}<br>--}}
 
                 </div>
 
                 <div class="col-sm-6 invoice-col">
-                  <b>Expenses Foreign: </b> @{{ currency_symbol }} @{{ expense_foreign | currency }}<br>
-                  <b>Expenses Local: </b> ৳ @{{ expense_local }}<br>
+                  <b>Consignment Value: </b><br>
+                  @{{ currency_symbol }} @{{ value | currency }}<br>
                   <br>
-                  <b>LC Value : </b>@{{ currency_symbol }} @{{ lc_value | currency }}<br>
-                  <b>LC Value in Taka: </b> ৳ @{{ lc_value*exchange_rate | currency }}<br>
+                  <b>Value in Taka </b><br>
+                  ৳ @{{ parseFloat(value)*parseFloat(exchange_rate) | currency }}<br>
+                  <br>
+                  <b>Total Cost (Value + Tax)</b><br>
+                  ৳ @{{ (parseFloat(value)*parseFloat(exchange_rate)) + parseFloat(tax) | currency }}<br>
+                  {{--<b>LC Value in Taka: </b> ৳ @{{ lc_value*exchange_rate | currency }}<br>--}}
 
                 </div>
 
@@ -484,25 +488,29 @@
               </div>
             </div>
             <div class="col-xs-6">
-              {{--<p class="lead">Amount Due 2/22/2014</p>--}}
+              <p class="lead">Estimated Values</p>
 
-              <div class="table-responsive mt-5 pt-3">
+              <div class="table-responsive">
                 <table class="table">
                   <tbody><tr>
-                    <th style="width:50%">Grand Total</th>
-                    <td>@{{ currency_symbol }} @{{ grand_total | currency }}</td>
+                    <th style="width:50%">Grand Total (Calculated)</th>
+                    <td>@{{ currency_symbol }} @{{ grand_total_foreign | currency }}</td>
                   </tr>
                   <tr>
-                    <th>Grand Total in TK</th>
-                    <td>৳ @{{ grand_total*exchange_rate | currency }}</td>
+                    <th>Grand Total in TK (Calculated)</th>
+                    <td>৳ @{{ grand_total_foreign*parseFloat(exchange_rate) | currency }}</td>
                   </tr>
                   <tr>
-                    <th>Expenses Foreign</th>
-                    <td>@{{ currency_symbol }} @{{ expense_foreign }}</td>
+                    <th>Total Tax in TK (Calulated)</th>
+                    <td>৳ @{{ total_tax | currency }}</td>
                   </tr>
                   <tr>
-                    <th>Expense Local:</th>
-                    <td>৳ @{{ expense_local }}</td>
+                    <th>Total Weight</th>
+                    <td>@{{ total_weight }} kg</td>
+                  </tr>
+                  <tr>
+                    <th># of Tyres</th>
+                    <td>@{{ total_count }} pcs.</td>
                   </tr>
                   </tbody></table>
               </div>
@@ -531,7 +539,7 @@
     </transition>
     <transition name="custom-classes-transition"
                 :enter-active-class="direction? 'animated fadeInRight delay-1s fast' : 'animated fadeInLeft delay-1s fast'"
-                :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'" >
+                :leave-active-class="direction? 'animated fadeOutRight fast' : 'animated fadeOutLeft fast'" >
       <div v-show="showForm == 1 && containers.length && selected_container != null" class="col-xs-5">
         <div class="box box-primary">
           <div class="box-header with-border">
@@ -603,7 +611,7 @@
               bol: null,
 
               tax : null,
-              date_issued : null,
+              date_landed : null,
               date_expired : null,
               currency_code : null,
               exchange_rate : null,
@@ -623,7 +631,7 @@
               date1: null,
               currency_symbol: '$',
 
-              errors : [],
+              errors : {},
               is_alert : false,
               is_complete : false,
               is_duplicate : false,
@@ -637,7 +645,90 @@
           },
           computed:{
 
+              grand_total_foreign : function()
+              {
+                  var ret_val = 0;
 
+                  this.containers.forEach(function(value){
+                      value.contents.forEach(function(value){
+                          if(parseInt(value.qty) * parseFloat(value.unit_price) > 0)
+                              ret_val += parseInt(value.qty)* parseFloat(value.unit_price);
+                      });
+                  });
+
+                  return ret_val;
+              },
+              total_qty : function()
+              {
+                  var ret_val = 0;
+
+                  this.containers.forEach(function(value){
+                     value.contents.forEach(function(value){
+                        if(parseInt(value.qty) > 0)
+                            ret_val += parseInt(value.qty);
+                     });
+                  });
+
+                  return ret_val;
+              },
+              //grand total_weight
+              total_weight : function()
+              {
+                  var ret_val = 0;
+
+                  this.containers.forEach(function(value){
+                      value.contents.forEach(function(value){
+                          if(parseFloat(value.total_weight) > 0)
+                              ret_val += parseFloat(value.total_weight);
+                      });
+                  });
+
+                  return ret_val;
+              },
+
+              total_tax : function()
+              {
+                  var ret_val = 0;
+
+                  this.containers.forEach(function(value){
+                      value.contents.forEach(function(value){
+                          if(parseFloat(value.total_tax) > 0)
+                              ret_val += parseFloat(value.total_tax);
+                      });
+                  });
+
+                  return ret_val;
+              },
+
+              total_count : function()
+              {
+                  var ret_val = 0;
+
+                  this.containers.forEach(function(value){
+                      value.contents.forEach(function(value){
+                          if(parseInt(value.qty) > 0)
+                              ret_val += parseInt(value.qty);
+                      });
+                  });
+
+                  return ret_val;
+              },
+
+
+
+              total_value : function()
+              {
+                  var ret_val = 0;
+
+                  this.containers.forEach(function(container){
+                      container.contents.forEach(function(value){
+                         if(parseFloat(value.qty)>0 && parseFloat(value.unit_price)>0)
+                             ret_val += (parseFloat(value.qty) * parseFloat(value.unit_price));
+                      });
+                  })
+
+                  return ret_val;
+              },
 
               value_local : function()
               {
@@ -656,9 +747,6 @@
                       ret_val = parseFloat(this.value)* parseFloat(this.exchange_rate);
                       if(!isNaN(parseFloat(this.tax)))
                           ret_val = ret_val + parseFloat(this.tax);
-
-                      if(!isNaN(parseFloat(this.expense_foreign)))
-                          ret_val = ret_val + (parseFloat(this.expense_foreign)*parseFloat(this.exchange_rate));
                   }
                   return ret_val;
 
@@ -701,6 +789,16 @@
           },
           watch : {
 
+              lc_num : function(new_val){
+                this.lcs.forEach(function(lc){
+
+                    console.log("LC : " + lc.lc_num);
+                    if(lc.lc_num == new_val)
+                    {
+                        app.currency_code = lc.currency_code;
+                    }
+                });
+              },
               currency_code : function(new_val)
               {
                   if (typeof currencies[new_val] !== 'undefined')
@@ -711,11 +809,6 @@
                   if(new_val.toUpperCase() != new_val)
                       this.currency_code = new_val.toUpperCase();
               },
-              expense_foreign : function(new_val)
-              {
-                  app.helperPositiveFloat(new_val, "expense_foreign");
-              },
-
               exchange_rate : function(new_val)
               {
                   app.helperPositiveFloat(new_val, "exchange_rate");
@@ -730,48 +823,113 @@
                   app.helperPositiveFloat(new_val, "tax");
               },
 
-              date_issued : function(new_val){
+              date_landed : function(new_val){
                   this.date1 = new_val;
               },
           },
 
           methods: {
 
-              test : function(){
-                  console.log("C: " + '#'+ this.containers[0].container_num);
-                  $('#'+ this.containers[0].container_num).boxWidget('collapse');
+              container_total_qty : function(index){
+
+                  var ret_val = 0;
+                  if(this.containers[index].contents.length)
+                      this.containers[index].contents.forEach(function(value){
+
+                          if(parseInt(value.qty) > 0)
+                              ret_val += parseInt(value.qty);
+                      });
+
+                  return ret_val;
+              },
+
+              container_total_weight : function(index){
+
+                  var ret_val = 0;
+                  if(this.containers[index].contents.length)
+                      this.containers[index].contents.forEach(function(value){
+
+                          if(parseFloat(value.total_weight) > 0)
+                              ret_val += parseFloat(value.total_weight);
+                      });
+
+                  return ret_val;
+              },
+
+              container_total_tax : function(index){
+
+                  var ret_val = 0;
+                  if(this.containers[index].contents.length)
+                      this.containers[index].contents.forEach(function(value){
+
+                          if(parseFloat(value.total_tax) > 0)
+                              ret_val += parseFloat(value.total_tax);
+                      });
+
+                  return ret_val;
+              },
+
+              container_total_value : function(index){
+
+                  var ret_val = 0;
+                  if(this.containers[index].contents.length)
+                    this.containers[index].contents.forEach(function(value){
+
+                        if(parseFloat(value.qty)>0 && parseFloat(value.unit_price)>0)
+                            ret_val += (parseFloat(value.qty) * parseFloat(value.unit_price));
+                    });
+
+                  return ret_val;
+              },
+
+              cancel : function(){
+                  this.container_step=0;
+                  this.errors = {};
               },
 
               add_container : function(){
 
-                  var container = {
-                      "container_num" : this.container_num,
-                      "contents" : [],
-                      "collapse" : false,
-                  };
+                  this.errors = {};
 
-                  this.containers.push(container);
+                  if(!this.container_num || !this.container_num.length)
+                      this.errors['container_num'] = "Enter a container number";
 
-                  //
-                  // this.containers.forEach(function(value, index){
-                  //     console.log("value");
-                  //     console.log(value.container_num);
-                  //     console.log(app.container_num);
-                  //     if(value.container_num == app.container_num)
-                  //         app.selected_container = index;
-                  //
-                  //     $('#'+value.container_num).boxWidget({
-                  //         animationSpeed: 500,
-                  //         collapseTrigger: '#'+value.container_num +'_close',
-                  //         // removeTrigger: '#my-remove-button-trigger',
-                  //         collapseIcon: 'fa-minus',
-                  //         expandIcon: 'fa-plus',
-                  //         // removeIcon: 'fa-times'
-                  //     });
-                  // });
+                  else
+                  {
+                      var container = {
+                          "container_num": this.container_num,
+                          "contents": [],
+                          "collapse": false,
+                      };
 
-                  this.container_num = null;
-                  this.container_step = 0;
+                      this.containers.push(container);
+
+                      //
+                      // this.containers.forEach(function(value, index){
+                      //     console.log("value");
+                      //     console.log(value.container_num);
+                      //     console.log(app.container_num);
+                      //     if(value.container_num == app.container_num)
+                      //         app.selected_container = index;
+                      //
+                      //     $('#'+value.container_num).boxWidget({
+                      //         animationSpeed: 500,
+                      //         collapseTrigger: '#'+value.container_num +'_close',
+                      //         // removeTrigger: '#my-remove-button-trigger',
+                      //         collapseIcon: 'fa-minus',
+                      //         expandIcon: 'fa-plus',
+                      //         // removeIcon: 'fa-times'
+                      //     });
+                      // });
+
+                      this.container_num = null;
+                      this.container_step = 0;
+                  }
+              },
+
+              remove_container : function(index){
+
+                  this.containers.splice(index, 1);
               },
 
               select_container : function(index){
@@ -810,7 +968,7 @@
               copyDate : function(i){
 
                   if(i==1)
-                      this.date_issued = document.getElementById('dateIssued').value;
+                      this.date_landed = document.getElementById('dateIssued').value;
 
               },
 
@@ -820,34 +978,89 @@
 
               validate : function(){
 
-                  var errors = [];
+                  var errors = {};
 
                   switch (this.showForm)
                   {
                       case 0 :
+                          if(!this.bol || !this.bol.length)
+                              errors['bol'] = 'The bill of lading number is required.';
+
+                          if(!this.lc_num || !this.lc_num.length)
+                              errors['lc_num'] = 'Enter a LC number';
+
+                          var regEx = /\d\d\/\d\d\/\d\d\d\d/;
+
+                          if(!regEx.test(this.date_landed))
+                          {
+                              errors['date_landed'] = 'Enter a valid land date';
+                          }
+                          if(!this.value || this.value<=0)
+                              errors['value'] = 'Enter consignment value.';
+
+                          if(!this.exchange_rate || this.exchange_rate<=0)
+                              errors['exchange_rate'] = 'Exchange rate required.';
+
+                          if(!this.tax || !this.tax.length)
+                              this.tax = 0;
+
                           break;
 
                       case 1:
+
+                          if(!this.containers.length)
+                              errors['containers'] = 'Must add atleast one (1) container.';
+
+                          else{
+
+                              this.containers.forEach(function(value){
+
+                                  if(!value.contents.length)
+                                      errors['contents'] = 'Container # ' + value.container_num + ' is empty';
+
+                                  else{
+                                      value.contents.forEach(function(record){
+
+                                          // if(record.)
+                                          if(record.qty <= 0)
+                                              errors['qty'] = 'Quantity cannot be zero (0).';
+                                          if(record.unit_price <= 0)
+                                              errors['unit_price'] = 'Unit price cannot be zero (0).';
+                                      });
+                                  }
+                              });
+
+                          }
+
+
                           break;
                   }
 
-                  if( Object.entries(errors).length) // because errors is an obj and does not have length
+                  if( Object.entries(errors).length)
+                  {
                       return { status : 'error', 'errors' : errors };
+                  }// because errors is an obj and does not have length
+
                   return {status : 'success'};
               },
 
               submit : function(){
 
                   this.is_alert = false;
-                  this.errors = [];
+                  this.errors = {};
 
                   var validate = this.validate();
-
+                  console.log(validate);
                   if(validate.status == 'success')
                       this.toggle(true);
 
                   else if(validate.errors)//errors
+                  {
+                      console.log("CAUGHT ERRORS");
                       this.errors = validate.errors;
+                      console.log(this.errors);
+                  }
+
 
               },
 
@@ -859,7 +1072,7 @@
 
                           "lc_num" : this.lc_num,
                           "invoice_num" : this.invoice_num ,
-                          "date_issued" : this.date_issued ,
+                          "date_landed" : this.date_landed ,
                           "date_expired" : this.date_expired,
                           "applicant" : this.applicant,
                           "beneficiary" : this.beneficiary,
@@ -868,8 +1081,7 @@
                           "currency_code" : this.currency_code,
                           "exchange_rate" : this.exchange_rate,
                           "lc_value" : this.lc_value,
-                          "expense_foreign" : this.expense_foreign ? this.expense_foreign : 0,
-                          "expense_local" : this.expense_local  ? this.expense_local : 0,
+
                           "notes" : this.notes,
 
                           "proforma_invoice": this.proforma_invoice
@@ -881,21 +1093,6 @@
                       });
 
               },
-
-              subTotal : function(i){
-
-                  if(this.proforma_invoice.length>i &&
-                      this.proforma_invoice.length>0 &&
-                      typeof (this.proforma_invoice[i].qty) !== 'undefined' &&
-                      typeof (this.proforma_invoice[i].unit_price) !== 'undefined' &&
-                      this.proforma_invoice[i].qty.length &&
-                      this.proforma_invoice[i].unit_price.length
-                  )
-                      return parseInt(this.proforma_invoice[i].qty) * parseFloat(this.proforma_invoice[i].unit_price);
-                  return 0;
-              },
-
-
               toggle : function(direction){
 
                   this.errors = [];
@@ -910,7 +1107,7 @@
                   {
                       this.date_flag = true;
 
-                      this.date1 = this.date_issued;
+                      this.date1 = this.date_landed;
                   }
 
 
@@ -988,6 +1185,10 @@
 
 
               }
+          },
+
+          mounted : function(){
+
           }
 
       })

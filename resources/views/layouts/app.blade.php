@@ -257,7 +257,7 @@
                     active
                   @endif
                 ">
-                    <a href="#"><i style="margin-left: 5px" class="far fa-file-invoice-dollar"></i> <span class="pl-3">Letters of Credit</span>
+                    <a href="#"><i style="margin-left: 5px" class="far fa-file-invoice-dollar"></i> <span>Letters of Credit</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
