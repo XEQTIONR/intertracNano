@@ -1040,6 +1040,10 @@
                   {
                       return { status : 'error', 'errors' : errors };
                   }// because errors is an obj and does not have length
+                  else if(this.showForm == 1)
+                  {
+                      this.helperConsolidate();
+                  }
 
                   return {status : 'success'};
               },
@@ -1142,6 +1146,38 @@
                       return tyre_index != i;
                   });
               },
+              //
+
+              helperConsolidate : function(){
+
+
+                this.containers.forEach(function(value){
+
+                    var contents = value.contents;
+
+                    for(var i=0; i<contents.length; i++)
+                    {
+                        var tyre_id = parseInt(contents[i].tyre_id);
+                        var unit_price = parseFloat(contents[i].unit_price);
+
+                        for(var j=contents.length-1; j>i; j--)
+                            if(parseInt(contents[j].tyre_id) == tyre_id)
+                                    if(parseFloat(contents[j].unit_price) == unit_price)
+                                    {
+                                        contents[i].qty = parseInt(contents[i].qty) + parseInt(contents[j].qty);
+                                        contents[i].total_weight = parseInt(contents[i].total_weight) + parseInt(contents[j].total_weight);
+                                        contents[i].total_tax = parseInt(contents[i].total_tax) + parseInt(contents[j].total_tax);
+                                        contents.splice(j,1);
+                                    }
+
+                    }
+
+                    value.contents = contents;
+                });
+
+
+              },
+
 
               helperPositiveFloat : function(new_val, who){
                   if(!(parseFloat(new_val)>= 0 ) )
