@@ -9,7 +9,7 @@
 
 @section('level')
   @component('components.level',
-    ['crumb' => 'Consingments',
+    ['crumb' => 'Consignments',
     'subcrumb' => 'An a consignment',
      'link' => route('consignments.index')])
   @endcomponent
@@ -23,17 +23,17 @@
                   enter-active-class="animated fadeIn faster"
                   leave-active-class="animated fadeOut faster"
       >
-        <div v-if="is_alert" id="alert" class="alert" :class="alert_class" role="alert">
-          <button type="button" class="close" aria-label="Close"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>
-          You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.
-          <button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to skip (not recommended)</button>
-        </div>
+        {{--<div v-if="is_alert" id="alert" class="alert" :class="alert_class" role="alert">--}}
+          {{--<button type="button" class="close" aria-label="Close"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>--}}
+          {{--<h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>--}}
+          {{--You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.--}}
+          {{--<button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to skip (not recommended)</button>--}}
+        {{--</div>--}}
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Done</h4>
-          New consignment has been recorded.
-          <a href="{{ route('lcs.index') }}"  class="btn btn-success ml-5">Click here to view all LCs</a>
+          New consignment has been saved.
+          <a href="{{ route('consignments.index') }}"  class="btn btn-success ml-5">Click here to view all Consignemnts</a>
         </div>
       </transition>
     </div>
@@ -1066,28 +1066,22 @@
 
               save : function(){
 
-                  $.post("{{route('lcs.store')}}",
+                  $.post("{{route('consignments.store')}}",
                       {
                           "_token" : "{{csrf_token()}}",
 
                           "lc_num" : this.lc_num,
-                          "invoice_num" : this.invoice_num ,
-                          "date_landed" : this.date_landed ,
-                          "date_expired" : this.date_expired,
-                          "applicant" : this.applicant,
-                          "beneficiary" : this.beneficiary,
-                          "departing_port" : this.departing_port,
-                          "arriving_port" : this.arriving_port,
-                          "currency_code" : this.currency_code,
+                          "bol" : this.bol ,
+                          "value" : this.value ,
                           "exchange_rate" : this.exchange_rate,
-                          "lc_value" : this.lc_value,
-
-                          "notes" : this.notes,
-
-                          "proforma_invoice": this.proforma_invoice
+                          "land_date" : this.date_landed,
+                          "tax" : this.tax,
+                          "containers": this.containers
                       } ,
                       function(data)
                       {
+                          console.log("HERE");
+                          console.log(data.containers);
                           if(data.status == 'success')
                               app.is_complete = true;
                       });
