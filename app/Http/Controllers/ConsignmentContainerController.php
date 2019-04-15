@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Consignment_container;
+use App\Consignment;
 use Illuminate\Http\Request;
+
+use App\Consignment_container;
+use App\Lc;
+use App\Tyre;
 
 class ConsignmentContainerController extends Controller
 {
@@ -29,7 +33,22 @@ class ConsignmentContainerController extends Controller
     {
         //
 
-        return view('new_container');
+      $lc_num="";
+
+      $lcs = Lc::orderBy('created_at', 'desc')->get();
+      $tyres = Tyre::all();
+
+      $consignments = Consignment::with('containers.contents.tyre')->get();
+
+      foreach($tyres as $tyre)
+      {
+        $tyre->qty = 0;
+        $tyre->unit_price = 0;
+        $tyre->total_tax = 0;
+        $tyre->total_weight = 0;
+      }
+
+      return view ('new_container', compact('lc_num', 'tyres', 'lcs', 'consignments'));
     }
 
     /**

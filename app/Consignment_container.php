@@ -11,7 +11,7 @@ class Consignment_container extends Model
     //protected $casts = ['Container_num' => 'string'];
     public $incrementing = false;
     
-    public function containerContents()
+    public function contents()
     {
       return $this->hasMany('App\Container_content','Container_num');
     }

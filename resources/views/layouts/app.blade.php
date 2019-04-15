@@ -283,7 +283,7 @@
                       <li><a href="{{  route('consignments.index')  }}"><i class="fa fa-angle-right"></i>View consignments</a></li>
                       <li><a href="{{  route('consignment_containers.index'  )}}"><i class="fa fa-angle-right"></i>View containers</a></li>
                       <li><a href="{{ route('consignments.create')  }}"><i class="fa fa-angle-right"></i>Add a consignment</a></li>
-                      <li><a href="#"><i class="fa fa-angle-right"></i>Add a container</a></li>
+                      <li><a href="{{  route('consignment_containers.create')  }}"><i class="fa fa-angle-right"></i>Add a container</a></li>
                       <li><a href="#"><i class="fa fa-angle-right"></i>Add an expense</a></li>
                     </ul>
                 </li>
