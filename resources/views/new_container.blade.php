@@ -32,8 +32,8 @@
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Done</h4>
-          New consignment has been saved.
-          <a href="{{ route('consignments.index') }}"  class="btn btn-success ml-5">Click here to view all Consignemnts</a>
+          New container has been saved.
+          <a href="{{ route('consignment_containers.index') }}"  class="btn btn-success ml-5">Click here to view all Containers</a>
         </div>
       </transition>
     </div>
@@ -619,7 +619,7 @@
                   <td>@{{ record.qty }}</td>
                   <td>@{{ record.unit_price | currency }}</td>
                   <td>@{{ record.total_weight }}</td>
-                  <td>@{{ record.total_tax }}</td>
+                  <td>@{{ record.total_tax | currency }}</td>
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
 
@@ -1385,24 +1385,17 @@
 
               save : function(){
 
-                  $.post("{{route('consignments.store')}}",
+                  $.post("{{route('consignment_containers.store')}}",
                       {
                           "_token" : "{{csrf_token()}}",
-
-                          "lc_num" : this.lc_num,
                           "bol" : this.bol ,
-                          "value" : this.value ,
-                          "exchange_rate" : this.exchange_rate,
-                          "land_date" : this.date_landed,
-                          "tax" : this.tax,
                           "containers": this.containers
                       } ,
                       function(data)
                       {
-                          console.log("HERE");
-                          console.log(data.containers);
                           if(data.status == 'success')
                               app.is_complete = true;
+
                       });
 
               },

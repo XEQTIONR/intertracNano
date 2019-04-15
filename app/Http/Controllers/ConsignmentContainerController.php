@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Consignment;
+use App\Container_content;
 use Illuminate\Http\Request;
 
 use App\Consignment_container;
@@ -60,14 +61,44 @@ class ConsignmentContainerController extends Controller
     public function store(Request $request)
     {
         //
-        $container = new Consignment_container;
 
-        $container->Container_num = $request->inputContainerNum;
-        $container->BOL = $request->inputBOL;
+      $bol = $request->input('bol');
+      $containers =  $request->input('containers');
 
-        $container->save();
 
-        
+      foreach($containers as $container)
+      {
+        $new_container = new Consignment_container;
+
+        $new_container->Container_num = $container['container_num'];
+        $new_container->BOL = $bol;
+
+        $new_container->save();
+
+        $contents = [];
+
+        foreach($container['contents'] as $content)
+        {
+          $container_content = new Container_content;
+
+          $container_content->BOL = $bol;
+          $container_content->tyre_id = $content['tyre_id'];
+          $container_content->qty = $content['qty'];
+          $container_content->unit_price = $content['unit_price'];
+          $container_content->total_tax = $content['total_tax'];
+          $container_content->total_weight = $content['total_weight'];
+
+          $contents[] = $container_content;
+        }
+
+        $new_container->contents()->saveMany($contents);
+      }
+
+      $response = array();
+
+      $response['status'] = 'success';
+
+      return $response;
     }
 
     /**
