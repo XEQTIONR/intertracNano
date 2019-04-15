@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('title')
-  Consignments
+  Containers
 @endsection
 @section('subtitle')
-  Add a new consignment arrived.
+  Add a new container to an existing consignment.
 @endsection
 
 @section('level')
   @component('components.level',
-    ['crumb' => 'Consignments',
-    'subcrumb' => 'An a consignment',
-     'link' => route('consignments.index')])
+    ['crumb' => 'Containers',
+    'subcrumb' => 'Add a container',
+     'link' => route('consignment_containers.create')])
   @endcomponent
 @endsection
 
@@ -23,12 +23,6 @@
                   enter-active-class="animated fadeIn faster"
                   leave-active-class="animated fadeOut faster"
       >
-        {{--<div v-if="is_alert" id="alert" class="alert" :class="alert_class" role="alert">--}}
-        {{--<button type="button" class="close" aria-label="Close"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>--}}
-        {{--<h4><i class="icon fa fa-warning"></i> No Proforma Invoice !</h4>--}}
-        {{--You have not entered a proforma invoice. It is recommended that you enter proforma invoice information.--}}
-        {{--<button @click="toggle(true)" type="button" class="btn btn-warning ml-5">Click here to skip (not recommended)</button>--}}
-        {{--</div>--}}
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Done</h4>
@@ -41,11 +35,8 @@
   <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
-                 {{--enter-class = "mimi"--}}
                  :enter-active-class="direction? 'animated fadeInRight fast' : 'animated fadeInLeft fast'"
                  :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'"
-      {{--enter-active-class="animated fadeInRight fast"--}}
-      {{--leave-active-class="animated fadeOutLeft fast"--}}
     >
       <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
@@ -54,7 +45,7 @@
           <div class="box-header">
             <h3 class="page-header ml-3">
               <i class="far fa-anchor mr-3"></i>
-              Enter Consignment Information
+              Select a consignment to add the container to.
             </h3>
           </div>
           <div class="box-body">
@@ -66,118 +57,74 @@
                     <div class="form-group" :class="{ 'has-error' :  errors.bol }">
                       <label>Bill of Lading #</label>
 
-                      <select id="lc_num" v-model="bol" class="form-control" placeholder="select an LC">
+                      <select id="lc_num" v-model="bol" class="form-control" placeholder="sel ect an LC">
                       <option disabled :value="null">Select a consignment</option>
                       <option  v-for="consignment in consignments" :value="consignment.BOL">@{{consignment.BOL}}</option>
                       </select>
 
-                      {{--<input id="bol" v-model="bol" type="text" class="form-control" placeholder="Enter Bill of lading number">--}}
-                      {{--</div>--}}
                       <span v-if=" errors.bol" class="help-block">@{{ errors.bol }}</span>
+                    </div>
+                    <div v-if="consignment_index" class="row">
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>LC #</label> <br>
+                          <span>  @{{ consignments[consignment_index].lc }}</span>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Land date</label> <br>
+                          <span>  @{{ consignments[consignment_index].land_date | date }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="consignment_index" class="row">
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Exchange rate</label> <br>
+                          <span> @{{ consignments[consignment_index].exchange_rate}} / ৳ </span>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Value</label> <br>
+                          <span>@{{ currency_symbol  }} @{{ consignments[consignment_index].value}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="consignment_index" class="row">
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Total Tax</label> <br>
+                          <span> ৳ @{{ consignments[consignment_index].tax}}</span>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Value (in TK)</label> <br>
+                          <span> ৳ @{{ parseFloat(consignments[consignment_index].value) * parseFloat(consignments[consignment_index].exchange_rate) | currency}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-if="consignment_index" class="row">
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Containers</label> <br>
+                          <span> @{{ consignments[consignment_index].containers.length}}</span>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-6">
+                        <div class="form-group">
+                          <label>Total Cost (Value + Tax)</label> <br>
+                          <span> ৳
+                            @{{ parseFloat(consignments[consignment_index].value)* parseFloat(consignments[consignment_index].exchange_rate) + parseFloat(consignments[consignment_index].tax)| currency}}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.lc_num }">--}}
-                      {{--<label>Letter of Credit #</label>--}}
-                      {{--<div class="input-group">--}}
-                      {{--<span class="input-group-addon">--}}
-                      {{--<span v-if="!is_verifying">F20</span>--}}
-                      {{--<i v-else class="fas fa-spinner fa-pulse"></i>--}}
-                      {{--</span>--}}
-                      {{--<input type="text" class="form-control" placeholder="Enter LC number">--}}
-                      {{--<select id="lc_num" v-model="lc_num" class="form-control" placeholder="select an LC">--}}
-                        {{--<option disabled :value="null">Select a LC</option>--}}
-                        {{--<option  v-for="lc in lcs" :value="lc.lc_num">@{{lc.lc_num}}</option>--}}
-                      {{--</select>--}}
-
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.lc_num" class="help-block">@{{ errors.lc_num }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12 col-md-5">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.date_landed }">--}}
-                      {{--<label>Land Date</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F31C</span>--}}
-                        {{--<input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">--}}
-                        {{--<div class="input-group-addon">--}}
-                          {{--<i class="fas fa-calendar-alt"></i>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.date_landed" class="help-block">@{{ errors.date_landed }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-7">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.value }">--}}
-                      {{--<label>Value (in foreign currency)</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>--}}
-                        {{--<input v-model="value" type="number" step="0.01" class="form-control" placeholder="0.00" min="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.value" class="help-block">@{{ errors.value }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row mx-2">--}}
-
-
-
-                  {{--<div class="col-xs-5">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.exchange_rate }">--}}
-                      {{--<label>Exchange Rate</label>--}}
-                      {{--<div class="input-group">--}}
-
-                        {{--<input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">--}}
-                        {{--<span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.exchange_rate" class="help-block">@{{ errors.exchange_rate }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-
-                  {{--<div class="col-xs-12 col-md-7">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>Consignment Value (in local currency) </label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>৳</strong></span>--}}
-                        {{--<input type="number" step="0.01" class="form-control" :value="value_local | currency" disabled>--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-
-                  {{--<div class="col-xs-12 col-md-5">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.tax }">--}}
-                      {{--<label>Tax Paid</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>৳</strong></span>--}}
-                        {{--<input v-model="tax" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.tax" class="help-block">@{{ errors.tax }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-12 col-md-7">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>Total Cost to obtain consignment</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>৳</strong></span>--}}
-                        {{--<input :value="total_cost | currency" type="number" step="0.01" min="0" class="form-control" disabled placeholder="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span class="help-block"></span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
 
                 <div class="row mx-2">
                   <div class="col-xs-12">
@@ -202,22 +149,18 @@
           <div class="box-header">
             <h3 class="page-header ml-3">
               <i class="far fa-container-storage mr-3"></i>
-              Add containers to your consignment
+              Add more containers to this consignment.
             </h3>
           </div>
           <div class="box-body pb-5 px-5">
 
-            <div class="form-group" :class="{ 'has-error' :  Object.entries(errors).length }">
-              <ul>
-                <li class="help-block" v-for="error in errors">@{{ error }}</li>
-              </ul>
-            </div>
+
 
 
             <form style="padding: 1rem;">
 
               <div class="row mb-2">
-                Previous containers
+                <span class="label bg-gray text-uppercase">Previous containers</span>
               </div>
               <div v-if="consignment_index != null" v-for="(container, index) in consignments[consignment_index].containers" key="container.container_num" class="row" {{--:Class="{'border-dash' : selected_container == index}"--}}  style="flex-direction: column">
                 <div class="box box-solid box-default" :id="container.Container_num" @click="makeCollapsible(container.Container_num)" {{--:class="[selected_container == index ? 'box-warning' : 'box-default']"--}}>
@@ -230,7 +173,6 @@
                   </div>
 
                   <div class="box-body px-0 pb-0">
-                    {{--<button type="button" @click="test()" class="btn btn-primary">Click me</button>--}}
                     <div class="col-xs-12" style="min-height: 100px">
                       <div class="row list-item pb-1">
                         <div class="col-xs-1 text-center"><strong>#</strong></div>
@@ -243,11 +185,7 @@
                         <div  class="col-xs-1 text-right"></div>
                       </div>
                       <transition-group  name="custom-classes-transition"
-                                         {{--tag="ol"--}}
-                                         {{--mode="out-in"--}}
-                                         {{--enter-class = "mimi"--}}
                                          enter-active-class="animated fadeInDown"
-                                         {{--enter-class="animated tada"--}}
                                          leave-active-class="animated fadeOutUp fast "
                       >
                         <div v-for="(item, item_index) in container.contents" key="item_index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
@@ -275,9 +213,6 @@
                           </div>
                           <div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>
                           <div class="col-xs-1">
-                            {{--<a class="text-danger" @click="removeTyre(index, item_index)">--}}
-                            {{--<i class="fas fa-minus-circle mt-1"></i>--}}
-                            {{--</a>--}}
                           </div>
                         </div>
                       </transition-group>
@@ -335,23 +270,24 @@
                 </div>
               </div>
 
+              <div class="form-group mt-5" :class="{ 'has-error' :  Object.entries(errors).length }">
+                <ul>
+                  <li class="help-block" v-for="error in errors">@{{ error }}</li>
+                </ul>
+              </div>
 
-              <div class="row mb-2">
-                New containers
+              <div v-if="containers.length" class="row mb-2 mt-5">
+                <span class="label label-info text-uppercase">New containers</span>
               </div>
               <transition-group  name="custom-classes-transition"
-                                 {{--tag="ol"--}}
-                                 {{--mode="out-in"--}}
-                                 {{--enter-class = "mimi"--}}
                                  enter-active-class="animated fadeInDown"
-                                 {{--enter-class="animated tada"--}}
                                  leave-active-class="animated fadeOut fast "
               >
 
 
 
                 <div v-for="(container, index) in containers" key="container.container_num" @click="select_container(index)" class="row" {{--:Class="{'border-dash' : selected_container == index}"--}}  style="flex-direction: column">
-                  <div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-warning' : 'box-default']">
+                  <div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-info' : 'box-default']">
 
                     <div class="box-header">
                       <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
@@ -375,11 +311,7 @@
                           <div  class="col-xs-1 text-right"></div>
                         </div>
                         <transition-group  name="custom-classes-transition"
-                                           {{--tag="ol"--}}
-                                           {{--mode="out-in"--}}
-                                           {{--enter-class = "mimi"--}}
                                            enter-active-class="animated fadeInDown"
-                                           {{--enter-class="animated tada"--}}
                                            leave-active-class="animated fadeOutUp fast "
                         >
                           <div v-for="(item, item_index) in container.contents" key="index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
@@ -477,11 +409,8 @@
 
             <div class="my-4 btn btn-success btn-block">
               <transition  name="custom-classes-transition"
-                           {{--tag="ol"--}}
                            mode="out-in"
-                           {{--enter-class = "mimi"--}}
                            enter-active-class="animated fadeIn fast"
-                           {{--enter-class="animated tada"--}}
                            leave-active-class="animated fadeOutRight fast "
               >
                 <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
@@ -520,7 +449,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new Consignment information
+                <i class="fas fa-check mr-3 text-success"></i>Confirm new container information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -534,7 +463,7 @@
               <b>Bill of lading # @{{ bol }}</b><br>
               <br>
               <b>LC # </b> @{{ lc_num }}<br>
-              <b>Land Date : </b> @{{ date_landed }}<br>
+              <b>Land Date : </b> @{{ date_landed | date }}<br>
             </div>
 
             <div class="col-sm-6 invoice-col">
@@ -545,7 +474,9 @@
             </div>
 
           </div>
-
+          <div class="row mt-5">
+            <span class="label bg-gray ml-4 text-uppercase">Existing containers</span>
+          </div>
           <div v-for="(container, container_index) in consignments[consignment_index].containers" class="row mt-4">
             <div class="col-xs-12 table-responsive">
               <table class="table table-striped">
@@ -572,9 +503,9 @@
                   <td>@{{ index + 1 }}</td>
                   <td>@{{ record.tyre.brand }} @{{ record.tyre.size }} @{{ record.tyre.lisi }} @{{ record.tyre.pattern }}</td>
                   <td>@{{ record.qty }}</td>
-                  <td>@{{ record.unit_price | currency }}</td>
+                  <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
                   <td>@{{ record.total_weight }}</td>
-                  <td>@{{ record.total_tax | currency }}</td>
+                  <td>৳ @{{ record.total_tax | currency }}</td>
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
                 <tr>
@@ -583,7 +514,7 @@
                   <td><b>@{{ container_total_qty_previous(container_index) }}</b></td>
                   <td></td>
                   <td><b>@{{ container_total_weight_previous(container_index) }}</b></td>
-                  <td><b>@{{ container_total_tax_previous(container_index) | currency}}</b></td>
+                  <td><b>৳ @{{ container_total_tax_previous(container_index) | currency}}</b></td>
                   <td><b>@{{ currency_symbol }} @{{ container_total_value_previous(container_index) | currency }}</b></td>
                 </tr>
                 </tbody>
@@ -591,15 +522,19 @@
             </div>
             <!-- /.col -->
           </div>
+
+          <div class="row">
+            <span class="label label-info ml-4 text-uppercase">New containers</span>
+          </div>
           <div v-for="(container, container_index) in containers" class="row mt-4">
             <div class="col-xs-12 table-responsive">
               <table class="table table-striped">
                 <thead>
                 <tr>
                   <th colspan="5">
-                    <i class="far fa-container-storage mr-2"></i>
-                    <span class="">#</span>
-                    @{{ container.container_num }}
+                    <i class="far fa-container-storage mr-2 text-info"></i>
+                    <span class="text-info">#</span>
+                    <span class="text-info">@{{ container.container_num }}</span>
                   </th>
                 </tr>
                 <tr>
@@ -617,9 +552,9 @@
                   <td>@{{ index + 1 }}</td>
                   <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
                   <td>@{{ record.qty }}</td>
-                  <td>@{{ record.unit_price | currency }}</td>
+                  <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
                   <td>@{{ record.total_weight }}</td>
-                  <td>@{{ record.total_tax | currency }}</td>
+                  <td>৳ @{{ record.total_tax | currency }}</td>
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
 
@@ -629,7 +564,7 @@
                   <td><b>@{{ container_total_qty(container_index) }}</b></td>
                   <td></td>
                   <td><b>@{{ container_total_weight(container_index) }}</b></td>
-                  <td><b>@{{ container_total_tax(container_index) | currency}}</b></td>
+                  <td><b>৳ @{{ container_total_tax(container_index) | currency}}</b></td>
                   <td><b>@{{ currency_symbol }} @{{ container_total_value(container_index) | currency }}</b></td>
                 </tr>
 
@@ -797,6 +732,11 @@
           return parseFloat(value).toFixed(2);
       });
 
+      Vue.filter('date', function(value){
+          return value.split("-").reverse().join("/");
+      });
+
+
       var app = new Vue({
           el: '#app',
           data: {
@@ -858,7 +798,7 @@
                       });
                   });
 
-                  return ret_val;
+                  return ret_val+ app.grand_total_foreign_previous;
               },
 
               grand_total_foreign_previous : function()
@@ -1049,7 +989,15 @@
                       this.consignments.forEach(function(a_consignment, index){
 
                           if(a_consignment.BOL == new_val)
+                          {
                               app.consignment_index = index;
+                              app.lc_num = a_consignment.lc;
+                              app.date_landed = a_consignment.land_date;
+                              app.exchange_rate = parseFloat(a_consignment.exchange_rate);
+                              app.value = parseFloat(a_consignment.value);
+                              app.tax = parseFloat(a_consignment.tax);
+                          }
+
                       });
                   }
 

@@ -33,7 +33,7 @@ class ConsignmentController extends Controller
 
           foreach($somecontainers as $somecontainer)
           {
-            $somecontents = $somecontainer->containerContents()
+            $somecontents = $somecontainer->contents()
                                           ->get();
             array_push($contents, $somecontents);
           }
@@ -162,7 +162,7 @@ class ConsignmentController extends Controller
                 array_push($contents, $content_model);
               }
 
-              $container->containerContents()->saveMany($contents);
+              $container->contents()->saveMany($contents);
             }
           }
         }
@@ -208,7 +208,7 @@ class ConsignmentController extends Controller
 
           foreach($containers as $somecontainer)
           {
-            $somecontents = $somecontainer->containerContents()
+            $somecontents = $somecontainer->contents()
                                           ->get();
             array_push($contents, $somecontents);
           }
