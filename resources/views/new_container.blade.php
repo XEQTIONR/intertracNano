@@ -577,21 +577,21 @@
                   <td>@{{ record.total_tax | currency }}</td>
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
-                {{--<tr>--}}
-                  {{--<td></td>--}}
-                  {{--<td><b>Container Total</b></td>--}}
-                  {{--<td><b>@{{ container_total_qty_previous(container_index) }}</b></td>--}}
-                  {{--<td></td>--}}
-                  {{--<td><b>@{{ container_total_weight_previous(container_index) }}</b></td>--}}
-                  {{--<td><b>@{{ container_total_tax_previous(container_index) | currency}}</b></td>--}}
-                  {{--<td><b>@{{ currency_symbol }} @{{ subtotal_container_previous(container_index) | currency }}</b></td>--}}
-                {{--</tr>--}}
+                <tr>
+                  <td></td>
+                  <td><b>Container Total</b></td>
+                  <td><b>@{{ container_total_qty_previous(container_index) }}</b></td>
+                  <td></td>
+                  <td><b>@{{ container_total_weight_previous(container_index) }}</b></td>
+                  <td><b>@{{ container_total_tax_previous(container_index) | currency}}</b></td>
+                  <td><b>@{{ currency_symbol }} @{{ container_total_value_previous(container_index) | currency }}</b></td>
+                </tr>
                 </tbody>
               </table>
             </div>
             <!-- /.col -->
           </div>
-          <div v-for="container in containers" class="row mt-4">
+          <div v-for="(container, container_index) in containers" class="row mt-4">
             <div class="col-xs-12 table-responsive">
               <table class="table table-striped">
                 <thead>
@@ -623,15 +623,15 @@
                   <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
 
-                {{--<tr>--}}
-                  {{--<td></td>--}}
-                  {{--<td><b>Container Total</b></td>--}}
-                  {{--<td><b>@{{ container_total_qty_previous(container_index) }}</b></td>--}}
-                  {{--<td></td>--}}
-                  {{--<td><b>@{{ container_total_weight_previous(container_index) }}</b></td>--}}
-                  {{--<td><b>@{{ container_total_tax_previous(container_index) | currency}}</b></td>--}}
-                  {{--<td><b>@{{ currency_symbol }} @{{ subtotal_container_previous(container_index) | currency }}</b></td>--}}
-                {{--</tr>--}}
+                <tr>
+                  <td></td>
+                  <td><b>Container Total</b></td>
+                  <td><b>@{{ container_total_qty(container_index) }}</b></td>
+                  <td></td>
+                  <td><b>@{{ container_total_weight(container_index) }}</b></td>
+                  <td><b>@{{ container_total_tax(container_index) | currency}}</b></td>
+                  <td><b>@{{ currency_symbol }} @{{ container_total_value(container_index) | currency }}</b></td>
+                </tr>
 
 
                 </tbody>
@@ -903,8 +903,6 @@
                     return ret_val;
                   else
                   {
-                      // ret_val = 1;
-                    // ret_val = this.consignments[consignment_index];
                       this.consignments[this.consignment_index].containers.forEach(function(acontainer){
 
                         console.log(app.consignments[app.consignment_index].containers);
@@ -1017,7 +1015,7 @@
                       });
                   })
 
-                  return ret_val + this.grand_total_foreign_previous;
+                  return ret_val + parseFloat(this.grand_total_foreign_previous);
               },
 
               value_local : function()
