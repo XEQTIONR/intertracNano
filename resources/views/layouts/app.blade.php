@@ -541,6 +541,17 @@
     console.log("CURRENCY : " + currencies.BDT);
 </script>
 
+<!-- Vue Filters -->
+<script>
+    Vue.filter('currency', function (value) {
+        return parseFloat(value).toFixed(2);
+    });
+
+    Vue.filter('date', function(value){
+        return value.split("-").reverse().join("/");
+    });
+</script>
+
 @yield('footer-scripts')
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

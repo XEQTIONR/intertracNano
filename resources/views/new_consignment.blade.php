@@ -594,9 +594,7 @@
       var tyre_catalog = JSON.parse('{!! json_encode($tyres) !!}');
 
 
-      Vue.filter('currency', function (value) {
-          return parseFloat(value).toFixed(2);
-      });
+
 
       var app = new Vue({
           el: '#app',
