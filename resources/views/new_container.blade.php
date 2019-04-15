@@ -286,27 +286,27 @@
 
                   </div>
 
-                  {{--<div class="box-footer" >--}}
-                    {{--<div class="row justify-content-center">--}}
-                    {{--<div class="col-xs-3">--}}
-                      {{--<b>Container Totals</b>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-xs-2 pl-3">--}}
-                      {{--@{{ container_total_qty_previous(index) }}--}}
-                    {{--</div>--}}
-                    {{--<div class="col-xs-1 mr-5"></div>--}}
-                    {{--<div class="col-xs-2">--}}
-                      {{--@{{ container_total_weight(index) }}--}}
-                    {{--</div>--}}
-                    {{--<div class="col-xs-2 pr-0">--}}
-                      {{--@{{ container_total_tax(index) | currency }}--}}
-                    {{--</div>--}}
+                  <div class="box-footer" >
+                    <div class="row justify-content-center">
+                    <div class="col-xs-3">
+                      <b>Container Totals</b>
+                    </div>
+                    <div class="col-xs-2 pl-3">
+                      @{{ container_total_qty_previous(index) }}
+                    </div>
+                    <div class="col-xs-1 mr-5"></div>
+                    <div class="col-xs-2">
+                      @{{ container_total_weight_previous(index) }}
+                    </div>
+                    <div class="col-xs-2 pr-0">
+                      @{{ container_total_tax_previous(index) | currency }}
+                    </div>
 
-                    {{--<div class="col-xs-1 px-0">--}}
-                      {{--@{{ container_total_value(index) | currency }}--}}
-                    {{--</div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
+                    <div class="col-xs-1 px-0">
+                      @{{ container_total_value_previous(index) | currency }}
+                    </div>
+                    </div>
+                  </div>
 
                 </div>
               </div>
@@ -417,27 +417,27 @@
                       </div>
 
                     </div>
-                    {{--<div class="box-footer" >--}}
-                      {{--<div class="row justify-content-center">--}}
-                      {{--<div class="col-xs-3">--}}
-                        {{--<b>Container Totals</b>--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-2 pl-3">--}}
-                        {{--@{{ container_total_qty(index) }}--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-1 mr-5"></div>--}}
-                      {{--<div class="col-xs-2">--}}
-                        {{--@{{ container_total_weight(index) }}--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-2 pr-0">--}}
-                        {{--@{{ container_total_tax(index) | currency }}--}}
-                      {{--</div>--}}
+                    <div class="box-footer" >
+                      <div class="row justify-content-center">
+                      <div class="col-xs-3">
+                        <b>Container Totals</b>
+                      </div>
+                      <div class="col-xs-2 pl-3">
+                        @{{ container_total_qty(index) }}
+                      </div>
+                      <div class="col-xs-1 mr-5"></div>
+                      <div class="col-xs-2">
+                        @{{ container_total_weight(index) }}
+                      </div>
+                      <div class="col-xs-2 pr-0">
+                        @{{ container_total_tax(index) | currency }}
+                      </div>
 
-                      {{--<div class="col-xs-1 px-0">--}}
-                        {{--@{{ container_total_value(index) | currency }}--}}
-                      {{--</div>--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
+                      <div class="col-xs-1 px-0">
+                        @{{ container_total_value(index) | currency }}
+                      </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </transition-group>
@@ -1193,6 +1193,19 @@
                   var ret_val = 0;
                   if(this.containers[index].contents.length)
                       this.containers[index].contents.forEach(function(value){
+
+                          if(parseFloat(value.qty)>0 && parseFloat(value.unit_price)>0)
+                              ret_val += (parseFloat(value.qty) * parseFloat(value.unit_price));
+                      });
+
+                  return ret_val;
+              },
+
+              container_total_value_previous : function(index){
+
+                  var ret_val = 0;
+                  if(this.consignments[this.consignment_index].containers[index].contents.length)
+                      this.consignments[this.consignment_index].containers[index].contents.forEach(function(value){
 
                           if(parseFloat(value.qty)>0 && parseFloat(value.unit_price)>0)
                               ret_val += (parseFloat(value.qty) * parseFloat(value.unit_price));
