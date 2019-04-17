@@ -247,7 +247,7 @@
               </div>
               <div  class="row">
                 <div class="col-xs-3 px-5">
-                  <b>Grand Total</b>
+                  <b>Grand Total (Previous)</b>
                 </div>
                 <div class="col-xs-2 pl-5 pr-0">
                   <b> @{{ total_qty_previous }}</b>
@@ -375,7 +375,7 @@
               </transition-group>
               <div v-if="containers.length" class="row">
                 <div class="col-xs-3 px-5">
-                  <b>Grand TotalNEW</b>
+                  <b>Grand Total</b>
                 </div>
                 <div class="col-xs-2 pl-5 pr-0">
                   <b> @{{ total_qty }}</b>
@@ -728,13 +728,7 @@
       var tyre_catalog = JSON.parse('{!! json_encode($tyres) !!}');
 
 
-      Vue.filter('currency', function (value) {
-          return parseFloat(value).toFixed(2);
-      });
 
-      Vue.filter('date', function(value){
-          return value.split("-").reverse().join("/");
-      });
 
 
       var app = new Vue({
