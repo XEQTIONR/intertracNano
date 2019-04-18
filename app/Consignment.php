@@ -11,7 +11,7 @@ class Consignment extends Model
     public $incrementing = false;
     //protected $casts = ['BOL' => 'string']; // laravel 5.0
 
-    public function lc()
+    public function letterOfCredit()
     {
       return $this->belongsTo('App\Lc', 'lc');
     }

@@ -26,19 +26,13 @@
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Done</h4>
-          New container has been saved.
-          <a href="{{ route('consignment_containers.index') }}"  class="btn btn-success ml-5">Click here to view all Containers</a>
+          New expenses recorded. You can keep adding more expenses.
         </div>
       </transition>
     </div>
   </div>
   <div v-cloak class="row justify-content-center">
-    <transition  name="custom-classes-transition"
-                 mode="out-in"
-                 :enter-active-class="direction? 'animated fadeInRight fast' : 'animated fadeInLeft fast'"
-                 :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'"
-    >
-      <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-10">
+      <div  class="col-xs-12 col-md-8">
 
 
         <div class="box box-info">
@@ -108,13 +102,6 @@
                       </div>
                     </div>
                     <div v-if="consignment_index" class="row">
-                      {{--<div class="col-xs-6">--}}
-                        {{--<div class="form-group">--}}
-                          {{--<label>Containers</label> <br>--}}
-                          {{--<span> @{{ consignments[consignment_index].containers.length}}</span>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-
                       <div class="col-xs-6">
                         <div class="form-group">
                           <label>Total Cost (Value + Tax)</label> <br>
@@ -125,32 +112,43 @@
                     </div>
                     <div v-if="consignment_index" class="row">
                       <div class="col-xs-12">
-                        <table class="table table-striped table-responsive">
+                        <table class="table table-striped table-responsive table-bordered">
                           <thead>
                             <tr>
-                              <th>Expense id</th>
+                              <th>id</th>
                               <th>Expense Notes</th>
                               <th>Expense Foreign</th>
                               <th>Expense Local</th>
-                              <th>created_at</th>
+                              <th>Expense Total</th>
+                              <th></th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr class="" v-for="expense in consignments[consignment_index].expenses">
                               <td>@{{ expense.expense_id }}</td>
                               <td>@{{ expense.expense_notes }}</td>
-                              <td>@{{ expense.expense_foreign | currency }}</td>
-                              <td>@{{ expense.expense_local | currency }}</td>
-                              <td>@{{ expense.created_at }}</td>
+                              <td class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>
+                              <td class="text-right">৳ @{{ expense.expense_local | currency }}</td>
+                              <td class="text-right">৳ @{{ parseFloat(consignments[consignment_index].exchange_rate)*parseFloat(expense.expense_foreign) + parseFloat(expense.expense_local) | currency }}</td>
+                              <td></td>
                             </tr>
                             <tr class="info" v-for="(expense, index) in new_expenses" style="max-height : 75px;">
                               <td class="pt-4 pb-0"><span class="label bg-blue">NEW</span></td>
                               <td>@{{ expense.expense_notes }}</td>
-                              <td>@{{ expense.expense_foreign | currency }}</td>
-                              <td>@{{ expense.expense_local | currency }}</td>
+                              <td class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>
+                              <td class="text-right">৳ @{{ expense.expense_local | currency }}</td>
+                              <td class="text-right">৳ @{{ parseFloat(expense.expense_foreign)*parseFloat(exchange_rate) + parseFloat(expense.expense_local) | currency }}</td>
                               <td>
-                                <i @click="remove_expense(index)" class="fas fa-minus-circle"></i>
+                                <i @click="remove_expense(index)" class="fas fa-minus-circle text-danger"></i>
                               </td>
+                            </tr>
+                            <tr class="warning">
+                              <td></td>
+                              <td><b>Totals</b></td>
+                              <td class="text-right"><b>@{{ currency_symbol }} @{{ expense_foreign_total | currency }}</b></td>
+                              <td class="text-right"><b>৳ @{{ expense_local_total | currency }}</b></td>
+                              <td class="text-right"><b>৳ @{{ expense_foreign_total*exchange_rate + expense_local_total | currency }}</b></td>
+                              <td></td>
                             </tr>
                           </tbody>
                         </table>
@@ -163,7 +161,7 @@
                         <div class="form-group" :class="{ 'has-error' :  errors.expense }">
                           <label class="mr-5">Expense Foreign</label>
                           <div class="input-group">
-                            <span class="input-group-addon">@{{ currency_symbol }}</span>
+                            <span class="input-group-addon"><b>@{{ currency_symbol }}</b></span>
                             <input class="w-100" v-model="expense_foreign" type="number">
                           </div>
                           <span v-if=" errors.expense" class="help-block text-danger">@{{ errors.expense }}</span>
@@ -181,7 +179,7 @@
                         <div class="form-group" :class="{ 'has-error' :  errors.expense }">
                           <label class="mr-5">Expense Local</label>
                           <div class="input-group">
-                            <span class="input-group-addon">৳</span>
+                            <span class="input-group-addon"><b>৳</b></span>
                             <input class="w-100" v-model="expense_local" type="number">
                           </div>
                         </div>
@@ -192,7 +190,7 @@
                         <div class="form-group w-100">
                           <label>Expense Total</label>
                           <div class="input-group w-100">
-                            <span>@{{ expense_total | currency }}</span>
+                            <span><b>৳ @{{ expense_new_total | currency }}</b></span>
                           </div>
                         </div>
                       </div>
@@ -233,525 +231,6 @@
 
         </div>
       </div>
-
-      {{--<div  v-if="showForm == 1" key="1"  class="col-xs-7">--}}
-        {{--<div class="box box-info">--}}
-          {{--<div class="box-header">--}}
-            {{--<h3 class="page-header ml-3">--}}
-              {{--<i class="far fa-container-storage mr-3"></i>--}}
-              {{--Add more containers to this consignment.--}}
-            {{--</h3>--}}
-          {{--</div>--}}
-          {{--<div class="box-body pb-5 px-5">--}}
-
-
-
-
-            {{--<form style="padding: 1rem;">--}}
-
-              {{--<div class="row mb-2">--}}
-                {{--<span class="label bg-gray text-uppercase">Previous containers</span>--}}
-              {{--</div>--}}
-              {{--<div v-if="consignment_index != null" v-for="(container, index) in consignments[consignment_index].containers" key="container.container_num" class="row" --}}{{--:Class="{'border-dash' : selected_container == index}"--}}{{--  style="flex-direction: column">--}}
-                {{--<div class="box box-solid box-default" :id="container.Container_num" @click="makeCollapsible(container.Container_num)" --}}{{--:class="[selected_container == index ? 'box-warning' : 'box-default']"--}}{{-->--}}
-
-                  {{--<div class="box-header">--}}
-                    {{--<h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.Container_num }}</h4>--}}
-                    {{--<div class="box-tools pull-right">--}}
-                      {{--<button type="button"  class="btn btn-box-tool"><i class="fa fa-minus" :id="container.Container_num + '_close'" ></i></button>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="box-body px-0 pb-0">--}}
-                    {{--<div class="col-xs-12" style="min-height: 100px">--}}
-                      {{--<div class="row list-item pb-1">--}}
-                        {{--<div class="col-xs-1 text-center"><strong>#</strong></div>--}}
-                        {{--<div class="col-xs-2 text-center"><strong>Tyre</strong></div>--}}
-                        {{--<div class="col-xs-2 text-center"><strong>Qty</strong></div>--}}
-                        {{--<div  class="col-xs-2 text-right"><strong>Unit Price</strong></div>--}}
-                        {{--<div class="col-xs-2 text-center"><strong>Total Weight (kg)</strong></div>--}}
-                        {{--<div class="col-xs-2 text-center"><strong>Total Tax (৳)</strong></div>--}}
-                        {{--<div  class="col-xs-1 text-right"><strong>Sub Total</strong></div>--}}
-                        {{--<div  class="col-xs-1 text-right"></div>--}}
-                      {{--</div>--}}
-                      {{--<transition-group  name="custom-classes-transition"--}}
-                                         {{--enter-active-class="animated fadeInDown"--}}
-                                         {{--leave-active-class="animated fadeOutUp fast "--}}
-                      {{-->--}}
-                        {{--<div v-for="(item, item_index) in container.contents" key="item_index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">--}}
-                          {{--<div class="col-xs-1 text-center"><strong>@{{ item_index + 1 }}</strong></div>--}}
-                          {{--<div class="col-xs-2 text-center">@{{item.tyre.brand}} @{{item.tyre.size}} @{{ item.tyre.lisi }} @{{item.tyre.pattern}}</div>--}}
-                          {{--<div class="col-xs-2 text-center">--}}
-                            {{--<div class="form-group"  :class="{ 'has-error' :  errors.qty && parseInt(item.qty)<=0 }">--}}
-                              {{--<input class="form-control" v-model="item.qty" disabled type="number" min="0" step="1">--}}
-                            {{--</div>--}}
-                          {{--</div>--}}
-                          {{--<div class="col-xs-2 text-center">--}}
-                            {{--<div class="form-group" :class="{ 'has-error' :  errors.unit_price && parseFloat(item.unit_price)<=0 }">--}}
-                              {{--<input class="form-control" v-model="item.unit_price" disabled type="number" min="0" step="0.01">--}}
-                            {{--</div>--}}
-                          {{--</div>--}}
-                          {{--<div class="col-xs-2 text-center">--}}
-                            {{--<div class="form-group">--}}
-                              {{--<input class="form-control" v-model="item.total_weight" disabled type="number" min="0" step="0.01">--}}
-                            {{--</div>--}}
-                          {{--</div>--}}
-                          {{--<div  class="col-xs-2 text-right">--}}
-                            {{--<div class="form-group">--}}
-                              {{--<input class="form-control" v-model="item.total_tax" disabled type="number" min="0" step="0.01">--}}
-                            {{--</div>--}}
-                          {{--</div>--}}
-                          {{--<div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>--}}
-                          {{--<div class="col-xs-1">--}}
-                          {{--</div>--}}
-                        {{--</div>--}}
-                      {{--</transition-group>--}}
-
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-
-                  {{--<div class="box-footer" >--}}
-                    {{--<div class="row justify-content-center">--}}
-                      {{--<div class="col-xs-3">--}}
-                        {{--<b>Container Totals</b>--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-2 pl-3">--}}
-                        {{--@{{ container_total_qty_previous(index) }}--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-1 mr-5"></div>--}}
-                      {{--<div class="col-xs-2">--}}
-                        {{--@{{ container_total_weight_previous(index) }}--}}
-                      {{--</div>--}}
-                      {{--<div class="col-xs-2 pr-0">--}}
-                        {{--@{{ container_total_tax_previous(index) | currency }}--}}
-                      {{--</div>--}}
-
-                      {{--<div class="col-xs-1 px-0">--}}
-                        {{--@{{ container_total_value_previous(index) | currency }}--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                {{--</div>--}}
-              {{--</div>--}}
-              {{--<div  class="row">--}}
-                {{--<div class="col-xs-3 px-5">--}}
-                  {{--<b>Grand Total (Previous)</b>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-2 pl-5 pr-0">--}}
-                  {{--<b> @{{ total_qty_previous }}</b>--}}
-
-                {{--</div>--}}
-                {{--<div class="col-xs-2">--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-2 pr-2">--}}
-                  {{--<b> @{{ total_weight_previous }}</b>--}}
-
-                {{--</div>--}}
-
-                {{--<div class="col-xs-2 pl-4-5">--}}
-                  {{--<b>  @{{ total_tax_previous | currency }}</b>--}}
-
-                {{--</div>--}}
-
-                {{--<div class="col-xs-2 pl-3">--}}
-                  {{--<b>  @{{ grand_total_foreign_previous | currency }}   </b>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-              {{--<div class="form-group mt-5" :class="{ 'has-error' :  Object.entries(errors).length }">--}}
-                {{--<ul>--}}
-                  {{--<li class="help-block" v-for="error in errors">@{{ error }}</li>--}}
-                {{--</ul>--}}
-              {{--</div>--}}
-
-              {{--<div v-if="containers.length" class="row mb-2 mt-5">--}}
-                {{--<span class="label label-info text-uppercase">New containers</span>--}}
-              {{--</div>--}}
-              {{--<transition-group  name="custom-classes-transition"--}}
-                                 {{--enter-active-class="animated fadeInDown"--}}
-                                 {{--leave-active-class="animated fadeOut fast "--}}
-              {{-->--}}
-
-
-
-                {{--<div v-for="(container, index) in containers" key="container.container_num" @click="select_container(index)" class="row" --}}{{--:Class="{'border-dash' : selected_container == index}"--}}{{--  style="flex-direction: column">--}}
-                  {{--<div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-info' : 'box-default']">--}}
-
-                    {{--<div class="box-header">--}}
-                      {{--<h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>--}}
-                      {{--<div class="box-tools pull-right">--}}
-                        {{--<button type="button" class="btn btn-box-tool" :id="container.container_num + '_close'"><i class="fa fa-minus"></i></button>--}}
-                        {{--<button @click="remove_container(index)" type="button" class="btn btn-box-tool"><i class="fa fa-times"></i></button>--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="box-body px-0 pb-0">--}}
-                      {{--<button type="button" @click="test()" class="btn btn-primary">Click me</button>--}}
-                      {{--<div class="col-xs-12" style="min-height: 100px">--}}
-                        {{--<div class="row list-item pb-1">--}}
-                          {{--<div class="col-xs-1 text-center"><strong>#</strong></div>--}}
-                          {{--<div class="col-xs-2 text-center"><strong>Tyre</strong></div>--}}
-                          {{--<div class="col-xs-2 text-center"><strong>Qty</strong></div>--}}
-                          {{--<div  class="col-xs-2 text-right"><strong>Unit Price</strong></div>--}}
-                          {{--<div class="col-xs-2 text-center"><strong>Total Weight (kg)</strong></div>--}}
-                          {{--<div class="col-xs-2 text-center"><strong>Total Tax (৳)</strong></div>--}}
-                          {{--<div  class="col-xs-1 text-right"><strong>Sub Total</strong></div>--}}
-                          {{--<div  class="col-xs-1 text-right"></div>--}}
-                        {{--</div>--}}
-                        {{--<transition-group  name="custom-classes-transition"--}}
-                                           {{--enter-active-class="animated fadeInDown"--}}
-                                           {{--leave-active-class="animated fadeOutUp fast "--}}
-                        {{-->--}}
-                          {{--<div v-for="(item, item_index) in container.contents" key="index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">--}}
-                            {{--<div class="col-xs-1 text-center"><strong>@{{ item_index + 1 }}</strong></div>--}}
-                            {{--<div class="col-xs-2 text-center">@{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}</div>--}}
-                            {{--<div class="col-xs-2 text-center">--}}
-                              {{--<div class="form-group"  :class="{ 'has-error' :  errors.qty && parseInt(item.qty)<=0 }">--}}
-                                {{--<input class="form-control" v-model="item.qty" type="number" min="0" step="1">--}}
-                              {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 text-center">--}}
-                              {{--<div class="form-group" :class="{ 'has-error' :  errors.unit_price && parseFloat(item.unit_price)<=0 }">--}}
-                                {{--<input class="form-control" v-model="item.unit_price" type="number" min="0" step="0.01">--}}
-                              {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-xs-2 text-center">--}}
-                              {{--<div class="form-group">--}}
-                                {{--<input class="form-control" v-model="item.total_weight" type="number" min="0" step="0.01">--}}
-                              {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div  class="col-xs-2 text-right">--}}
-                              {{--<div class="form-group">--}}
-                                {{--<input class="form-control" v-model="item.total_tax" type="number" min="0" step="0.01">--}}
-                              {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>--}}
-                            {{--<div class="col-xs-1">--}}
-                              {{--<a class="text-danger" @click="removeTyre(index, item_index)">--}}
-                                {{--<i class="fas fa-minus-circle mt-1"></i>--}}
-                              {{--</a>--}}
-                            {{--</div>--}}
-                          {{--</div>--}}
-                        {{--</transition-group>--}}
-
-                      {{--</div>--}}
-
-                    {{--</div>--}}
-                    {{--<div class="box-footer" >--}}
-                      {{--<div class="row justify-content-center">--}}
-                        {{--<div class="col-xs-3">--}}
-                          {{--<b>Container Totals</b>--}}
-                        {{--</div>--}}
-                        {{--<div class="col-xs-2 pl-3">--}}
-                          {{--@{{ container_total_qty(index) }}--}}
-                        {{--</div>--}}
-                        {{--<div class="col-xs-1 mr-5"></div>--}}
-                        {{--<div class="col-xs-2">--}}
-                          {{--@{{ container_total_weight(index) }}--}}
-                        {{--</div>--}}
-                        {{--<div class="col-xs-2 pr-0">--}}
-                          {{--@{{ container_total_tax(index) | currency }}--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-xs-1 px-0">--}}
-                          {{--@{{ container_total_value(index) | currency }}--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-              {{--</transition-group>--}}
-              {{--<div v-if="containers.length" class="row">--}}
-                {{--<div class="col-xs-3 px-5">--}}
-                  {{--<b>Grand Total</b>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-2 pl-5 pr-0">--}}
-                  {{--<b> @{{ total_qty }}</b>--}}
-
-                {{--</div>--}}
-                {{--<div class="col-xs-2">--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-2 pr-2">--}}
-                  {{--<b> @{{ total_weight }}</b>--}}
-
-                {{--</div>--}}
-
-                {{--<div class="col-xs-2 pl-4-5">--}}
-                  {{--<b>  @{{ total_tax | currency }}</b>--}}
-
-                {{--</div>--}}
-
-                {{--<div class="col-xs-2 pl-3">--}}
-                  {{--<b>  @{{ total_value | currency }}   </b>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-
-
-            {{--</form>--}}
-
-
-
-          {{--</div>--}}
-          {{--<div class="box-footer px-4">--}}
-
-
-            {{--<div class="my-4 btn btn-success btn-block">--}}
-              {{--<transition  name="custom-classes-transition"--}}
-                           {{--mode="out-in"--}}
-                           {{--enter-active-class="animated fadeIn fast"--}}
-                           {{--leave-active-class="animated fadeOutRight fast "--}}
-              {{-->--}}
-                {{--<div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">--}}
-                  {{--<span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>--}}
-                  {{--<i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>--}}
-                  {{--<span style="font-size : 15px;"><b> Add a container</b></span>--}}
-                {{--</div>--}}
-                {{--<div v-if="container_step==1" key="1" class="row justify-content-center align-items-center p-5 ">--}}
-
-                  {{--<i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>--}}
-                  {{--<span style="font-size : 15px;"><b>#</b></span>--}}
-                  {{--<input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">--}}
-                  {{--<button @click="add_container()" type="button" class="btn btn-success ml-2">Add</button>--}}
-                  {{--<button @click="cancel()" type="button" class="btn btn-warning mr-2">Cancel</button>--}}
-                {{--</div>--}}
-              {{--</transition>--}}
-            {{--</div>--}}
-
-            {{--<button type="button" class="btn btn-default" @click="toggle(false)">--}}
-              {{--<i class="fa fa-chevron-left pt-1 mr-2"></i>--}}
-              {{--Back--}}
-            {{--</button>--}}
-            {{--<button type="button" class="btn btn-info pull-right" @click="submit()">--}}
-              {{--Continue--}}
-              {{--<i class="fa fa-chevron-right pt-1 ml-2"></i>--}}
-            {{--</button>--}}
-          {{--</div>--}}
-        {{--</div>--}}
-
-
-      {{--</div>--}}
-
-      <div v-if="showForm == 2" key="2" class="col-xs-12">
-        <section class="invoice">
-          <!-- title row -->
-          <div class="row">
-            <div class="col-xs-12">
-              <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new container information
-                <small class="pull-right">Date: 2/10/2014</small>
-              </h2>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- info row -->
-          <div class="row invoice-info">
-
-            <!-- /.col -->
-            <div class="col-sm-6 invoice-col">
-              <b>Bill of lading # @{{ bol }}</b><br>
-              <br>
-              <b>LC # </b> @{{ lc_num }}<br>
-              <b>Land Date : </b> @{{ date_landed | date }}<br>
-            </div>
-
-            <div class="col-sm-6 invoice-col">
-              <b>Exchange Rate :</b> ৳ @{{ exchange_rate }} / @{{ currency_symbol }}<br>
-              <br>
-              <b>Consignment Value : </b>@{{ currency_symbol }} @{{ value | currency }}<br>
-              <b>Value in local currency</b> ৳ @{{ value * exchange_rate | currency }}<br>
-            </div>
-
-          </div>
-          <div class="row mt-5">
-            <span class="label bg-gray ml-4 text-uppercase">Existing containers</span>
-          </div>
-          <div v-for="(container, container_index) in consignments[consignment_index].containers" class="row mt-4">
-            <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th colspan="5">
-                    <i class="far fa-container-storage mr-2"></i>
-                    <span class="">#</span>
-                    @{{ container.Container_num }}
-                  </th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <th>Tyre</th>
-                  <th>Qty</th>
-                  <th>Unit Price</th>
-                  <th>Total Weight</th>
-                  <th>Total Tax</th>
-                  <th>Sub-total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(record, index) in container.contents">
-                  <td>@{{ index + 1 }}</td>
-                  <td>@{{ record.tyre.brand }} @{{ record.tyre.size }} @{{ record.tyre.lisi }} @{{ record.tyre.pattern }}</td>
-                  <td>@{{ record.qty }}</td>
-                  <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
-                  <td>@{{ record.total_weight }}</td>
-                  <td>৳ @{{ record.total_tax | currency }}</td>
-                  <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><b>Container Total</b></td>
-                  <td><b>@{{ container_total_qty_previous(container_index) }}</b></td>
-                  <td></td>
-                  <td><b>@{{ container_total_weight_previous(container_index) }}</b></td>
-                  <td><b>৳ @{{ container_total_tax_previous(container_index) | currency}}</b></td>
-                  <td><b>@{{ currency_symbol }} @{{ container_total_value_previous(container_index) | currency }}</b></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.col -->
-          </div>
-
-          <div class="row">
-            <span class="label label-info ml-4 text-uppercase">New containers</span>
-          </div>
-          <div v-for="(container, container_index) in containers" class="row mt-4">
-            <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th colspan="5">
-                    <i class="far fa-container-storage mr-2 text-info"></i>
-                    <span class="text-info">#</span>
-                    <span class="text-info">@{{ container.container_num }}</span>
-                  </th>
-                </tr>
-                <tr>
-                  <th>#</th>
-                  <th>Tyre</th>
-                  <th>Qty</th>
-                  <th>Unit Price</th>
-                  <th>Total Weight</th>
-                  <th>Total Tax</th>
-                  <th>Sub-total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(record, index) in container.contents">
-                  <td>@{{ index + 1 }}</td>
-                  <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
-                  <td>@{{ record.qty }}</td>
-                  <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
-                  <td>@{{ record.total_weight }}</td>
-                  <td>৳ @{{ record.total_tax | currency }}</td>
-                  <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>
-                </tr>
-
-                <tr>
-                  <td></td>
-                  <td><b>Container Total</b></td>
-                  <td><b>@{{ container_total_qty(container_index) }}</b></td>
-                  <td></td>
-                  <td><b>@{{ container_total_weight(container_index) }}</b></td>
-                  <td><b>৳ @{{ container_total_tax(container_index) | currency}}</b></td>
-                  <td><b>@{{ currency_symbol }} @{{ container_total_value(container_index) | currency }}</b></td>
-                </tr>
-
-
-                </tbody>
-              </table>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-
-          <div class="row mt-3">
-            <div class="col-xs-6">
-              <div class="row">
-                <p class="lead ml-5">Actual Values</p>
-              </div>
-              <div class="row invoice-info well ml-1 mr-1 mb-4">
-                <div class="col-sm-6 invoice-col">
-                  <b>Foreign Currency Code:</b> <br>
-                  @{{ currency_code }}<br>
-                  <br>
-                  <b>Exchange Rate:</b> <br>
-                  ৳ @{{ exchange_rate | currency }} / @{{ currency_symbol }}
-                  <br>
-                  <br>
-                  <b>Tax Paid :</b> <br>
-                  ৳ @{{ tax | currency }}
-                  {{--<b>Arriving Port:</b> @{{ arriving_port }}<br>--}}
-
-                </div>
-
-                <div class="col-sm-6 invoice-col">
-                  <b>Consignment Value: </b><br>
-                  @{{ currency_symbol }} @{{ value | currency }}<br>
-                  <br>
-                  <b>Value in Taka </b><br>
-                  ৳ @{{ parseFloat(value)*parseFloat(exchange_rate) | currency }}<br>
-                  <br>
-                  <b>Total Cost (Value + Tax)</b><br>
-                  ৳ @{{ (parseFloat(value)*parseFloat(exchange_rate)) + parseFloat(tax) | currency }}<br>
-                  {{--<b>LC Value in Taka: </b> ৳ @{{ lc_value*exchange_rate | currency }}<br>--}}
-
-                </div>
-
-                <!-- /.col -->
-              </div>
-            </div>
-            <div class="col-xs-6">
-              <p class="lead">Estimated Values</p>
-
-              <div class="table-responsive">
-                <table class="table">
-                  <tbody><tr>
-                    <th style="width:50%">Grand Total (Calculated)</th>
-                    <td>@{{ currency_symbol }} @{{ grand_total_foreign | currency }}</td>
-                  </tr>
-                  <tr>
-                    <th>Grand Total in TK (Calculated)</th>
-                    <td>৳ @{{ grand_total_foreign*parseFloat(exchange_rate) | currency }}</td>
-                  </tr>
-                  <tr>
-                    <th>Total Tax in TK (Calulated)</th>
-                    <td>৳ @{{ total_tax | currency }}</td>
-                  </tr>
-                  <tr>
-                    <th>Total Weight</th>
-                    <td>@{{ total_weight }} kg</td>
-                  </tr>
-                  <tr>
-                    <th># of Tyres</th>
-                    <td>@{{ total_count }} pcs.</td>
-                  </tr>
-                  </tbody></table>
-              </div>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-
-          <!-- this row will not appear when printing -->
-          <div v-if="!is_complete" class="row no-print">
-            <div class="col-xs-12 border-light-gray pt-3">
-              <button type="button" class="btn btn-default" @click="toggle(false)">
-                <i class="fa fa-chevron-left pt-1 mr-2"></i>
-                Back
-              </button>
-              <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
-                <i class="fas fa-check mr-2"></i>
-                Confirm
-              </button>
-            </div>
-          </div>
-        </section>
-
-
-      </div>
-    </transition>
   </div>
 
 @endsection
@@ -761,25 +240,16 @@
   <script>
 
       $(window).scroll(function(){
-          // console.log($(window).scrollTop());
-
           var top = (parseFloat($(window).scrollTop()) -100 );
-
           $('#catalogContainer').css('top', top>0 ? top : 0);
       });
-
-
-
-
 
 
       var app = new Vue({
           el: '#app',
           data: {
-              showForm : 0,
+
               showCatalog : false,
-
-
               lcs : null,
               lc_num : null,
               bol: null,
@@ -788,55 +258,80 @@
               consignments : JSON.parse('{!! json_encode($consignments) !!}'),
 
               tax : null,
-              date_landed : null,
-              date_expired : null,
+
               currency_code : null,
               exchange_rate : null,
               value : null,
-              expense_foreign : null,
-              expense_local : null,
+              expense_foreign : 0,
+              expense_local : 0,
               expense_notes : null,
               new_expenses : [],
 
-              proforma_invoice : [],
 
               containers : [],
               container_step : 0,
               container_num : null,
               selected_container : null,
 
-              direction : true,
-
-              date_flag: false,
-              date1: null,
               currency_symbol: '$',
 
               errors : {},
-              is_alert : false,
               is_complete : false,
-              is_duplicate : false,
-
-              is_verifying : false,
-
-              alert_class : 'alert-warning',
-
-
 
           },
           computed:{
-              expense_total : function(){
+
+              expense_new_total : function(){
 
                   var ret_val = 0;
 
-                  if(parseInt(this.exchange_rate)>0 && parseFloat(this.expense_foreign)>0)
-                      ret_val += parseInt(this.exchange_rate) * parseFloat(this.expense_foreign)
+                  if(parseFloat(this.expense_foreign) > 0)
+                      ret_val = parseFloat(this.expense_foreign) * parseFloat(this.exchange_rate);
 
-                  if(parseFloat(this.expense_local)>0)
+                  if(parseFloat(this.expense_local) > 0)
                       ret_val += parseFloat(this.expense_local);
 
-                  return ret_val
+                  return ret_val;
+              },
 
+              expense_foreign_total : function(){
 
+                  var ret_val = 0;
+
+                  this.consignments[this.consignment_index].expenses.forEach(function(expense){
+                      if(parseFloat(expense.expense_foreign)>0)
+                        ret_val += parseFloat(expense.expense_foreign);
+                  });
+
+                  if(this.new_expenses.length)
+                  {
+                      this.new_expenses.forEach(function(expense){
+                          if(parseFloat(expense.expense_foreign)>0)
+                              ret_val += parseFloat(expense.expense_foreign);
+                      });
+                  }
+
+                  return ret_val;
+              },
+
+              expense_local_total : function(){
+
+                  var ret_val = 0;
+
+                  this.consignments[this.consignment_index].expenses.forEach(function(expense){
+                      if(parseFloat(expense.expense_local)>0)
+                          ret_val += parseFloat(expense.expense_local);
+                  });
+
+                  if(this.new_expenses.length)
+                  {
+                      this.new_expenses.forEach(function(expense){
+                          if(parseFloat(expense.expense_local)>0)
+                              ret_val += parseFloat(expense.expense_local);
+                      });
+                  }
+
+                  return ret_val;
               },
           },
           watch : {
@@ -855,6 +350,8 @@
                               app.exchange_rate = parseFloat(a_consignment.exchange_rate);
                               app.value = parseFloat(a_consignment.value);
                               app.tax = parseFloat(a_consignment.tax);
+                              app.currency_code = a_consignment.letter_of_credit.currency_code;
+                              app.currency_symbol = currencies[app.currency_code];
                           }
 
                       });
@@ -921,26 +418,13 @@
 
               },
 
-              copyDate : function(i){
-
-                  if(i==1)
-                      this.date_landed = document.getElementById('dateIssued').value;
-
-              },
-
-              copyDates : function(){
-                  this.copyDate(1);
-              },
-
               makeCollapsible : function(id){
                   console.log('collapse');
                   $('#'+ id).boxWidget({
                       animationSpeed: 500,
                       collapseTrigger: '#'+id +'_close',
-                      // removeTrigger: '#my-remove-button-trigger',
                       collapseIcon: 'fa-minus',
                       expandIcon: 'fa-plus',
-                      // removeIcon: 'fa-times'
                   });
               },
 
@@ -995,20 +479,12 @@
                                   app.is_complete = false;
                               }, 5000);
                           }
-
-
                       });
-
               },
-
-              //
-
 
               helperPositiveFloat : function(new_val, who){
                   if(!(parseFloat(new_val)>= 0 ) )
-                  {
                       app[who] = 0;
-                  }
 
                   var leading = 0;
                   var lead_mid = false;
@@ -1037,15 +513,8 @@
                       app[who] = 0;
                   else if(leading>0)
                       app[who] = app[who].substr(leading);
-
-
               }
-          },
-
-          mounted : function(){
-
           }
-
       })
   </script>
 @endsection

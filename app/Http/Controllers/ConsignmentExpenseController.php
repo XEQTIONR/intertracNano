@@ -30,8 +30,7 @@ class ConsignmentExpenseController extends Controller
     public function create()
     {
         //
-        $bol="";
-        $consignments =  Consignment::with('expenses')->get();
+        $consignments =  Consignment::with(['expenses', 'letterOfCredit:lc_num,currency_code'])->get();
 
         return view('new_expense', compact('consignments'));
     }
