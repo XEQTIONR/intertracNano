@@ -37,9 +37,13 @@
 
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3">
+            <h3 v-if="bol == null" class="page-header ml-3">
               <i class="far fa-anchor mr-3"></i>
-              Select a consignment to add the container to.
+              Select a consignment to add expenses to.
+            </h3>
+            <h3 v-else class="page-header ml-3">
+              <i class="far fa-coins mr-3"></i>
+              Add expenses to this consignment.
             </h3>
           </div>
           <div class="box-body">
@@ -124,7 +128,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr class="" v-for="expense in consignments[consignment_index].expenses">
+                            <tr v-for="expense in consignments[consignment_index].expenses">
                               <td>@{{ expense.expense_id }}</td>
                               <td>@{{ expense.expense_notes }}</td>
                               <td class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>
@@ -132,15 +136,22 @@
                               <td class="text-right">৳ @{{ parseFloat(consignments[consignment_index].exchange_rate)*parseFloat(expense.expense_foreign) + parseFloat(expense.expense_local) | currency }}</td>
                               <td></td>
                             </tr>
-                            <tr class="info" v-for="(expense, index) in new_expenses" style="max-height : 75px;">
-                              <td class="pt-4 pb-0"><span class="label bg-blue">NEW</span></td>
-                              <td>@{{ expense.expense_notes }}</td>
-                              <td class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>
-                              <td class="text-right">৳ @{{ expense.expense_local | currency }}</td>
-                              <td class="text-right">৳ @{{ parseFloat(expense.expense_foreign)*parseFloat(exchange_rate) + parseFloat(expense.expense_local) | currency }}</td>
-                              <td>
-                                <i @click="remove_expense(index)" class="fas fa-minus-circle text-danger"></i>
-                              </td>
+                            {{--<tr class="info" v-for="(expense, index) in new_expenses">--}}
+                              {{--<td class="pt-4 pb-0"><span class="label bg-blue">NEW</span></td>--}}
+                              {{--<td>@{{ expense.expense_notes }}</td>--}}
+                              {{--<td class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>--}}
+                              {{--<td class="text-right">৳ @{{ expense.expense_local | currency }}</td>--}}
+                              {{--<td class="text-right">৳ @{{ parseFloat(expense.expense_foreign)*parseFloat(exchange_rate) + parseFloat(expense.expense_local) | currency }}</td>--}}
+                              {{--<td>--}}
+                                {{--<i @click="remove_expense(index)" class="fas fa-minus-circle text-danger"></i>--}}
+                              {{--</td>--}}
+                            {{--</tr>--}}
+                            <tr v-for="(expense, index) in new_expenses" is="an-expense"
+                                         :expense="expense"
+                                         :exchange_rate="exchange_rate"
+                                         :currency_symbol="currency_symbol"
+                                         :key="index"
+                                         :index="index">
                             </tr>
                             <tr class="warning">
                               <td></td>
@@ -162,7 +173,7 @@
                           <label class="mr-5">Expense Foreign</label>
                           <div class="input-group">
                             <span class="input-group-addon"><b>@{{ currency_symbol }}</b></span>
-                            <input class="w-100" v-model="expense_foreign" type="number">
+                            <input class="w-100" v-model="expense_foreign" type="number" placeholder="0.00">
                           </div>
                           <span v-if=" errors.expense" class="help-block text-danger">@{{ errors.expense }}</span>
                         </div>
@@ -180,7 +191,7 @@
                           <label class="mr-5">Expense Local</label>
                           <div class="input-group">
                             <span class="input-group-addon"><b>৳</b></span>
-                            <input class="w-100" v-model="expense_local" type="number">
+                            <input class="w-100" v-model="expense_local" type="number" placeholder="0.00">
                           </div>
                         </div>
                       </div>
@@ -244,9 +255,33 @@
           $('#catalogContainer').css('top', top>0 ? top : 0);
       });
 
+      var NewExpense = Vue.component('NewExpense', {
+
+         props : ['currency_symbol','expense', 'exchange_rate', 'index'],
+         template : '<tr id="anew" class="info" >' +
+         '                              <td style="display:none" class="pt-4 pb-0"><span class="label bg-blue">NEW</span></td>' +
+         '                              <td style="display:none">@{{ expense.expense_notes }}</td>' +
+         '                              <td style="display:none" class="text-right">@{{ currency_symbol }} @{{ expense.expense_foreign | currency }}</td>' +
+         '                              <td style="display:none" class="text-right">৳ @{{ expense.expense_local | currency }}</td>' +
+         '                              <td style="display:none" class="text-right">৳ @{{ parseFloat(expense.expense_foreign)*parseFloat(exchange_rate) + parseFloat(expense.expense_local) | currency }}</td>' +
+         '                              <td style="display:none">' +
+         '                                <i @click="remove_expense(index)" class="fas fa-minus-circle text-danger"></i>' +
+         '                              </td>' +
+         '                            </tr>',
+
+         methods : {
+             remove_expense : function(index){
+                 this.$parent.remove_expense(index);
+             }
+         }
+
+      });
 
       var app = new Vue({
           el: '#app',
+          components: {
+            'an-expense' : NewExpense
+          },
           data: {
 
               showCatalog : false,
@@ -262,8 +297,8 @@
               currency_code : null,
               exchange_rate : null,
               value : null,
-              expense_foreign : 0,
-              expense_local : 0,
+              expense_foreign : "",
+              expense_local : "",
               expense_notes : null,
               new_expenses : [],
 
@@ -336,6 +371,13 @@
           },
           watch : {
 
+              expense_foreign : function(new_val){
+                  app.helperPositiveFloat(new_val, "expense_foreign");
+              },
+              expense_local : function(new_val){
+                  app.helperPositiveFloat(new_val, "expense_local");
+              },
+
               bol : function(new_val){
 
                   if(new_val != null)
@@ -394,6 +436,12 @@
                       this.expense_local = 0;
                       this.expense_foreign = 0;
                       this.expense_notes = null;
+
+                      this.$nextTick(function(){
+                         $('#anew td').fadeIn(300, function(){
+                             $('#anew').removeAttr('id');
+                         });
+                      });
                   }
                   else
                   {
@@ -404,7 +452,23 @@
               },
 
               remove_expense : function(index){
-                  this.new_expenses.splice(index, 1);
+
+                  var done = false;
+                  var count = 0;
+                  $('tr.info:eq('+ index +')').fadeOut(400, function(){
+
+                          count++;
+                          if(!count) // because it somehow does it twice.
+                          {
+                              app.$nextTick(function(){
+                                  app.new_expenses.splice(index, 1);
+                              });
+                          }
+
+
+
+                  });
+
               },
 
               cancel : function(){
@@ -416,16 +480,6 @@
               dismiss_warning : function(){
                   this.is_complete = false;
 
-              },
-
-              makeCollapsible : function(id){
-                  console.log('collapse');
-                  $('#'+ id).boxWidget({
-                      animationSpeed: 500,
-                      collapseTrigger: '#'+id +'_close',
-                      collapseIcon: 'fa-minus',
-                      expandIcon: 'fa-plus',
-                  });
               },
 
               validate : function(){
@@ -484,7 +538,9 @@
 
               helperPositiveFloat : function(new_val, who){
                   if(!(parseFloat(new_val)>= 0 ) )
+                  {
                       app[who] = 0;
+                  }
 
                   var leading = 0;
                   var lead_mid = false;
@@ -513,6 +569,8 @@
                       app[who] = 0;
                   else if(leading>0)
                       app[who] = app[who].substr(leading);
+
+
               }
           }
       })
