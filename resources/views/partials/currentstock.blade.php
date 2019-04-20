@@ -7,10 +7,11 @@
     <th> Pattern </th>
 
     <th> # remaining </th>
-
+    <th></th>
   </tr>
 </thead>
 <tbody>
+  <?php $i =0; ?>
   @foreach ($in_stock as $item)
     <tr>
 
@@ -20,9 +21,13 @@
       <td class="text-center">{{$item->pattern}}</td>
 
       <td class="text-center">{{$item->in_stock}}</td>
-
-
+      <td>
+        <a class="text-success" @click="add({{$i}})">
+          <i class="fas fa-plus-circle"></i>
+        </a>
+      </td>
     </tr>
+    <?php $i++; ?>
   @endforeach
 </tbody>
 </table>

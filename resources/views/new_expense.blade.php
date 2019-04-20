@@ -453,19 +453,10 @@
 
               remove_expense : function(index){
 
-                  var done = false;
-                  var count = 0;
-                  $('tr.info:eq('+ index +')').fadeOut(400, function(){
 
-                          count++;
-                          if(!count) // because it somehow does it twice.
-                          {
-                              app.$nextTick(function(){
-                                  app.new_expenses.splice(index, 1);
-                              });
-                          }
-
-
+                  $('tr.info').eq(index).fadeOut(400, function(){
+                      app.new_expenses.splice(index, 1);
+                      $('tr.info').show(); // because it keeps hiding a second one. BUT WHY ? :@
 
                   });
 

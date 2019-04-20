@@ -300,7 +300,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{  route('orders.index')  }}"><i class="fa fa-angle-right"></i>View orders</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Create an order</a></li>
+                        <li><a href="{{  route('orders.create')  }}"><i class="fa fa-angle-right"></i>Create an order</a></li>
                     </ul>
                 </li>
 

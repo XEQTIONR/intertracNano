@@ -68,8 +68,16 @@ class OrderController extends Controller
     public function create()
     {
         //
+        $customers = Customer::all();
         $in_stock = Order::tyresRemaining();
-        return view('new_order',compact('in_stock'));
+
+        foreach($in_stock as $stock)
+        {
+          $stock->qty = 0;
+          $stock->unit_price = 0;
+        }
+
+        return view('new_order',compact('in_stock', 'customers'));
     }
 
 
