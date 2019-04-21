@@ -38,7 +38,11 @@ mix.less('resources/assets/less/main.less', '../resources/assets/css')
         'resources/assets/js/currencies.js',
     'node_modules/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/admin-lte/dist/js/adminlte.min.js',
+    'node_modules/vue-select/dist/vue-select.js',
 
+
+
+        // 'node_modules/select2/dist/js/select2.js',
     //"https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js",
         //'node_modules/currency-symbol-map/map.js',
         //'node_modules/currency-symbol-map/currency-symbol-map.js'
@@ -55,5 +59,7 @@ mix.less('resources/assets/less/main.less', '../resources/assets/css')
         'node_modules/admin-lte/dist/css/AdminLTE.min.css',
         'node_modules/admin-lte/dist/css/skins/skin-black.min.css',
         'node_modules/animate.css/animate.css',
+        'node_modules/vue-select/dist/vue-select.css',
+        // 'node_modules/select2/dist/css/select2.css',
         // 'node_modules/inputmask/css/inputmask.css',
         'resources/assets/css/main.css'], 'public/css/app2.css');

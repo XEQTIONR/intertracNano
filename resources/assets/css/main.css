@@ -341,3 +341,6 @@ a .fab {
 [v-cloak] {
   display: none;
 }
+.v-select {
+  padding: 0;
+}

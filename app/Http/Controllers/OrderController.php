@@ -71,6 +71,12 @@ class OrderController extends Controller
         $customers = Customer::all();
         $in_stock = Order::tyresRemaining();
 
+        foreach($customers as $customer)
+        {
+
+          $customer->address = str_replace("\n", "",nl2br($customer->address));
+        }
+
         foreach($in_stock as $stock)
         {
           $stock->qty = 0;
