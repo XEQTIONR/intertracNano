@@ -82,7 +82,8 @@
                             <td style="width: 45%;" >@{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
                             <td style="width: 15%;" >
                               <div class="form-group" :class="{'has-error' : (errors.qty && parseInt(content.qty)<=0) || (helperStockLive(content.i)<0)}">
-                                <input class="text-right form-control " v-model="content.qty" type="number" step="1" min="1" value="1">
+                                <input class="text-right form-control " type="number" step="1" min="1" value="1"
+                                       v-model="content.qty" @keyup="content.qty = helperValidQty(content.qty, content.i)">
                               </div>
                             </td>
                             <td style="width: 15%;" >
@@ -683,6 +684,16 @@
                           app.is_complete = true;
 
                     });
+            },
+
+            helperValidQty : function(val, index) {
+                var ret = parseInt(val);
+
+                if (this.helperStockLive(index) < 0)
+                {
+                    ret = 0;
+                }
+                return ret;
             },
 
             helperPositiveFloat : function(new_val, who){
