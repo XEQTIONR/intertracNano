@@ -77,10 +77,13 @@ class OrderController extends Controller
           $customer->address = str_replace("\n", "",nl2br($customer->address));
         }
 
+        $i = 0;
         foreach($in_stock as $stock)
         {
           $stock->qty = 0;
           $stock->unit_price = 0;
+          $stock->i = $i;
+          $i++;
         }
 
         return view('new_order',compact('in_stock', 'customers'));
@@ -163,7 +166,7 @@ class OrderController extends Controller
 
 
         }
-        
+
 
         $new_contents = collect($new_contents)->filter(function($value){
           return intval($value->qty) > 0;

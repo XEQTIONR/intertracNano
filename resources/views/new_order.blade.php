@@ -81,12 +81,12 @@
                             <td style="width: 5%;" >@{{ index+1 }}</td>
                             <td style="width: 45%;" >@{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
                             <td style="width: 15%;" >
-                              <div class="form-group" :class="{'has-error' : errors.qty && !parseInt(content.qty)>0}">
+                              <div class="form-group" :class="{'has-error' : (errors.qty && parseInt(content.qty)<=0) || (helperStockLive(content.i)<0)}">
                                 <input class="text-right form-control " v-model="content.qty" type="number" step="1" min="1" value="1">
                               </div>
                             </td>
                             <td style="width: 15%;" >
-                              <div class="form-group" :class="{'has-error' : errors.qty && !parseFloat(content.unit_price)>0}">
+                              <div class="form-group" :class="{'has-error' : errors.unit_price && !parseFloat(content.unit_price)>0}">
                                 <input class="text-right form-control" v-model="content.unit_price" type="number" step="1" min="1" value="1">
                               </div>
                             </td>
@@ -615,6 +615,12 @@
                         errors['qty'] = "Quantity must be greater than zero (0).";
                     if(!(parseFloat(item.unit_price) > 0))
                         errors['unit_price'] = "Unit price must be greater than zero (0).";
+
+                    app.stock.forEach(function(item){
+
+                        if(app.helperStockLive(item.i)<0)
+                            errors['qty'] = 'More items than in stock';
+                    });
                 });
 
                 if( Object.entries(errors).length) // because errors is an obj and does not have length
@@ -716,6 +722,25 @@
                 else if(leading>0)
                     app[who] = app[who].substr(leading);
 
+
+            }
+            ,
+            helperStockLive : function(index){
+
+                // delete(app.errors['qty']);
+                var tyre = this.stock[index].tyre_id;
+                var qty = parseInt(this.stock[index].in_stock);
+
+                this.order_contents.forEach(function(value){
+
+                    if(value.tyre_id == tyre && Number.isInteger(parseInt(value.qty)))
+                        qty-= parseInt(value.qty);
+                });
+
+                //if(qty<0)
+                    //app.errors['qty'] = 'Quantity ordered is greater than stock available';
+
+                return qty;
 
             }
 
