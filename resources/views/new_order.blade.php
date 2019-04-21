@@ -18,6 +18,21 @@
 @section('body')
 
   <div v-cloak class="row justify-content-center">
+    <div class="col-xs-12">
+      <transition name="custom-classes-transition"
+                  enter-active-class="animated fadeIn faster"
+                  leave-active-class="animated fadeOut faster"
+      >
+        <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
+          <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
+          <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+          New order saved
+          <a href="{{ route('orders.index') }}"  class="btn btn-success ml-5">Click here to view all orders</a>
+        </div>
+      </transition>
+    </div>
+  </div>
+  <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
                  enter-active-class="animated fadeInRight fast"
@@ -33,14 +48,12 @@
               <div class="box-body">
                 <div class="row">
                   <div class="col-xs-12">
-                    <div class="form-group">
-                      <label for="inputCustomerId">Customer ID</label>
-                      <select v-model="customer" id="customer" class="form-control">
-                        <option :value="null">Select a customer</option>
-                        @foreach($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->name}}</option>
-                        @endforeach
-                      </select>
+                    <div class="form-group" :class="{'has-error' : errors.customer && customer==null}">
+                      <label for="inputCustomerId">Customer</label>
+                      <v-select id="customer" class="form-control" placeholder="Select a customer"
+                                v-model="customer" :options="customers" label="name"
+                      >
+                      </v-select>
                     </div>
                   </div>
                 </div>
@@ -67,8 +80,16 @@
                           <tr id="selector" class="selector" v-for="(content,index) in order_contents" style="display:none;">
                             <td style="width: 5%;" >@{{ index+1 }}</td>
                             <td style="width: 45%;" >@{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
-                            <td style="width: 15%;" ><div class="form-group" :class="{'has-error' : errors.qty && !parseInt(content.qty)>0}"><input class="text-right form-control " v-model="content.qty" type="number" step="1" min="1" value="1"></div></td>
-                            <td style="width: 15%;" ><div class="form-group" :class="{'has-error' : errors.qty && !parseFloat(content.unit_price)>0}"><input class="text-right form-control" v-model="content.unit_price" type="number" step="1" min="1" value="1"></div></td>
+                            <td style="width: 15%;" >
+                              <div class="form-group" :class="{'has-error' : errors.qty && !parseInt(content.qty)>0}">
+                                <input class="text-right form-control " v-model="content.qty" type="number" step="1" min="1" value="1">
+                              </div>
+                            </td>
+                            <td style="width: 15%;" >
+                              <div class="form-group" :class="{'has-error' : errors.qty && !parseFloat(content.unit_price)>0}">
+                                <input class="text-right form-control" v-model="content.unit_price" type="number" step="1" min="1" value="1">
+                              </div>
+                            </td>
                             <td style="width: 15%;" class="text-right" >৳ @{{ parseFloat(content.qty) * parseFloat(content.unit_price) | currency}}</td>
                             <td style="width: 5%;" >
                               <a class="text-danger" @click="remove(index)">
@@ -112,19 +133,23 @@
                     </div>
                     <br>
 
-
-                    <div v-if="order_contents.length" class="form-group col-xs-12 px-0">
+                    <transition-group  name="custom-classes-transition"
+                                 {{--mode="out-in"--}}
+                                 enter-active-class="animated fadeIn fast"
+                                 leave-active-class="animated fadeOut fast"
+                    >
+                    <div v-if="order_contents.length" key="1" class="form-group col-xs-12 px-0">
                       <label for="inputTaxAmount" class="col-xs-12 col-md-2 control-label pl-0">Num items</label>
                       <div class="col-xs-3">
                         <input v-model="order_contents.length" type="text" class="form-control"  readonly>
                       </div>
                     </div>
 
-                    <div class="form-group col-xs-12 px-0">
+                    <div v-if="order_contents.length" key="2" class="form-group col-xs-12 px-0">
                       <label for="discountPercent" class="col-xs-12 control-label px-0">Discount</label>
                       <div class="col-xs-4 px-0">
                         <div class="input-group">
-                          <input v-model="discount_percent" name="discountPercent" type="number" min="0" step="0.01" class="form-control" >
+                          <input v-model="discount_percent" type="number" min="0" step="0.01" class="form-control" >
                           <div class="input-group-addon">
                             <i class="fas fa-percent"></i>
                           </div>
@@ -136,7 +161,7 @@
                       <div class="col-xs-4 px-0">
                         <div class="input-group">
                           <div class="input-group-addon"><b>৳</b></div>
-                          <input v-model="discount_amount" type="text" class="form-control" >
+                          <input v-model="discount_amount" type="number" class="form-control" >
                         </div>
                       </div>
                       <label v-if="discount_percentage_amount>0" class="col-xs-4 control-label  mt-4 px-0">
@@ -146,7 +171,7 @@
                       </label>
                     </div>
 
-                    <div class="form-group col-xs-12 px-0">
+                    <div v-if="order_contents.length" key="3" class="form-group col-xs-12 px-0">
                       <label for="inputDiscountPercent" class="col-xs-12 control-label px-0">Tax</label>
                       <div class="col-xs-4 px-0">
 
@@ -163,15 +188,16 @@
                       <div class="col-xs-4 px-0">
                         <div class="input-group">
                           <div class="input-group-addon"><b>৳</b></div>
-                          <input v-model="tax_amount" type="text" class="form-control" >
+                          <input v-model="tax_amount" type="number" class="form-control" >
                         </div>
                       </div>
-                      <label class="col-xs-4 control-label  mt-4 px-0">
+                      <label v-if="tax_percentage_amount > 0" class="col-xs-4 control-label  mt-4 px-0">
                         <i class="fas fa-equals ml-3 mr-5"></i>
                         {{--<i class="fas fa-minus mr-1"></i> --}}
-                        ৳ 400
+                        ৳ @{{ tax_percentage_amount }}
                       </label>
                     </div>
+                    </transition-group>
                   </div>
                 </div>
                 {{--<div class="row">--}}
@@ -194,7 +220,7 @@
               <div class="box-footer">
                 <div class="row">
                   <div class="col-xs-12">
-                    <button type="button" class="btn btn-info pull-right" @click="continue_f()">
+                    <button v-if="order_contents.length" type="button" class="btn btn-info pull-right" @click="continue_f()">
                       Continue
                       <i class="fa fa-chevron-right pt-1 ml-2"></i>
                     </button>
@@ -222,8 +248,10 @@
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
               <small class="text-uppercase">Bill To</small><br>
-              <address>
-
+              <address v-if="customer">
+                <b>@{{ customer.name }}</b> <br>
+                <span v-html="customer.address"></span> <br>
+                @{{ customer.phone }}
               </address>
             </div>
             <!-- /.col -->
@@ -231,8 +259,9 @@
               <small class="text-uppercase">Beneficiary</small><br>
               <address>
                 <b>Intertrac Nano</b> <br>
-                7/5 Ring Road, Shyamoli, <br>
-                Dhaka -1207
+                7/5 Ring Road, <br>
+                Shyamoli, <br>
+                Dhaka - 1207 <br>
               </address>
             </div>
 
@@ -323,7 +352,7 @@
               <button @click="back()" type="button" class="btn btn-primary" style="margin-right: 5px;">
                 <i class="fa fa-chevron-left mr-2"></i> Back
               </button>
-              <button type="button" class="btn btn-success pull-right"><i class="fa fa-check mr-2"></i> Confirm Order
+              <button @click="save()" type="button" class="btn btn-success pull-right"><i class="fa fa-check mr-2"></i> Confirm Order
               </button>
 
             </div>
@@ -381,16 +410,19 @@
 
     var stock = JSON.parse('{!! json_encode($in_stock) !!}');
 
+    var customers = JSON.parse('{!! json_encode($customers) !!}');
+
     // var OrderItem = new Vue.component('OrderItem', {
     //
     // });
+    Vue.component('v-select', VueSelect.VueSelect);
 
     var app = new Vue({
         el: '#app',
         data: {
             stock : stock,
             order_contents : [],
-            errors : [],
+            errors : {},
             toggle : false,
 
             discount_percent : 0,
@@ -398,6 +430,8 @@
             tax_percent : 0,
             tax_amount : 0,
             customer : null,
+            customers : customers,
+            is_complete : false
         },
 
         watch: {
@@ -485,7 +519,7 @@
                 var ret = 0;
 
                 if(parseFloat(this.subTotal)>0 && parseFloat(this.discount_percent)>=0 && parseFloat(this.discount_percent)<100)
-                    ret = parseFloat(this.subTotal) * parseFloat(this.discount_percent) /100.0
+                    ret = parseFloat(this.subTotal) * parseFloat(this.discount_percent) /100.0;
 
                 return ret;
 
@@ -499,6 +533,16 @@
                     ret = parseFloat(this.subTotal) * parseFloat(this.tax_percent) /100.0 + parseFloat(this.tax_amount);
 
                 return ret;
+            },
+
+            tax_percentage_amount : function(){
+                var ret = 0;
+
+                if(parseFloat(this.subTotal)>0 && parseFloat(this.tax_percent)>=0 && parseFloat(this.tax_percent)<100)
+                    ret = parseFloat(this.subTotal) * parseFloat(this.tax_percent) /100.0;
+
+                return ret;
+
             },
             subTotal : function(){
 
@@ -534,7 +578,9 @@
 
 
             add : function(index){
-                this.order_contents.push(this.stock[index]);
+
+                var obj = Object.assign ({}, this.stock[index]);
+                this.order_contents.push(obj);
 
                 this.$nextTick(function(){
                     $('#selector').fadeIn(300, function(){
@@ -558,6 +604,9 @@
 
                 console.log('IN VALIDATE');
 
+                if(this.customer == null)
+                    errors['customer'] = "Select a customer";
+
                 this.order_contents.forEach(function(item){
 
                     console.log('item');
@@ -566,9 +615,6 @@
                         errors['qty'] = "Quantity must be greater than zero (0).";
                     if(!(parseFloat(item.unit_price) > 0))
                         errors['unit_price'] = "Unit price must be greater than zero (0).";
-
-
-
                 });
 
                 if( Object.entries(errors).length) // because errors is an obj and does not have length
@@ -584,7 +630,12 @@
                     this.toggle = true;
 
                 else if(validate.errors)//errors
+                {
+                    console.log('validate.errors');
+                    console.log(validate.errors);
                     this.errors = validate.errors;
+                }
+
             },
 
             back : function(){
@@ -611,11 +662,17 @@
                     {
                         "_token" : "{{csrf_token()}}",
 
-                        "customer" : this.customer,
-                        "order_contents" : this.order_contents
+                        "customer" : this.customer.id,
+                        "order_contents" : this.order_contents,
+                        "discount_percent" : parseFloat(this.discount_percent),
+                        "discount_amount" : parseFloat(this.discount_amount),
+                        "tax_percent" : parseFloat(this.tax_percent),
+                        "tax_amount" : parseFloat(this.tax_amount)
                     },
                     function(data){
 
+                      console.log('return handler');
+                      console.log(data);
                       if(data.status == 'success')
                           app.is_complete = true;
 
@@ -623,6 +680,9 @@
             },
 
             helperPositiveFloat : function(new_val, who){
+                console.log("HELPER POSITIVE FLOAT");
+                console.log(new_val);
+                console.log(who);
                 if(!(parseFloat(new_val)>= 0 ) )
                 {
                     app[who] = 0;
@@ -663,6 +723,12 @@
 
         },
 
+        mounted : function() {
+            // $('#customer').select2()
+            //     .on('change', function(){
+            //
+            //     })
+        }
     })
 
   </script>

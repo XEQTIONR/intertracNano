@@ -70,10 +70,10 @@ class Order extends Model
 
 
 //HELPER FUNCTIONS
-    public static function tyreInContRemaining($id)
+    public static function tyresRemainingInContainers()
     {
       $remaining = DB::table('container_contents')
-                  ->select('Container_num', 'BOL','tyre_id','qty')
+                  ->select('Container_num', 'BOL','tyre_id','qty','created_at')
                   ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
                                       FROM order_contents
                                       GROUP BY container_num, bol, tyre_id) AS B'),
@@ -88,14 +88,16 @@ class Order extends Model
                   ->select('container_contents.Container_num',
                             'container_contents.BOL',
                             'container_contents.tyre_id',
+                            'container_contents.created_at',
                             'container_contents.qty AS qty_bought',
                             DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
                             DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
                             )
-                  ->where('container_contents.tyre_id', $id)
-                  ->oldest()
+//                  ->where('container_contents.tyre_id', $id)
+//                  ->oldest()
+                  ->orderBy('created_at', 'ASC')
                   ->get();
-
+                  // depends on tyres not oversold from a container
                   //dd($remaining->toSql());
 
         return $remaining;

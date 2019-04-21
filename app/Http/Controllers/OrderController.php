@@ -97,79 +97,90 @@ class OrderController extends Controller
     public function store(Request $request)
     {
 
-      //VALIDATE
-      $validator=Validator::make($request->all(),[
-        'inputCustomerId' => 'required|numeric',
-        'inputDiscountPercent' => 'required|numeric|min:0',
-        'inputDiscountAmount' => 'required|numeric|min:0',
-        'inputTaxAmount' => 'required|string|min:0',
-      ]);
-
-      if($validator->fails())
-      {
-        return redirect('orders/create')
-                ->withErrors($validator)
-                ->withInput();
-      }
-
-      else
-      {
         DB::beginTransaction();
-        //{
+
         $order  = new Order;
 
-        $order->customer_id = $request->inputCustomerId;
-        $order->discount_percent = $request->inputDiscountPercent;
-        $order->discount_amount = $request->inputDiscountAmount;
-        $order->tax_percentage = $request->inputTaxPercent;
-        $order->tax_amount = $request->inputTaxAmount;
+        $order->customer_id = $request->input('customer');
+        $order->discount_percent = $request->input('discount_percent');
+        $order->discount_amount = $request->input('discount_amount');
+        $order->tax_percentage = $request->input('tax_percent');
+        $order->tax_amount = $request->input('tax_amount');
 
         $order->save();
 
-        $contents = array();
-        $index = 0;
 
+        $order_contents = $request->input('order_contents');
 
+        $tyre_remaining_cont = Order::tyresRemainingInContainers();
 
-        for ($i=0; $i<$request->runningCount; $i++) // each tyre
+        $new_contents = array();
+
+        foreach($order_contents as $order_content)
         {
-          $subdiv_value = 'subDiv'.$i;
-          $removed = $request->removedDivs;
+          $tyre = $order_content['tyre_id'];
+          $qty = intval($order_content['qty']);
+          $unit_price = floatval($order_content['unit_price']);
 
-          /** ARRGH - WHY DOES $request->has('name') NOT WORK on objects inside
-          *  divs that have been removed by Javascript. Always returns TRUE
-          *  should be FALSE for divs removed.
-          */
-          if(strpos($removed,$subdiv_value)===FALSE) //Do Only for divs not removed
+          $filtered = $tyre_remaining_cont->where('tyre_id', $tyre)
+                                          ->filter(function($value, $key){
+
+                                              $keys[] = $key;
+                                              return (intval($value->in_stock)>0);
+                                          })
+                                          ->all();
+
+          foreach($filtered as $key => $item)
           {
-            $full_qty = $request->qty[$i]; //total number of tyre[i] ordered
-            $qty_remain = $full_qty; //remaining qty to be filled
+            $order_content =  new Order_content;
 
-            $in_stock = Order::tyreInContRemaining($request->tyre[$i]); // stock info for tyre_id i
+            $order_content->tyre_id = $tyre;
+            $order_content->Container_num = $item->Container_num;
+            $order_content->BOL = $item->BOL;
+            $order_content->unit_price = $unit_price;
 
-            foreach ($in_stock as $stock_listing) // each stock entry
+            if(intval($item->in_stock)>=$qty)
             {
-              //Create a new order_content entry
-              $qty_remain = OrderController::setContents($contents,
-                                                          $index,
-                                                          $order->Order_num,
-                                                          $request->tyre[$i],
-                                                          $request->price[$i],
-                                                          $stock_listing, 
-                                                          $qty_remain);
+              $order_content->qty = $qty;
+              $tyre_remaining_cont[$key]->in_stock = intval($tyre_remaining_cont[$key]->in_stock) - $qty;
 
-              if ($qty_remain==0)
-                break;
-              else
-                $index++;
-            }//endforeach
-          } //endif
-        } //endfor
+              array_push($new_contents, $order_content);
+              break; // loop exit
+            }
+            else
+            {
+              $qty -= intval($item->in_stock);
+              $order_content->qty = intval($item->in_stock);
+              $tyre_remaining_cont[$key]->in_stock = 0;
 
-        $order->orderContents()->saveMany($contents);
+              array_push($new_contents, $order_content);
+            }
+
+
+//            $new_contents [] = $order_content;
+          }
+
+
+
+        }
+        
+
+        $new_contents = collect($new_contents)->filter(function($value){
+          return intval($value->qty) > 0;
+        })
+        ->all();
+
+        $order->orderContents()->saveMany($new_contents);
         DB::commit();
-        return redirect('/orders/'.$order->Order_num);
-      }
+//
+        $response = [];
+
+        $response['status'] = 'success';
+
+        return $response;
+
+
+        //      }
     }
 
 
