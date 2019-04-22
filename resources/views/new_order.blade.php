@@ -232,12 +232,12 @@
           </div>
         </div>
       </div>
-      <div v-if="toggle==true" :key="true" class="col-xs-12">
+      <div v-if="toggle==true" :key="true" class="col-xs-12 col-md-10 col-lg-8">
         <section class="invoice">
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new Order Information
+                <i class="fas fa-check mr-3 text-success"></i>Confirm new Order information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -310,7 +310,7 @@
               <div class="row">
                 <p class="lead ml-5">Additional information</p>
               </div>
-              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+              <p class="text-muted well well-sm no-shadow no-print" style="margin-top: 10px;">
                 Add orders are final after confirming. Payments can be made against the order number. You can print
                 this after finalizing.
               </p>
@@ -347,7 +347,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row no-print">
             <div class="col-xs-12">
               {{--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>--}}
               <button @click="back()" type="button" class="btn btn-primary" style="margin-right: 5px;">
@@ -366,10 +366,10 @@
                  enter-active-class="animated fadeInRight fast"
                  leave-active-class="animated fadeOutRight fast"
     >
-    <div v-if="toggle==false" class="col-xs-12 col-md-5">
+    <div v-show="toggle==false" class="col-xs-12 col-md-5">
       <div class="box box-default">
         <div class="box-header">
-          <h3 class="page-header ml-3"><i class="fa fa-dolly mr-3"></i>Current Stock</h3>
+          <h3 class="page-header ml-3"><i class="fas fa-warehouse mr-3"></i></i></i>Current Stock</h3>
         </div>
         <div class="box-body">
           <div class="row">
@@ -388,24 +388,6 @@
 @endsection
 
 @section('footer-scripts')
-  <style>
-    .leftDiv{
-      width : 50%;
-      float : left;
-      margin : auto;
-    }
-    .rightDiv{
-      width : 50%;
-      float : right;
-      margin : auto;
-    }
-
-    .input{
-      width: 25%;
-    }
-
-  </style>
-  <script src="/js/addItem.js"></script>
 
   <script>
 
@@ -413,9 +395,6 @@
 
     var customers = JSON.parse('{!! json_encode($customers) !!}');
 
-    // var OrderItem = new Vue.component('OrderItem', {
-    //
-    // });
     Vue.component('v-select', VueSelect.VueSelect);
 
     var app = new Vue({

@@ -22,7 +22,7 @@
       <td class="text-center">@{{item.lisi}}</td>
 
       <td class="text-center" :class="{'text-red' : helperStockLive(index)<0}">@{{helperStockLive(index)}}</td>
-      <td>
+      <td v-if="!do_not_show">
         <a class="text-success" @click="add(index)">
           <i class="fas fa-plus-circle"></i>
         </a>
