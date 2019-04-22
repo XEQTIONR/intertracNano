@@ -68,12 +68,12 @@
 
                         <thead>
                           <tr>
-                            <td style="width: 5%"  >#</td>
-                            <td style="width: 45%" >Tyre</td>
-                            <td style="width: 15%" >Qty</td>
-                            <td style="width: 15%" >Unit Price</td>
-                            <td style="width: 15%" class="text-right" >Subtotal</td>
-                            <td style="width: 5%" ></td>
+                            <th style="width: 5%"  >#</th>
+                            <th style="width: 45%" >Tyre</th>
+                            <th style="width: 15%" >Qty</th>
+                            <th style="width: 15%" >Unit Price</th>
+                            <th style="width: 15%" class="text-right" >Subtotal</th>
+                            <th style="width: 5%" ></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -88,7 +88,8 @@
                             </td>
                             <td style="width: 15%;" >
                               <div class="form-group" :class="{'has-error' : errors.unit_price && !parseFloat(content.unit_price)>0}">
-                                <input class="text-right form-control" v-model="content.unit_price" type="number" step="1" min="1" value="1">
+                                <input class="text-right form-control" type="number" step="1" min="1" value="1"
+                                       v-model="content.unit_price" @keyup="content.unit_price = helperValidUnitPrice(content.unit_price)">
                               </div>
                             </td>
                             <td style="width: 15%;" class="text-right" >৳ @{{ parseFloat(content.qty) * parseFloat(content.unit_price) | currency}}</td>
@@ -668,10 +669,19 @@
             helperValidQty : function(val, index) {
                 var ret = parseInt(val);
 
-                if (this.helperStockLive(index) < 0)
-                {
+                if (this.helperStockLive(index) < 0 || val=="")
                     ret = 0;
-                }
+
+                return ret;
+            },
+
+            helperValidUnitPrice : function(val)
+            {
+                var ret = parseFloat(val);
+
+                if(val == "")
+                    ret = 0;
+
                 return ret;
             },
 
