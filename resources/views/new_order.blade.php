@@ -396,8 +396,6 @@
 
     var customers = JSON.parse('{!! json_encode($customers) !!}');
 
-    Vue.component('v-select', VueSelect.VueSelect);
-
     var app = new Vue({
         el: '#app',
         data: {
@@ -669,7 +667,7 @@
             helperValidQty : function(val, index) {
                 var ret = parseInt(val);
 
-                if (this.helperStockLive(index) < 0 || val=="")
+                if (this.helperStockLive(index) < 0 || val=="" || ret < 0)
                     ret = 0;
 
                 return ret;
@@ -679,7 +677,7 @@
             {
                 var ret = parseFloat(val);
 
-                if(val == "")
+                if(val == "" || ret < 0)
                     ret = 0;
 
                 return ret;

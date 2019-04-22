@@ -541,8 +541,9 @@
     console.log("CURRENCY : " + currencies.BDT);
 </script>
 
-<!-- Vue Filters -->
+
 <script>
+    //<!-- Vue Filters -->
     Vue.filter('currency', function (value) {
         return parseFloat(value).toFixed(2);
     });
@@ -550,6 +551,9 @@
     Vue.filter('date', function(value){
         return value.split("-").reverse().join("/");
     });
+
+    //<!-- Vue Components -->
+    Vue.component('v-select', VueSelect.VueSelect);
 </script>
 
 @yield('footer-scripts')
