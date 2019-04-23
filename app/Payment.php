@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Payment extends Model
 {
     //
-    public $primaryKey = 'Invoice_num';
+    public $primaryKey = 'invoice_num';
 
     public function order()
     {

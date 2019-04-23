@@ -16,7 +16,7 @@ class Order extends Model
     {
       return $this->hasMany('App\Order_content', 'Order_num');
     }
-    public function payment()
+    public function payments()
     {
       return $this->hasMany('App\Payment','Order_num');
     }
@@ -26,30 +26,31 @@ class Order extends Model
       return $this->belongsTo('App\Customer','customer_id');
     }
 
-    public function calculateAndSetDiscount()
+    public function totalDiscount()
     {
-      $discount_percent = ($this->subtotal * ($this->discount_percent/100.0));
-      $this->totalDiscount = $discount_percent + $this->discount_amount;
+      $discount_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->discount_percent/100.0));
+      return $discount_percent + $this->discount_amount;
     }
 
-    public function calculateAndSetTax()
+    public function totalTax()
     {
-      $tax_percent_amt = ($this->subtotal * ($this->tax_percentage/100.0));
-      $this->totalTax = $tax_percent_amt + $this->tax_amount;
+      $tax_percent_amt = ($this->totalValueBeforeDiscountAndTax() * ($this->tax_percentage/100.0));
+      return $tax_percent_amt + $this->tax_amount;
 
     }
 
+    //Make sure to query Order::with('payments')
+    // Inefficiant query
     public function calculatePayable()
     {
-        $total = ($this->subtotal+$this->totalTax-$this->totalDiscount);
-        $payments = $this->payment()
-                        ->get();
+        $total = ($this->totalValueBeforeDiscountAndTax()+$this->totalTax()-$this->totalDiscount());
+        $payments = $this->payments; // because ALWAYS expected to query with payments.
         foreach ($payments as $payment)
         {
           $total -= $payment->payment_amount;
         }
 
-        $this->payable = $total;
+        return $total;
     }
 
     /* Total value before tax and discount */
@@ -64,7 +65,7 @@ class Order extends Model
           $total_value+= ($content->qty * $content->unit_price);
         }
 
-        $this->subtotal = $total_value;
+        return $total_value;
     }
 
 

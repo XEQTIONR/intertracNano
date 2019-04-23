@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Payment;
 use Illuminate\Http\Request;
 use Validator;
@@ -16,9 +17,9 @@ class PaymentController extends Controller
     public function index()
     {
         $payments = Payment::all();
-
         return view('payments', compact('payments'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,8 +28,9 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
-        return view('new_payment');
+
+      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
+      return view('new_payment', compact('orders'));
     }
 
     /**
@@ -39,32 +41,24 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-
-      $validator=Validator::make($request->all(),[
-        'inputOrderNum' => 'required|numeric',
-        'inputPaidAmount' => 'required|numeric|min:0',
-      ]);
-
-      if ($validator->fails()) {
-        return redirect('payments/create')
-                ->withErrors($validator)
-                ->withInput();
-      }
-      else
-      {
         //ALLOCATE
         $payment = new Payment;
 
         //INITIALIZE
-        $payment->Order_num = $request->inputOrderNum;
-        $payment->payment_amount = $request->inputPaidAmount;
+        $payment->Order_num = $request->order;
+        $payment->payment_amount = $request->amount;
 
         //STORE
         $payment->save();
+        $payment->new = true;
 
         //REDIRECT
-        return redirect('/payments');
-      }
+        $response = [];
+
+        $response['status'] = 'success';
+        $response['payment'] = $payment;
+
+        return $response;
     }
 
     /**
