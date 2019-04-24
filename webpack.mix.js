@@ -39,6 +39,7 @@ mix.less('resources/assets/less/main.less', '../resources/assets/css')
     'node_modules/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/admin-lte/dist/js/adminlte.min.js',
     'node_modules/vue-select/dist/vue-select.js',
+        'node_modules/number-to-words/numberToWords.js'
 
 
 

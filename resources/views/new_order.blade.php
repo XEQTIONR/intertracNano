@@ -101,33 +101,33 @@
                           </tr>
 
                           <tr id="subTotal" class="" style="display: none;">
-                            <td style="width: 5%"></td>
-                            <td style="width: 45%"><b>Total</b></td>
-                            <td style="width: 15%" class="text-right" style="padding-right: 5%;"><b>@{{ totalQty }}</b></td>
-                            <td style="width: 15%"></td>
-                            <td style="width: 15%" class="text-right"  scope="col"><b>৳ @{{ subTotal | currency }}</b></td>
-                            <td style="width: 5%" ></td>
+                            <th style="width: 5%"></th>
+                            <th style="width: 45%">Total</th>
+                            <th style="width: 15%" class="text-right" style="padding-right: 5%;">@{{ totalQty }}</th>
+                            <th style="width: 15%"></th>
+                            <th style="width: 15%" class="text-right"  scope="col">৳ @{{ subTotal | currency }}</th>
+                            <th style="width: 5%" ></th>
                           </tr>
 
                           <tr id="discount" class="warning" style="display:none">
-                            <td style="width: 5%"></td>
-                            <td style="width: 45%"><b>Discount</b></td>
-                            <td class="text-right" style="width: 30%" colspan="2"><i class="fas fa-minus"></i></td>
-                            <td style="width: 15%" class="text-right"  scope="col"><b>৳ @{{ total_discount_amount | currency }}</b></td>
-                            <td style="width: 5%" ></td>
+                            <th style="width: 5%"></th>
+                            <th style="width: 45%">Discount</th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-minus"></i></th>
+                            <th style="width: 15%" class="text-right"  scope="col">৳ @{{ total_discount_amount | currency }}</th>
+                            <th style="width: 5%" ></th>
                           </tr>
                           <tr id="tax" class="danger" style="display:none">
-                            <td style="width: 5%"></td>
-                            <td style="width: 45%"><b>Tax</b></td>
-                            <td class="text-right" style="width: 30%" colspan="2"><i class="fas fa-plus"></i></td>
-                            <td style="width: 15%" class="text-right"><b>৳ @{{ total_tax_amount | currency }}</b></td>
-                            <td style="width: 5%" ></td>
+                            <th style="width: 5%"></th>
+                            <th style="width: 45%">Tax</th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-plus"></i></th>
+                            <th style="width: 15%" class="text-right">৳ @{{ total_tax_amount | currency }}</th>
+                            <th style="width: 5%" ></th>
                           </tr>
                           <tr id="grandTotal" class="info" style="display:none">
-                            <td style="width: 5%"></td>
-                            <td style="width: 45%"><h4 class="text-uppercase"><b>Grand Total</b></h4></td>
-                            <td style="width: 45%" class="text-right"  colspan="3"><h4><b>৳ @{{ grandTotal | currency }}</b></h4></td>
-                            <td style="width: 5%" ></td>
+                            <th style="width: 5%"></th>
+                            <th style="width: 45%" class="text-uppercase">Grand Total</th>
+                            <th style="width: 45%" class="text-right"  colspan="3">৳ @{{ grandTotal | currency }}</th>
+                            <th style="width: 5%" ></th>
                           </tr>
                         </tbody>
 

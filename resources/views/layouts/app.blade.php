@@ -36,6 +36,8 @@
 </head>
 
 <body class="hold-transition skin-black sidebar-mini">
+
+
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -301,6 +303,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{  route('orders.index')  }}"><i class="fa fa-angle-right"></i>View orders</a></li>
                         <li><a href="{{  route('orders.create')  }}"><i class="fa fa-angle-right"></i>Create an order</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i>Returns</a></li>
                     </ul>
                 </li>
 
@@ -316,7 +319,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{  route('payments.index')  }}"><i class="fa fa-angle-right"></i>View payments made</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Record a payment</a></li>
+                        <li><a href="{{ route('payments.create')  }}"><i class="fa fa-angle-right"></i>Record a payment</a></li>
                     </ul>
                 </li>
 
@@ -405,6 +408,8 @@
 
         <!-- Main content -->
         <section id="app" class="content container-fluid">
+
+            @yield('modal')
 
             @yield('body')
 
@@ -535,7 +540,7 @@
 
     $(document).ready(function() {
         $('#table_id').DataTable();
-        $(".date").inputmask("dd/mm/yyyy");
+        $(".date").inputmask( "dd/mm/yyyy");
     } );
 
     console.log("CURRENCY : " + currencies.BDT);
@@ -552,9 +557,22 @@
         return value.split("-").reverse().join("/");
     });
 
+    Vue.filter('invoicenum_zerofill', function(value){
+
+        return value.toString().padStart(10, "0");
+    });
+
+    Vue.filter('ddmmyyyy', function(value){
+
+        return value.split(" ")[0].split("-").reverse().join('/');
+    });
+
     //<!-- Vue Components -->
     Vue.component('v-select', VueSelect.VueSelect);
 </script>
+
+
+
 
 @yield('footer-scripts')
 
