@@ -17,7 +17,7 @@
 
 @section('body')
 
-  <div v-cloak class="row justify-content-center">
+  <div v-cloak class="row justify-content-center no-print">
     <div class="col-xs-12">
       <transition name="custom-classes-transition"
                   enter-active-class="animated fadeIn faster"
@@ -237,9 +237,13 @@
         <section class="invoice">
           <div class="row">
             <div class="col-xs-12">
-              <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new Order information
-                <small class="pull-right">Date: 2/10/2014</small>
+              <h2 v-if="!is_complete" class="page-header">
+                <span><i class="fas fa-check mr-3 text-success"></i>Confirm new Order information</span>
+                {{--<small class="pull-right">Date: 2/10/2014</small>--}}
+              </h2>
+              <h2 v-else class="page-header">
+                <img src="/images/intertracnanologo.png" height="75" width="auto">
+                <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
               </h2>
             </div>
             <!-- /.col -->
@@ -269,7 +273,7 @@
 
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
-              <b>Order # </b><br>
+              <b>Order # </b>@{{ order_num }}<br>
             </div>
 
           </div>
@@ -309,7 +313,7 @@
           <div class="row">
             <div class="col-xs-6">
               <div class="row">
-                <p class="lead ml-5">Additional information</p>
+                <p class="lead ml-5 no-print">Additional information</p>
               </div>
               <p class="text-muted well well-sm no-shadow no-print" style="margin-top: 10px;">
                 Add orders are final after confirming. Payments can be made against the order number. You can print
@@ -348,7 +352,7 @@
               </div>
             </div>
           </div>
-          <div class="row no-print">
+          <div v-if="!is_complete" class="row no-print">
             <div class="col-xs-12">
               {{--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>--}}
               <button @click="back()" type="button" class="btn btn-primary" style="margin-right: 5px;">
@@ -357,6 +361,13 @@
               <button @click="save()" type="button" class="btn btn-success pull-right"><i class="fa fa-check mr-2"></i> Confirm Order
               </button>
 
+            </div>
+          </div>
+          <div v-else class="row no-print">
+            <div class="col-xs-12">
+              <button onclick="window.print()" class="btn btn-default">
+                <i class="fa fa-print"></i> Print
+              </button>
             </div>
           </div>
         </section>
@@ -410,7 +421,10 @@
             tax_amount : 0,
             customer : null,
             customers : customers,
-            is_complete : false
+            is_complete : false,
+
+            order_num : null,
+            date : null
         },
 
         watch: {
@@ -660,6 +674,8 @@
                       console.log(data);
                       if(data.status == 'success')
                           app.is_complete = true;
+                          app.order_num = data.order_num;
+                          app.date = data.date.date;
 
                     });
             },

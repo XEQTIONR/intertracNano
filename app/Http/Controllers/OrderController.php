@@ -179,7 +179,8 @@ class OrderController extends Controller
         $response = [];
 
         $response['status'] = 'success';
-
+        $response['order_num'] = $order->Order_num;
+        $response['date'] = $order->created_at;
         return $response;
 
 

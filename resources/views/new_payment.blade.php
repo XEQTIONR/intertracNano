@@ -25,7 +25,7 @@
           <h4 class="modal-title">Confirm payment</h4>
         </div>
         <div class="modal-body">
-          <p> Confirm payment of ৳@{{ amount }}. You can print the receipt after confirming</p>
+          <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
@@ -169,7 +169,7 @@
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn btn-info btn-flat">Pay</button>
+                    <button @click="showModal()"  type="button" class="btn btn-info btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
                   </span>
                 </div>
               </div>
@@ -191,7 +191,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fas fa-receipt mr-2"></i> Payment Receipt
+            <img src="/images/intertracnanologo.png" height="75" width="auto">
             <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>
           </h2>
         </div>
@@ -218,8 +218,8 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b>Invoice #@{{ invoice_num | invoicenum_zerofill}}</b><br>
-          <b>Order ID:</b> @{{ order.Order_num }}<br>
+          <b>Invoice # @{{ invoice_num | invoicenum_zerofill}}</b><br>
+          <b>Order #:</b> @{{ order.Order_num }}<br>
           <b>Account:</b> @{{ order.customer.id }}
         </div>
         <!-- /.col -->

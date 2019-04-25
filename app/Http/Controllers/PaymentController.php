@@ -30,6 +30,13 @@ class PaymentController extends Controller
     {
 
       $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
+
+      foreach($orders as $order)
+      {
+        $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+      }
+
+
       return view('new_payment', compact('orders'));
     }
 
