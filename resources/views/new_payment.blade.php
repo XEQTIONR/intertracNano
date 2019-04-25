@@ -194,6 +194,7 @@
             <img src="/images/intertracnanologo.png" height="75" width="auto">
             <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>
           </h2>
+          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>
         </div>
         <!-- /.col -->
       </div>

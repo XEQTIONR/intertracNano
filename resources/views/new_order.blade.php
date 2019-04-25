@@ -245,6 +245,7 @@
                 <img src="/images/intertracnanologo.png" height="75" width="auto">
                 <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
               </h2>
+              <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>
             </div>
             <!-- /.col -->
           </div>
