@@ -107,34 +107,30 @@ class Order extends Model
     public static function tyresRemaining()
     {
       //tyres_remaining.sql
-      $remaining = DB::table('container_contents')
-                  ->select('Container_num', 'BOL','tyre_id','qty')
-                  ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-                                      FROM order_contents
-                                      GROUP BY container_num, bol, tyre_id) AS B'),
+      $remaining = DB::select('
+      
+      SELECT T.tyre_id, T.brand, T.size, T.pattern, T.lisi, E.qtyavailable AS in_stock
+      FROM	(SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0)) AS qtyavailable  
+	          FROM  (SELECT Container_num, BOL, tyre_id, SUM(qty) as supplyqty 
+		              FROM container_contents
+		              GROUP BY Container_num, BOL, tyre_id) AS C
 
-                            function($join)
-                            {
-                              $join->on('container_contents.tyre_id','=','B.tyre_id')
-                                ->on('container_contents.BOL','=','B.bol')
-                                ->on('container_contents.Container_num','=','B.container_num');
+		              LEFT JOIN
 
-                            })
-                  ->select('container_contents.Container_num',
-                            'container_contents.BOL',
-                            'container_contents.tyre_id',
-                            'container_contents.qty AS qty_bought',
-                            DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
-                            DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
-                            )
-                  ->join('tyres', 'container_contents.tyre_id','=','tyres.tyre_id')
-                  ->select('container_contents.tyre_id', 'tyres.brand', 'tyres.size', 'tyres.pattern', 'tyres.lisi' , DB::raw('SUM(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock'))
-                  ->groupBy('container_contents.tyre_id')
+		              (SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
+		              FROM order_contents
+		              GROUP BY container_num, bol, tyre_id) AS B
+	
+		              ON (C.tyre_id = B.tyre_id AND C.BOL = B.bol AND C.Container_num = B.container_num)
+	          GROUP BY tyre_id) E, tyres T	
+      WHERE T.tyre_id = E.tyre_id
+      
+      ');
 
 
 
 
-                  ->get();
+         //         ->get();
 
                   //dd($remaining->toSql());
 
