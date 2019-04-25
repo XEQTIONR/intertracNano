@@ -1,7 +1,7 @@
 <table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
-    <th>Invoice #</th>
+    <th>Transaction ID</th>
     <th>Order #</th>
     <th>Amount Paid (&#2547)</th>
     <th>Created</th>
@@ -11,7 +11,7 @@
 <tbody>
   @foreach ($payments as $payment)
     <tr>
-      <td class="text-center">{{$payment->invoice_num}}</td>
+      <td class="text-center">{{$payment->transaction_id}}</td>
       <td class="text-center"><a href="orders/{{$payment->Order_num}}">{{$payment->Order_num}}</a></td>
       <td class="text-right">{{$payment->payment_amount}}</td>
       <td class="text-center">{{$payment->created_at}}</td>

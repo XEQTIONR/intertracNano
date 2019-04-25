@@ -557,7 +557,7 @@
         return value.split("-").reverse().join("/");
     });
 
-    Vue.filter('invoicenum_zerofill', function(value){
+    Vue.filter('transactionid_zerofill', function(value){
 
         return value.toString().padStart(10, "0");
     });

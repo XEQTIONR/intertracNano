@@ -142,7 +142,7 @@
                 <table class="table table-bordered  table-responsive">
                   <thead>
                     <tr>
-                      <th class="col-xs-1">Invoice #</th>
+                      <th class="col-xs-1">Transaction Id</th>
                       <th class="col-xs-3">Payment Date</th>
                       <th class="col-xs-2">Amount Paid</th>
                       <th class="col-xs-2"></th>
@@ -152,7 +152,7 @@
                   </thead>
                   <tbody v-if="order && order.payments">
                     <tr  v-for="(payment, index) in order.payments">
-                      <td class="col-xs-1"> @{{ payment.invoice_num |invoicenum_zerofill}}</td>
+                      <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                       <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                       <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
                       <td class="col-xs-2"></td>
@@ -218,9 +218,9 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b>Invoice # @{{ invoice_num | invoicenum_zerofill}}</b><br>
-          <b>Order #:</b> @{{ order.Order_num }}<br>
-          <b>Account:</b> @{{ order.customer.id }}
+          <b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>
+          <b>Order #</b> @{{ order.Order_num }}<br>
+          <b>Account :</b> @{{ order.customer.id }}
         </div>
         <!-- /.col -->
       </div>
@@ -319,7 +319,7 @@
             amount : 0,
             numberToWords : numberToWords,
             paid : false,
-            invoice_num : null,
+            transaction_id : null,
             payment_at : null
         },
 
@@ -499,7 +499,7 @@
                         {
                             app.order.payments.push(data.payment);
                             app.paid = true;
-                            app.invoice_num = data.payment.invoice_num;
+                            app.transaction_id = data.payment.transaction_id;
                             app.payment_at = data.payment.created_at;
                             //app.amount = 0;
                         }
