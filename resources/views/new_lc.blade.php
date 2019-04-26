@@ -10,7 +10,7 @@
 @section('level')
   @component('components.level',
     ['crumb' => 'Letters of Credit',
-    'subcrumb' => 'An a LC',
+    'subcrumb' => 'Add a LC',
      'link' => route('lcs.index')])
   @endcomponent
 @endsection
@@ -234,10 +234,10 @@
                     <div class="col-xs-12">
                     <div class="form-group">
                       <label>Notes</label>
-                      {{--<div class="input-group">--}}
-                      {{--<span class="input-group-addon">F50</span>--}}
+                      <div class="input-group">
+                      <span class="input-group-addon"> <i class="far fa-clipboard-list" style="font-size: 20px"></i></span>
                       <textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
-                      {{--</div>--}}
+                      </div>
 
                     </div>
                     <span class="help-block"></span>

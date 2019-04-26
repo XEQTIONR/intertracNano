@@ -49,36 +49,41 @@ class TyreController extends Controller
     {
         //VALIDATE
 
-        $validator=Validator::make($request->all(),[
-          'Brand' => 'required|alpha_num',
-          'Size' => 'required|string',
-          'Pattern' => 'required|string',
-        ]);
-
-        if($validator->fails())
-        {
-          return redirect('tyres/create')
-                  ->withErrors($validator)
-                  ->withInput();
-        }
-
-        else
-        {
+//        $validator=Validator::make($request->all(),[
+//          'Brand' => 'required|alpha_num',
+//          'Size' => 'required|string',
+//          'Pattern' => 'required|string',
+//        ]);
+//
+//        if($validator->fails())
+//        {
+//          return redirect('tyres/create')
+//                  ->withErrors($validator)
+//                  ->withInput();
+//        }
+//
+//        else
+//        {
           //ALLOCATE
           $tyre = new Tyre;
 
           //INITIALIZE
-          $tyre->brand = Str::upper($request->Brand);
-          $tyre->size = Str::upper($request->Size);
-          $tyre->lisi = Str::upper($request->Lisi);
-          $tyre->pattern = Str::upper($request->Pattern);
+          $tyre->brand = Str::upper($request->brand);
+          $tyre->size = Str::upper($request->size);
+          $tyre->lisi = Str::upper($request->lisi);
+          $tyre->pattern = Str::upper($request->pattern);
 
           //STORE
           $tyre->save();
 
           //REDIRECT
-          return redirect('/tyres/'.$tyre->tyre_id);
-        }
+          $response = array();
+          $response['status'] = 'success';
+          $response['tyre_id'] = $tyre->tyre_id;
+
+
+          return $response;
+//        }
 
     }
 

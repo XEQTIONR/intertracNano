@@ -336,7 +336,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{  route('tyres.index')  }}"><i class="fa fa-angle-right"></i>View tyre catalog</a></li>
                         <li><a href="{{  route('stock')  }}"><i class="fa fa-angle-right"></i>View current stock</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Add a tyre</a></li>
+                        <li><a href="{{ route('tyres.create') }}"><i class="fa fa-angle-right"></i>Add a tyre</a></li>
 
                     </ul>
                 </li>
