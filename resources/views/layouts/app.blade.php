@@ -352,7 +352,7 @@
               </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Add a customer</a></li>
+                        <li><a href="{{ route('customers.create')}} "><i class="fa fa-angle-right"></i>Add a customer</a></li>
                         <li><a href="{{  route('customers.index')  }}"><i class="fa fa-angle-right"></i>View customers</a></li>
                     </ul>
                 </li>

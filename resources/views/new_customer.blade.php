@@ -55,7 +55,7 @@
               {{--{{ csrf_field() }}--}}
               <div class="row justify-content-center">
                 <div class="col-xs-12">
-                  <div class="form-group">
+                  <div class="form-group" :class="{ 'has-error' : errors.name && (name== null || name=='') }">
                     <label for="inputBrand">Full Name</label>
                     <div class="input-group">
                     <span class="input-group-addon">
@@ -65,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" :class="{ 'has-error' : errors.address && (address== null || address=='') }">
                     <label for="inputSize">Address</label>
                     <div class="input-group">
                     <span class="input-group-addon"><i class="fas fa-store-alt"></i> </span>
@@ -74,14 +74,14 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" :class="{ 'has-error' : errors.phone && (phone== null || phone=='') }">
                     <label for="inputLisi">Phone #</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="fas fa-phone" style="transform : rotate(90deg)"></i>
                         {{--<i class="fas fa-phone"></i>--}}
                       </span>
-                    <input v-model="phone" type="text" class="form-control" name="Lisi" id="inputLisi" value="{{old('Lisi')}}">
+                    <input v-model="phone" type="text" class="form-control" name="Lisi" placeholder="Enter customer's contact number">
                     </div>
                   </div>
 
@@ -91,7 +91,7 @@
                       <span class="input-group-addon">
                         <i class="far fa-clipboard-list" style="font-size: 20px"></i>
                       </span>
-                      <textarea v-model="notes" type="text" class="form-control" rows="3" name="Pattern" id="inputPattern" value="{{old('Pattern')}}" required>
+                      <textarea v-model="notes" type="text" class="form-control" rows="3" name="Pattern" id="inputPattern" placeholder="Any additional information about this customer (Optional)">
                       </textarea>
                     </div>
                   </div>
@@ -128,14 +128,35 @@
               address     : null,
               notes       : null,
               phone       : null,
-              is_complete : false
+              is_complete : false,
+              errors      : {}
           },
 
           methods : {
 
               validate : function(){
 
-                  return true;
+                  this.errors = {};
+
+                  var is_error = false;
+
+                  if(this.name == null || this.name == "")
+                  {
+                      this.errors.name = "Enter the customer name";
+                      is_error = true;
+                  }
+                  if(this.address == null || this.address == "")
+                  {
+                      this.errors.address = "Enter the customer name";
+                      is_error = true;
+                  }
+                  if(this.phone == null || this.phone == "")
+                  {
+                      this.errors.phone = "Enter the customer name";
+                      is_error = true;
+                  }
+
+                  return is_error;
               },
 
               save : function (){
