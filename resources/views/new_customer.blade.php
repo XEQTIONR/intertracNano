@@ -156,7 +156,7 @@
                       is_error = true;
                   }
 
-                  return is_error;
+                  return !is_error;
               },
 
               save : function (){

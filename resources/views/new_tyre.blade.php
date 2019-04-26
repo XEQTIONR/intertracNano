@@ -57,28 +57,28 @@
               {{--{{ csrf_field() }}--}}
             <div class="row justify-content-center">
               <div class="col-xs-12">
-              <div class="form-group">
+              <div class="form-group" :class="{ 'has-error' : errors.brand && ( brand==null || brand== '')}">
                 <label for="inputBrand">Brand</label>
                 {{--<div class="input-group">--}}
                   <input v-model="brand" type="text" class="form-control" name="Brand" id="inputBrand" value="{{old('Brand')}}" required>
                 {{--</div>--}}
               </div>
 
-              <div class="form-group">
+              <div class="form-group" :class="{ 'has-error' : errors.size && ( size==null || size== '')}">
                 <label for="inputSize">Size Code</label>
                 {{--<div class="input-group">--}}
                   <input v-model="size" type="text" class="form-control" name="Size" id="inputSize" value="{{old('Size')}}" required>
                 {{--</div>--}}
               </div>
 
-              <div class="form-group">
+              <div class="form-group" :class="{ 'has-error' : errors.lisi && ( lisi==null || lisi== '')}">
                 <label for="inputLisi">Li/Si</label>
                 {{--<div class="input-group">--}}
                   <input v-model="lisi" type="text" class="form-control" name="Lisi" id="inputLisi" value="{{old('Lisi')}}">
                 {{--</div>--}}
               </div>
 
-              <div class="form-group">
+              <div class="form-group" :class="{ 'has-error' : errors.pattern && ( pattern==null || pattern== '')}">
                 <label for="inputPattern">Pattern Code</label>
                 {{--<div class="input-group">--}}
                   <input v-model="pattern" type="text" class="form-control" name="Pattern" id="inputPattern" value="{{old('Pattern')}}" required>
@@ -117,14 +117,40 @@
          size         : null,
          lisi         : null,
          pattern      : null,
-         is_complete  : false
+         is_complete  : false,
+         errors       : {}
      },
 
      methods : {
 
          validate : function(){
 
-             return true;
+             this.errors = {};
+
+             var is_error = false;
+
+             if(this.brand == null || this.brand == "")
+             {
+                 this.errors.brand = "Enter the customer name";
+                 is_error = true;
+             }
+             if(this.size == null || this.size == "")
+             {
+                 this.errors.size = "Enter the customer name";
+                 is_error = true;
+             }
+             if(this.pattern == null || this.pattern == "")
+             {
+                 this.errors.pattern = "Enter the customer name";
+                 is_error = true;
+             }
+             if(this.lisi == null || this.lisi == "")
+             {
+                 this.errors.lisi = "Enter the customer name";
+                 is_error = true;
+             }
+
+             return !is_error;
          },
 
          save : function (){
