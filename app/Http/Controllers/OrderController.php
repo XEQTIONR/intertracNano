@@ -97,6 +97,19 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function atest(){
+      return Order::tyresRemainingInContainers();
+    }
+
+    public function btest(){
+      return Order::tyresRemaining();
+    }
+
+    public function ctest(){
+      return Order::tyresRemainingInContainers2();
+    }
+
     public function store(Request $request)
     {
 
@@ -115,7 +128,7 @@ class OrderController extends Controller
 
         $order_contents = $request->input('order_contents');
 
-        $tyre_remaining_cont = Order::tyresRemainingInContainers();
+        $tyre_remaining_cont = Order::tyresRemainingInContainers2();
 
         $new_contents = array();
 
