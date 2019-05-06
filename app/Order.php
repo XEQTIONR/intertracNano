@@ -75,7 +75,7 @@ class Order extends Model
     {
       $remaining = DB::select('
       
-                  SELECT * , (qty_bought - qty_sold) AS in_stock FROM
+                  SELECT C.* , IFNULL((qty_bought - qty_sold), qty_bought) AS in_stock FROM
                   (SELECT Container_num, BOL, tyre_id, SUM(qty) as qty_bought, MIN(created_at) as created_at 
 		              FROM container_contents
 		              GROUP BY Container_num, BOL, tyre_id) AS C
