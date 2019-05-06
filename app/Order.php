@@ -71,39 +71,8 @@ class Order extends Model
 
 
 //HELPER FUNCTIONS
-    public static function tyresRemainingInContainers2()
+    public static function tyresRemainingInContainers()
     {
-//      SELECT T.tyre_id, T.brand, T.size, T.pattern, T.lisi, E.qtyavailable AS in_stock
-//      FROM	(SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0)) AS qtyavailable
-//	          FROM  (SELECT Container_num, BOL, tyre_id, SUM(qty) as supplyqty
-//		              FROM container_contents
-//		              GROUP BY Container_num, BOL, tyre_id) AS C
-//
-//		              LEFT JOIN
-//
-//    (SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-//		              FROM order_contents
-//		              GROUP BY container_num, bol, tyre_id) AS B
-//
-//		              ON (C.tyre_id = B.tyre_id AND C.BOL = B.bol AND C.Container_num = B.container_num)
-//	          GROUP BY tyre_id) E, tyres T
-//      WHERE T.tyre_id = E.tyre_id
-
-//      SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0)) AS qtyavailable
-//	          FROM  (SELECT Container_num, BOL, tyre_id, SUM(qty) as supplyqty
-//		              FROM container_contents
-//		              GROUP BY Container_num, BOL, tyre_id) AS C
-//
-//		              LEFT JOIN
-//
-//    (SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-//		              FROM order_contents
-//		              GROUP BY container_num, bol, tyre_id) AS B
-//
-//		              ON (C.tyre_id = B.tyre_id AND C.BOL = B.bol AND C.Container_num = B.container_num)
-//	    GROUP BY tyre_id
-
-
       $remaining = DB::select('
       
                   SELECT * , (qty_bought - qty_sold) AS in_stock FROM
@@ -126,39 +95,7 @@ class Order extends Model
       return collect($remaining);
     }
 
-
-    public static function tyresRemainingInContainers()
-    {
-      $remaining = DB::table('container_contents')
-                  ->select('Container_num', 'BOL','tyre_id','qty','created_at')
-                  ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-                                      FROM order_contents
-                                      GROUP BY container_num, bol, tyre_id) AS B'),
-
-                            function($join)
-                            {
-                              $join->on('container_contents.tyre_id','=','B.tyre_id')
-                                ->on('container_contents.BOL','=','B.bol')
-                                ->on('container_contents.Container_num','=','B.container_num');
-
-                            })
-                  ->select('container_contents.Container_num',
-                            'container_contents.BOL',
-                            'container_contents.tyre_id',
-                            'container_contents.created_at',
-                            'container_contents.qty AS qty_bought',
-                            DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
-                            DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
-                            )
-//                  ->where('container_contents.tyre_id', $id)
-//                  ->oldest()
-                  ->orderBy('created_at', 'ASC')
-                  ->get();
-                  // depends on tyres not oversold from a container
-                  //dd($remaining->toSql());
-
-        return $remaining;
-    }
+    
 
     public static function tyresRemaining()
     {
