@@ -53,6 +53,8 @@ Route::get('/orders/json/{order_num}', 'OrderController@showJSON');
 
 Route::resource('orders','OrderController');
 
+Route::get('returns', 'ReturnController@create')->name('returns.create');
+
 
 
 Route::resource('payments','PaymentController');
@@ -96,40 +98,43 @@ Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalan
 Route::get('reports/profit', 'ReportController@showProfitReport');
 
 
+Route::get('test', 'OrderController@atest');
+Route::get('test2', 'OrderController@btest');
+Route::get('test3', 'OrderController@ctest');
 
-Route::get('test', function()
-{
-  $orders = App\Order::all();
-  $customers = collect();
-  //$num_customers=0;
-  $num_orders=0;
-  $total_owed=0;
-  $total_value=0;
-
-  foreach ($orders as $order)
-  {
-    $order->totalValueBeforeDiscountAndTax();
-    $order->calculateAndSetDiscount();
-    $order->calculateAndSetTax();
-    $order->calculatePayable();
-    $order->final_value = $order->subtotal + $order->totalTax - $order->totalDiscount;
-
-    if ($order->payable>0)
-    {
-
-      $customers->push($order->customer_id);
-      $num_orders++;
-      $total_owed+= $order->payable;
-      $total_value+= $order->final_value;
-    }
-    //$customer = $order->customer()->get();
-    //$order->customer_id = $order->customer()->id;
-  }
-
-  $unique = $customers->unique();
-  $num_customers = count($unique);
-  return [$orders, $customers, $unique, $total_owed, $total_value, $num_orders, $num_customers];
-});
+//Route::get('test', function()
+//{
+//  $orders = App\Order::all();
+//  $customers = collect();
+//  //$num_customers=0;
+//  $num_orders=0;
+//  $total_owed=0;
+//  $total_value=0;
+//
+//  foreach ($orders as $order)
+//  {
+//    $order->totalValueBeforeDiscountAndTax();
+//    $order->calculateAndSetDiscount();
+//    $order->calculateAndSetTax();
+//    $order->calculatePayable();
+//    $order->final_value = $order->subtotal + $order->totalTax - $order->totalDiscount;
+//
+//    if ($order->payable>0)
+//    {
+//
+//      $customers->push($order->customer_id);
+//      $num_orders++;
+//      $total_owed+= $order->payable;
+//      $total_value+= $order->final_value;
+//    }
+//    //$customer = $order->customer()->get();
+//    //$order->customer_id = $order->customer()->id;
+//  }
+//
+//  $unique = $customers->unique();
+//  $num_customers = count($unique);
+//  return [$orders, $customers, $unique, $total_owed, $total_value, $num_orders, $num_customers];
+//});
 
 
 

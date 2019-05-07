@@ -303,7 +303,7 @@
                     <ul class="treeview-menu">
                         <li><a href="{{  route('orders.index')  }}"><i class="fa fa-angle-right"></i>View orders</a></li>
                         <li><a href="{{  route('orders.create')  }}"><i class="fa fa-angle-right"></i>Create an order</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i>Returns</a></li>
+                        <li><a href="{{ route('returns.create') }}"><i class="fa fa-angle-right"></i>Returns</a></li>
                     </ul>
                 </li>
 
@@ -551,6 +551,10 @@
     //<!-- Vue Filters -->
     Vue.filter('currency', function (value) {
         return parseFloat(value).toFixed(2);
+    });
+
+    Vue.filter('percentage_rounded', function (value) {
+        return parseFloat(value).toFixed(5);
     });
 
     Vue.filter('date', function(value){
