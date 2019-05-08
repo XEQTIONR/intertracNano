@@ -149,15 +149,15 @@
                           <th class="col-xs-2">Qty</th>
                           <th class="col-xs-2">Unit Price</th>
                           {{--<th class="col-xs-1">Percentage</th>--}}
-                          <th class="col-xs-2 text-right">Subtotal RETER</th>
+                          <th class="col-xs-2 text-right">Subtotal</th>
                           <th class="col-xs-2"></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr v-for="(item, index) in filtered">
-                          <td class="col-xs-1">@{{ index + 1 }}</td>
+                          <td class="col-xs-1">@{{ item.index + 1 }}</td>
                           <td class="col-xs-3">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
-                          <td class="col-xs-2">@{{ item.qty }}</td>
+                          <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="fas fa-arrow-alt-to-top ml-5"></i></td>
                           <td class="col-xs-2">@{{ item.unit_price }}</td>
                           <td class="col-xs-2 text-right">@{{ parseFloat(item.unit_price) * parseInt(item.qty) }}</td>
                           <td class="col-xs-2"></td>
@@ -348,7 +348,7 @@
               order : null,
               five : 5,
               returns : [],
-              filtered : [],
+              // filtered : [],
               amount : 0,
               numberToWords : numberToWords,
               paid : false,
@@ -366,15 +366,26 @@
                       this.helperPositiveFloat(new_val, "amount");
               },
 
-              returns : function(new_val){
-
-                  this.filtered = new_val.filter(function(value){
-                     return typeof value != "undefined";
-                  });
-              }
+              // returns : function(new_val){
+              //
+              //     this.filtered = new_val.filter(function(value){
+              //        return typeof value != "undefined";
+              //     });
+              // }
           },
 
           computed : {
+
+              filtered : function(){
+
+                  if(this.returns.length)
+                  {
+                      return this.returns.filter(function(value){
+                          return typeof value != "undefined";
+                      });
+                  }
+                  return [];
+              },
 
               toWordsPoisha : function(){
 
@@ -593,9 +604,8 @@
               returnItem : function(item, index){
                   if(typeof this.returns[index] == "undefined")
                   {
-                      console.log('in undef');
                       var entry = {};
-                      var array = this.returns.slice();
+                      var array = this.returns.slice(); //copy
                       entry.Order_num = item.Order_num;
                       entry.tyre_id = item.tyre_id;
                       entry.brand = item.tyre.brand;
@@ -607,17 +617,66 @@
                       entry.unit_price = item.unit_price;
                       entry.qty = 1;
 
+                      entry.index = index;
+
                       array[index] = entry;
                       this.returns = array;
-                      console.log('exit undef');
                   }
                   else
                   {
-                      console.log("ELSE BLOCK. INDEX : " + index );
                       if(this.returnCount(index) < this.order.order_contents[index].qty)
                           this.returns[index].qty++;
                   }
+              },
+
+              putBack : function(index){
+
+                  console.log("PUT BACK : " + index);
+                  var array = this.returns.slice();
+
+                  array[index].qty--;
+
+                  if(array[index].qty<=0)
+                      array[index] = undefined;
+
+                  this.returns = array;
               }
+
+
+              // putBack : function(index){
+              //
+              //     if(this.filtered[index].qty>1)
+              //     {
+              //         this.filtered[index].qty--;
+              //
+              //         // if(this.filtered[index].qty == 0)
+              //         //     this.filtered.splice(index, 1);
+              //     }
+              //     else if(this.filtered[index].qty == 1)
+              //     {
+              //         var i = 0 ;
+              //         var j = 0;
+              //         var found = false;
+              //
+              //         while(i<=index)
+              //         {
+              //             if(typeof this.returns[j] == "undefined")
+              //             {
+              //
+              //             }
+              //             else
+              //             {
+              //                 j++;
+              //             }
+              //
+              //             i++;
+              //         }
+              //         console.log("J = " + j);
+              //         console.log("index = " + index);
+              //         this.$set(this.returns, j-1, undefined);
+              //         //this.returns[j-1] = null;
+              //     }
+              // },
 
 
           },
