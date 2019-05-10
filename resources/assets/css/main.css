@@ -325,6 +325,10 @@ a .fab {
 .border-dash {
   border: 2px solid red;
 }
+.strikethrough-red {
+  text-decoration: line-through;
+  color: red;
+}
 .justify-content-center {
   -webkit-box-pack: center;
       -ms-flex-pack: center;

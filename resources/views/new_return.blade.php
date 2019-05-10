@@ -94,13 +94,13 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr v-for="(item, index) in order.order_contents">
+                      <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
                         <td class="col-xs-1">@{{ index+1 }}</td>
                         <td class="col-xs-3">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
-                        <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i @click="returnItem(item, index)" class="fas fa-arrow-alt-to-bottom ml-5"></i></td>
+                        <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i v-if="(item.qty - returnCount(index))" @click="returnItem(item, index)" class="fas fa-arrow-alt-to-bottom ml-5"></i></td>
                         <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
-                        <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty) | currency}}</td>
+                        <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty- returnCount(index)) | currency}}</td>
                         <td class="col-xs-2"></td>
                       </tr>
                       <tr>
@@ -108,23 +108,23 @@
                         <th class="col-xs-3">Total</th>
                         <th class="col-xs-2"></th>
                         <th class="col-xs-2"></th>
-                        <th class="col-xs-2 text-right">৳ @{{ subTotal | currency }}</th>
+                        <th class="col-xs-2 text-right">৳ @{{ subTotal - subTotalReturn | currency }}</th>
                         <th class="col-xs-2"></th>
                       </tr>
                       <tr>
                         <th></th>
-                        <th>Discount</th>
+                        <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
+                        <th> <span><i class="fas fa-plus mr-3"></i> ৳ @{{ order.discount_amount }}</span></th>
                         <th></th>
-                        <th></th>
-                        <th class="text-right">৳ @{{ discountTotal | currency }}</th>
+                        <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
                         <th></th>
                       </tr>
                       <tr>
                         <th></th>
-                        <th>Tax</th>
+                        <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
+                        <th> <span><i class="fas fa-plus mr-3"></i> ৳ @{{ order.tax_amount }}</span></th>
                         <th></th>
-                        <th></th>
-                        <th class="text-right">৳ @{{ taxTotal | currency }}</th>
+                        <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
                         <th></th>
                       </tr>
                       <tr>
@@ -132,14 +132,14 @@
                         <th class="text-uppercase">Grand Total</th>
                         <th></th>
                         <th></th>
-                        <th class="text-right">৳ @{{ grandTotal | currency }}</th>
+                        <th class="text-right">৳ @{{ subTotal - subTotalReturn - discountTotal + taxTotal  | currency }}</th>
                         <th></th>
                       </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div class="row">
+                <div v-if="order" class="row">
                   <div class="col-xs-12">
                     <table class="table table-striped">
                       <thead>
@@ -161,6 +161,39 @@
                           <td class="col-xs-2">@{{ item.unit_price }}</td>
                           <td class="col-xs-2 text-right">@{{ parseFloat(item.unit_price) * parseInt(item.qty) }}</td>
                           <td class="col-xs-2"></td>
+                        </tr>
+
+                        <tr>
+                          <td class="col-xs-1"></td>
+                          <td class="col-xs-3">Total</td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"> ৳ @{{ subTotalReturn | currency }}</td>
+                        </tr>
+                        <tr>
+                          <td class="col-xs-1"></td>
+                          <td class="col-xs-3">Discount Adjusment</td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"> ৳ @{{ discountReturnPercentAmount | currency }}</td>
+                        </tr>
+                        <tr>
+                          <td class="col-xs-1"></td>
+                          <td class="col-xs-3">Tax Refund</td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"> ৳ @{{ taxReturnPercentAmount | currency }}</td>
+                        </tr>
+                        <tr>
+                          <td class="col-xs-1"></td>
+                          <td class="col-xs-3">Grand Total Return</td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"></td>
+                          <td class="col-xs-2"> ৳ @{{ grandTotalReturn | currency }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -346,9 +379,7 @@
           data: {
               orders : Object.values(orders), // object to array
               order : null,
-              five : 5,
               returns : [],
-              // filtered : [],
               amount : 0,
               numberToWords : numberToWords,
               paid : false,
@@ -364,14 +395,7 @@
                       this.amount = this.grandTotal- this.paymentsTotal();
                   else
                       this.helperPositiveFloat(new_val, "amount");
-              },
-
-              // returns : function(new_val){
-              //
-              //     this.filtered = new_val.filter(function(value){
-              //        return typeof value != "undefined";
-              //     });
-              // }
+              }
           },
 
           computed : {
@@ -463,6 +487,17 @@
 
               },
 
+              subTotalReturn : function(){
+
+                  var ret = 0;
+
+                  if(this.filtered.length)
+                      for(var i = 0; i< this.filtered.length; i++)
+                          ret += (parseFloat(this.filtered[i].unit_price) * parseFloat(this.filtered[i].qty));
+
+                  return ret;
+              },
+
               discountTotal : function() {
 
                   var discount_percentage_amount = 0;
@@ -470,11 +505,27 @@
 
                   if(app.order)
                   {
-                      discount_percentage_amount = app.subTotal * parseFloat(app.order.discount_percent)/100.0;
+                      discount_percentage_amount = (app.subTotal - app.subTotalReturn) * parseFloat(app.order.discount_percent)/100.0;
                       discount_amount_amount = parseFloat(app.order.discount_amount);
                   }
 
                   return (discount_percentage_amount + discount_amount_amount);
+              },
+
+              discountReturnPercentAmount : function(){
+
+                  var discount_percentage_amount = 0;
+                  //var discount_amount_amount = 0;
+
+                  if(app.order)
+                  {
+                      discount_percentage_amount = app.subTotalReturn * parseFloat(app.order.discount_percent)/100.0;
+                      //discount_amount_amount = parseFloat(app.order.discount_amount);
+                  }
+
+                  return discount_percentage_amount;
+                  //return (discount_percentage_amount + discount_amount_amount);
+
               },
 
               taxTotal : function() {
@@ -484,15 +535,35 @@
 
                   if(app.order)
                   {
-                      tax_percentage_amount = app.subTotal * parseFloat(app.order.tax_percentage)/100.0;
+                      tax_percentage_amount = (app.subTotal- app.subTotalReturn) * parseFloat(app.order.tax_percentage)/100.0;
                       tax_amount_amount = parseFloat(app.order.tax_amount);
                   }
 
                   return (tax_percentage_amount + tax_amount_amount);
               },
 
+              taxReturnPercentAmount : function() {
+
+                  var tax_percentage_amount = 0;
+                  //var tax_amount_amount = 0;
+
+                  if(app.order)
+                  {
+                      tax_percentage_amount = app.subTotalReturn * parseFloat(app.order.tax_percentage)/100.0;
+                      //tax_amount_amount = parseFloat(app.order.tax_amount);
+                  }
+
+                  return tax_percentage_amount;
+                  //return (tax_percentage_amount + tax_amount_amount);
+              },
+
               grandTotal : function(){
                   return this.subTotal - this.discountTotal + this.taxTotal
+              },
+
+              grandTotalReturn : function(){
+
+                  return this.subTotalReturn - this.discountReturnPercentAmount + this.taxReturnPercentAmount;
               },
 
               amountToWords : function(){
@@ -641,44 +712,6 @@
 
                   this.returns = array;
               }
-
-
-              // putBack : function(index){
-              //
-              //     if(this.filtered[index].qty>1)
-              //     {
-              //         this.filtered[index].qty--;
-              //
-              //         // if(this.filtered[index].qty == 0)
-              //         //     this.filtered.splice(index, 1);
-              //     }
-              //     else if(this.filtered[index].qty == 1)
-              //     {
-              //         var i = 0 ;
-              //         var j = 0;
-              //         var found = false;
-              //
-              //         while(i<=index)
-              //         {
-              //             if(typeof this.returns[j] == "undefined")
-              //             {
-              //
-              //             }
-              //             else
-              //             {
-              //                 j++;
-              //             }
-              //
-              //             i++;
-              //         }
-              //         console.log("J = " + j);
-              //         console.log("index = " + index);
-              //         this.$set(this.returns, j-1, undefined);
-              //         //this.returns[j-1] = null;
-              //     }
-              // },
-
-
           },
 
           mounted: function(){
