@@ -132,7 +132,7 @@
                         <th class="text-uppercase">Grand Total</th>
                         <th></th>
                         <th></th>
-                        <th class="text-right">৳ @{{ subTotal - subTotalReturn - discountTotal + taxTotal  | currency }}</th>
+                        <th class="text-right">৳ @{{ grandTotal - subTotalReturn  | currency }}</th>
                         <th></th>
                       </tr>
                       </tbody>
@@ -158,42 +158,42 @@
                           <td class="col-xs-1">@{{ item.index + 1 }}</td>
                           <td class="col-xs-3">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
                           <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="fas fa-arrow-alt-to-top ml-5"></i></td>
-                          <td class="col-xs-2">@{{ item.unit_price }}</td>
-                          <td class="col-xs-2 text-right">@{{ parseFloat(item.unit_price) * parseInt(item.qty) }}</td>
+                          <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
+                          <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>
                           <td class="col-xs-2"></td>
                         </tr>
 
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3">Total</td>
+                          <td class="col-xs-3"><b>Total</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
+                          <td class="col-xs-2 text-right"><b>৳ @{{ subTotalReturn | currency }}</b></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2"> ৳ @{{ subTotalReturn | currency }}</td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3">Discount Adjusment</td>
+                          <td class="col-xs-3"><b>Discount Adjusment</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
+                          <td class="col-xs-2 text-right"><i class="fas fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2"> ৳ @{{ discountReturnPercentAmount | currency }}</td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3">Tax Refund</td>
+                          <td class="col-xs-3"><b>Tax Refund</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
+                          <td class="col-xs-2 text-right"><i class="fas fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2"> ৳ @{{ taxReturnPercentAmount | currency }}</td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3">Grand Total Return</td>
+                          <td class="col-xs-3 text-uppercase"><b>Total Refund</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
+                          <td class="col-xs-2 text-right"><b>৳ @{{ grandTotalReturn | currency }}</b></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2"> ৳ @{{ grandTotalReturn | currency }}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -225,20 +225,6 @@
                     </table>
                   </div>
                 </div>
-                <div v-if="order" class="row justify-content-center">
-                  <div class="col-xs-12 col-md-4">
-                    <div class="input-group input-group-lg">
-                      <span class="input-group-addon"><b>৳</b></span>
-                      <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
-                      <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn btn-info btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
-                  </span>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="amount>0" class="row justify-content-center">
-                  @{{ amountToWords }}  <span class="mx-1" v-html="toWordsPoisha"></span> Taka only
-                </div>
               </div>
 
             </form>
@@ -246,122 +232,122 @@
         </div>
       </div>
     </div>
-    <div v-else key="1" class="row justify-content-center">
-      <div class="col-xs-12 col-md-8">
-        <section  class="invoice">
-          <!-- title row -->
-          <div class="row">
-            <div class="col-xs-12">
-              <h2 class="page-header">
-                <img src="/images/intertracnanologo.png" height="75" width="auto">
-                <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>
-              </h2>
-              <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- info row -->
-          <div class="row invoice-info">
-            <div class="col-sm-4 invoice-col">
-              Payment By
-              <address>
-                <strong v-text="order.customer.name"></strong><br>
-                <span v-html="order.customer.address"></span><br>
-                <span v-text="order.customer.phone"></span>
-              </address>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              Paid To
-              <address>
-                <strong>IntertracNano</strong><br>
-                7/5 Ring Road Shyamoli,<br>
-                Dhaka 1207
-              </address>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-4 invoice-col">
-              <b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>
-              <b>Order #</b> @{{ order.Order_num }}<br>
-              <b>Account :</b> @{{ order.customer.id }}
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-          <div class="row justify-content-center">
-            <div class="col-xs-3">
-              <h4>Amount Paid</h4>
-            </div>
-            <div class="col-xs-7" style="border-bottom : 2px solid black">
-              <h3 class="text-center">৳ @{{ amount | currency }}</h3>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <h3 class="text-center text-capitalize"> @{{ amountToWords }} <span class="mx-2" v-html="toWordsPoisha"></span> taka only</h3>
-            </div>
-          </div>
-          <!-- Table row -->
-          <div class="row">
-            <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
-                <thead>
-                <tr>
-                  <th>Order Total</th>
-                  <th></th>
-                  <th>৳ <span style="float :right">@{{ grandTotal | currency }}</span></th>
-                  <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <th>Previous Payments Total</th>
-                  <td><i class="fas fa-minus"></i></td>
-                  <td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Current Payment</th>
-                  <td><i class="fas fa-minus"></i></td>
-                  <td>৳ <span style="float :right">@{{ amount | currency }}</span></td>
-                  <td></td>
-                </tr>
-                <tr style="border-top : 2px solid black">
-                  <th>Balance</th>
-                  <td></td>
-                  <td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() | currency }}</span></td>
-                  <td></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
+    {{--<div v-else key="1" class="row justify-content-center">--}}
+      {{--<div class="col-xs-12 col-md-8">--}}
+        {{--<section  class="invoice">--}}
+          {{--<!-- title row -->--}}
+          {{--<div class="row">--}}
+            {{--<div class="col-xs-12">--}}
+              {{--<h2 class="page-header">--}}
+                {{--<img src="/images/intertracnanologo.png" height="75" width="auto">--}}
+                {{--<small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
+              {{--</h2>--}}
+              {{--<h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
+            {{--</div>--}}
+            {{--<!-- /.col -->--}}
+          {{--</div>--}}
+          {{--<!-- info row -->--}}
+          {{--<div class="row invoice-info">--}}
+            {{--<div class="col-sm-4 invoice-col">--}}
+              {{--Payment By--}}
+              {{--<address>--}}
+                {{--<strong v-text="order.customer.name"></strong><br>--}}
+                {{--<span v-html="order.customer.address"></span><br>--}}
+                {{--<span v-text="order.customer.phone"></span>--}}
+              {{--</address>--}}
+            {{--</div>--}}
+            {{--<!-- /.col -->--}}
+            {{--<div class="col-sm-4 invoice-col">--}}
+              {{--Paid To--}}
+              {{--<address>--}}
+                {{--<strong>IntertracNano</strong><br>--}}
+                {{--7/5 Ring Road Shyamoli,<br>--}}
+                {{--Dhaka 1207--}}
+              {{--</address>--}}
+            {{--</div>--}}
+            {{--<!-- /.col -->--}}
+            {{--<div class="col-sm-4 invoice-col">--}}
+              {{--<b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>--}}
+              {{--<b>Order #</b> @{{ order.Order_num }}<br>--}}
+              {{--<b>Account :</b> @{{ order.customer.id }}--}}
+            {{--</div>--}}
+            {{--<!-- /.col -->--}}
+          {{--</div>--}}
+          {{--<!-- /.row -->--}}
+          {{--<div class="row justify-content-center">--}}
+            {{--<div class="col-xs-3">--}}
+              {{--<h4>Amount Paid</h4>--}}
+            {{--</div>--}}
+            {{--<div class="col-xs-7" style="border-bottom : 2px solid black">--}}
+              {{--<h3 class="text-center">৳ @{{ amount | currency }}</h3>--}}
+            {{--</div>--}}
+          {{--</div>--}}
+          {{--<div class="row">--}}
+            {{--<div class="col-xs-12">--}}
+              {{--<h3 class="text-center text-capitalize"> @{{ amountToWords }} <span class="mx-2" v-html="toWordsPoisha"></span> taka only</h3>--}}
+            {{--</div>--}}
+          {{--</div>--}}
+          {{--<!-- Table row -->--}}
+          {{--<div class="row">--}}
+            {{--<div class="col-xs-12 table-responsive">--}}
+              {{--<table class="table table-striped">--}}
+                {{--<thead>--}}
+                {{--<tr>--}}
+                  {{--<th>Order Total</th>--}}
+                  {{--<th></th>--}}
+                  {{--<th>৳ <span style="float :right">@{{ grandTotal | currency }}</span></th>--}}
+                  {{--<td></td>--}}
+                {{--</tr>--}}
+                {{--</thead>--}}
+                {{--<tbody>--}}
+                {{--<tr>--}}
+                  {{--<th>Previous Payments Total</th>--}}
+                  {{--<td><i class="fas fa-minus"></i></td>--}}
+                  {{--<td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>--}}
+                  {{--<td></td>--}}
+                {{--</tr>--}}
+                {{--<tr>--}}
+                  {{--<th>Current Payment</th>--}}
+                  {{--<td><i class="fas fa-minus"></i></td>--}}
+                  {{--<td>৳ <span style="float :right">@{{ amount | currency }}</span></td>--}}
+                  {{--<td></td>--}}
+                {{--</tr>--}}
+                {{--<tr style="border-top : 2px solid black">--}}
+                  {{--<th>Balance</th>--}}
+                  {{--<td></td>--}}
+                  {{--<td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() | currency }}</span></td>--}}
+                  {{--<td></td>--}}
+                {{--</tr>--}}
+                {{--</tbody>--}}
+              {{--</table>--}}
+            {{--</div>--}}
+            {{--<!-- /.col -->--}}
+          {{--</div>--}}
+          {{--<!-- /.row -->--}}
 
-          <div class="row">
-            <div class="col-xs-12">
-              <small class="text-center text-uppercase d-block mx-auto">Thanks and regards</small>
-            </div>
-          </div>
+          {{--<div class="row">--}}
+            {{--<div class="col-xs-12">--}}
+              {{--<small class="text-center text-uppercase d-block mx-auto">Thanks and regards</small>--}}
+            {{--</div>--}}
+          {{--</div>--}}
 
-          <!-- /.row -->
+          {{--<!-- /.row -->--}}
 
-          <!-- this row will not appear when printing -->
-          <div class="row no-print">
-            <div class="col-xs-12">
-              <button onclick="window.print()" class="btn btn-default pull-right"><i class="fa fa-print"></i> Print</button>
-              <a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">
-                <i class="fa fa-chevron-left"></i> Another Payment
-              </a>
+          {{--<!-- this row will not appear when printing -->--}}
+          {{--<div class="row no-print">--}}
+            {{--<div class="col-xs-12">--}}
+              {{--<button onclick="window.print()" class="btn btn-default pull-right"><i class="fa fa-print"></i> Print</button>--}}
+              {{--<a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">--}}
+                {{--<i class="fa fa-chevron-left"></i> Another Payment--}}
+              {{--</a>--}}
               {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
               {{--<i class="fa fa-download"></i> Generate PDF--}}
               {{--</button>--}}
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+            {{--</div>--}}
+          {{--</div>--}}
+        {{--</section>--}}
+      {{--</div>--}}
+    {{--</div>--}}
 
   </transition>
 
@@ -395,10 +381,20 @@
                       this.amount = this.grandTotal- this.paymentsTotal();
                   else
                       this.helperPositiveFloat(new_val, "amount");
+              },
+
+              order : function(){
+
+                  this.returns = [];
               }
           },
 
           computed : {
+
+              abc : function(){
+
+                  return this.grandTotal -  this.grandTotalReturn;
+              },
 
               filtered : function(){
 
@@ -579,7 +575,7 @@
               // for each payment alread
               runningTotal : function(index){
 
-                  var total =  this.grandTotal;
+                  var total =  this.grandTotal - this.subTotalReturn; // tax and discount already mutates in grandTotal
 
                   for(var i=0; i<=index; i++)
                   {
