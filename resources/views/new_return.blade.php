@@ -114,16 +114,55 @@
                       <tr>
                         <th></th>
                         <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
-                        <th> <span><i class="fas fa-plus mr-3"></i> ৳ @{{ order.discount_amount }}</span></th>
-                        <th></th>
+                        <th>
+                          <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
+                          <button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
+                        </th>
+
+                        <th>
+                          <div v-if="edit_discount" class="input-group input-group-sm">
+                            <input v-model="order.discount_amount"  type="number" min="0" class="form-control">
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-success" @click="verify_amount('discount')">
+                                <i class="fas fa-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger" @click="cancel_amount('discount')">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div v-if="!edit_discount && order.discount_amount != old_discount_amount">
+                            ৳ @{{ order.discount_amount | currency }}
+                          </div>
+                        </th>
+
+
                         <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
                         <th></th>
                       </tr>
                       <tr>
                         <th></th>
                         <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
-                        <th> <span><i class="fas fa-plus mr-3"></i> ৳ @{{ order.tax_amount }}</span></th>
-                        <th></th>
+                        <th>
+                          <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
+                          <button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
+                        </th>
+                        <th>
+                          <div v-if="edit_tax" class="input-group input-group-sm">
+                            <input v-model="order.tax_amount"  type="number" min="0" class="form-control">
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-success" @click="verify_amount('tax')">
+                                <i class="fas fa-check"></i>
+                              </button>
+                              <button type="button" class="btn btn-danger" @click="cancel_amount('tax')">
+                                <i class="fas fa-times"></i>
+                              </button>
+                            </span>
+                          </div>
+                          <div v-if="!edit_tax && order.tax_amount != old_tax_amount">
+                            ৳ @{{ order.tax_amount | currency }}
+                          </div>
+                        </th>
                         <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
                         <th></th>
                       </tr>
@@ -367,6 +406,13 @@
               order : null,
               returns : [],
               amount : 0,
+              edit_discount : false,
+              edit_tax : false,
+              old_discount_amount : null,
+              old_tax_amount : null,
+
+              new_discount_amount : null,
+              new_tax_amount : null,
               numberToWords : numberToWords,
               paid : false,
               transaction_id : null,
@@ -375,18 +421,21 @@
 
           watch:{
 
-              amount : function(new_val){
+              // amount : function(new_val){
+              //
+              //     if(parseFloat(new_val)> this.grandTotal - this.paymentsTotal())
+              //         this.amount = this.grandTotal- this.paymentsTotal();
+              //     else
+              //         this.helperPositiveFloat(new_val, "amount");
+              // },
 
-                  if(parseFloat(new_val)> this.grandTotal - this.paymentsTotal())
-                      this.amount = this.grandTotal- this.paymentsTotal();
-                  else
-                      this.helperPositiveFloat(new_val, "amount");
-              },
-
-              order : function(){
+              order : function(new_val){
 
                   this.returns = [];
-              }
+
+                  this.old_discount_amount = parseFloat(new_val.discount_amount);
+                  this.old_tax_amount = parseFloat(new_val.tax_amount);
+              },
           },
 
           computed : {
@@ -624,43 +673,8 @@
 
                       });
               },
+
               //HELPERs
-              helperPositiveFloat : function(new_val, who){
-                  if(!(parseFloat(new_val)>= 0 ) )
-                  {
-                      app[who] = 0;
-                  }
-
-                  var leading = 0;
-                  var lead_mid = false;
-                  var decimal_count = 0;
-                  var lead_or_trail = "lead";
-
-                  for(var i=0; i<new_val.length; new_val++)
-                  {
-                      if(new_val[i] == '0')
-                      {
-                          if(lead_or_trail == "lead" && !lead_mid)
-                              leading++;
-                      }
-                      else if(new_val[i] == '.')
-                      {
-                          decimal_count++;
-                          lead_or_trail = "trail";
-                      }
-                      else{
-                          if(lead_or_trail == "lead")
-                              lead_mid = true;
-                      }
-                  }
-
-                  if(decimal_count>1)
-                      app[who] = 0;
-                  else if(leading>0)
-                      app[who] = app[who].substr(leading);
-
-
-              },
 
               returnCount : function(index){
                   if(this.returns.length > index && typeof this.returns[index] != "undefined")
@@ -707,7 +721,48 @@
                       array[index] = undefined;
 
                   this.returns = array;
+              },
+
+              verify_amount : function(who){
+
+                  switch(who){
+
+                      case "tax" :
+
+                          if(!(parseFloat(this.order.tax_amount)>=0))
+                              this.order.tax_amount = this.old_tax_amount;
+
+                          this.edit_tax = false;
+
+                          break;
+
+                      case "discount" :
+
+                          if(!(parseFloat(this.order.discount_amount)>=0))
+                              this.order.discount_amount = this.old_discount_amount;
+
+                          this.edit_discount = false;
+
+                          break;
+                  }
+              },
+
+              cancel_amount : function(who){
+                  switch(who){
+
+                      case "tax" :
+                          this.order.tax_amount = this.old_tax_amount;
+                          this.edit_tax = false;
+                          break;
+
+                      case "discount" :
+                          this.order.discount_amount = this.old_discount_amount;
+                          this.edit_discount = false;
+                          break;
+                  }
               }
+
+
           },
 
           mounted: function(){
