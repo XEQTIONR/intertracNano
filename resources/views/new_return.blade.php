@@ -15,38 +15,56 @@
   @endcomponent
 @endsection
 
-{{--@section('modal')--}}
-  {{--<div class="modal modal-warning fade in" id="modal-warning">--}}
-    {{--<div class="modal-dialog">--}}
-      {{--<div class="modal-content">--}}
-        {{--<div class="modal-header">--}}
-          {{--<button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-            {{--<span aria-hidden="true">×</span></button>--}}
-          {{--<h4 class="modal-title">Confirm payment</h4>--}}
-        {{--</div>--}}
-        {{--<div class="modal-body">--}}
-          {{--<p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>--}}
-        {{--</div>--}}
-        {{--<div class="modal-footer">--}}
-          {{--<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>--}}
-          {{--<button @click="pay()" data-dismiss="modal" type="button" class="btn btn-outline">Confirm payment</button>--}}
-        {{--</div>--}}
-      {{--</div>--}}
-      {{--<!-- /.modal-content -->--}}
-    {{--</div>--}}
-    {{--<!-- /.modal-dialog -->--}}
-  {{--</div>--}}
-{{--@endsection--}}
+@section('modal')
+  <div class="modal modal-warning fade in" id="modal-warning">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Confirm returns</h4>
+        </div>
+        <div class="modal-body" v-if="order">
+          <p> Confirm returns of <b>@{{ returnQty }}</b> tyres for a refund of ৳ @{{ grandTotalReturn | currency }}.
+            The new bill adjusted is ৳ @{{ grandTotal - subTotalReturn  | currency }}. Click continue if this information
+            is correct.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <button @click="confirm()" data-dismiss="modal" type="button" class="btn btn-outline">Confirm Return</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+@endsection
 
 @section('body')
 
+  <div class="row justify-content-center">
+    <div class="col-xs-12">
 
+      <transition name="custom-classes-transition"
+                  enter-active-class="animated fadeIn faster"
+                  leave-active-class="animated fadeOut faster"
+      >
+        <div v-if="is_complete && show_alert" id="alert" class="alert alert-success"  role="alert">
+          <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
+          <h4><i class="icon fa fa-check-circle"></i> Items Returned</h4>
+          The items have been returns and the bills have been adjusted.
+          {{--<a href="{{ route('lcs.index') }}"  class="btn btn-success ml-5">Click here to view all LCs</a>--}}
+        </div>
+      </transition>
+    </div>
+  </div>
   <transition name="custom-classes-transition"
               mode="out-in"
               enter-active-class="animated fadeInRight"
               leave-active-class="animated fadeOutLeft"
   >
-    <div v-if="!paid" key="0" class="row justify-content-center">
+    <div key="0" class="row justify-content-center">
       <div class="col-xs-12">
 
         <div class="box box-info">
@@ -264,6 +282,11 @@
                     </table>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                  <button v-if="validate" @click="showModal()" type="button" class="btn btn-primary pull-right">Continue <i class="fa fa-chevron-right pt-1 ml-2"></i> </button>
+                  </div>
+                </div>
               </div>
 
             </form>
@@ -414,7 +437,8 @@
               new_discount_amount : null,
               new_tax_amount : null,
               numberToWords : numberToWords,
-              paid : false,
+              is_complete : false,
+              show_alert : false,
               transaction_id : null,
               payment_at : null
           },
@@ -440,9 +464,18 @@
 
           computed : {
 
-              abc : function(){
+              validate : function(){
 
-                  return this.grandTotal -  this.grandTotalReturn;
+                  if(this.returns.length && !this.edit_discount && !this.edit_tax)
+                  {
+                      for(var i=0; i<this.returns.length; i++)
+                      {
+                          if(this.returns[i]!= undefined)
+                              return true;
+                      }
+                  }
+
+                  return false;
               },
 
               filtered : function(){
@@ -614,6 +647,20 @@
               amountToWords : function(){
 
                   return this.numberToWords.toWords(parseFloat(this.amount));
+              },
+
+              returnQty : function(){
+
+                  var count = 0;
+
+                  if(this.returns.length)
+                  {
+                      for(var i=0; i<this.returns.length; i++)
+                          if(this.returns[i]!=undefined)
+                             count+= parseInt(this.returns[i].qty);
+                  }
+
+                  return count;
               }
 
 
@@ -651,24 +698,24 @@
                   return total;
               },
 
-              pay : function(){
+              confirm : function(){
 
-                  $.post("{{ route('payments.store')  }}",
+                  $.post("{{ route('returns.store')  }}",
                       {
                           "_token" : "{{csrf_token()}}",
-                          amount : parseFloat(app.amount),
-                          order : app.order.Order_num
+                          order : app.order.Order_num,
+                          returns : app.filtered
+
                       },
 
                       function(data)
                       {
+                          console.log(data);
                           if(data.status ==  'success')
                           {
-                              app.order.payments.push(data.payment);
-                              app.paid = true;
-                              app.transaction_id = data.payment.transaction_id;
-                              app.payment_at = data.payment.created_at;
-                              //app.amount = 0;
+                            app.is_complete = true;
+                            app.show_alert = true;
+                            window.scrollTo(0,0);
                           }
 
                       });

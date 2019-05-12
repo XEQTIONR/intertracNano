@@ -21,6 +21,11 @@ class Order extends Model
       return $this->hasMany('App\Payment','Order_num');
     }
 
+    public function orderReturns()
+    {
+      return $this->hasMany('App\Order_return', 'order_num');
+    }
+
     public function customer()
     {
       return $this->belongsTo('App\Customer','customer_id');

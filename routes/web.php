@@ -53,8 +53,11 @@ Route::get('/orders/json/{order_num}', 'OrderController@showJSON');
 
 Route::resource('orders','OrderController');
 
+
+
 Route::get('returns', 'ReturnController@create')->name('returns.create');
 
+Route::post('returns', 'ReturnController@returns')->name('returns.store');
 
 
 Route::resource('payments','PaymentController');
