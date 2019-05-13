@@ -18,6 +18,20 @@ class ReturnController extends Controller
       $contents = $order->orderContents()->get();
       $returns = $request->input('returns');
 
+      $tax = floatval($request->input('tax'));
+      $discount = floatval($request->input('discount'));
+
+      if($tax!=$order->tax_amount || $discount!=$order->discount_amount)
+      {
+        if($tax>0)
+          $order->tax_amount = $tax;
+        if($discount>0)
+          $order->discount_amount = $discount;
+
+        $order->save();
+      }
+
+
       foreach($returns as $return)
       {
         $qty_remain = intval($return['qty']);

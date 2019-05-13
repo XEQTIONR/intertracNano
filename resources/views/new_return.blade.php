@@ -50,7 +50,7 @@
                   enter-active-class="animated fadeIn faster"
                   leave-active-class="animated fadeOut faster"
       >
-        <div v-if="is_complete && show_alert" id="alert" class="alert alert-success"  role="alert">
+        <div v-if="is_complete && show_alert" id="alert" class="alert alert-success no-print"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Items Returned</h4>
           The items have been returns and the bills have been adjusted.
@@ -64,7 +64,7 @@
               enter-active-class="animated fadeInRight"
               leave-active-class="animated fadeOutLeft"
   >
-    <div key="0" class="row justify-content-center">
+    <div v-if="step == 0" key="0" class="row justify-content-center">
       <div class="col-xs-12">
 
         <div class="box box-info">
@@ -98,42 +98,39 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
+                  <div class="col-xs-12 mx-2">
                     <table class="table table-striped" v-if="order">
                       <thead>
                       <tr>
                         <th class="col-xs-1">#</th>
-                        <th class="col-xs-3">Tyre</th>
+                        <th class="col-xs-5">Tyre</th>
                         <th class="col-xs-2">Qty</th>
                         <th class="col-xs-2">Unit Price</th>
                         {{--<th class="col-xs-1">Percentage</th>--}}
                         <th class="col-xs-2 text-right">Subtotal</th>
-                        <th class="col-xs-2"></th>
                       </tr>
                       </thead>
                       <tbody>
                       <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
                         <td class="col-xs-1">@{{ index+1 }}</td>
-                        <td class="col-xs-3">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
+                        <td class="col-xs-5">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
                         <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i v-if="(item.qty - returnCount(index))" @click="returnItem(item, index)" class="fas fa-arrow-alt-to-bottom ml-5"></i></td>
                         <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
                         <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty- returnCount(index)) | currency}}</td>
-                        <td class="col-xs-2"></td>
                       </tr>
                       <tr>
                         <th class="col-xs-1"></th>
-                        <th class="col-xs-3">Total</th>
+                        <th class="col-xs-5">Total</th>
                         <th class="col-xs-2"></th>
                         <th class="col-xs-2"></th>
                         <th class="col-xs-2 text-right">৳ @{{ subTotal - subTotalReturn | currency }}</th>
-                        <th class="col-xs-2"></th>
                       </tr>
                       <tr>
                         <th></th>
                         <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
                         <th>
-                          <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
+                          <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
                           <button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
                         </th>
 
@@ -156,7 +153,6 @@
 
 
                         <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
-                        <th></th>
                       </tr>
                       <tr>
                         <th></th>
@@ -182,7 +178,6 @@
                           </div>
                         </th>
                         <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
-                        <th></th>
                       </tr>
                       <tr>
                         <th></th>
@@ -190,83 +185,75 @@
                         <th></th>
                         <th></th>
                         <th class="text-right">৳ @{{ grandTotal - subTotalReturn  | currency }}</th>
-                        <th></th>
                       </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <div v-if="order" class="row">
-                  <div class="col-xs-12">
+                  <div class="col-xs-12 mx-2">
                     <table class="table table-striped">
                       <thead>
                         <tr>
                           <th class="col-xs-1">#</th>
-                          <th class="col-xs-3">Tyre</th>
+                          <th class="col-xs-5">Tyre</th>
                           <th class="col-xs-2">Qty</th>
                           <th class="col-xs-2">Unit Price</th>
                           {{--<th class="col-xs-1">Percentage</th>--}}
                           <th class="col-xs-2 text-right">Subtotal</th>
-                          <th class="col-xs-2"></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr v-for="(item, index) in filtered">
                           <td class="col-xs-1">@{{ item.index + 1 }}</td>
-                          <td class="col-xs-3">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
+                          <td class="col-xs-5">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
                           <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="fas fa-arrow-alt-to-top ml-5"></i></td>
                           <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                           <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>
-                          <td class="col-xs-2"></td>
                         </tr>
 
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3"><b>Total</b></td>
+                          <td class="col-xs-5"><b>Total</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2 text-right"><b>৳ @{{ subTotalReturn | currency }}</b></td>
-                          <td class="col-xs-2"></td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3"><b>Discount Adjusment</b></td>
+                          <td class="col-xs-5"><b>Discount Adjusment</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2 text-right"><i class="fas fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
-                          <td class="col-xs-2"></td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3"><b>Tax Refund</b></td>
+                          <td class="col-xs-5"><b>Tax Refund</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2 text-right"><i class="fas fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
-                          <td class="col-xs-2"></td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
-                          <td class="col-xs-3 text-uppercase"><b>Total Refund</b></td>
+                          <td class="col-xs-5 text-uppercase"><b>Total Refund</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2 text-right"><b>৳ @{{ grandTotalReturn | currency }}</b></td>
-                          <td class="col-xs-2"></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <div v-if="order" class="row">
-                  <div class="col-xs-12">
+                  <div class="col-xs-12 mx-2">
                     <table class="table table-bordered  table-responsive">
                       <thead>
                       <tr>
                         <th class="col-xs-1">Transaction Id</th>
                         <th class="col-xs-3">Payment Date</th>
                         <th class="col-xs-2">Amount Paid</th>
-                        <th class="col-xs-2"></th>
+                        <th class="col-xs-4"></th>
                         <th class="col-xs-2 text-right">Balance</th>
-                        <th class="col-xs-2"></th>
                       </tr>
                       </thead>
                       <tbody v-if="order && order.payments">
@@ -274,9 +261,8 @@
                         <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                         <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                         <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
-                        <td class="col-xs-2"></td>
+                        <td class="col-xs-4"></td>
                         <td class="col-xs-2 text-right">৳ @{{ runningTotal(index) | currency }}</td>
-                        <td class="col-xs-2"></td>
                       </tr>
                       </tbody>
                     </table>
@@ -294,123 +280,179 @@
         </div>
       </div>
     </div>
-    {{--<div v-else key="1" class="row justify-content-center">--}}
-      {{--<div class="col-xs-12 col-md-8">--}}
-        {{--<section  class="invoice">--}}
-          {{--<!-- title row -->--}}
-          {{--<div class="row">--}}
-            {{--<div class="col-xs-12">--}}
-              {{--<h2 class="page-header">--}}
-                {{--<img src="/images/intertracnanologo.png" height="75" width="auto">--}}
-                {{--<small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
-              {{--</h2>--}}
-              {{--<h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
-            {{--</div>--}}
-            {{--<!-- /.col -->--}}
-          {{--</div>--}}
-          {{--<!-- info row -->--}}
-          {{--<div class="row invoice-info">--}}
-            {{--<div class="col-sm-4 invoice-col">--}}
-              {{--Payment By--}}
-              {{--<address>--}}
-                {{--<strong v-text="order.customer.name"></strong><br>--}}
-                {{--<span v-html="order.customer.address"></span><br>--}}
-                {{--<span v-text="order.customer.phone"></span>--}}
-              {{--</address>--}}
-            {{--</div>--}}
-            {{--<!-- /.col -->--}}
-            {{--<div class="col-sm-4 invoice-col">--}}
-              {{--Paid To--}}
-              {{--<address>--}}
-                {{--<strong>IntertracNano</strong><br>--}}
-                {{--7/5 Ring Road Shyamoli,<br>--}}
-                {{--Dhaka 1207--}}
-              {{--</address>--}}
-            {{--</div>--}}
-            {{--<!-- /.col -->--}}
-            {{--<div class="col-sm-4 invoice-col">--}}
-              {{--<b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>--}}
-              {{--<b>Order #</b> @{{ order.Order_num }}<br>--}}
-              {{--<b>Account :</b> @{{ order.customer.id }}--}}
-            {{--</div>--}}
-            {{--<!-- /.col -->--}}
-          {{--</div>--}}
-          {{--<!-- /.row -->--}}
-          {{--<div class="row justify-content-center">--}}
-            {{--<div class="col-xs-3">--}}
-              {{--<h4>Amount Paid</h4>--}}
-            {{--</div>--}}
-            {{--<div class="col-xs-7" style="border-bottom : 2px solid black">--}}
-              {{--<h3 class="text-center">৳ @{{ amount | currency }}</h3>--}}
-            {{--</div>--}}
-          {{--</div>--}}
-          {{--<div class="row">--}}
-            {{--<div class="col-xs-12">--}}
-              {{--<h3 class="text-center text-capitalize"> @{{ amountToWords }} <span class="mx-2" v-html="toWordsPoisha"></span> taka only</h3>--}}
-            {{--</div>--}}
-          {{--</div>--}}
-          {{--<!-- Table row -->--}}
-          {{--<div class="row">--}}
-            {{--<div class="col-xs-12 table-responsive">--}}
-              {{--<table class="table table-striped">--}}
-                {{--<thead>--}}
-                {{--<tr>--}}
-                  {{--<th>Order Total</th>--}}
-                  {{--<th></th>--}}
-                  {{--<th>৳ <span style="float :right">@{{ grandTotal | currency }}</span></th>--}}
-                  {{--<td></td>--}}
-                {{--</tr>--}}
-                {{--</thead>--}}
-                {{--<tbody>--}}
-                {{--<tr>--}}
-                  {{--<th>Previous Payments Total</th>--}}
-                  {{--<td><i class="fas fa-minus"></i></td>--}}
-                  {{--<td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>--}}
-                  {{--<td></td>--}}
-                {{--</tr>--}}
-                {{--<tr>--}}
-                  {{--<th>Current Payment</th>--}}
-                  {{--<td><i class="fas fa-minus"></i></td>--}}
-                  {{--<td>৳ <span style="float :right">@{{ amount | currency }}</span></td>--}}
-                  {{--<td></td>--}}
-                {{--</tr>--}}
-                {{--<tr style="border-top : 2px solid black">--}}
-                  {{--<th>Balance</th>--}}
-                  {{--<td></td>--}}
-                  {{--<td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() | currency }}</span></td>--}}
-                  {{--<td></td>--}}
-                {{--</tr>--}}
-                {{--</tbody>--}}
-              {{--</table>--}}
-            {{--</div>--}}
-            {{--<!-- /.col -->--}}
-          {{--</div>--}}
-          {{--<!-- /.row -->--}}
 
-          {{--<div class="row">--}}
-            {{--<div class="col-xs-12">--}}
-              {{--<small class="text-center text-uppercase d-block mx-auto">Thanks and regards</small>--}}
-            {{--</div>--}}
-          {{--</div>--}}
 
-          {{--<!-- /.row -->--}}
 
-          {{--<!-- this row will not appear when printing -->--}}
-          {{--<div class="row no-print">--}}
-            {{--<div class="col-xs-12">--}}
-              {{--<button onclick="window.print()" class="btn btn-default pull-right"><i class="fa fa-print"></i> Print</button>--}}
-              {{--<a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">--}}
-                {{--<i class="fa fa-chevron-left"></i> Another Payment--}}
-              {{--</a>--}}
-              {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
-              {{--<i class="fa fa-download"></i> Generate PDF--}}
-              {{--</button>--}}
-            {{--</div>--}}
-          {{--</div>--}}
-        {{--</section>--}}
-      {{--</div>--}}
-    {{--</div>--}}
 
+    <div v-else key="1" class="row justify-content-center">
+      <div class="col-xs-12 col-md-8">
+        <section class="invoice">
+          {{--<div class="box box-info">--}}
+            {{--<div class="box-body">--}}
+              <div class="row">
+                <div class="col-xs-12">
+                  <h2 class="page-header">
+                    <img src="/images/intertracnanologo.png" height="75" width="auto">
+                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
+                  </h2>
+                  <h2 class="text-center text-uppercase mb-4"><b>Return Slip</b></h2>
+                </div>
+                <!-- /.col -->
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="form-group">
+                    <span for="inputOrder">Order # @{{ order.Order_num }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row invoice-info">
+                <div class="col-xs-12 invoice-col">
+                  <address>
+                    <b>@{{ order.customer.name }}</b> <br>
+                    <span v-html="order.customer.address"></span> <br>
+                    @{{ order.customer.phone }}
+                  </address>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                      <th class="">#</th>
+                      <th class="">Tyre</th>
+                      <th class="">Qty</th>
+                      <th class="">Unit Price</th>
+                      {{--<th class="col-xs-1">Percentage</th>--}}
+                      <th class=" text-right">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
+                      <td class="">@{{ index+1 }}</td>
+                      <td class="">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
+                      <td class="">@{{ item.qty - returnCount(index) }}</td>
+                      <td class="">৳ @{{ item.unit_price }}</td>
+                      {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
+                      <td class="text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty- returnCount(index)) | currency}}</td>
+                    </tr>
+                    <tr>
+                      <th class=""></th>
+                      <th class="">Total</th>
+                      <th class=""></th>
+                      <th class=""></th>
+                      <th class="text-right">৳ @{{ subTotal - subTotalReturn | currency }}</th>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
+                      <th>
+                        <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
+                        {{--<button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>--}}
+                      </th>
+                      <th>
+                        <div v-if="!edit_discount && order.discount_amount != old_discount_amount">
+                          ৳ @{{ order.discount_amount | currency }}
+                        </div>
+                      </th>
+                      <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
+                      <th>
+                        <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
+                        {{--<button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>--}}
+                      </th>
+                      <th>
+                        <div v-if="!edit_tax && order.tax_amount != old_tax_amount">
+                          ৳ @{{ order.tax_amount | currency }}
+                        </div>
+                      </th>
+                      <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th class="text-uppercase">Grand Total</th>
+                      <th></th>
+                      <th></th>
+                      <th class="text-right">৳ @{{ grandTotal - subTotalReturn  | currency }}</th>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <table class="table table-striped table-responsive">
+                    <thead>
+                    <tr>
+                      <th class="">#</th>
+                      <th class="">Tyre</th>
+                      <th class="">Qty</th>
+                      <th class="">Unit Price</th>
+                      {{--<th class="col-xs-1">Percentage</th>--}}
+                      <th class="text-right">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(item, index) in filtered">
+                      <td class="">@{{ item.index + 1 }}</td>
+                      <td class="">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
+                      <td class="">@{{ item.qty }}</td>
+                      <td class="">৳ @{{ item.unit_price }}</td>
+                      <td class="text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>
+                    </tr>
+
+                    <tr>
+                      <td class=""></td>
+                      <td class=""><b>Total</b></td>
+                      <td class=""></td>
+                      <td class=""></td>
+                      <td class="text-right"><b>৳ @{{ subTotalReturn | currency }}</b></td>
+                    </tr>
+                    <tr>
+                      <td class=""></td>
+                      <td class=""><b>Discount Adjusment</b></td>
+                      <td class=""></td>
+                      <td class=""></td>
+                      <td class="text-right"><i class="fas fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
+                    </tr>
+                    <tr>
+                      <td class=""></td>
+                      <td class=""><b>Tax Refund</b></td>
+                      <td class=""></td>
+                      <td class=""></td>
+                      <td class="text-right"><i class="fas fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
+                    </tr>
+                    <tr>
+                      <td class=""></td>
+                      <td class="text-uppercase"><b>Total Refund</b></td>
+                      <td class=""></td>
+                      <td class=""></td>
+                      <td class="text-right"><b>৳ @{{ grandTotalReturn | currency }}</b></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="row no-print">
+                <div class="col-xs-12">
+                  <button onclick="window.print()" class="btn btn-default">
+                    <i class="fa fa-print"></i> Print
+                  </button>
+                </div>
+              </div>
+            {{--</div> <!-- box-body -->--}}
+          {{--</div> <!-- box -->--}}
+        </section>
+
+      </div>
+    </div>
   </transition>
 
 @endsection
@@ -440,7 +482,11 @@
               is_complete : false,
               show_alert : false,
               transaction_id : null,
-              payment_at : null
+              payment_at : null,
+
+              date : '{{\Carbon\Carbon::now()}}',
+
+              step : 0
           },
 
           watch:{
@@ -700,24 +746,33 @@
 
               confirm : function(){
 
-                  $.post("{{ route('returns.store')  }}",
-                      {
-                          "_token" : "{{csrf_token()}}",
-                          order : app.order.Order_num,
-                          returns : app.filtered
+                  var params = {
 
-                      },
+                      "_token" : "{{csrf_token()}}",
+                      order : app.order.Order_num,
+                      returns : app.filtered
+                  }
 
+                  if(this.order.tax_amount != this.old_tax_amount)
+                      params.tax = this.order.tax_amount;
+
+                  if(this.order.discount_amount != this.old_discount_amount)
+                      params.discount = this.order.discount_amount;
+
+                  $.post("{{  route('returns.store')  }}",
+
+                      params,
                       function(data)
                       {
                           console.log(data);
+
                           if(data.status ==  'success')
                           {
+                            app.step = 1;
                             app.is_complete = true;
                             app.show_alert = true;
                             window.scrollTo(0,0);
                           }
-
                       });
               },
 
