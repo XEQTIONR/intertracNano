@@ -17,4 +17,9 @@ class Order_return extends Model
   {
     return $this->belongsTo('App\Order', 'order_num');
   }
+
+  public function tyre()
+  {
+    return $this->belongsTo('App\Tyre', 'tyre_id');
+  }
 }

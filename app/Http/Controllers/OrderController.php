@@ -196,6 +196,61 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
+
+
+    public function detailsRow(Request $request)
+    {
+      $id = $request->input('order');
+      $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($id);
+
+      $subtotal = 0;
+      $subtotalReturn = 0;
+      $qtytotal = 0;
+      $qtytotalReturn = 0;
+
+      foreach($order->orderContents as $item)
+      {
+        $subtotal += (floatval($item->qty)*floatval($item->unit_price));
+        $qtytotal += intval($item->qty);
+      }
+
+
+
+      $order->subtotal = $subtotal;
+
+      $order->taxtotal = ($subtotal * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->discounttotal = ($subtotal * $order->discount_percent/100.0) + $order->discount_amount;
+
+      $order->grandtotal = $order->subtotal + $order->taxtotal - $order->discounttotal;
+
+      $grandtotal = $order->grandtotal;
+
+      foreach($order->payments as $payment)
+      {
+        $grandtotal -= $payment->payment_amount;
+        $payment->balance = $grandtotal;
+      }
+
+      foreach($order->orderReturns as $item)
+      {
+        $subtotalReturn += (floatval($item->qty)*floatval($item->unit_price));
+        $qtytotalReturn += intval($item->qty);
+      }
+
+
+      $order->subtotalReturn = $subtotalReturn;
+
+      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->discounttotalReturn = ($subtotalReturn * $order->discount_percent/100.0);
+
+      $order->grandtotalReturn = $order->subtotalReturn + $order->taxtotalReturn - $order->discounttotalReturn;
+
+      $order->qtytotal = $qtytotal;
+      $order->qtytotalReturn = $qtytotalReturn;
+
+      return view('partials.rows.order', compact('order'));
+    }
+
     public function show(Order $order)
     {
         //

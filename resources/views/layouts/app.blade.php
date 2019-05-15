@@ -538,8 +538,10 @@
 
     observer.observe(target, { attributes : true });
 
-    $(document).ready(function() {
-        $('#table_id').DataTable();
+    var table;
+
+     $(document).ready(function() {
+     table =   $('#table_id').DataTable();
         $(".date").inputmask( "dd/mm/yyyy");
     } );
 

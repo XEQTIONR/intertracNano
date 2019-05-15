@@ -13,8 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth')->group(function(){
+//Route::middleware('auth')->group(function(){
 
   Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
 
-});
+
+  Route::get('order', 'OrderController@detailsRow');
+
+//});
+
+
