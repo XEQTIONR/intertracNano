@@ -87,7 +87,7 @@
               row.child( format(row.data()) ).show();
               tr.addClass('shown');
 
-              $('.shown + tr').css('background-color', '#f9f9f9');
+              $('.shown + tr').css('background-color', '#f5f5f5');
 
           }
       } );

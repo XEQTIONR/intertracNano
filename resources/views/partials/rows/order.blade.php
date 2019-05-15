@@ -1,4 +1,17 @@
 <div class="row">
+  <div class="col-xs-12 col-md-4 invoice-col mx-3">
+    <small class="text-uppercase">Order By</small><br>
+    <address>
+      <b>{{$order->customer->name}}</b>
+    </address>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-4 my-2 invoice-col mx-3">
+    <small class="text-uppercase"><b>Order/Invoice</b></small><br>
+  </div>
+</div>
+<div class="row">
   <div class="col-xs-12 mx-2">
     <table class="table table-striped table-bordered">
       <thead>
@@ -77,7 +90,11 @@
     </table>
   </div>
 </div>
-
+<div class="row">
+  <div class="col-xs-12 col-md-4 my-2 invoice-col mx-3">
+    <small class="text-uppercase"><b>Payments</b></small><br>
+  </div>
+</div>
 <div class="row">
   <div class="col-xs-12 mx-2">
     <table class="table table-bordered">
@@ -106,6 +123,11 @@
 </div>
 
 @if($order->grandtotalReturn>0)
+<div class="row">
+  <div class="col-xs-12 col-md-4 my-2 invoice-col mx-3">
+    <small class="text-uppercase"><b>Returns</b></small><br>
+  </div>
+</div>
 <div class="row">
   <div class="col-xs-12 mx-2">
     <table class="table table-striped table-bordered">

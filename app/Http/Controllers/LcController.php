@@ -170,10 +170,23 @@ class LcController extends Controller
     {
 
         $performa = $lc->performaInvoice()
+                      ->with('tyre')
                       ->get();
 
         $consignments = $lc->consignment()
                           ->get();
+
+        $totalqty = 0;
+        $total = 0;
+        foreach($performa as $record)
+        {
+          $totalqty += intval($record->qty);
+          $total += (floatval($record->unit_price) * floatval($record->qty));
+
+        }
+
+        $lc->total = $total;
+        $lc->totalqty = $totalqty;
         //return $performa;
         return view('profiles.lc', compact('lc', 'performa', 'consignments'));
     }

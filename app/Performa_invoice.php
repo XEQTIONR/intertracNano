@@ -11,4 +11,9 @@ class Performa_invoice extends Model
     //protected $casts = ['lc_num' => 'string'];
 
 
+  public function tyre()
+  {
+    return $this->belongsTo('App\Tyre', 'tyre_id');
+  }
+
 }

@@ -14,7 +14,7 @@
 <tbody>
   @foreach ($orders as $order)
     <tr style="cursor: pointer;">
-      <td class="text-center details-control">{{$order->Order_num}}</td>
+      <td class="text-center details-control strong">{{$order->Order_num}}</td>
       <td class="text-center">{{$order->customer_id}}</td>
       <td class="text-right">{{$order->discount_percent}}</td>
       <td class="text-right">{{$order->discount_amount}}</td>
