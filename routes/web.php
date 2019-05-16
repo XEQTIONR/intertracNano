@@ -24,6 +24,13 @@ Route::get('/admin-test', function(){
   return view('test');
 });
 
+Route::get('/users', function(){
+
+  $users = \App\User::all();
+
+  return view('users', compact('users'));
+})->name('users.index')->middleware(['auth', 'admin']);
+
 Route::resource('tyres','TyreController');
 
 Route::resource('lcs','LcController');
@@ -101,7 +108,15 @@ Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalan
 Route::get('reports/profit', 'ReportController@showProfitReport');
 
 
-Route::get('test', 'OrderController@atest');
+Route::get('test', function(){
+
+  $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find(74);
+
+  return $order;
+  //dd($order);
+
+});
+
 Route::get('test2', 'OrderController@btest');
 Route::get('test3', 'OrderController@ctest');
 
