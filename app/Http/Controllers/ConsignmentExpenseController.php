@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Consignment;
 use App\Consignment_expense;
 use Illuminate\Http\Request;
 use Validator;
@@ -29,8 +30,9 @@ class ConsignmentExpenseController extends Controller
     public function create()
     {
         //
-        $bol="";
-        return view('new_expense', compact('bol'));
+        $consignments =  Consignment::with(['expenses', 'letterOfCredit:lc_num,currency_code'])->get();
+
+        return view('new_expense', compact('consignments'));
     }
 
     public function createGivenBOL($bol)
@@ -49,37 +51,48 @@ class ConsignmentExpenseController extends Controller
     public function store(Request $request)
     {
       //VALIDATE
-      $validator=Validator::make($request->all(),[
-        'inputBOL' => 'required|string',
-        'inputExpenseLocal' => 'required|numeric|min:0',
-        'inputExpenseForeign' => 'required|numeric|min:0',
-        'inputNote' => 'required|string',
-      ]);
+//      $validator=Validator::make($request->all(),[
+//        'inputBOL' => 'required|string',
+//        'inputExpenseLocal' => 'required|numeric|min:0',
+//        'inputExpenseForeign' => 'required|numeric|min:0',
+//        'inputNote' => 'required|string',
+//      ]);
 
-      if ($validator->fails())
-      {
-        return redirect('/consignment_expenses/create/')
-              ->withErrors($validator)
-              ->withInput();
-      }
-      else
-      {
+//      if ($validator->fails())
+//      {
+//        return redirect('/consignment_expenses/create/')
+//              ->withErrors($validator)
+//              ->withInput();
+//      }
+//      else
+//      {
         //ALLOCATE
-        $expense = new Consignment_expense;
 
-        //INITIALIZE
-        $expense->BOL = $request->inputBOL;
-        $expense->expense_foreign = $request->inputExpenseForeign;
-        $expense->expense_local = $request->inputExpenseLocal;
-        $expense->expense_notes = $request->inputNote;
+        $consignment = Consignment::find($request->input('bol'));
 
-        //STORE
-        $expense->save();
+        $expenses = array();
 
-        //REDIRECT
-        return redirect('/consignment_expenses');
-      }
+        foreach($request->input('expenses') as $expense)
+        {
+          $an_expense = new Consignment_expense;
 
+          $an_expense->expense_foreign = $expense['expense_foreign'];
+          $an_expense->expense_local = $expense['expense_local'];
+
+          if(strlen($expense['expense_notes']))
+            $an_expense->expense_notes = $expense['expense_notes'];
+
+          $expenses[] = $an_expense;
+        }
+
+        if(count($expense))
+          $consignment->expenses()->saveMany($expenses);
+
+        $response = array();
+        $response['status'] = 'success';
+        $response['expenses'] =  $consignment->expenses()->get();
+
+        return $response;
     }
 
     /**

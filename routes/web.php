@@ -19,11 +19,25 @@ Route::get('/', function()
   return view('welcome');
 });
 
+Route::get('/admin-test', function(){
+
+  return view('test');
+});
+
+Route::get('/users', function(){
+
+  $users = \App\User::all();
+
+  return view('users', compact('users'));
+})->name('users.index')->middleware(['auth', 'admin']);
 
 Route::resource('tyres','TyreController');
 
 Route::resource('lcs','LcController');
 
+Route::get('/proforma_invoice/create', 'LcController@createProformaInvoice')->name('proforma_invoice.create');
+
+Route::post('/proforma_invoice/store', 'LcController@storeProformaInvoice')->name('proforma_invoice.store');
 
 //To pass the lc_num
 Route::get('/consignments/create/{lc}', 'ConsignmentController@createGivenLC');
@@ -48,6 +62,11 @@ Route::resource('orders','OrderController');
 
 
 
+Route::get('returns', 'ReturnController@create')->name('returns.create');
+
+Route::post('returns', 'ReturnController@returns')->name('returns.store');
+
+
 Route::resource('payments','PaymentController');
 
 Route::resource('hscodes','HscodeController');
@@ -67,7 +86,7 @@ Route::get('stock', function()
 {
   $in_stock = App\Order::tyresRemaining();
   return view('stock', compact('in_stock'));
-});
+})->name('stock');
 
 
 Route::get('reports/expense', 'ReportController@defaultExpenseReport');
@@ -89,40 +108,51 @@ Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalan
 Route::get('reports/profit', 'ReportController@showProfitReport');
 
 
+Route::get('test', function(){
 
-Route::get('test', function()
-{
-  $orders = App\Order::all();
-  $customers = collect();
-  //$num_customers=0;
-  $num_orders=0;
-  $total_owed=0;
-  $total_value=0;
+  $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find(74);
 
-  foreach ($orders as $order)
-  {
-    $order->totalValueBeforeDiscountAndTax();
-    $order->calculateAndSetDiscount();
-    $order->calculateAndSetTax();
-    $order->calculatePayable();
-    $order->final_value = $order->subtotal + $order->totalTax - $order->totalDiscount;
+  return $order;
+  //dd($order);
 
-    if ($order->payable>0)
-    {
-
-      $customers->push($order->customer_id);
-      $num_orders++;
-      $total_owed+= $order->payable;
-      $total_value+= $order->final_value;
-    }
-    //$customer = $order->customer()->get();
-    //$order->customer_id = $order->customer()->id;
-  }
-
-  $unique = $customers->unique();
-  $num_customers = count($unique);
-  return [$orders, $customers, $unique, $total_owed, $total_value, $num_orders, $num_customers];
 });
+
+Route::get('test2', 'OrderController@btest');
+Route::get('test3', 'OrderController@ctest');
+
+//Route::get('test', function()
+//{
+//  $orders = App\Order::all();
+//  $customers = collect();
+//  //$num_customers=0;
+//  $num_orders=0;
+//  $total_owed=0;
+//  $total_value=0;
+//
+//  foreach ($orders as $order)
+//  {
+//    $order->totalValueBeforeDiscountAndTax();
+//    $order->calculateAndSetDiscount();
+//    $order->calculateAndSetTax();
+//    $order->calculatePayable();
+//    $order->final_value = $order->subtotal + $order->totalTax - $order->totalDiscount;
+//
+//    if ($order->payable>0)
+//    {
+//
+//      $customers->push($order->customer_id);
+//      $num_orders++;
+//      $total_owed+= $order->payable;
+//      $total_value+= $order->final_value;
+//    }
+//    //$customer = $order->customer()->get();
+//    //$order->customer_id = $order->customer()->id;
+//  }
+//
+//  $unique = $customers->unique();
+//  $num_customers = count($unique);
+//  return [$orders, $customers, $unique, $total_owed, $total_value, $num_orders, $num_customers];
+//});
 
 
 
@@ -136,4 +166,7 @@ Route::get('title', function()
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', function(){
+
+  return redirect('/');
+});

@@ -1,4 +1,4 @@
-<table class="table table-hover table-condensed">
+<table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
     <th>Order#</th>
@@ -13,8 +13,8 @@
 </thead>
 <tbody>
   @foreach ($orders as $order)
-    <tr style="cursor: pointer;" onclick="location.href='/orders/{{$order->Order_num}}'">
-      <td class="text-center">{{$order->Order_num}}</td>
+    <tr style="cursor: pointer;">
+      <td class="text-center details-control strong">{{$order->Order_num}}</td>
       <td class="text-center">{{$order->customer_id}}</td>
       <td class="text-right">{{$order->discount_percent}}</td>
       <td class="text-right">{{$order->discount_amount}}</td>

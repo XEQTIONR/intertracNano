@@ -6,8 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Performa_invoice extends Model
 {
-    //Performa invoice contains composite keys. Caution.
+    protected $table = 'performa_invoices';
+  //Performa invoice contains composite keys. Caution.
     //protected $casts = ['lc_num' => 'string'];
 
+
+  public function tyre()
+  {
+    return $this->belongsTo('App\Tyre', 'tyre_id');
+  }
 
 }

@@ -1,55 +1,65 @@
-@extends('layout.mainlayout')
+@extends('layouts.app')
 
-@section('scripts')
-
-
+@section('title')
+  Consignments
+@endsection
+@section('subtitle')
+  All Consignemnts arrived.
 @endsection
 
-@section('content')
+@section('level')
+  @component('components.level',
+    ['crumb' => 'Consignments',
+    'subcrumb' => 'All Consignments',
+    'link'  =>  route('consignments.index')])
+  @endcomponent
+@endsection
 
-<div class="container">
 
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="page-header">
-        <h1>Consignments <small>List of consignments imported.</small></h1>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-hover table-condensed">
+
+@section('body')
+  <div class="box box-teal">
+    <div class="box-body">
+      <table id="table_id" class="table table-hover table-bordered">
         <thead>
-          <tr>
-            <th>BOL#</th>
-            <th>Exchange Rate</th>
-            <th>Value($)</th>
-            <th>Value(&#2547)</th>
-            <th>Tax</th>
-            <th>Land Date</th>
-            <th>LC#</th>
-            <th>Created</th>
-            <th>Updated</th>
-          </tr>
+        <tr>
+          <th>BOL#</th>
+          <th>LC#</th>
+          <th>$ Rate</th>
+          <th>Value($)</th>
+          <th>Value(&#2547)</th>
+          <th>Tax(&#2547)</th>
+          <th>Land Date</th>
+          <th>Created</th>
+          {{--<th>Updated</th>--}}
+          <th>Progress</th>
+        </tr>
         </thead>
 
         <tbody>
-          @foreach ($consignments as $consignment)
-            <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
-              <td class="text-center">{{$consignment->BOL}}</td>
-              <td class="text-right">{{$consignment->exchange_rate}}</td>
-              <td class="text-right">{{$consignment->value}}</td>
-              <td class="text-right">{{$consignment->value * $consignment->exchange_rate}}</td>
-              <td class="text-right">{{$consignment->tax}}</td>
-              <td class="text-center">{{$consignment->land_date}}</td>
-              <td class="text-center">{{$consignment->lc}}</td>
-              <td class="text-center">{{$consignment->created_at}}</td>
-              <td class="text-center">{{$consignment->updated_at}}</td>
-            </tr>
-          @endforeach
+        @foreach ($consignments as $consignment)
+          <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
+            <td class="text-center">{{$consignment->BOL}}</td>
+            <td class="text-center">{{$consignment->lc}}</td>
+            <td class="text-right">{{$consignment->exchange_rate}}</td>
+            <td class="text-right">{{$consignment->value}}</td>
+            <td class="text-right">{{$consignment->value * $consignment->exchange_rate}}</td>
+            <td class="text-right">{{$consignment->tax}}</td>
+            <td class="text-center">{{$consignment->land_date}}</td>
+            <td class="text-center">{{$consignment->created_at}}</td>
+            {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}
+            <td>
+              <div class="progress progress-xs">
+                {{--<div class="progress-bar progress-bar-danger" style="width: 80%"></div>--}}
+              </div>
+            </td>
+
+          </tr>
+        @endforeach
         </tbody>
       </table>
     </div>
   </div>
-</div>
+
+
 @endsection

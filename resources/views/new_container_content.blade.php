@@ -21,24 +21,26 @@
   <script>
   // javascript included in layout file.
   var count=0;
+  var running_count=0;
+  /* Custom addItem function
+  *  Similar to function in addItem.js
+  */
   function addItem()
   {
-
-    //names of parameters.
-    var itemId = "tyre[" + count + "]";
-    var qty = "qty[" + count + "]";
-    var price = "price[" + count + "]";
-    var weight = "weight[" + count + "]";
-    var tax = "tax[" + count + "]";
+    //Names of parameters.
+    var itemId = "tyre[" + running_count + "]";
+    var qty = "qty[" + running_count + "]";
+    var price = "price[" + running_count + "]";
+    var weight = "weight[" + running_count + "]";
+    var tax = "tax[" + running_count + "]";
 
     var subDiv = document.createElement("DIV");
-    var subDivId = "subDiv" + count;
+    var subDivId = "subDiv" + running_count;
 
     //Div for every new invice item
     subDiv.setAttribute("class", "tyreDiv");
     subDiv.setAttribute("id", subDivId);
 
-    //document.getElementById("itemList").append(subDiv);
     //Items that go inside the Div
     var itemInput = document.createElement("INPUT");
     itemInput.setAttribute("type", "number");
@@ -48,8 +50,6 @@
     itemInput.setAttribute("placeholder", "Tyre ID");
     itemInput.required = true;
 
-    //document.getElementById(subDivNum).appendChild(itemInput);
-    //$("#"+subDivId).append("Tyre ID: ");
     subDiv.appendChild(itemInput); //insert in the Div
 
     var qtyInput = document.createElement("INPUT");
@@ -61,9 +61,7 @@
     qtyInput.setAttribute("onchange", "updateTotals()");
     qtyInput.required = true;
 
-    //$("#"+subDivId).append("Quantity: ");
     subDiv.appendChild(qtyInput); //insert in the Div
-    //document.getElementById(subDivNum).appendChild(qtyInput);
 
     var priceInput = document.createElement("INPUT");
     priceInput.setAttribute("type", "number");
@@ -74,9 +72,8 @@
     priceInput.setAttribute("placeholder", "Unit Price");
     priceInput.setAttribute("onchange", "updateTotals()");
     priceInput.required = true;
-    //$("#"+subDivId).append("Unit Price: ");
+
     subDiv.appendChild(priceInput); //insert in the Div
-    //document.getElementById(subDivNum).appendChild(priceInput);
 
     var weightInput = document.createElement("INPUT");
     weightInput.setAttribute("type", "number");
@@ -86,7 +83,7 @@
     weightInput.setAttribute("name", weight);
     weightInput.setAttribute("placeholder", "Total Weight");
     weightInput.required = true;
-    //$("#"+subDivId).append("Unit Price: ");
+
     subDiv.appendChild(weightInput); //insert in the Div
 
     var taxInput = document.createElement("INPUT");
@@ -96,25 +93,35 @@
     taxInput.setAttribute("name", tax);
     taxInput.setAttribute("placeholder", "Total Tax");
     taxInput.required = true;
-    //$("#"+subDivId).append("Unit Price: ");
+
     subDiv.appendChild(taxInput); //insert in the Div
 
     var subTotalLabel = document.createElement("SPAN");
     subTotalLabel.setAttribute("name", "subTotal");
     subTotalLabel.setAttribute("id", "subTotal"+count);
 
-
     subDiv.appendChild(subTotalLabel); //insert in the Div
 
+    //Delete button - Replaces Remove Last Item Button
+    var deleteButton = document.createElement("BUTTON");
+    var func  = "remove(" + subDivId + ")";
+    deleteButton.setAttribute("type", "button");
+    deleteButton.setAttribute("onclick", func);
+    deleteButton.innerHTML = "Delete";
+
+    subDiv.appendChild(deleteButton); //insert in the Div
 
     var itemlist = document.getElementById("itemList");
 
-    itemlist.appendChild(subDiv);
-
+    itemlist.appendChild(subDiv); //insert in Container itemlist
     count++;
     document.getElementById("numItems").value = count;
+    running_count++;
+    document.getElementById("runningCount").value = running_count;
   }
-
+  /* Custom updateTotal function
+  *  Similar to function in addItem.js
+  */
   function updateTotals()
   {
     var totalQty = 0;
@@ -124,23 +131,42 @@
     {
       var qtyField = "qty[" + i + "]";
       var unitPriceField = "price[" + i + "]";
-      var qty  = document.getElementsByName(qtyField)[0].value;
-      var unitprice = document.getElementsByName(unitPriceField)[0].value;
+      if(  document.getElementsByName(qtyField).length > 0  ) //if an element is found
+      {
+        var qty  = document.getElementsByName(qtyField)[0].value;
+        var unitprice = document.getElementsByName(unitPriceField)[0].value;
 
-      if (qty=="")
-        qty=0;
-      if(unitprice=="")
-        unitprice=0;
+        if (qty=="")
+          qty=0;
+        if(unitprice=="")
+          unitprice=0;
 
         totalQty = parseInt(totalQty) + parseInt(qty);
         var subTotal =  Number(unitprice) * Number(qty);
         grandTotal+= Number(subTotal);
         document.getElementById("subTotal"+i).innerHTML = subTotal.toFixed(2);
+      }
     }
     document.getElementById("QtyTotal").innerHTML = totalQty;
     document.getElementById("GrandTotal").innerHTML = grandTotal.toFixed(2);
   }
+
+  /* Custom remove function
+  *  Similar to function in addItem.js
+  */
+  function remove(subDivId)
+  {
+    var id = subDivId.id;
+    var parent = document.getElementById("itemList");
+    parent.removeChild(subDivId); // but why is the subDiv passed instead of id?
+    count--;
+    document.getElementById("numItems").value = count;
+    document.getElementById("removedDivs").value = document.getElementById("removedDivs").value
+                                                    + "," + id;
+  }
+
   </script>
+  <script src="/js/spinner.js"></script>
 @endsection
 
 
@@ -222,14 +248,19 @@
       </div>
     </div>
 
-
+    <input type="hidden" id="removedDivs" name="removedDivs" value="">
+    <input type="hidden" id="runningCount" name="runningCount" value="">
 
   </form>
 </div><!--col-->
 
 
   <div class="col-md-4">
-    @include('partials.tyres')
+    <h4>Tyre Catalog</h4>
+    <div id="tyreCatalog">
+
+      @include('partials.tables.tyre_catalog')
+    </div>
   </div><!--col-->
 </div><!--row-->
 <!--</div>panel-body-->

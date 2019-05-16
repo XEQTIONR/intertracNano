@@ -46,33 +46,38 @@ class CustomerController extends Controller
 
         //VALIDATE
 
-        $validator=Validator::make($request->all(),[
-          'Name' => 'required|string',
-          'Address' => 'required|string',
-          'Phone' => 'required|numeric|digits_between:7,12',
-          'Notes' => 'string|nullable',
-        ]);
-
-        if($validator->fails())
-        {
-          return redirect('customers/create')
-                  ->withErrors($validator)
-                  ->withInput();
-        }
+//        $validator=Validator::make($request->all(),[
+//          'Name' => 'required|string',
+//          'Address' => 'required|string',
+//          'Phone' => 'required|numeric|digits_between:7,12',
+//          'Notes' => 'string|nullable',
+//        ]);
+//
+//        if($validator->fails())
+//        {
+//          return redirect('customers/create')
+//                  ->withErrors($validator)
+//                  ->withInput();
+//        }
         //ALLOCATE
         $customer = new Customer;
 
 
         //INITIAZE
-        $customer->name = $request->Name;
-        $customer->address = $request->Address;
-        $customer->phone = $request->Phone;
-        $customer->notes = $request->Notes;
+        $customer->name = $request->name;
+        $customer->address = $request->address;
+        $customer->phone = $request->phone;
+        $customer->notes = $request->notes;
 
         //STORE
         $customer->save();
 
-        return redirect('/customers');
+        $response = array();
+        $response['status'] = 'success';
+        $response['customer_id'] = $customer->id;
+
+        return $response;
+        //return redirect('/customers');
     }
 
     /**

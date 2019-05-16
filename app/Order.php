@@ -16,9 +16,14 @@ class Order extends Model
     {
       return $this->hasMany('App\Order_content', 'Order_num');
     }
-    public function payment()
+    public function payments()
     {
       return $this->hasMany('App\Payment','Order_num');
+    }
+
+    public function orderReturns()
+    {
+      return $this->hasMany('App\Order_return', 'order_num');
     }
 
     public function customer()
@@ -26,30 +31,31 @@ class Order extends Model
       return $this->belongsTo('App\Customer','customer_id');
     }
 
-    public function calculateAndSetDiscount()
+    public function totalDiscount()
     {
-      $discount_percent = ($this->subtotal * ($this->discount_percent/100.0));
-      $this->totalDiscount = $discount_percent + $this->discount_amount;
+      $discount_percent = ($this->totalValueBeforeDiscountAndTax() * ($this->discount_percent/100.0));
+      return $discount_percent + $this->discount_amount;
     }
 
-    public function calculateAndSetTax()
+    public function totalTax()
     {
-      $tax_percent_amt = ($this->subtotal * ($this->tax_percentage/100.0));
-      $this->totalTax = $tax_percent_amt + $this->tax_amount;
+      $tax_percent_amt = ($this->totalValueBeforeDiscountAndTax() * ($this->tax_percentage/100.0));
+      return $tax_percent_amt + $this->tax_amount;
 
     }
 
+    //Make sure to query Order::with('payments')
+    // Inefficiant query
     public function calculatePayable()
     {
-        $total = ($this->subtotal+$this->totalTax-$this->totalDiscount);
-        $payments = $this->payment()
-                        ->get();
+        $total = ($this->totalValueBeforeDiscountAndTax()+$this->totalTax()-$this->totalDiscount());
+        $payments = $this->payments; // because ALWAYS expected to query with payments.
         foreach ($payments as $payment)
         {
           $total -= $payment->payment_amount;
         }
 
-        $this->payable = $total;
+        return $total;
     }
 
     /* Total value before tax and discount */
@@ -64,74 +70,65 @@ class Order extends Model
           $total_value+= ($content->qty * $content->unit_price);
         }
 
-        $this->subtotal = $total_value;
+        return $total_value;
     }
 
 
 
 //HELPER FUNCTIONS
-    public static function tyreInContRemaining($id)
+    public static function tyresRemainingInContainers()
     {
-      $remaining = DB::table('container_contents')
-                  ->select('Container_num', 'BOL','tyre_id','qty')
-                  ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-                                      FROM order_contents
-                                      GROUP BY container_num, bol, tyre_id) AS B'),
+      $remaining = DB::select('
+      
+                  SELECT C.* , IFNULL((qty_bought - qty_sold), qty_bought) AS in_stock FROM
+                  (SELECT Container_num, BOL, tyre_id, SUM(qty) as qty_bought, MIN(created_at) as created_at 
+		              FROM container_contents
+		              GROUP BY Container_num, BOL, tyre_id) AS C
 
-                            function($join)
-                            {
-                              $join->on('container_contents.tyre_id','=','B.tyre_id')
-                                ->on('container_contents.BOL','=','B.bol')
-                                ->on('container_contents.Container_num','=','B.container_num');
+		              LEFT JOIN
 
-                            })
-                  ->select('container_contents.Container_num',
-                            'container_contents.BOL',
-                            'container_contents.tyre_id',
-                            'container_contents.qty AS qty_bought',
-                            DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
-                            DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
-                            )
-                  ->where('container_contents.tyre_id', $id)
-                  ->oldest()
-                  ->get();
+		              (SELECT container_num, bol, tyre_id, SUM(qty) AS qty_sold
+		              FROM order_contents
+		              GROUP BY container_num, bol, tyre_id) AS B
+	
+		              ON (C.tyre_id = B.tyre_id AND C.BOL = B.bol AND C.Container_num = B.container_num)
+		              ORDER BY created_at ASC
+	    
+      
+      ');
 
-                  //dd($remaining->toSql());
-
-        return $remaining;
+      return collect($remaining);
     }
+
+    
 
     public static function tyresRemaining()
     {
       //tyres_remaining.sql
-      $remaining = DB::table('container_contents')
-                  ->select('Container_num', 'BOL','tyre_id','qty')
-                  ->leftJoin(DB::raw('(SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
-                                      FROM order_contents
-                                      GROUP BY container_num, bol, tyre_id) AS B'),
+      $remaining = DB::select('
+      
+      SELECT T.tyre_id, T.brand, T.size, T.pattern, T.lisi, E.qtyavailable AS in_stock
+      FROM	(SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0)) AS qtyavailable  
+	          FROM  (SELECT Container_num, BOL, tyre_id, SUM(qty) as supplyqty 
+		              FROM container_contents
+		              GROUP BY Container_num, BOL, tyre_id) AS C
 
-                            function($join)
-                            {
-                              $join->on('container_contents.tyre_id','=','B.tyre_id')
-                                ->on('container_contents.BOL','=','B.bol')
-                                ->on('container_contents.Container_num','=','B.container_num');
+		              LEFT JOIN
 
-                            })
-                  ->select('container_contents.Container_num',
-                            'container_contents.BOL',
-                            'container_contents.tyre_id',
-                            'container_contents.qty AS qty_bought',
-                            DB::raw('IFNULL(B.sumqty,0) AS qty_sold'),
-                            DB::raw('(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock')
-                            )
-                  ->join('tyres', 'container_contents.tyre_id','=','tyres.tyre_id')
-                  ->select('container_contents.tyre_id', 'tyres.brand', 'tyres.size', 'tyres.pattern', DB::raw('SUM(container_contents.qty - IFNULL(B.sumqty,0)) AS in_stock'))
-                  ->groupBy('container_contents.tyre_id')
+		              (SELECT container_num, bol, tyre_id, SUM(qty) AS sumqty
+		              FROM order_contents
+		              GROUP BY container_num, bol, tyre_id) AS B
+	
+		              ON (C.tyre_id = B.tyre_id AND C.BOL = B.bol AND C.Container_num = B.container_num)
+	          GROUP BY tyre_id) E, tyres T	
+      WHERE T.tyre_id = E.tyre_id
+      
+      ');
 
 
 
 
-                  ->get();
+         //         ->get();
 
                   //dd($remaining->toSql());
 

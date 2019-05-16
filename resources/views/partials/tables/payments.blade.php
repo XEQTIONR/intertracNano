@@ -1,22 +1,19 @@
-<table class="table table-condensed">
+<table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
-    <th>Invoice #</th>
+    <th>Transaction ID</th>
     <th>Order #</th>
     <th>Amount Paid (&#2547)</th>
     <th>Created</th>
-    <th>Updated</th>
   </tr>
 </thead>
 <tbody>
   @foreach ($payments as $payment)
     <tr>
-      <td class="text-center">{{$payment->Invoice_num}}</td>
-      <td class="text-center"><a href="orders/{{$payment->Order_num}}">{{$payment->Order_num}}</a></td>
+      <td class="text-center">{{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
+      <td class="text-center">{{$payment->Order_num}}</td>
       <td class="text-right">{{$payment->payment_amount}}</td>
       <td class="text-center">{{$payment->created_at}}</td>
-      <td class="text-center">{{$payment->updated_at}}</td>
-
     </tr>
   @endforeach
 </tbody>

@@ -38,11 +38,9 @@ class OrderController extends Controller
 
         $item->qty = $qty_remain;
         $qty_remain = 0;
-
       }
       else // more entries needed keep looping
       {
-
         $item->qty = $stock_listing->in_stock; // take all the tyres in this entry for this order
         $qty_remain -= $stock_listing->in_stock; // adjust further number of tyres to be filled
       }
@@ -70,8 +68,25 @@ class OrderController extends Controller
     public function create()
     {
         //
+        $customers = Customer::all();
         $in_stock = Order::tyresRemaining();
-        return view('new_order',compact('in_stock'));
+
+        foreach($customers as $customer)
+        {
+
+          $customer->address = str_replace("\n", "",nl2br($customer->address));
+        }
+
+        $i = 0;
+        foreach($in_stock as $stock)
+        {
+          $stock->qty = 0;
+          $stock->unit_price = 0;
+          $stock->i = $i;
+          $i++;
+        }
+
+        return view('new_order',compact('in_stock', 'customers'));
     }
 
 
@@ -82,76 +97,95 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
 
-      //VALIDATE
-      $validator=Validator::make($request->all(),[
-        'inputCustomerId' => 'required|numeric',
-        'inputDiscountPercent' => 'required|numeric|min:0',
-        'inputDiscountAmount' => 'required|numeric|min:0',
-        'inputTaxAmount' => 'required|string|min:0',
-      ]);
-
-      if($validator->fails())
-      {
-        return redirect('orders/create')
-                ->withErrors($validator)
-                ->withInput();
-      }
-
-      else
-      {
         DB::beginTransaction();
-        //{
+
         $order  = new Order;
 
-        $order->customer_id = $request->inputCustomerId;
-        $order->discount_percent = $request->inputDiscountPercent;
-        $order->discount_amount = $request->inputDiscountAmount;
-        $order->tax_percentage = $request->inputTaxPercent;
-        $order->tax_amount = $request->inputTaxAmount;
+        $order->customer_id = $request->input('customer');
+        $order->discount_percent = $request->input('discount_percent');
+        $order->discount_amount = $request->input('discount_amount');
+        $order->tax_percentage = $request->input('tax_percent');
+        $order->tax_amount = $request->input('tax_amount');
 
         $order->save();
 
-        $contents = array();
-        $index = 0;
 
+        $order_contents = $request->input('order_contents');
 
+        $tyre_remaining_cont = Order::tyresRemainingInContainers();
 
-        for ($i=0; $i<$request->numItems; $i++) // each tyre
+        $new_contents = array();
+
+        foreach($order_contents as $order_content)
         {
+          $tyre = $order_content['tyre_id'];
+          $qty = intval($order_content['qty']);
+          $unit_price = floatval($order_content['unit_price']);
 
-          $full_qty = $request->qty[$i]; //total number of tyre[i] ordered
-          $qty_remain = $full_qty; //remaining qty to be filled
+          $filtered = $tyre_remaining_cont->where('tyre_id', $tyre)
+                                          ->filter(function($value, $key){
 
-          $in_stock = Order::tyreInContRemaining($request->tyre[$i]); // stock info for tyre_id i
+                                              $keys[] = $key;
+                                              return (intval($value->in_stock)>0);
+                                          })
+                                          ->all();
 
-
-          foreach ($in_stock as $stock_listing) // each stock entry
+          foreach($filtered as $key => $item)
           {
-            //Create a new order_content entry
-            $qty_remain = OrderController::setContents($contents, $index, $order->Order_num, $request->tyre[$i], $request->price[$i], $stock_listing, $qty_remain);
+            $order_content =  new Order_content;
 
-            if ($qty_remain==0)
+            $order_content->tyre_id = $tyre;
+            $order_content->Container_num = $item->Container_num;
+            $order_content->BOL = $item->BOL;
+            $order_content->unit_price = $unit_price;
+
+            if(intval($item->in_stock)>=$qty)
             {
-              break;
-            }
+              $order_content->qty = $qty;
+              $tyre_remaining_cont[$key]->in_stock = intval($tyre_remaining_cont[$key]->in_stock) - $qty;
 
+              array_push($new_contents, $order_content);
+              break; // loop exit
+            }
             else
             {
-              $index++;
+              $qty -= intval($item->in_stock);
+              $order_content->qty = intval($item->in_stock);
+              $tyre_remaining_cont[$key]->in_stock = 0;
+
+              array_push($new_contents, $order_content);
             }
 
+
+//            $new_contents [] = $order_content;
           }
+
+
 
         }
 
-        $order->orderContents()->saveMany($contents);
-        //});
+
+        $new_contents = collect($new_contents)->filter(function($value){
+          return intval($value->qty) > 0;
+        })
+        ->all();
+
+        $order->orderContents()->saveMany($new_contents);
         DB::commit();
-        return redirect('/orders/'.$order->Order_num);
-      }
+//
+        $response = [];
+
+        $response['status'] = 'success';
+        $response['order_num'] = $order->Order_num;
+        $response['date'] = $order->created_at;
+        return $response;
+
+
+        //      }
     }
 
 
@@ -162,6 +196,61 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
+
+
+    public function detailsRow(Request $request)
+    {
+      $id = $request->input('order');
+      $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($id);
+
+      $subtotal = 0;
+      $subtotalReturn = 0;
+      $qtytotal = 0;
+      $qtytotalReturn = 0;
+
+      foreach($order->orderContents as $item)
+      {
+        $subtotal += (floatval($item->qty)*floatval($item->unit_price));
+        $qtytotal += intval($item->qty);
+      }
+
+
+
+      $order->subtotal = $subtotal;
+
+      $order->taxtotal = ($subtotal * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->discounttotal = ($subtotal * $order->discount_percent/100.0) + $order->discount_amount;
+
+      $order->grandtotal = $order->subtotal + $order->taxtotal - $order->discounttotal;
+
+      $grandtotal = $order->grandtotal;
+
+      foreach($order->payments as $payment)
+      {
+        $grandtotal -= $payment->payment_amount;
+        $payment->balance = $grandtotal;
+      }
+
+      foreach($order->orderReturns as $item)
+      {
+        $subtotalReturn += (floatval($item->qty)*floatval($item->unit_price));
+        $qtytotalReturn += intval($item->qty);
+      }
+
+
+      $order->subtotalReturn = $subtotalReturn;
+
+      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->discounttotalReturn = ($subtotalReturn * $order->discount_percent/100.0);
+
+      $order->grandtotalReturn = $order->subtotalReturn + $order->taxtotalReturn - $order->discounttotalReturn;
+
+      $order->qtytotal = $qtytotal;
+      $order->qtytotalReturn = $qtytotalReturn;
+
+      return view('partials.rows.order', compact('order'));
+    }
+
     public function show(Order $order)
     {
         //
