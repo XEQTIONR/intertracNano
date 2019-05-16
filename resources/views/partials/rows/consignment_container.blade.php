@@ -44,7 +44,7 @@
     <td class="col-xs-2"> </td>
     <td class="col-xs-2"> {{$total}} </td>
     <td class="col-xs-2"> {{$total_tax}} </td>
-    <td class="col-xs-2"> ${{$total_weight}} </td>
+    <td class="col-xs-2"> {{$total_weight}} </td>
   </tr>
   </tbody>
 </table>

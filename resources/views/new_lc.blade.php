@@ -50,7 +50,7 @@
         <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
 
-          <div class="box box-info">
+          <div class="box box-primary">
             <div class="box-header">
               <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>
             </div>
@@ -276,7 +276,7 @@
                 {{--</span>--}}
               {{--</transition-group>--}}
             {{--</div>--}}
-            <div class="box box-info">
+            <div class="box box-primary">
               <div class="box-header">
                 <h3 class="page-header ml-3"><i class="far fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
               </div>

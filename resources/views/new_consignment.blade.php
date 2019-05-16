@@ -340,7 +340,7 @@
           <div class="box-footer px-4">
 
 
-            <div class="my-4 btn btn-success btn-block">
+            <div class="my-4 btn bg-purple btn-block">
               <transition  name="custom-classes-transition"
                            {{--tag="ol"--}}
                            mode="out-in"
@@ -359,8 +359,8 @@
                   <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b>#</b></span>
                   <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">
-                  <button @click="add_container()" type="button" class="btn btn-success ml-2">Add</button>
-                  <button @click="cancel()" type="button" class="btn btn-warning mr-2">Cancel</button>
+                  <button @click="add_container()" type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i></button>
+                  <button @click="cancel()" type="button" class="btn btn-danger mr-2"><i class="fa fa-times"></i> </button>
                 </div>
               </transition>
             </div>

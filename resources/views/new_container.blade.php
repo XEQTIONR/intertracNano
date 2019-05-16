@@ -41,7 +41,7 @@
       <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
 
-        <div class="box box-purple">
+        <div class="box box-teal">
           <div class="box-header">
             <h3 class="page-header ml-3">
               <i class="far fa-anchor mr-3"></i>
@@ -407,7 +407,7 @@
           <div class="box-footer px-4">
 
 
-            <div class="my-4 btn btn-success btn-block">
+            <div class="my-4 btn bg-purple btn-block">
               <transition  name="custom-classes-transition"
                            mode="out-in"
                            enter-active-class="animated fadeIn fast"
@@ -422,9 +422,9 @@
 
                   <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b>#</b></span>
-                  <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">
-                  <button @click="add_container()" type="button" class="btn btn-success ml-2">Add</button>
-                  <button @click="cancel()" type="button" class="btn btn-warning mr-2">Cancel</button>
+                  <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number" style="color: black">
+                  <button @click="add_container()" type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i> </button>
+                  <button @click="cancel()" type="button" class="btn btn-danger mr-2"><i class="fa fa-times"></i> </button>
                 </div>
               </transition>
             </div>
@@ -667,7 +667,7 @@
                 :leave-active-class="direction? 'animated fadeOutRight fast' : 'animated fadeOutLeft fast'"
     >
       <div v-show="showForm == 1 && containers.length && selected_container != null" class="col-xs-5" >
-        <div class="box box-default mx-0" id="catalogContainer">
+        <div class="box box-dea mx-0" id="catalogContainer">
           <div class="box-header with-border">
             <h3 class="box-title">Tyre Catalog</h3>
           </div>
