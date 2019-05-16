@@ -26,7 +26,7 @@
     {{--</div>--}}
   {{--</div>--}}
 @section('body')
-  <div class="box">
+  <div class="box box-primary">
     <div class="box-body">
       <table id ="table_id" class="table table-hover table-bordered">
         <thead>

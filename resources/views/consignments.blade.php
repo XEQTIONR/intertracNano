@@ -18,7 +18,7 @@
 
 
 @section('body')
-  <div class="box">
+  <div class="box box-teal">
     <div class="box-body">
       <table id="table_id" class="table table-hover table-bordered">
         <thead>

@@ -15,7 +15,7 @@
 
 
 @section('body')
-  <div class="box">
+  <div class="box box-info">
     <div class="box-body">
       @include('partials.tables.orders')
     </div>

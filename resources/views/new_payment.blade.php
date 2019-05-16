@@ -49,7 +49,7 @@
   <div v-if="!paid" key="0" class="row justify-content-center">
   <div class="col-xs-12">
 
-    <div class="box box-info">
+    <div class="box box-maroon">
       <div class="box-header">
         <h3 class="page-header ml-3"><i class="fa fa-hand-holding-usd mr-3"></i>Record payments for an order</h3>
       </div>
@@ -169,7 +169,7 @@
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn btn-info btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
+                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
                   </span>
                 </div>
               </div>
@@ -288,8 +288,8 @@
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-          <button onclick="window.print()" class="btn btn-default pull-right"><i class="fa fa-print"></i> Print</button>
-          <a href="{{ route('payments.create') }}" type="button" class="btn btn-primary">
+          <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print"></i> Print</button>
+          <a href="{{ route('payments.create') }}" type="button" class="btn btn-default">
             <i class="fa fa-chevron-left"></i> Another Payment
           </a>
           {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}

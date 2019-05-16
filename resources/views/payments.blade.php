@@ -18,7 +18,7 @@
 
 
 @section('body')
-  <div class="box">
+  <div class="box box-maroon">
     <div class="box-body">
       @include('partials.tables.payments')
     </div>

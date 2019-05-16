@@ -442,7 +442,7 @@
 
               <div class="row no-print">
                 <div class="col-xs-12">
-                  <button onclick="window.print()" class="btn btn-default">
+                  <button onclick="window.print()" class="btn bg-navy">
                     <i class="fa fa-print"></i> Print
                   </button>
                 </div>

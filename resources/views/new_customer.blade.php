@@ -42,7 +42,7 @@
 
   <div class="row justify-content-center">
     <div class="col-xs-12 col-md-8 col-lg-6">
-      <div class="box box-default">
+      <div class="box box-orange">
         <div class="box-header">
           <h3 class="page-header ml-3"><i class="fas fa-user mr-3"></i></i>Add a new customer</h3>
         </div>
@@ -104,7 +104,7 @@
 
               <div class="row">
                 <div class="col-xs-12 px-0">
-                  <button class="btn btn-lg btn-primary pull-right" type="button" @click="save()">Submit</button>
+                  <button class="btn btn-lg btn-success pull-right" type="button" @click="save()">Submit</button>
                 </div>
               </div>
             </div>
