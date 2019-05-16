@@ -93,13 +93,15 @@
         <div>
           {{--SOMETHING RANDOM--}}
             <table class="table table-responsive table-bordered inner-white">
+            <thead>
             <tr>
               <th class="text-teal-active">Tyre</th>
               <th class="text-teal-active">Qty</th>
-              <th class="text-teal-active">UnitPrice</th>
+              <th class="text-teal-active">Unit Price</th>
               <th class="text-teal-active text-right">Sub Total</th>
             </tr>
-
+            </thead>
+            <tbody>
             @foreach ($performa as $record)
               <tr>
                 <td>{{$record->tyre->brand}} {{$record->tyre->size}} {{$record->tyre->pattern}} {{$record->tyre->lisi}}</td>
@@ -117,6 +119,7 @@
                 <td class="text-right"><b><span class="currency-symbol mr-1"></span>{{ number_format($lc->total, 2) }}</b></td>
               </tr>
             @endif
+            </tbody>
           </table>
           {{--<a href="#" class="btn btn-primary">Edit</a>--}}
           {{--<a href="#" class="btn btn-danger">Delete</a>--}}
@@ -134,27 +137,28 @@
       </div>
       <div class="box-body">
         <div>
-          <table class="table table-responsive inner-white">
-            <tr class="bg-light-blue">
-              <th>Bill Of Lading#</th>
-              <th class="text-right">Total Value</th>
-              <th class="text-right">Tax Paid</th>
-              <th>Land Date</th>
+          <table class="table table-responsive inner-white" style="border: 1px solid white">
+            <thead>
+            <tr class="" >
+              <th class="text-blue" >Bill Of Lading#</th>
+              <th class="text-blue text-right">Total Value</th>
+              <th class="text-blue text-right">Tax Paid</th>
+              <th class="text-blue">Land Date</th>
               <th></th>
             </tr>
-
-
+            </thead>
+            <tbody>
             @foreach($consignments as $consignment)
               <tr>
-                <td class="text-blue">{{$consignment->BOL}}</td>
-                <td class="text-blue text-right"><span class="currency-symbol mr-1"></span> {{$consignment->value}}</td>
-                <td class="text-blue text-right">৳ {{$consignment->tax}}</td>
-                <td class="text-blue">{{$consignment->land_date}}</td>
-                <td class="text-blue"><a href="/consignments/{{$consignment->BOL}}"
+                <td class=" strong" >{{$consignment->BOL}}</td>
+                <td class="text-right"><span class="currency-symbol mr-1"></span> {{$consignment->value}}</td>
+                <td class="text-right">৳ {{$consignment->tax}}</td>
+                <td class="">{{$consignment->land_date}}</td>
+                <td class=""><a href="/consignments/{{$consignment->BOL}}"
                        class="btn btn-primary btn-sm"><i class="far fa-eye"></i>View</a></td>
               </tr>
             @endforeach
-
+            </tbody>
           </table>
           {{--<a href="/consignments/create/{{$lc->lc_num}}" class="btn btn-primary">Add Consignment</a>--}}
         </div>
@@ -164,11 +168,6 @@
   </div>
 </div> <!--row-->
 {{--</div> <!--container-->--}}
-
-
-<div id="accordion" class="row">
-
-</div> <!--accordion -->
 
 
 @endsection

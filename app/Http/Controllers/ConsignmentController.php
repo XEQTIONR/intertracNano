@@ -184,21 +184,6 @@ class ConsignmentController extends Controller
      */
     public function show(Consignment $consignment)
     {
-        //
-      /*  $containers = $consignment->container()
-                                  ->get();
-        $contents = array();
-
-        foreach ($containers as $container)
-        {
-          $content = $container->containerContents()
-                              ->get();
-          array_push($contents, $content);
-        }*/
-
-
-
-        //$containers = array();
         $contents = array();
 
 
@@ -209,12 +194,29 @@ class ConsignmentController extends Controller
           foreach($containers as $somecontainer)
           {
             $somecontents = $somecontainer->contents()
+                                          ->with('tyre')
                                           ->get();
             array_push($contents, $somecontents);
           }
 
           $expenses = $consignment->expenses()
                                   ->get();
+
+          $total = 0;
+          $foreign_total = 0;
+          $local_total = 0;
+          foreach($expenses as $expense)
+          {
+            $foreign_total+= floatval($expense->expense_foreign);
+            $local_total+= floatval($expense->expense_local);
+            $total+= (floatval($expense->expense_foreign)* floatval($consignment->exchange_rate)+ floatval($expense->expense_local));
+
+          }
+
+
+          $consignment->expense_grand_total = $total;
+          $consignment->expense_foreign_total = $foreign_total;
+          $consignment->expense_local_total = $local_total;
 
         return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses'));
     }

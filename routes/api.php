@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 
   Route::get('order', 'OrderController@detailsRow');
 
+  Route::get('consignment_container', 'ConsignmentContainerController@detailsRow');
+
 //});
 
 

@@ -11,8 +11,8 @@
 <tbody>
   @foreach ($payments as $payment)
     <tr>
-      <td class="text-center">{{$payment->transaction_id}}</td>
-      <td class="text-center"><a href="orders/{{$payment->Order_num}}">{{$payment->Order_num}}</a></td>
+      <td class="text-center">{{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
+      <td class="text-center">{{$payment->Order_num}}</td>
       <td class="text-right">{{$payment->payment_amount}}</td>
       <td class="text-center">{{$payment->created_at}}</td>
       <td class="text-center">{{$payment->updated_at}}</td>

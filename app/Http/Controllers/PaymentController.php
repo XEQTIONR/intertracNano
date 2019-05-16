@@ -16,7 +16,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::orderBy('created_at', 'desc')->get();
         return view('payments', compact('payments'));
     }
 
