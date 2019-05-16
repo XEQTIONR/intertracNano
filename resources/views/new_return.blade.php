@@ -16,7 +16,7 @@
 @endsection
 
 @section('modal')
-  <div class="modal modal-warning fade in" id="modal-warning">
+  <div v-cloak class="modal modal-warning fade in" id="modal-warning">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -43,7 +43,7 @@
 
 @section('body')
 
-  <div class="row justify-content-center">
+  <div v-cloak class="row justify-content-center">
     <div class="col-xs-12">
 
       <transition name="custom-classes-transition"
@@ -59,7 +59,7 @@
       </transition>
     </div>
   </div>
-  <transition name="custom-classes-transition"
+  <transition v-cloak name="custom-classes-transition"
               mode="out-in"
               enter-active-class="animated fadeInRight"
               leave-active-class="animated fadeOutLeft"

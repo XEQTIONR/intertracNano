@@ -50,7 +50,7 @@
       <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
 
-        <div class="box box-info">
+        <div class="box box-teal">
           <div class="box-header">
             <h3 class="page-header ml-3">
               <i class="far fa-anchor mr-3"></i>
@@ -192,7 +192,7 @@
       </div>
 
       <div  v-if="showForm == 1" key="1"  class="col-xs-7">
-        <div class="box box-info">
+        <div class="box box-purple">
           <div class="box-header">
             <h3 class="page-header ml-3">
               <i class="far fa-container-storage mr-3"></i>
@@ -541,7 +541,7 @@
                 :enter-active-class="direction? 'animated fadeInRight delay-1s fast' : 'animated fadeInLeft delay-1s fast'"
                 :leave-active-class="direction? 'animated fadeOutRight fast' : 'animated fadeOutLeft fast'" >
       <div v-show="showForm == 1 && containers.length && selected_container != null" class="col-xs-5">
-        <div class="box box-primary">
+        <div class="box box-default">
           <div class="box-header with-border">
             <h3 class="box-title">Tyre Catalog</h3>
           </div>

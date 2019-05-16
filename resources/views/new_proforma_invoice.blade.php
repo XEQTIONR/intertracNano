@@ -17,7 +17,7 @@
 
 @section('body')
 
-  <div class="row justify-content-center">
+  <div v-cloak class="row justify-content-center">
     <div class="col-xs-12">
       <transition name="custom-classes-transition"
                   enter-active-class="animated fadeIn faster"
@@ -32,242 +32,16 @@
       </transition>
     </div>
   </div>
-  <div class="row justify-content-center">
+  <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
                  :enter-active-class="direction? 'animated fadeInRight fast' : 'animated fadeInLeft fast'"
                  :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'"
     >
-      {{--<div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">--}}
-
-
-        {{--<div class="box box-info">--}}
-          {{--<div class="box-header">--}}
-            {{--<h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>--}}
-          {{--</div>--}}
-          {{--<div class="box-body">--}}
-
-            {{--<form>--}}
-              {{--<div class="box-body">--}}
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.lc_num }">--}}
-                      {{--<label>LC#</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">--}}
-                          {{--<span v-if="!is_verifying">F20</span>--}}
-                          {{--<i v-else class="fas fa-spinner fa-pulse"></i>--}}
-                        {{--</span>--}}
-                        {{--<input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter Document Credit Number">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.lc_num" class="help-block text-danger">@{{ errors.lc_num }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12 col-md-6">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.date_issued }">--}}
-                      {{--<label>Date Issued</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F31C</span>--}}
-                        {{--<input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">--}}
-                        {{--<div class="input-group-addon">--}}
-                          {{--<i class="fas fa-calendar-alt"></i>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-12 col-md-6">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.date_expired }">--}}
-                      {{--<label>Date Expiry</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F31D</span>--}}
-                        {{--<input v-model="date2" @click="datetify()" @blur="copyDate(2)" id="dateExpiry" type="text" class="form-control date">--}}
-                        {{--<div class="input-group-addon">--}}
-                          {{--<i class="fas fa-calendar-alt"></i>--}}
-                        {{--</div>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.date_expired" class="help-block text-danger">@{{ errors.date_expired }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.applicant }">--}}
-                      {{--<label>Applicant</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F50</span>--}}
-                        {{--<textarea id="applicant" v-model="applicant" class="form-control" rows="3" placeholder="Enter applicant name and address"></textarea>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.applicant" class="help-block text-danger">@{{ errors.applicant }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.beneficiary }">--}}
-                      {{--<label>Beneficiary</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F59</span>--}}
-                        {{--<textarea id="beneficiary"  v-model="beneficiary" class="form-control" rows="3" placeholder="Beneficiary name and address"></textarea>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.beneficiary" class="help-block text-danger">@{{ errors.beneficiary }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.departing_port }">--}}
-                      {{--<label>Departing Port</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F44E</span>--}}
-                        {{--<input v-model="departing_port" type="text" class="form-control" placeholder="Enter departing port">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.departing_port" class="help-block text-danger">@{{ errors.departing_port }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.arriving_port }">--}}
-                      {{--<label>Arriving Port</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F44F</span>--}}
-                        {{--<input v-model="arriving_port" type="text" class="form-control" placeholder="Enter departing port">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.arriving_port" class="help-block text-danger">@{{ errors.arriving_port }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-4">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.currency_code }">--}}
-                      {{--<label>Foreign currency code</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon">F32B</span>--}}
-                        {{--<input v-model="currency_code" type="text" class="form-control" placeholder="Currency Code">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.currency_code" class="help-block text-danger">@{{ errors.currency_code }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-8">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.lc_value }">--}}
-                      {{--<label>LC Value (in foreign currency)</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>--}}
-                        {{--<input v-model="lc_value" type="number" step="0.01" class="form-control" placeholder="0.00" min="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.lc_value" class="help-block text-danger">@{{ errors.lc_value }}</span>--}}
-                    {{--</div>--}}
-
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-4">--}}
-                    {{--<div class="form-group" :class="{ 'has-error' :  errors.exchange_rate }">--}}
-                      {{--<label>Exchange Rate</label>--}}
-                      {{--<div class="input-group">--}}
-
-                        {{--<input v-model="exchange_rate" type="number" step="0.01" class="form-control" placeholder="0.00">--}}
-                        {{--<span class="input-group-addon"><strong>/ @{{currency_symbol}}</strong></span>--}}
-                      {{--</div>--}}
-                      {{--<span v-if=" errors.exchange_rate" class="help-block text-danger">@{{ errors.exchange_rate }}</span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-8">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>LC Value (in local currency) </label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>৳</strong></span>--}}
-                        {{--<input type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" :value="lc_local_value | currency" disabled>--}}
-                      {{--</div>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12 col-md-6">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>Expenses Paid (Foreign)</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>@{{currency_symbol}}</strong></span>--}}
-                        {{--<input v-model="expense_foreign" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span class="help-block"></span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-
-                  {{--<div class="col-xs-12 col-md-6">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>Expenses Paid (Local)</label>--}}
-                      {{--<div class="input-group">--}}
-                        {{--<span class="input-group-addon"><strong>৳</strong></span>--}}
-                        {{--<input v-model="expense_local" type="number" step="0.01" min="0" class="form-control" placeholder="0.00">--}}
-                      {{--</div>--}}
-                      {{--<span class="help-block"></span>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="row mx-2">--}}
-                  {{--<div class="col-xs-12">--}}
-                    {{--<div class="form-group">--}}
-                      {{--<label>Notes</label>--}}
-                      {{--<div class="input-group">--}}
-                      {{--<span class="input-group-addon">F50</span>--}}
-                      {{--<textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>--}}
-                      {{--</div>--}}
-
-                    {{--</div>--}}
-                    {{--<span class="help-block"></span>--}}
-                    {{--<div class="col-12">--}}
-                      {{--<button v-if="!is_duplicate" type="button" class="btn btn-info pull-right" @click="submit()">--}}
-                        {{--Continue--}}
-                        {{--<i class="fa fa-chevron-right pt-1 ml-2"></i>--}}
-                      {{--</button>--}}
-                    {{--</div>--}}
-                  {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<!-- /.input group -->--}}
-
-                {{--<label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#  <small>F20</small></label>--}}
-                {{--<div class="col-md-3">--}}
-                {{--<input type="text" class="form-control" name="LcNumber" id="inputLCnum" value="{{old('LcNumber')}}" required>--}}
-                {{--</div>--}}
-              {{--</div>--}}
-            {{--</form>--}}
-
-
-          {{--</div>--}}
-        {{--</div>--}}
-      {{--</div>--}}
-
       <div v-if="showForm == 0" class="col-xs-10">
-        <div class="box box-info">
+        <div class="box box-primary">
           <div class="box-header">
-
             <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Select a Letter of Credit</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-            </div>
-
           </div>
           <div class="box-body pb-5 pl-5 pr-5">
 
@@ -773,63 +547,6 @@
                   console.log("showform= " + this.showForm);
                   switch (this.showForm)
                   {
-                      // case 0 :
-                      //     if(!this.lc_num || !this.lc_num.length)
-                      //         errors['lc_num'] = 'Enter a LC number';
-                      //
-                      //     if(!this.applicant || !this.applicant.length)
-                      //         errors['applicant'] = 'Enter applicant information.';
-                      //
-                      //     if(!this.beneficiary || !this.beneficiary.length)
-                      //         errors['beneficiary'] = 'Enter beneficiary information';
-                      //
-                      //     if(!this.departing_port || !this.departing_port.length)
-                      //         errors['departing_port'] = 'Enter departing port';
-                      //
-                      //     if(!this.arriving_port || !this.arriving_port.length)
-                      //         errors['arriving_port'] = 'Enter arriving port';
-                      //
-                      //     if(!this.currency_code || this.currency_code.length != 3)
-                      //         errors['currency_code'] = 'Enter a valid currency code';
-                      //
-                      //     if( !this.lc_value || !(this.lc_value > 0) )
-                      //         errors['lc_value'] = 'Enter a valid LC value';
-                      //
-                      //     if( !this.exchange_rate || !(this.exchange_rate > 0) )
-                      //         errors['exchange_rate'] = 'Enter a valid exchange rate.';
-                      //
-                      //     var regEx = /\d\d\/\d\d\/\d\d\d/;
-                      //     var issued = this.date1;
-                      //     var expires = this.date2;
-                      //
-                      //     if(!regEx.test(issued))
-                      //     {
-                      //       errors['date_issued'] = 'Enter a valid issue date';
-                      //     }
-                      //     if(!regEx.test(expires))
-                      //     {
-                      //       errors['date_expired'] = 'Enter a valid expiry date';
-                      //     }
-                      //
-                      //     if(!errors.date_issued && !errors.date_expired)
-                      //     {
-                      //         var i_array = issued.split("/");
-                      //         var e_array = expires.split("/");
-                      //         var date_error = false;
-                      //
-                      //         for(var i = 2; i>=0; i--)
-                      //             if (parseInt(i_array[i]) > parseInt(e_array[i])) {
-                      //                 date_error = true;
-                      //                 break;
-                      //             }
-                      //             else if (parseInt(i_array[i]) < parseInt(e_array[i]))
-                      //                 break;
-                      //
-                      //         if(date_error)
-                      //             errors['date_issued'] = 'Date issued must be before date expiry';
-                      //
-                      //     }
-                      //     break;
                       case 1 :
                           if(!this.invoice_num || !this.invoice_num.length)
                               errors['invoice_num'] = 'The proforma invoice number is required.';
