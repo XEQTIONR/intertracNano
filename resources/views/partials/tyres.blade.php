@@ -6,6 +6,7 @@
     <th>Size</th>
     <th>Li/Si</th>
     <th>Pattern</th>
+    <th>created_at</th>
   </tr>
 </thead>
 <tbody>
@@ -16,6 +17,7 @@
       <td>{{$tyre->size}}</td>
       <td>{{$tyre->lisi}}</td>
       <td>{{$tyre->pattern}}</td>
+      <td>{{$tyre->created_at}}</td>
     </tr>
   @endforeach
 </tbody>

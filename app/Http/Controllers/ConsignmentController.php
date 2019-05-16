@@ -24,25 +24,7 @@ class ConsignmentController extends Controller
         $containers = array();
         $contents = array();
         $consignments = Consignment::all();
-
-        foreach($consignments as $consignment)
-        {
-          $somecontainers = $consignment->containers()
-                                      ->get();
-          array_push($containers, $somecontainers);
-
-          foreach($somecontainers as $somecontainer)
-          {
-            $somecontents = $somecontainer->contents()
-                                          ->get();
-            array_push($contents, $somecontents);
-          }
-        }
-
-
-        //return $contents;
-        //return $containers;
-        //return $containers;
+        
         return view('consignments', compact('consignments'));
     }
 

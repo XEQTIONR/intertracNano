@@ -5,7 +5,6 @@
     <th>Order #</th>
     <th>Amount Paid (&#2547)</th>
     <th>Created</th>
-    <th>Updated</th>
   </tr>
 </thead>
 <tbody>
@@ -15,8 +14,6 @@
       <td class="text-center">{{$payment->Order_num}}</td>
       <td class="text-right">{{$payment->payment_amount}}</td>
       <td class="text-center">{{$payment->created_at}}</td>
-      <td class="text-center">{{$payment->updated_at}}</td>
-
     </tr>
   @endforeach
 </tbody>
