@@ -15,7 +15,8 @@
     {{--<link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">--}}
 
     <link rel="stylesheet" href="/css/app2.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    {{--<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css">--}}
     {{--<link rel="stylesheet" href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css'>--}}
   <!-- iCheck -->
 {{--<link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">--}}
@@ -259,7 +260,7 @@
                     active
                   @endif
                 ">
-                    <a href="#"><i style="margin-left: 5px" class="far fa-file-invoice-dollar"></i> <span>Letters of Credit</span>
+                    <a href="#"><i class="icon-file-invoice-dollar-r mr-2"></i> <span>Letters of Credit</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -276,7 +277,7 @@
                     active
                   @endif
               ">
-                      <a href="#"><i class="far fa-anchor"></i> <span>Consignments</span>
+                      <a href="#"><i class="icon-anchor-r mr-2"></i> <span>Consignments</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -295,7 +296,7 @@
                       active
                     @endif
                 ">
-                    <a href="#"><i class="fa fa-dolly"></i> <span>Orders</span>
+                    <a href="#"><i class="icon-dolly-s mr-2"></i> <span>Orders</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -312,7 +313,7 @@
                       active
                     @endif
                 ">
-                    <a href="#"><i class="fa fa-hand-holding-usd"></i> <span>Payments</span>
+                    <a href="#"><i class="icon-hand-holding-usd-s mr-2"></i> <span>Payments</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -328,7 +329,7 @@
                       active
                     @endif
                 ">
-                    <a href="#"><i class="fas fa-tire"></i> <span>Products</span>
+                    <a href="#"><i class="icon-tyre-s mr-2"></i> <span>Products</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -346,7 +347,7 @@
                   active
                   @endif
                 ">
-                    <a href="{{ route('customers.index') }}"><i class="fa fa-users"></i> <span>Customers</span>
+                    <a href="{{ route('customers.index') }}"><i class="icon-users-s mr-2"></i> <span>Customers</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -362,7 +363,7 @@
                       active
                     @endif
                 ">
-                    <a href="#"><i class="fas fa-chart-bar"></i> <span>Reports</span>
+                    <a href="#"><i class="icon-chart-bar-s mr-2"></i> <span>Reports</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -378,7 +379,7 @@
                 @if(Auth::user()->admin)
                 <li class="header">ADMIN ACTIONS</li>
                 <li class="treeview">
-                    <a href="#"><i class="far fa-user"></i> <span>Users</span>
+                    <a href="#"><i class="icon-user-r mr-2"></i> <span>Users</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
