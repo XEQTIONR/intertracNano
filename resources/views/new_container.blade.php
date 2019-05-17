@@ -148,7 +148,7 @@
         <div class="box box-purple">
           <div class="box-header">
             <h3 class="page-header ml-3">
-              <i class="far fa-container-storage mr-3"></i>
+              <i class="icon-container-storage-r fa-container-storage mr-3"></i>
               Add more containers to this consignment.
             </h3>
           </div>
@@ -166,7 +166,7 @@
                 <div class="box box-solid box-default" :id="container.Container_num" @click="makeCollapsible(container.Container_num)" {{--:class="[selected_container == index ? 'box-warning' : 'box-default']"--}}>
 
                   <div class="box-header">
-                    <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.Container_num }}</h4>
+                    <h4 class="box-title"><i class="icon-container-storage-r fa-container-storage mr-3"></i> # @{{ container.Container_num }}</h4>
                     <div class="box-tools pull-right">
                       <button type="button"  class="btn btn-box-tool"><i class="fa fa-minus" :id="container.Container_num + '_close'" ></i></button>
                     </div>
@@ -290,7 +290,7 @@
                   <div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-info' : 'box-default']">
 
                     <div class="box-header">
-                      <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
+                      <h4 class="box-title"><i class="icon-container-storage-r fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
                       <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" :id="container.container_num + '_close'"><i class="fa fa-minus"></i></button>
                         <button @click="remove_container(index)" type="button" class="btn btn-box-tool"><i class="fa fa-times"></i></button>
@@ -415,12 +415,12 @@
               >
                 <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
                   <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
-                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b> Add a container</b></span>
                 </div>
                 <div v-if="container_step==1" key="1" class="row justify-content-center align-items-center p-5 ">
 
-                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b>#</b></span>
                   <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number" style="color: black">
                   <button @click="add_container()" type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i> </button>
@@ -483,7 +483,7 @@
                 <thead>
                 <tr>
                   <th colspan="5">
-                    <i class="far fa-container-storage mr-2"></i>
+                    <i class="icon-container-storage-r fa-container-storage mr-2"></i>
                     <span class="">#</span>
                     @{{ container.Container_num }}
                   </th>
@@ -532,7 +532,7 @@
                 <thead>
                 <tr>
                   <th colspan="5">
-                    <i class="far fa-container-storage mr-2 text-info"></i>
+                    <i class="icon-container-storage-r fa-container-storage mr-2 text-info"></i>
                     <span class="text-info">#</span>
                     <span class="text-info">@{{ container.container_num }}</span>
                   </th>
