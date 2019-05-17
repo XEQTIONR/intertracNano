@@ -15,7 +15,6 @@
   {{--<link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">--}}
 
   <link rel="stylesheet" href="/css/app2.css">
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css">
   <!-- iCheck -->
 {{--<link rel="stylesheet" href="../../plugins/iCheck/square/blue.css">--}}
 

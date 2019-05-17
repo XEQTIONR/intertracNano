@@ -44,7 +44,7 @@
         <div class="box box-teal">
           <div class="box-header">
             <h3 class="page-header ml-3">
-              <i class="far fa-anchor mr-3"></i>
+              <i class="icon-anchor-r  fa-anchor mr-3"></i>
               Select a consignment to add the container to.
             </h3>
           </div>
@@ -148,7 +148,7 @@
         <div class="box box-purple">
           <div class="box-header">
             <h3 class="page-header ml-3">
-              <i class="far fa-container-storage mr-3"></i>
+              <i class="icon-container-storage-r fa-container-storage mr-3"></i>
               Add more containers to this consignment.
             </h3>
           </div>
@@ -166,7 +166,7 @@
                 <div class="box box-solid box-default" :id="container.Container_num" @click="makeCollapsible(container.Container_num)" {{--:class="[selected_container == index ? 'box-warning' : 'box-default']"--}}>
 
                   <div class="box-header">
-                    <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.Container_num }}</h4>
+                    <h4 class="box-title"><i class="icon-container-storage-r fa-container-storage mr-3"></i> # @{{ container.Container_num }}</h4>
                     <div class="box-tools pull-right">
                       <button type="button"  class="btn btn-box-tool"><i class="fa fa-minus" :id="container.Container_num + '_close'" ></i></button>
                     </div>
@@ -290,7 +290,7 @@
                   <div class="box box-solid" :id="container.container_num" :class="[selected_container == index ? 'box-info' : 'box-default']">
 
                     <div class="box-header">
-                      <h4 class="box-title"><i class="far fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
+                      <h4 class="box-title"><i class="icon-container-storage-r fa-container-storage mr-3"></i> # @{{ container.container_num }}</h4>
                       <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" :id="container.container_num + '_close'"><i class="fa fa-minus"></i></button>
                         <button @click="remove_container(index)" type="button" class="btn btn-box-tool"><i class="fa fa-times"></i></button>
@@ -340,7 +340,7 @@
                             <div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>
                             <div class="col-xs-1">
                               <a class="text-danger" @click="removeTyre(index, item_index)">
-                                <i class="fas fa-minus-circle mt-1"></i>
+                                <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                               </a>
                             </div>
                           </div>
@@ -415,12 +415,12 @@
               >
                 <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
                   <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
-                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b> Add a container</b></span>
                 </div>
                 <div v-if="container_step==1" key="1" class="row justify-content-center align-items-center p-5 ">
 
-                  <i style="font-size: 20px;" class="far fa-container-storage mr-3"></i>
+                  <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b>#</b></span>
                   <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number" style="color: black">
                   <button @click="add_container()" type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i> </button>
@@ -483,7 +483,7 @@
                 <thead>
                 <tr>
                   <th colspan="5">
-                    <i class="far fa-container-storage mr-2"></i>
+                    <i class="icon-container-storage-r fa-container-storage mr-2"></i>
                     <span class="">#</span>
                     @{{ container.Container_num }}
                   </th>
@@ -532,7 +532,7 @@
                 <thead>
                 <tr>
                   <th colspan="5">
-                    <i class="far fa-container-storage mr-2 text-info"></i>
+                    <i class="icon-container-storage-r fa-container-storage mr-2 text-info"></i>
                     <span class="text-info">#</span>
                     <span class="text-info">@{{ container.container_num }}</span>
                   </th>
@@ -675,7 +675,7 @@
             <table id ="table_id" class="table table-hover table-bordered">
               <thead>
               <tr>
-                <th><i class="fas fa-tire"></i> ID</th>
+                <th><i class="icon-tyre-s fa-tire"></i> ID</th>
                 <th>Brand</th>
                 <th>Size</th>
                 <th>Li/Si</th>
@@ -695,7 +695,7 @@
                     <td>{{$tyre->pattern}}</td>
                     <td>
                       <a class="text-success" @click="addTyre({{$tyre->tyre_id}})">
-                        <i class="fas fa-plus-circle"></i>
+                        <i class="icon-plus-circle-s fa-plus-circle"></i>
                       </a>
                     </td>
                   </tr>

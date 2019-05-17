@@ -44,7 +44,7 @@
     <div class="col-xs-12 col-md-8 col-lg-6">
       <div class="box box-orange">
         <div class="box-header">
-          <h3 class="page-header ml-3"><i class="fas fa-user mr-3"></i></i>Add a new customer</h3>
+          <h3 class="page-header ml-3"><i class="icon-users-s fa-user mr-3"></i></i>Add a new customer</h3>
         </div>
         <div class="box-body">
           <form class="form-horizontal" method="post" action="/tyres">

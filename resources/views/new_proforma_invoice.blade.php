@@ -41,7 +41,7 @@
       <div v-if="showForm == 0" class="col-xs-10">
         <div class="box box-primary">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Select a Letter of Credit</h3>
+            <h3 class="page-header ml-3"><i class="icon-file-invoice-dollar-s fa-file-invoice-dollar mr-3"></i> Select a Letter of Credit</h3>
           </div>
           <div class="box-body pb-5 pl-5 pr-5">
 
@@ -111,7 +111,7 @@
 
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="far fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
+            <h3 class="page-header ml-3"><i class="icon-receipt-r fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
           </div>
           <div class="box-body pb-5 pl-5 pr-5">
 
@@ -165,7 +165,7 @@
                   </div>
                   <div class="col-xs-1">
                     <a class="text-danger" @click="removeTyre(index)">
-                      <i class="fas fa-minus-circle mt-1"></i>
+                      <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                     </a>
                   </div>
                 </div>
@@ -389,7 +389,7 @@
                     <td>{{$tyre->pattern}}</td>
                     <td>
                       <a class="text-success" @click="addTyre({{$tyre->tyre_id}})">
-                        <i class="fas fa-plus-circle"></i>
+                        <i class="icon-plus-circle-s fa-plus-circle"></i>
                       </a>
                     </td>
                   </tr>

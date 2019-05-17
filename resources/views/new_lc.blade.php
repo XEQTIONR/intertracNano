@@ -31,7 +31,7 @@
         </div>
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+          <h4><i class="icon icon-check-circle-s fa fa-check-circle"></i> Done</h4>
           New letter of credit information has been recorded.
           <a href="{{ route('lcs.index') }}"  class="btn btn-success ml-5">Click here to view all LCs</a>
         </div>
@@ -52,7 +52,7 @@
 
           <div class="box box-primary">
             <div class="box-header">
-              <h3 class="page-header ml-3"><i class="fas fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>
+              <h3 class="page-header ml-3"><i class="icon-file-invoice-dollar-s fa-file-invoice-dollar mr-3"></i> Enter LC Information</h3>
             </div>
             <div class="box-body">
 
@@ -82,7 +82,7 @@
                         <span class="input-group-addon">F31C</span>
                         <input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">
                         <div class="input-group-addon">
-                          <i class="fas fa-calendar-alt"></i>
+                          <i class="icon-calendar-alt-s fa-calendar-alt"></i>
                         </div>
                       </div>
                       <span v-if=" errors.date_issued" class="help-block text-danger">@{{ errors.date_issued }}</span>
@@ -96,7 +96,7 @@
                         <span class="input-group-addon">F31D</span>
                         <input v-model="date2" @click="datetify()" @blur="copyDate(2)" id="dateExpiry" type="text" class="form-control date">
                         <div class="input-group-addon">
-                          <i class="fas fa-calendar-alt"></i>
+                          <i class="icon-calendar-alt-s fa-calendar-alt"></i>
                         </div>
                       </div>
                       <span v-if=" errors.date_expired" class="help-block text-danger">@{{ errors.date_expired }}</span>
@@ -235,7 +235,7 @@
                     <div class="form-group">
                       <label>Notes</label>
                       <div class="input-group">
-                      <span class="input-group-addon"> <i class="far fa-clipboard-list" style="font-size: 20px"></i></span>
+                      <span class="input-group-addon"> <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 20px"></i></span>
                       <textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                       </div>
 
@@ -278,7 +278,7 @@
             {{--</div>--}}
             <div class="box box-primary">
               <div class="box-header">
-                <h3 class="page-header ml-3"><i class="far fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
+                <h3 class="page-header ml-3"><i class="icon-receipt-r fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
               </div>
               <div class="box-body pb-5 pl-5 pr-5">
 
@@ -339,7 +339,7 @@
                       </div>
                       <div class="col-xs-1">
                         <a class="text-danger" @click="removeTyre(index)">
-                          <i class="fas fa-minus-circle mt-1"></i>
+                          <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                         </a>
                       </div>
                       {{--</div>--}}
@@ -395,7 +395,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <h2 class="page-header">
-                  <i class="fas fa-check mr-3 text-success"></i>Confirm new LC information
+                  <i class="fa fa-check mr-3 text-success"></i>Confirm new LC information
                   <small class="pull-right">Date: 2/10/2014</small>
                 </h2>
               </div>
@@ -567,7 +567,7 @@
                       <td>{{$tyre->pattern}}</td>
                       <td>
                         <a class="text-success" @click="addTyre({{$tyre->tyre_id}})">
-                          <i class="fas fa-plus-circle"></i>
+                          <i class="icon-plus-circle-s fa-plus-circle"></i>
                         </a>
                       </td>
                     </tr>
