@@ -52,7 +52,7 @@
       >
         <div v-if="is_complete && show_alert" id="alert" class="alert alert-success no-print"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-check-circle"></i> Items Returned</h4>
+          <h4><i class="icon icon-check-circle-s fa fa-check-circle"></i> Items Returned</h4>
           The items have been returns and the bills have been adjusted.
           {{--<a href="{{ route('lcs.index') }}"  class="btn btn-success ml-5">Click here to view all LCs</a>--}}
         </div>
@@ -69,7 +69,7 @@
 
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="fa fa-hand-holding-usd mr-3"></i>Record returned items for orders</h3>
+            <h3 class="page-header ml-3"><i class="icon-hand-holding-usd-s fa-hand-holding-usd mr-3"></i>Record returned items for orders</h3>
           </div>
           <div class="box-body">
             <form>
@@ -139,7 +139,7 @@
                             <input v-model="order.discount_amount"  type="number" min="0" class="form-control">
                             <span class="input-group-btn">
                               <button type="button" class="btn btn-success" @click="verify_amount('discount')">
-                                <i class="fas fa-check"></i>
+                                <i class="fa fa-check"></i>
                               </button>
                               <button type="button" class="btn btn-danger" @click="cancel_amount('discount')">
                                 <i class="fas fa-times"></i>
@@ -166,7 +166,7 @@
                             <input v-model="order.tax_amount"  type="number" min="0" class="form-control">
                             <span class="input-group-btn">
                               <button type="button" class="btn btn-success" @click="verify_amount('tax')">
-                                <i class="fas fa-check"></i>
+                                <i class="fa fa-check"></i>
                               </button>
                               <button type="button" class="btn btn-danger" @click="cancel_amount('tax')">
                                 <i class="fas fa-times"></i>

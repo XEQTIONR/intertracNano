@@ -25,7 +25,7 @@
       >
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+          <h4><i class="icon icon-check-circle-s fa-check-circle"></i> Done</h4>
           New order saved
           <a href="{{ route('orders.index') }}"  class="btn btn-success ml-5">Click here to view all orders</a>
         </div>
@@ -41,7 +41,7 @@
       <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="fa fa-dolly mr-3"></i>Enter new order information</h3>
+            <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Enter new order information</h3>
           </div>
           <div class="box-body">
             <div class="form">
@@ -95,7 +95,7 @@
                             <td style="width: 15%;" class="text-right" >৳ @{{ parseFloat(content.qty) * parseFloat(content.unit_price) | currency}}</td>
                             <td style="width: 5%;" >
                               <a class="text-danger" @click="remove(index)">
-                                <i class="fas fa-minus-circle mt-1"></i>
+                                <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                               </a>
                             </td>
                           </tr>
@@ -153,7 +153,7 @@
                         <div class="input-group">
                           <input v-model="discount_percent" type="number" min="0" step="0.01" class="form-control" >
                           <div class="input-group-addon">
-                            <i class="fas fa-percent"></i>
+                            <i class="icon-percent-s fa-percent"></i>
                           </div>
                         </div>
                       </div>
@@ -167,7 +167,7 @@
                         </div>
                       </div>
                       <label v-if="discount_percentage_amount>0" class="col-xs-4 control-label  mt-4 px-0">
-                        <i class="fas fa-equals ml-3 mr-5"></i>
+                        <i class="icon-equals-s fa-equals ml-3 mr-5"></i>
                         {{--<i class="fas fa-minus mr-1"></i> --}}
                         ৳ @{{ discount_percentage_amount }}
                       </label>
@@ -180,7 +180,7 @@
                         <div class="input-group">
                           <input v-model="tax_percent" type="number" class="form-control">
                           <div class="input-group-addon">
-                            <i class="fas fa-percent"></i>
+                            <i class="icon-percent-s fa-percent"></i>
                           </div>
                         </div>
                       </div>
@@ -194,7 +194,7 @@
                         </div>
                       </div>
                       <label v-if="tax_percentage_amount > 0" class="col-xs-4 control-label  mt-4 px-0">
-                        <i class="fas fa-equals ml-3 mr-5"></i>
+                        <i class="icon-equals-s fa-equals ml-3 mr-5"></i>
                         {{--<i class="fas fa-minus mr-1"></i> --}}
                         ৳ @{{ tax_percentage_amount }}
                       </label>
@@ -238,7 +238,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 v-if="!is_complete" class="page-header">
-                <span><i class="fas fa-check mr-3 text-success"></i>Confirm new Order information</span>
+                <span><i class="fa fa-check mr-3 text-success"></i>Confirm new Order information</span>
                 {{--<small class="pull-right">Date: 2/10/2014</small>--}}
               </h2>
               <h2 v-else class="page-header">
@@ -382,7 +382,7 @@
     <div v-show="toggle==false" class="col-xs-12 col-md-5">
       <div class="box box-default">
         <div class="box-header">
-          <h3 class="page-header ml-3"><i class="fas fa-warehouse mr-3"></i></i></i>Current Stock</h3>
+          <h3 class="page-header ml-3"><i class="icon-warehouse-s fa-warehouse mr-3"></i></i></i>Current Stock</h3>
         </div>
         <div class="box-body">
           <div class="row">

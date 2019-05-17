@@ -44,7 +44,7 @@
         <div class="box box-teal">
           <div class="box-header">
             <h3 class="page-header ml-3">
-              <i class="far fa-anchor mr-3"></i>
+              <i class="icon-anchor-r  fa-anchor mr-3"></i>
               Select a consignment to add the container to.
             </h3>
           </div>
@@ -340,7 +340,7 @@
                             <div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>
                             <div class="col-xs-1">
                               <a class="text-danger" @click="removeTyre(index, item_index)">
-                                <i class="fas fa-minus-circle mt-1"></i>
+                                <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                               </a>
                             </div>
                           </div>
@@ -675,7 +675,7 @@
             <table id ="table_id" class="table table-hover table-bordered">
               <thead>
               <tr>
-                <th><i class="fas fa-tire"></i> ID</th>
+                <th><i class="icon-tyre-s fa-tire"></i> ID</th>
                 <th>Brand</th>
                 <th>Size</th>
                 <th>Li/Si</th>
@@ -695,7 +695,7 @@
                     <td>{{$tyre->pattern}}</td>
                     <td>
                       <a class="text-success" @click="addTyre({{$tyre->tyre_id}})">
-                        <i class="fas fa-plus-circle"></i>
+                        <i class="icon-plus-circle-s fa-plus-circle"></i>
                       </a>
                     </td>
                   </tr>

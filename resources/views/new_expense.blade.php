@@ -38,7 +38,7 @@
         <div class="box box-info">
           <div class="box-header">
             <h3 v-if="bol == null" class="page-header ml-3">
-              <i class="far fa-anchor mr-3"></i>
+              <i class="icon-anchor-r  fa-anchor mr-3"></i>
               Select a consignment to add expenses to.
             </h3>
             <h3 v-else class="page-header ml-3">
@@ -265,7 +265,7 @@
          '                              <td style="display:none" class="text-right">৳ @{{ expense.expense_local | currency }}</td>' +
          '                              <td style="display:none" class="text-right">৳ @{{ parseFloat(expense.expense_foreign)*parseFloat(exchange_rate) + parseFloat(expense.expense_local) | currency }}</td>' +
          '                              <td style="display:none">' +
-         '                                <i @click="remove_expense(index)" class="fas fa-minus-circle text-danger"></i>' +
+         '                                <i @click="remove_expense(index)" class="icon-minus-circle-s fa-minus-circle text-danger"></i>' +
          '                              </td>' +
          '                            </tr>',
 

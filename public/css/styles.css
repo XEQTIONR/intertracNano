@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: "untitled-font-1";
-  src:url("/fonts/untitled-font-1.eot");
-  src:url("/fonts/untitled-font-1.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/untitled-font-1.woff") format("woff"),
-    url("/fonts/untitled-font-1.ttf") format("truetype"),
-    url("/fonts/untitled-font-1.svg#untitled-font-1") format("svg");
+  src:url("fonts/untitled-font-1.eot");
+  src:url("fonts/untitled-font-1.eot?#iefix") format("embedded-opentype"),
+    url("fonts/untitled-font-1.woff") format("woff"),
+    url("fonts/untitled-font-1.ttf") format("truetype"),
+    url("fonts/untitled-font-1.svg#untitled-font-1") format("svg");
   font-weight: normal;
   font-style: normal;
 
@@ -76,4 +76,28 @@
 }
 .icon-warehouse-s:before {
   content: "\6d";
+}
+.icon-angle-left-s:before {
+  content: "\6e";
+}
+.icon-angle-right-s:before {
+  content: "\6f";
+}
+.icon-receipt-r:before {
+  content: "\70";
+}
+.icon-tachometer-s:before {
+  content: "\71";
+}
+.icon-equals-s:before {
+  content: "\72";
+}
+.icon-calendar-alt-s:before {
+  content: "\73";
+}
+.icon-check-circle-s:before {
+  content: "\74";
+}
+.icon-clipboard-list-r:before {
+  content: "\75";
 }

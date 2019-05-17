@@ -51,7 +51,7 @@
 
     <div class="box box-maroon">
       <div class="box-header">
-        <h3 class="page-header ml-3"><i class="fa fa-hand-holding-usd mr-3"></i>Record payments for an order</h3>
+        <h3 class="page-header ml-3"><i class="icon-hand-holding-usd-s fa-hand-holding-usd mr-3"></i>Record payments for an order</h3>
       </div>
       <div class="box-body">
         <form>

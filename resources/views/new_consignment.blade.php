@@ -31,7 +31,7 @@
         {{--</div>--}}
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-          <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+          <h4><i class="icon icon-check-circle-s fa fa-check-circle"></i> Done</h4>
           New consignment has been saved.
           <a href="{{ route('consignments.index') }}"  class="btn btn-success ml-5">Click here to view all Consignemnts</a>
         </div>
@@ -53,7 +53,7 @@
         <div class="box box-teal">
           <div class="box-header">
             <h3 class="page-header ml-3">
-              <i class="far fa-anchor mr-3"></i>
+              <i class="icon-anchor-r fa-anchor mr-3"></i>
               Enter Consignment Information
             </h3>
           </div>
@@ -101,7 +101,7 @@
                         <span class="input-group-addon">F31C</span>
                         <input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">
                         <div class="input-group-addon">
-                          <i class="fas fa-calendar-alt"></i>
+                          <i class="icon-calendar-alt-s  fa-calendar-alt"></i>
                         </div>
                       </div>
                       <span v-if=" errors.date_landed" class="help-block">@{{ errors.date_landed }}</span>
@@ -273,7 +273,7 @@
                           <div  class="col-xs-1 text-right">@{{item.unit_price * item.qty | currency }}</div>
                           <div class="col-xs-1">
                             <a class="text-danger" @click="removeTyre(index, item_index)">
-                              <i class="fas fa-minus-circle mt-1"></i>
+                              <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                             </a>
                           </div>
                         </div>
@@ -385,7 +385,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new Consignment information
+                <i class="fa fa-check mr-3 text-success"></i>Confirm new Consignment information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -527,7 +527,7 @@
                 Back
               </button>
               <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
-                <i class="fas fa-check mr-2"></i>
+                <i class="fa fa-check mr-2"></i>
                 Confirm
               </button>
             </div>
@@ -549,7 +549,7 @@
             <table id ="table_id" class="table table-hover table-bordered">
               <thead>
               <tr>
-                <th><i class="fas fa-tire"></i> ID</th>
+                <th><i class="icon-tyre-s fa-tire"></i> ID</th>
                 <th>Brand</th>
                 <th>Size</th>
                 <th>Li/Si</th>
@@ -569,7 +569,7 @@
                     <td>{{$tyre->pattern}}</td>
                     <td>
                       <a class="text-success" @click="addTyre({{$tyre->tyre_id}})">
-                        <i class="fas fa-plus-circle"></i>
+                        <i class="icon-plus-circle-s fa-plus-circle"></i>
                       </a>
                     </td>
                   </tr>

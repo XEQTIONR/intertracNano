@@ -35,7 +35,7 @@
       {{--</div>--}}
       <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
         <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
-        <h4><i class="icon fa fa-check-circle"></i> Done</h4>
+        <h4><i class="icon icon-check-circle-s fa-check-circle"></i> Done</h4>
         New Tyre has been added. You can keep adding new tyres.
       </div>
     </transition>
@@ -46,7 +46,7 @@
   <div class="col-xs-12 col-md-8 col-lg-6">
     <div class="box box-default">
       <div class="box-header">
-        <h3 class="page-header ml-3"><i class="fas fa-tire mr-3"></i>Add a tyre</h3>
+        <h3 class="page-header ml-3"><i class="icon-tyre-s fa-tire mr-3"></i>Add a tyre</h3>
       </div>
       <div class="box-body">
         <form class="form-horizontal" method="post" action="/tyres">

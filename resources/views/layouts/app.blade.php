@@ -248,7 +248,7 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li><a href="#"><i class="fa fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                <li><a href="#"><i class="icon-tachometer-s"></i> <span>Dashboard</span></a></li>
                 <li class="header">AVAILABLE OPTIONS</li>
                 <!-- Optionally, you can add icons to the links -->
                 {{--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>--}}
@@ -262,7 +262,7 @@
                 ">
                     <a href="#"><i class="icon-file-invoice-dollar-r mr-2"></i> <span>Letters of Credit</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -279,7 +279,7 @@
               ">
                       <a href="#"><i class="icon-anchor-r mr-2"></i> <span>Consignments</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -298,7 +298,7 @@
                 ">
                     <a href="#"><i class="icon-dolly-s mr-2"></i> <span>Orders</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -315,7 +315,7 @@
                 ">
                     <a href="#"><i class="icon-hand-holding-usd-s mr-2"></i> <span>Payments</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -331,7 +331,7 @@
                 ">
                     <a href="#"><i class="icon-tyre-s mr-2"></i> <span>Products</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -349,7 +349,7 @@
                 ">
                     <a href="{{ route('customers.index') }}"><i class="icon-users-s mr-2"></i> <span>Customers</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -365,7 +365,7 @@
                 ">
                     <a href="#"><i class="icon-chart-bar-s mr-2"></i> <span>Reports</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
@@ -381,7 +381,7 @@
                 <li class="treeview">
                     <a href="#"><i class="icon-user-r mr-2"></i> <span>Users</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="icon-angle-left-s  fa-angle-left pull-right"></i>
               </span>
                     </a>
                     <ul class="treeview-menu">
