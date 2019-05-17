@@ -62,7 +62,7 @@
 
                       <span v-if=" errors.bol" class="help-block">@{{ errors.bol }}</span>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-6">
                         <div class="form-group">
                           <label>LC #</label> <br>
@@ -76,7 +76,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-6">
                         <div class="form-group">
                           <label>Exchange rate</label> <br>
@@ -90,7 +90,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-6">
                         <div class="form-group">
                           <label>Total Tax</label> <br>
@@ -105,7 +105,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-6">
                         <div class="form-group">
                           <label>Total Cost (Value + Tax)</label> <br>
@@ -114,7 +114,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-12">
                         <table class="table table-striped table-responsive table-bordered">
                           <thead>
@@ -167,7 +167,7 @@
                     </div>
 
 
-                    <div v-if="consignment_index" class="row justify-content-center">
+                    <div v-if="bol" class="row justify-content-center">
                       <div class="col-xs-12 col-md-4">
                         <div class="form-group" :class="{ 'has-error' :  errors.expense }">
                           <label class="mr-5">Expense Foreign</label>
@@ -196,7 +196,7 @@
                         </div>
                       </div>
                     </div>
-                    <div v-if="consignment_index" class="row">
+                    <div v-if="bol" class="row">
                       <div class="col-xs-12 col-md-4 col-md-offset-8">
                         <div class="form-group w-100">
                           <label>Expense Total</label>
