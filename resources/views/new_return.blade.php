@@ -114,7 +114,7 @@
                       <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
                         <td class="col-xs-1">@{{ index+1 }}</td>
                         <td class="col-xs-5">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
-                        <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i v-if="(item.qty - returnCount(index))" @click="returnItem(item, index)" class="fas fa-arrow-alt-to-bottom ml-5"></i></td>
+                        <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i v-if="(item.qty - returnCount(index))" @click="returnItem(item, index)" class="icon-arrow-alt-circle-down-s ml-5"></i></td>
                         <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
                         <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty- returnCount(index)) | currency}}</td>
@@ -131,7 +131,7 @@
                         <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
                         <th>
                           <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fa fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
-                          <button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
+                          <button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="icon-sliders-h"></i></button>
                         </th>
 
                         <th>
@@ -142,7 +142,7 @@
                                 <i class="fa fa-check"></i>
                               </button>
                               <button type="button" class="btn btn-danger" @click="cancel_amount('discount')">
-                                <i class="fas fa-times"></i>
+                                <i class="fa fa-times"></i>
                               </button>
                             </span>
                           </div>
@@ -159,7 +159,7 @@
                         <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
                         <th>
                           <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fa fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
-                          <button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
+                          <button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="icon-sliders-h"></i></button>
                         </th>
                         <th>
                           <div v-if="edit_tax" class="input-group input-group-sm">
@@ -169,7 +169,7 @@
                                 <i class="fa fa-check"></i>
                               </button>
                               <button type="button" class="btn btn-danger" @click="cancel_amount('tax')">
-                                <i class="fas fa-times"></i>
+                                <i class="fa fa-times"></i>
                               </button>
                             </span>
                           </div>
@@ -207,7 +207,7 @@
                         <tr v-for="(item, index) in filtered">
                           <td class="col-xs-1">@{{ item.index + 1 }}</td>
                           <td class="col-xs-5">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
-                          <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="fas fa-arrow-alt-to-top ml-5"></i></td>
+                          <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="icon-arrow-alt-circle-up-s ml-5"></i></td>
                           <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                           <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>
                         </tr>

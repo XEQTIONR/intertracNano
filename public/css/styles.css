@@ -113,3 +113,12 @@
 .icon-store-alt-s:before {
   content: "\79";
 }
+.icon-arrow-alt-circle-down-s:before {
+  content: "\7a";
+}
+.icon-arrow-alt-circle-up-s:before {
+  content: "\41";
+}
+.icon-sliders-h:before {
+  content: "\77";
+}
