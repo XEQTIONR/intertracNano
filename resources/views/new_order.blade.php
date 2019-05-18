@@ -112,14 +112,14 @@
                           <tr id="discount" class="warning" style="display:none">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Discount</th>
-                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-minus"></i></th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-minus"></i></th>
                             <th style="width: 15%" class="text-right"  scope="col">৳ @{{ total_discount_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
                           <tr id="tax" class="danger" style="display:none">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Tax</th>
-                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-plus"></i></th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-plus"></i></th>
                             <th style="width: 15%" class="text-right">৳ @{{ total_tax_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
@@ -333,13 +333,13 @@
                     </tr>
                     <tr>
                       <th>Tax</th>
-                      <td><i class="fas fa-plus mr-2"></i></td>
+                      <td><i class="fa fa-plus mr-2"></i></td>
                       <td>৳ @{{ total_tax_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <th>Discount</th>
-                      <td><i class="fas fa-minus mr-2"></i></td>
+                      <td><i class="fa fa-minus mr-2"></i></td>
                       <td>৳ @{{ total_discount_amount | currency }}</td>
                       <td></td>
                     </tr>

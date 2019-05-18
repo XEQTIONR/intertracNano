@@ -130,7 +130,7 @@
                         <th></th>
                         <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
                         <th>
-                          <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
+                          <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fa fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
                           <button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
                         </th>
 
@@ -152,13 +152,13 @@
                         </th>
 
 
-                        <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
                         <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
                         <th>
-                          <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
+                          <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fa fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
                           <button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>
                         </th>
                         <th>
@@ -177,7 +177,7 @@
                             ৳ @{{ order.tax_amount | currency }}
                           </div>
                         </th>
-                        <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
@@ -224,14 +224,14 @@
                           <td class="col-xs-5"><b>Discount Adjusment</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2 text-right"><i class="fas fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
+                          <td class="col-xs-2 text-right"><i class="fa fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
                           <td class="col-xs-5"><b>Tax Refund</b></td>
                           <td class="col-xs-2"></td>
                           <td class="col-xs-2"></td>
-                          <td class="col-xs-2 text-right"><i class="fas fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
+                          <td class="col-xs-2 text-right"><i class="fa fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
                         </tr>
                         <tr>
                           <td class="col-xs-1"></td>
@@ -350,7 +350,7 @@
                       <th></th>
                       <th>Discount <span class="ml-2">(@{{ order.discount_percent }} %)</span></th>
                       <th>
-                        <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fas fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
+                        <span  :class="{'strikethrough-red' : parseFloat(order.discount_amount)!= old_discount_amount}"><i class="fa fa-minus mr-3"></i> ৳ @{{ old_discount_amount | currency }}</span>
                         {{--<button v-if="!edit_discount" @click="edit_discount = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>--}}
                       </th>
                       <th>
@@ -358,13 +358,13 @@
                           ৳ @{{ order.discount_amount | currency }}
                         </div>
                       </th>
-                      <th class="text-right"><i class="fas fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
+                      <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
                     </tr>
                     <tr>
                       <th></th>
                       <th>Tax <span class="ml-2">(@{{ order.tax_percentage }} %)</span></th>
                       <th>
-                        <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fas fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
+                        <span  :class="{'strikethrough-red' : parseFloat(order.tax_amount)!= old_tax_amount}"><i class="fa fa-plus mr-3"></i> ৳ @{{ old_tax_amount | currency }}</span>
                         {{--<button v-if="!edit_tax" @click="edit_tax = true" type="button" class="btn btn-default ml-2"><i class="fas fa-sliders-h"></i></button>--}}
                       </th>
                       <th>
@@ -372,7 +372,7 @@
                           ৳ @{{ order.tax_amount | currency }}
                         </div>
                       </th>
-                      <th class="text-right"><i class="fas fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
+                      <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
                     </tr>
                     <tr>
                       <th></th>
@@ -419,14 +419,14 @@
                       <td class=""><b>Discount Adjusment</b></td>
                       <td class=""></td>
                       <td class=""></td>
-                      <td class="text-right"><i class="fas fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
+                      <td class="text-right"><i class="fa fa-minus mr-3"></i><b>৳ @{{ discountReturnPercentAmount | currency }}</b></td>
                     </tr>
                     <tr>
                       <td class=""></td>
                       <td class=""><b>Tax Refund</b></td>
                       <td class=""></td>
                       <td class=""></td>
-                      <td class="text-right"><i class="fas fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
+                      <td class="text-right"><i class="fa fa-plus mr-3"></i><b>৳ @{{ taxReturnPercentAmount | currency }}</b></td>
                     </tr>
                     <tr>
                       <td class=""></td>

@@ -51,7 +51,7 @@
           @if($order->discount_amount>0)
           <span class="ml-2">
             <b>
-              <i class="fas fa-minus mr-2"></i>
+              <i class="fa fa-minus mr-2"></i>
               ৳ {{$order->discount_amount}}
             </b>
           </span>
@@ -69,7 +69,7 @@
           @if($order->tax_amount>0)
           <span class="ml-2">
             <b>
-              <i class="fas fa-plus mr-2"></i>
+              <i class="fa fa-plus mr-2"></i>
               ৳ {{$order->tax_amount}}
             </b>
           </span>

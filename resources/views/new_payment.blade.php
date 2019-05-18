@@ -254,13 +254,13 @@
             <tbody>
             <tr>
               <th>Previous Payments Total</th>
-              <td><i class="fas fa-minus"></i></td>
+              <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>
               <td></td>
             </tr>
             <tr>
               <th>Current Payment</th>
-              <td><i class="fas fa-minus"></i></td>
+              <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ amount | currency }}</span></td>
               <td></td>
             </tr>

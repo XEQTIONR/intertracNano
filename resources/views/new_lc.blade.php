@@ -65,7 +65,7 @@
                       <div class="input-group">
                         <span class="input-group-addon">
                           <span v-if="!is_verifying">F20</span>
-                          <i v-else class="fas fa-spinner fa-pulse"></i>
+                          <i v-else class="fa fa-spinner fa-pulse"></i>
                         </span>
                         <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter Document Credit Number">
                       </div>
