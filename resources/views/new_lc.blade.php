@@ -65,7 +65,7 @@
                       <div class="input-group">
                         <span class="input-group-addon">
                           <span v-if="!is_verifying">F20</span>
-                          <i v-else class="fas fa-spinner fa-pulse"></i>
+                          <i v-else class="fa fa-spinner fa-pulse"></i>
                         </span>
                         <input id="lcNum" v-model="lc_num" type="text" class="form-control" placeholder="Enter Document Credit Number">
                       </div>
@@ -235,7 +235,7 @@
                     <div class="form-group">
                       <label>Notes</label>
                       <div class="input-group">
-                      <span class="input-group-addon"> <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 20px"></i></span>
+                      <span class="input-group-addon"> <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 16px"></i></span>
                       <textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                       </div>
 
@@ -521,7 +521,7 @@
                   Back
                 </button>
                 <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
-                  <i class="fas fa-check mr-2"></i>
+                  <i class="fa fa-check mr-2"></i>
                   Confirm
                 </button>
               </div>

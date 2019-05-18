@@ -248,7 +248,7 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li><a href="#"><i class="icon-tachometer-s"></i> <span>Dashboard</span></a></li>
+                <li><a href="/"><i style="position: relative; top: 2px;" class="icon-tachometer-s mr-2"></i> <span>Dashboard</span></a></li>
                 <li class="header">AVAILABLE OPTIONS</li>
                 <!-- Optionally, you can add icons to the links -->
                 {{--<li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>--}}
@@ -425,10 +425,10 @@
     <footer class="main-footer no-print">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Anything you want
+            v {{config('app.version')}}
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2019 <a href="/">Intertrac Nano</a>.</strong> All rights reserved.
     </footer>
 
     <!-- Control Sidebar -->

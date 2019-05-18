@@ -350,7 +350,7 @@
                            leave-active-class="animated fadeOutRight fast "
               >
                 <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
-                  <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
+                  <span class="mr-2" style="font-size: 10px"><i class="fa fa-plus"></i></span>
                   <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b> Add a container</b></span>
                 </div>
@@ -358,7 +358,7 @@
 
                   <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b>#</b></span>
-                  <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number">
+                  <input v-model="container_num" type="text" class="ml-3" placeholder="Enter Container Number" style="color: #000;">
                   <button @click="add_container()" type="button" class="btn btn-success ml-2"><i class="fa fa-plus"></i></button>
                   <button @click="cancel()" type="button" class="btn btn-danger mr-2"><i class="fa fa-times"></i> </button>
                 </div>

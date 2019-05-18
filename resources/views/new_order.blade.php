@@ -112,14 +112,14 @@
                           <tr id="discount" class="warning" style="display:none">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Discount</th>
-                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-minus"></i></th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-minus"></i></th>
                             <th style="width: 15%" class="text-right"  scope="col">৳ @{{ total_discount_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
                           <tr id="tax" class="danger" style="display:none">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Tax</th>
-                            <th class="text-right" style="width: 30%" colspan="2"><i class="fas fa-plus"></i></th>
+                            <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-plus"></i></th>
                             <th style="width: 15%" class="text-right">৳ @{{ total_tax_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
@@ -333,13 +333,13 @@
                     </tr>
                     <tr>
                       <th>Tax</th>
-                      <td><i class="fas fa-plus mr-2"></i></td>
+                      <td><i class="fa fa-plus mr-2"></i></td>
                       <td>৳ @{{ total_tax_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <th>Discount</th>
-                      <td><i class="fas fa-minus mr-2"></i></td>
+                      <td><i class="fa fa-minus mr-2"></i></td>
                       <td>৳ @{{ total_discount_amount | currency }}</td>
                       <td></td>
                     </tr>
@@ -627,7 +627,10 @@
                 var validate =  this.validate();
 
                 if(validate.status == 'success')
+                {
                     this.toggle = true;
+                    this.helperConsolidate();
+                }
 
                 else if(validate.errors)//errors
                 {
@@ -679,6 +682,29 @@
                           app.date = data.date.date;
 
                     });
+            },
+
+            helperConsolidate : function(){
+
+                console.log('helper consolidate function');
+                var contents = this.order_contents;
+
+                console.log(contents);
+
+                if(contents.length)
+                for(var i=0; i<contents.length; i++)
+                    for(var j=contents.length-1; j>i; j--)
+                        if(parseInt(contents[i].tyre_id) == parseInt(contents[j].tyre_id))
+                            if(parseFloat(contents[j].unit_price) == parseFloat(contents[i].unit_price))
+                            {
+                                contents[i].qty = parseInt(contents[i].qty) + parseInt(contents[j].qty);
+                                contents.splice(j,1);
+                            }
+
+                console.log('contents HERE :');
+                console.log(contents);
+                this.order_contents = contents;
+
             },
 
             helperValidQty : function(val, index) {

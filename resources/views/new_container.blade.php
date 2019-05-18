@@ -414,7 +414,7 @@
                            leave-active-class="animated fadeOutRight fast "
               >
                 <div v-if="container_step==0" key="0" @click="container_step=1" class="row justify-content-center align-items-center p-5">
-                  <span class="mr-2" style="font-size: 10px"><i class="fas fa-plus"></i></span>
+                  <span class="mr-2" style="font-size: 10px"><i class="fa fa-plus"></i></span>
                   <i style="font-size: 20px;" class="icon-container-storage-r fa-container-storage mr-3"></i>
                   <span style="font-size : 15px;"><b> Add a container</b></span>
                 </div>
@@ -449,7 +449,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new container information
+                <i class="fa fa-check mr-3 text-success"></i>Confirm new container information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -652,7 +652,7 @@
                 Back
               </button>
               <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
-                <i class="fas fa-check mr-2"></i>
+                <i class="fa fa-check mr-2"></i>
                 Confirm
               </button>
             </div>
