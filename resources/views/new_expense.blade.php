@@ -228,7 +228,7 @@
                 <div v-if="new_expenses.length" class="row mx-2 mt-5">
                   <div class="col-xs-12">
                     <button type="button" class="btn btn-success pull-right" @click="save()">
-                      <i class="fas fa-check mr-3"></i>
+                      <i class="fa fa-check mr-3"></i>
                       Save
                     </button>
                   </div>

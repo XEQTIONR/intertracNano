@@ -59,7 +59,7 @@
                     <label for="inputBrand">Full Name</label>
                     <div class="input-group">
                     <span class="input-group-addon">
-                      <i class="far fa-address-card"></i>
+                      <i class="icon-address-card-r fa-address-card"></i>
                     </span>
                     <input v-model="name" type="text" class="form-control" name="Brand" id="inputBrand" placeholder="Enter customer name" required>
                     </div>
@@ -68,7 +68,7 @@
                   <div class="form-group" :class="{ 'has-error' : errors.address && (address== null || address=='') }">
                     <label for="inputSize">Address</label>
                     <div class="input-group">
-                    <span class="input-group-addon"><i class="fas fa-store-alt"></i> </span>
+                    <span class="input-group-addon"><i class="icon-store-alt-s fa-store-alt"></i> </span>
                       <textarea v-model="address" type="text" class="form-control" rows="3" placeholder="Enter customer store name and address" required>
                     </textarea>
                     </div>
@@ -78,7 +78,7 @@
                     <label for="inputLisi">Phone #</label>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <i class="fas fa-phone" style="transform : rotate(90deg)"></i>
+                        <i class="fa fa-phone"></i>
                         {{--<i class="fas fa-phone"></i>--}}
                       </span>
                     <input v-model="phone" type="text" class="form-control" name="Lisi" placeholder="Enter customer's contact number">
@@ -89,7 +89,7 @@
                     <label for="inputPattern">Notes</label>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <i class="far fa-clipboard-list" style="font-size: 20px"></i>
+                        <i class="icon-clipboard-list-r fa-clipboard-list"></i>
                       </span>
                       <textarea v-model="notes" type="text" class="form-control" rows="3" name="Pattern" id="inputPattern" placeholder="Any additional information about this customer (Optional)">
                       </textarea>
@@ -104,7 +104,10 @@
 
               <div class="row">
                 <div class="col-xs-12 px-0">
-                  <button class="btn btn-lg btn-success pull-right" type="button" @click="save()">Submit</button>
+                  <button class="btn btn-success pull-right" type="button" @click="save()">
+                    <i class="fa fa-check mr-1"></i>
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>

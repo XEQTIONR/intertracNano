@@ -449,7 +449,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 class="page-header">
-                <i class="fas fa-check mr-3 text-success"></i>Confirm new container information
+                <i class="fa fa-check mr-3 text-success"></i>Confirm new container information
                 <small class="pull-right">Date: 2/10/2014</small>
               </h2>
             </div>
@@ -652,7 +652,7 @@
                 Back
               </button>
               <button type="button" class="btn btn-success pull-right" @click="toggle(true)">
-                <i class="fas fa-check mr-2"></i>
+                <i class="fa fa-check mr-2"></i>
                 Confirm
               </button>
             </div>

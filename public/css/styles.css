@@ -104,3 +104,12 @@
 .icon-container-storage-r:before {
   content: "\76";
 }
+.icon-address-card-r:before {
+  content: "\77";
+}
+.icon-phone-s:before {
+  content: "\78";
+}
+.icon-store-alt-s:before {
+  content: "\79";
+}
