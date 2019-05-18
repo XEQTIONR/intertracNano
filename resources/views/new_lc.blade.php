@@ -235,7 +235,7 @@
                     <div class="form-group">
                       <label>Notes</label>
                       <div class="input-group">
-                      <span class="input-group-addon"> <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 20px"></i></span>
+                      <span class="input-group-addon"> <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 16px"></i></span>
                       <textarea v-model="notes" id="notes" class="form-control" rows="3" placeholder="Any additonal information you want to record about this LC"></textarea>
                       </div>
 

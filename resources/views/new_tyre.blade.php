@@ -43,7 +43,7 @@
 </div>
 
 <div class="row justify-content-center">
-  <div class="col-xs-12 col-md-8 col-lg-6">
+  <div class="col-xs-12 col-md-6 col-lg-4">
     <div class="box box-default">
       <div class="box-header">
         <h3 class="page-header ml-3"><i class="icon-tyre-s fa-tire mr-3"></i>Add a tyre</h3>
@@ -93,7 +93,10 @@
 
             <div class="row">
               <div class="col-xs-12 px-0">
-                <button class="btn btn-lg btn-primary pull-right" type="button" @click="save()">Submit</button>
+                <button class="btn btn btn-success pull-right" type="button" @click="save()">
+                  <i class="fa fa-check mr-2"></i>
+                  Submit
+                </button>
               </div>
             </div>
           </div>

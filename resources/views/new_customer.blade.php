@@ -89,7 +89,7 @@
                     <label for="inputPattern">Notes</label>
                     <div class="input-group">
                       <span class="input-group-addon">
-                        <i class="icon-clipboard-list-r fa-clipboard-list"></i>
+                        <i class="icon-clipboard-list-r fa-clipboard-list" style="font-size: 16px"></i>
                       </span>
                       <textarea v-model="notes" type="text" class="form-control" rows="3" name="Pattern" id="inputPattern" placeholder="Any additional information about this customer (Optional)">
                       </textarea>
