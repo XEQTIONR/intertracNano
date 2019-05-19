@@ -523,7 +523,13 @@
 <!-- AdminLTE App -->
 {{--<script src="dist/js/adminlte.min.js"></script>--}}
 {{--<script src="js/adminlte.min.js"></script>--}}
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!-- Vue JS DEV-->
+{{--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>--}}
+
+<!-- Vue JS PROD-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
 <script src="/js/app.js"></script>
 {{--<script src="/js/jquery.inputmask.bundle.js"></script>--}}
 {{--<script src='js/jquerydataTables.min.js'></script>--}}
