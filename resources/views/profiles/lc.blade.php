@@ -155,7 +155,10 @@
                 <td class="text-right">৳ {{$consignment->tax}}</td>
                 <td class="">{{$consignment->land_date}}</td>
                 <td class=""><a href="/consignments/{{$consignment->BOL}}"
-                       class="btn btn-primary btn-sm"><i class="far fa-eye"></i>View</a></td>
+                       class="btn btn-primary btn-sm">
+                    <i class="icon-eye-r mr-1"  style="position: relative; top: 2px;"></i>
+                    View</a>
+                </td>
               </tr>
             @endforeach
             </tbody>
