@@ -1,14 +1,14 @@
 <table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
-    <th>Order#</th>
-    <th>Customer ID</th>
-    <th>Discount %</th>
-    <th>Discount Amount(&#2547)</th>
-    <th>Tax %</th>
-    <th>Tax Amount(&#2547)</th>
-    <th>Created At</th>
-    <th>Updated At</th>
+    <th class="col-xs-1">Order#</th>
+    <th class="col-xs-2">Customer ID</th>
+    <th class="col-xs-1">Discount%</th>
+    <th class="col-xs-2">Discount Amount(&#2547)</th>
+    <th class="col-xs-1">Tax%</th>
+    <th class="col-xs-2">Tax Amount(&#2547)</th>
+    <th class="col-xs-1">Total(&#2547)</th>
+    <th class="col-xs-2">Created</th>
   </tr>
 </thead>
 <tbody>
@@ -20,8 +20,8 @@
       <td class="text-right">{{$order->discount_amount}}</td>
       <td class="text-right">{{$order->tax_percentage}}</td>
       <td class="text-right">{{$order->tax_amount}}</td>
+      <td class="text-right">{{number_format($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount, 2) }}</td>
       <td class="text-center">{{$order->created_at}}</td>
-      <td class="text-center">{{$order->updated_at}}</td>
     </tr>
   @endforeach
 </tbody>

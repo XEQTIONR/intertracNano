@@ -53,7 +53,14 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::all();
+        $orders = DB::select('
+          SELECT O.*, D.total 
+          FROM (SELECT B.*, SUM(B.multiply) as total 
+                FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
+                      FROM order_contents C) AS B 
+                GROUP BY B.Order_num) D, orders O 
+          WHERE D.Order_num = O.Order_num
+        ');
 
         //return $in_stock;
         //dd(DB::getQueryLog());
