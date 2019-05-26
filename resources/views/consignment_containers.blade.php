@@ -32,15 +32,22 @@
         </thead>
         <tbody>
         @foreach ($containers as $container)
-          <tr>
+          <tr style="cursor: pointer">
             <td>{{$container->Container_num}}</td>
             <td>{{$container->BOL}}</td>
             <td>{{$container->created_at}}</td>
             <td>{{$container->updated_at}}</td>
             <td>
-              <div class="progress progress-xs">
-                <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
-              </div>
+              @if($container->percentage == 0)
+                <small class="label bg-gray" data-toggle="tooltip" title="All {{$container->total_sold}} sold">empty</small>
+              @elseif($container->percentage == 100)
+                <small class="label bg-primary" data-toggle="tooltip" title="{{$container->total_bought}} total">full</small>
+              @else
+                <div class="progress progress-xs" data-toggle="tooltip" title="{{$container->total_bought - $container->total_sold}}/{{$container->total_bought}} remaining">
+                  <div class="progress-bar progress-bar-<?php if($container->percentage<33) echo "danger"; else {  echo $container->percentage<66 ?  "warning" :  "success"; } ?>"
+                       style="width: {{$container->percentage}}%"></div>
+                </div>
+              @endif
             </td>
           </tr>
         @endforeach

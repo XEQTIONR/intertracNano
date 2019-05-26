@@ -30,7 +30,7 @@
   </tr>
   <?php
   $total+= (floatval($listing->unit_price) * floatval($listing->qty));
-  $total_qty += intval($listing->unit_price);
+  $total_qty += intval($listing->qty);
   $total_tax += floatval($listing->total_tax);
   $total_weight += floatval($listing->total_weight);
   ?>

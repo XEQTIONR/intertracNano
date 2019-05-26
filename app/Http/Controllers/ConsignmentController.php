@@ -28,8 +28,8 @@ class ConsignmentController extends Controller
                                       LEFT JOIN 
                                      (SELECT bol, SUM(qty) AS total_sold FROM order_contents GROUP BY bol) AS B 
                                      ON A.BOL = B.bol
-                                ) 
-          AS C WHERE C.BOL = D.BOL
+                                ) AS C 
+          WHERE C.BOL = D.BOL
 
         ');
         
