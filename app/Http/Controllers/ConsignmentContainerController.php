@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Consignment_container;
 use App\Lc;
 use App\Tyre;
+use Illuminate\Support\Facades\DB;
 
 class ConsignmentContainerController extends Controller
 {
@@ -34,7 +35,24 @@ class ConsignmentContainerController extends Controller
     public function index()
     {
         //
-        $containers = Consignment_container::all();
+        $containers = DB::select('
+          SELECT Y.*, X.total_bought, X.total_sold, ((X.total_bought - X.total_sold)/X.total_bought * 100) AS percentage  
+          FROM consignment_containers Y,
+                (SELECT A.BOL, A.Container_num, total_bought, IFNULL(total_sold, 0) AS total_sold 
+                FROM (SELECT Container_num, BOL, SUM(qty) AS total_bought 
+	                    FROM container_contents 
+	                    GROUP BY Container_num) AS A 
+	
+	                    LEFT JOIN 
+	
+	                    (SELECT container_num, bol, SUM(qty) AS total_sold 
+	                    FROM order_contents 
+	                    GROUP BY container_num) AS B 
+
+	                    ON A.Container_num = B.container_num AND A.BOL = B.bol) AS X
+                WHERE X.BOL = Y.BOL AND X.Container_num = Y.Container_num
+        
+        ');
 
         return view('consignment_containers', compact('containers'));
     }

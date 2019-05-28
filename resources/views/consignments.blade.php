@@ -25,7 +25,7 @@
         <tr>
           <th>BOL#</th>
           <th>LC#</th>
-          <th>$ Rate</th>
+          <th>Rate</th>
           <th>Value($)</th>
           <th>Value(&#2547)</th>
           <th>Tax(&#2547)</th>
@@ -41,17 +41,25 @@
           <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
             <td class="text-center">{{$consignment->BOL}}</td>
             <td class="text-center">{{$consignment->lc}}</td>
-            <td class="text-right">{{$consignment->exchange_rate}}</td>
-            <td class="text-right">{{$consignment->value}}</td>
-            <td class="text-right">{{$consignment->value * $consignment->exchange_rate}}</td>
+            <td class="text-right">{{number_format($consignment->exchange_rate,2)}}</td>
+            <td class="text-right">{{number_format($consignment->value, 2)}}</td>
+            <td class="text-right">{{number_format($consignment->value * $consignment->exchange_rate,2)}}</td>
             <td class="text-right">{{$consignment->tax}}</td>
             <td class="text-center">{{$consignment->land_date}}</td>
             <td class="text-center">{{$consignment->created_at}}</td>
             {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}
             <td>
-              <div class="progress progress-xs">
-                {{--<div class="progress-bar progress-bar-danger" style="width: 80%"></div>--}}
-              </div>
+
+              @if($consignment->percentage == 0)
+                <small class="label bg-gray" data-toggle="tooltip" title="All {{$consignment->total_sold}} sold">empty</small>
+              @elseif($consignment->percentage == 100)
+                <small class="label bg-primary" data-toggle="tooltip" title="{{$consignment->total_bought}} total">full</small>
+              @else
+                <div class="progress progress-xs" data-toggle="tooltip" title="{{$consignment->total_bought - $consignment->total_sold}}/{{$consignment->total_bought}} remaining">
+                  <div class="progress-bar progress-bar-<?php if($consignment->percentage<33) echo "danger"; else {  echo $consignment->percentage<66 ?  "warning" :  "success"; } ?>"
+                       style="width: {{$consignment->percentage}}%"></div>
+                </div>
+              @endif
             </td>
 
           </tr>

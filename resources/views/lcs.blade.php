@@ -39,6 +39,7 @@
           <th>Expenses Total(&#2547)</th>
           <th>LC Value($)</th>
           <th>LC Value(&#2547)</th>
+          <th>Created</th>
 
         </tr>
         </thead>
@@ -51,9 +52,10 @@
             <td class="text-center">{{$LC->date_expiry}}</td>
             {{--<td class="text-center">{{$LC->invoice_no}}</td>--}}
             <td class="text-right">{{$LC->exchange_rate}}</td>
-            <td class="text-right">{{($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense}}</td>
-            <td class="text-right">{{$LC->foreign_amount}}</td>
-            <td class="text-right">{{$LC->foreign_amount * $LC->exchange_rate}}</td>
+            <td class="text-right">{{number_format(($LC->foreign_expense * $LC->exchange_rate)+$LC->domestic_expense,2)}}</td>
+            <td class="text-right">{{number_format($LC->foreign_amount,2)}}</td>
+            <td class="text-right">{{number_format($LC->foreign_amount * $LC->exchange_rate,2)}}</td>
+            <td class="text-center">{{$LC->created_at}}</td>
           </tr>
         @endforeach
         </tbody>

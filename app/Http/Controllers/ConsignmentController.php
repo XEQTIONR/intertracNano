@@ -10,6 +10,7 @@ use App\Lc;
 use Illuminate\Http\Request;
 use Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ConsignmentController extends Controller
 {
@@ -20,10 +21,17 @@ class ConsignmentController extends Controller
      */
     public function index()
     {
-        //
-        $containers = array();
-        $contents = array();
-        $consignments = Consignment::all();
+        $consignments = DB::select('
+          SELECT D.*, C.total_bought, C.total_sold, ((C.total_bought - C.total_sold)/C.total_bought * 100) AS percentage 
+          FROM consignments D, (SELECT A.BOL, total_bought, IFNULL(total_sold, 0) AS total_sold 
+                                FROM (SELECT BOL, SUM(qty) AS total_bought FROM container_contents GROUP BY BOL) AS A 
+                                      LEFT JOIN 
+                                     (SELECT bol, SUM(qty) AS total_sold FROM order_contents GROUP BY bol) AS B 
+                                     ON A.BOL = B.bol
+                                ) AS C 
+          WHERE C.BOL = D.BOL
+
+        ');
         
         return view('consignments', compact('consignments'));
     }

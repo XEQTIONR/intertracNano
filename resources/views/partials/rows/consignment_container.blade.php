@@ -30,7 +30,7 @@
   </tr>
   <?php
   $total+= (floatval($listing->unit_price) * floatval($listing->qty));
-  $total_qty += intval($listing->unit_price);
+  $total_qty += intval($listing->qty);
   $total_tax += floatval($listing->total_tax);
   $total_weight += floatval($listing->total_weight);
   ?>
@@ -42,9 +42,9 @@
     <td class="col-xs-3 text-uppercase"> TOTAL </td>
     <td class="col-xs-1"> {{$total_qty}} </td>
     <td class="col-xs-2"> </td>
-    <td class="col-xs-2"> {{$total}} </td>
-    <td class="col-xs-2"> {{$total_tax}} </td>
-    <td class="col-xs-2"> {{$total_weight}} </td>
+    <td class="col-xs-2"> {{number_format($total, 2)}} </td>
+    <td class="col-xs-2"> {{number_format($total_tax, 2)}} </td>
+    <td class="col-xs-2"> {{number_format($total_weight, 2)}} </td>
   </tr>
   </tbody>
 </table>

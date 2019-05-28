@@ -38,6 +38,18 @@
   </div>
 @endsection
 
+@section('header-scripts')
+
+  <style>
+    .progress-bar-colorful
+    {
+      -webkit-transition: background-color .6s ease, width .6s ease;
+      -o-transition: background-color .6s ease, width .6s ease;
+      transition: background-color .6s ease, width .6s ease;
+    }
+  </style>
+@endsection
+
 @section('body')
 
 
@@ -161,6 +173,11 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <div v-if="order" class="row justify-content-center">
+              <div class="progress col-xs-12 px-0 mx-4">
+                <div class="progress-bar progress-bar-colorful" :style="{width: fractionTotalP+'%', backgroundColor: fractionColor}">@{{ (fractionTotalP < 100) ? (parseFloat(fractionTotalP).toFixed(2)) +' % Paid'   : 'Paid Off' }}</div>
               </div>
             </div>
             <div v-if="order" class="row justify-content-center">
@@ -332,7 +349,7 @@
                   this.amount = this.grandTotal- this.paymentsTotal();
                 else
                   this.helperPositiveFloat(new_val, "amount");
-            }
+            },
         },
 
         computed : {
@@ -448,6 +465,27 @@
             amountToWords : function(){
 
                 return this.numberToWords.toWords(parseFloat(this.amount));
+            },
+
+            fractionTotalP : function(){
+
+                //return this.paymentsTotal();
+                return ((this.paymentsTotal()+parseFloat(this.amount))/this.grandTotal)*100;// * 100;
+            },
+
+            fractionColor : function(){
+
+                // var green = 255 * (this.fractionTotalP/100);
+                // var red = 255 * ((100-this.fractionTotalP)/100);
+                // return "rgba(" + red + "," + green + ", 0 ,1)";
+
+                //0-120
+
+                var val = Math.floor(120*(this.fractionTotalP/100));
+
+                return "hsl(" + val + ",60%,50%)";
+
+                //hsl(90,50%,50%)
             }
 
 
