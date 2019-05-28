@@ -99,7 +99,7 @@
                       <label>Land Date</label>
                       <div class="input-group">
                         <span class="input-group-addon">F31C</span>
-                        <input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date">
+                        <input v-model="date1"  @click="datetify()" @blur="copyDate(1)" id="dateIssued" type="text" class="form-control date" placeholder="dd/mm/yyyy">
                         <div class="input-group-addon">
                           <i class="icon-calendar-alt-s  fa-calendar-alt"></i>
                         </div>
