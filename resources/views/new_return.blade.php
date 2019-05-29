@@ -113,7 +113,7 @@
                       <tbody>
                       <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
                         <td class="col-xs-1">@{{ index+1 }}</td>
-                        <td class="col-xs-5">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
+                        <td class="col-xs-5"><b>(@{{ item.tyre.tyre_id }})</b> @{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
                         <td class="col-xs-2">@{{ item.qty - returnCount(index) }} <i v-if="(item.qty - returnCount(index))" @click="returnItem(item, index)" class="icon-arrow-alt-circle-down-s ml-5"></i></td>
                         <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
@@ -206,7 +206,7 @@
                       <tbody>
                         <tr v-for="(item, index) in filtered">
                           <td class="col-xs-1">@{{ item.index + 1 }}</td>
-                          <td class="col-xs-5">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
+                          <td class="col-xs-5"><b>(@{{ item.tyre_id }})</b> @{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
                           <td class="col-xs-2">@{{ item.qty }} <i @click="putBack(item.index)" class="icon-arrow-alt-circle-up-s ml-5"></i></td>
                           <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                           <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>
@@ -333,7 +333,7 @@
                     <tbody>
                     <tr v-for="(item, index) in order.order_contents" :class="{'strikethrough-red' : (item.qty - returnCount(index)) == 0}">
                       <td class="">@{{ index+1 }}</td>
-                      <td class="">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
+                      <td class=""><b>(@{{ item.tyre.tyre_id }})</b> @{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
                       <td class="">@{{ item.qty - returnCount(index) }}</td>
                       <td class="">৳ @{{ item.unit_price }}</td>
                       {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
@@ -401,7 +401,7 @@
                     <tbody>
                     <tr v-for="(item, index) in filtered">
                       <td class="">@{{ item.index + 1 }}</td>
-                      <td class="">@{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
+                      <td class=""><b>(@{{ item.tyre_id }})</b> @{{ item.brand }} @{{ item.size }} @{{ item.pattern }} @{{ item.lisi }}</td>
                       <td class="">@{{ item.qty }}</td>
                       <td class="">৳ @{{ item.unit_price }}</td>
                       <td class="text-right">৳ @{{ parseFloat(item.unit_price) * parseInt(item.qty) | currency }}</td>

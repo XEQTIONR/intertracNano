@@ -79,7 +79,7 @@
                         <tbody>
                           <tr id="selector" class="selector" v-for="(content,index) in order_contents" style="display:none;">
                             <td style="width: 5%;" >@{{ index+1 }}</td>
-                            <td style="width: 45%;" >@{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
+                            <td style="width: 45%;" ><b>(@{{ content.tyre_id }})</b> @{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
                             <td style="width: 15%;" >
                               <div class="form-group" :class="{'has-error' : (errors.qty && parseInt(content.qty)<=0) || (helperStockLive(content.i)<0)}">
                                 <input class="text-right form-control " type="number" step="1" min="1" value="1"
@@ -294,7 +294,7 @@
                 <tbody>
                 <tr v-for="(record, index) in order_contents">
                   <td>@{{ index+1 }}</td>
-                  <td>@{{ record.brand }} @{{ record.size }} @{{ record.pattern }}  @{{ record.lisi }}</td>
+                  <td><b>(@{{ record.tyre_id }})</b> @{{ record.brand }} @{{ record.size }} @{{ record.pattern }}  @{{ record.lisi }}</td>
                   <td>@{{ record.qty }}</td>
                   <td>৳ @{{ record.unit_price | currency }}</td>
                   <td>৳ @{{ record.qty*record.unit_price | currency }}</td>

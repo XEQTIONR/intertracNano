@@ -107,7 +107,7 @@
                   <tbody>
                     <tr v-for="(item, index) in order.order_contents">
                       <td class="col-xs-1">@{{ index+1 }}</td>
-                      <td class="col-xs-3">@{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
+                      <td class="col-xs-3"><b>(@{{ item.tyre.tyre_id }})</b> @{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
                       <td class="col-xs-2">@{{ item.qty }}</td>
                       <td class="col-xs-2">৳ @{{ item.unit_price }}</td>
                       <td class="col-xs-2 text-right">৳ @{{ parseFloat(item.unit_price)* parseInt(item.qty) | currency}}</td>

@@ -104,7 +104,7 @@
             <tbody>
             @foreach ($performa as $record)
               <tr>
-                <td>{{$record->tyre->brand}} {{$record->tyre->size}} {{$record->tyre->pattern}} {{$record->tyre->lisi}}</td>
+                <td><b>({{$record->tyre->tyre_id}})</b> {{$record->tyre->brand}} {{$record->tyre->size}} {{$record->tyre->pattern}} {{$record->tyre->lisi}}</td>
                 <td>{{$record->qty}}</td>
                 <td><span class="currency-symbol mr-1"></span>{{number_format($record->unit_price,2)}}</td>
 
