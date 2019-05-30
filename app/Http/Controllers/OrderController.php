@@ -54,12 +54,20 @@ class OrderController extends Controller
     {
         //
         $orders = DB::select('
-          SELECT O.*, D.total 
-          FROM (SELECT B.*, SUM(B.multiply) as total 
-                FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
-                      FROM order_contents C) AS B 
+          SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
+          FROM  (SELECT O.*, D.total 
+                FROM (SELECT B.*, SUM(B.multiply) as total 
+                      FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
+                            FROM order_contents C) AS B 
                 GROUP BY B.Order_num) D, orders O 
-          WHERE D.Order_num = O.Order_num
+          WHERE D.Order_num = O.Order_num) T
+          
+          LEFT JOIN
+          
+          (SELECT Order_num, SUM(payment_amount) as payments_total FROM payments GROUP BY Order_num) AS P
+          
+          ON T.Order_num = P.Order_num
+
         ');
 
         //return $in_stock;
