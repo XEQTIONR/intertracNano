@@ -1,4 +1,4 @@
-<table id="table_id" class="table table-hover table-bordered">
+<table id="table_id" class="table table-striped">
 <thead>
   <tr>
     <th>Tyre ID</th>
@@ -12,7 +12,7 @@
 <tbody>
   @foreach ($tyres as $tyre)
     <tr>
-      <td>{{$tyre->tyre_id}}</td>
+      <td class="strong">{{$tyre->tyre_id}}</td>
       <td>{{$tyre->brand}}</td>
       <td>{{$tyre->size}}</td>
       <td>{{$tyre->lisi}}</td>

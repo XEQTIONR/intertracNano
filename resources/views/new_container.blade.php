@@ -190,7 +190,7 @@
                       >
                         <div v-for="(item, item_index) in container.contents" key="item_index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
                           <div class="col-xs-1 text-center"><strong>@{{ item_index + 1 }}</strong></div>
-                          <div class="col-xs-2 text-center">@{{item.tyre.brand}} @{{item.tyre.size}} @{{ item.tyre.lisi }} @{{item.tyre.pattern}}</div>
+                          <div class="col-xs-2 text-center"><b>(@{{item.tyre.tyre_id}})</b> @{{item.tyre.brand}} @{{item.tyre.size}} @{{ item.tyre.lisi }} @{{item.tyre.pattern}}</div>
                           <div class="col-xs-2 text-center">
                             <div class="form-group"  :class="{ 'has-error' :  errors.qty && parseInt(item.qty)<=0 }">
                               <input class="form-control" v-model="item.qty" disabled type="number" min="0" step="1">
@@ -316,7 +316,7 @@
                         >
                           <div v-for="(item, item_index) in container.contents" key="index"  class="row py-2" :class="{'bg-light-gray' : !(item_index%2)}">
                             <div class="col-xs-1 text-center"><strong>@{{ item_index + 1 }}</strong></div>
-                            <div class="col-xs-2 text-center">@{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}</div>
+                            <div class="col-xs-2 text-center"><b>(@{{item.tyre_id}})</b> @{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}</div>
                             <div class="col-xs-2 text-center">
                               <div class="form-group"  :class="{ 'has-error' :  errors.qty && parseInt(item.qty)<=0 }">
                                 <input class="form-control" v-model="item.qty" type="number" min="0" step="1">
@@ -501,7 +501,7 @@
                 <tbody>
                 <tr v-for="(record, index) in container.contents">
                   <td>@{{ index + 1 }}</td>
-                  <td>@{{ record.tyre.brand }} @{{ record.tyre.size }} @{{ record.tyre.lisi }} @{{ record.tyre.pattern }}</td>
+                  <td><b>(@{{ record.tyre.tyre_id }})</b> @{{ record.tyre.brand }} @{{ record.tyre.size }} @{{ record.tyre.lisi }} @{{ record.tyre.pattern }}</td>
                   <td>@{{ record.qty }}</td>
                   <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
                   <td>@{{ record.total_weight }}</td>
@@ -550,7 +550,7 @@
                 <tbody>
                 <tr v-for="(record, index) in container.contents">
                   <td>@{{ index + 1 }}</td>
-                  <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
+                  <td><b>(@{{ record.tyre_id }})</b> @{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
                   <td>@{{ record.qty }}</td>
                   <td>@{{ currency_symbol }} @{{ record.unit_price | currency }}</td>
                   <td>@{{ record.total_weight }}</td>

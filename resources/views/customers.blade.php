@@ -18,7 +18,7 @@
 @section('body')
   <div class="box box-orange">
     <div class="box-body">
-      <table id ="table_id" class="table table-hover table-bordered">
+      <table id ="table_id" class="table table-striped">
         <thead>
         <tr>
           <th>Customer ID</th>
@@ -31,7 +31,7 @@
         </thead>
         <tbody>
         @foreach ($customers as $customer)
-          <tr style="cursor: pointer" onclick="location.href='/customers/{{$customer->id}}'">
+          <tr>
             <td class="text-center">{{$customer->id}}</td>
             <td>{{$customer->name}}</td>
             <td>{{$customer->address}}</td>

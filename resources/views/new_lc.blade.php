@@ -326,7 +326,7 @@
                         @{{ index+1 }}
                       </div>
                       <div class="col-xs-4">
-                        @{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}
+                        <b>(@{{ item.tyre_id }})</b> @{{item.brand}} @{{item.size}} @{{ item.lisi }} @{{item.pattern}}
                       </div>
                       <div class="col-xs-2 form-group" :class="{'has-error' : item.qty==0}">
                         <input class="text-right form-control" v-model="item.qty" type="number" step="1" min="1" value="1">
@@ -445,7 +445,7 @@
                   <tbody>
                   <tr v-for="(record, index) in proforma_invoice">
                     <td>@{{ index+1 }}</td>
-                    <td>@{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
+                    <td><b>(@{{ record.tyre_id }})</b> @{{ record.brand }} @{{ record.size }} @{{ record.lisi }} @{{ record.pattern }}</td>
                     <td>@{{ record.qty }}</td>
                     <td>@{{ record.unit_price }}</td>
                     <td>@{{ currency_symbol }} @{{ record.qty*record.unit_price | currency }}</td>

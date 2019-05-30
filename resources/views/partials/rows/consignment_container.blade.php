@@ -21,7 +21,7 @@
 
   {{--@foreach($content_one_container as $listing) --}}{{---each tyre qty price etc--}}
   <tr>
-    <td class="col-xs-3">{{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
+    <td class="col-xs-3"><b>({{$listing->tyre->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
     <td class="col-xs-1">{{$listing->qty}}</td>
     <td class="col-xs-2">{{number_format($listing->unit_price,2)}}</td>
     <td class="col-xs-2">{{number_format($listing->qty * $listing->unit_price,2)}}</td>
