@@ -28,7 +28,7 @@
 @section('body')
   <div class="box box-primary">
     <div class="box-body">
-      <table id ="table_id" class="table table-hover table-bordered">
+      <table id ="table_id" class="table table-hover">
         <thead>
         <tr>
           <th>LC#</th>
@@ -47,7 +47,7 @@
         <tbody>
         @foreach ($LCs as $LC)
           <tr style="cursor: pointer;" onclick="location.href='/lcs/{{$LC->lc_num}}'">
-            <td class="text-center">{{$LC->lc_num}}</td>
+            <td class="text-center strong">{{$LC->lc_num}}</td>
             <td class="text-center">{{$LC->date_issued}}</td>
             <td class="text-center">{{$LC->date_expiry}}</td>
             {{--<td class="text-center">{{$LC->invoice_no}}</td>--}}

@@ -20,7 +20,7 @@
 @section('body')
   <div class="box box-purple">
     <div class="box-body">
-      <table id="table_id" class="table table-hover table-bordered">
+      <table id="table_id" class="table table-hover">
         <thead>
         <tr>
           <th>Container#</th>

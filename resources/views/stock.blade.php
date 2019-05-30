@@ -18,7 +18,7 @@
 @section('body')
   <div class="box" id="app">
     <div class="box-body">
-      <table id ="table_id" class="table table-hover table-bordered">
+      <table id ="table_id" class="table table-striped">
         <thead>
         <tr>
           <th class=" col-xs-1"> Tyre ID </th>
@@ -33,12 +33,12 @@
 
         @foreach($in_stock as $item)
         <tr>
-          <td class="text-center col-xs-1">{{$item->tyre_id}}</td>
+          <td class="text-center col-xs-1 strong">{{$item->tyre_id}}</td>
           <td class="text-center col-xs-3">{{$item->brand}}</td>
           <td class="text-center col-xs-2">{{$item->size}}</td>
           <td class="text-center col-xs-2">{{$item->pattern}}</td>
           <td class="text-center col-xs-2">{{$item->lisi}}</td>
-          <td class="text-center col-xs-2">{{$item->in_stock}}</td>
+          <td class="text-center col-xs-2 strong">{{$item->in_stock}}</td>
         </tr>
         @endforeach
         </tbody>
