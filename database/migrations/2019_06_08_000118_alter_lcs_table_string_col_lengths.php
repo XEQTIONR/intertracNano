@@ -29,6 +29,6 @@ class AlterLcsTableStringColLengths extends Migration
         //
       \DB::statement('ALTER TABLE `lcs` MODIFY applicant VARCHAR(100) NOT NULL');
       \DB::statement('ALTER TABLE `lcs` MODIFY beneficiary VARCHAR(100) NOT NULL');
-      \DB::statement('ALTER TABLE `lcs` MODIFY notes VARCHAR(100) NOT NULL');
+      \DB::statement('ALTER TABLE `lcs` MODIFY notes VARCHAR(100)');
     }
 }
