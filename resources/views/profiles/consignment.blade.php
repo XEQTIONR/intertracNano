@@ -14,7 +14,7 @@
   </div>
 
   <div class="row justify-content-center d-block">
-    <div class="col-md-6">
+    <div class="col-lg-6">
       <div class="box box-teal">
         <div class="box-header with-border">
           <h3 class="box-title">Consignment</h3>
@@ -35,18 +35,18 @@
             <dd>{{$consignment->exchange_rate}}</dd> {{--Change 60 to exchange_rate--}}
 
             <dt class="mb-2">Total Value (Foreign)</dt>
-            <dd>{{$consignment->value}}</dd>
+            <dd><span class="currency-symbol"></span> {{$consignment->value}}</dd>
 
             <dt class="mb-2">Total Value (Local)</dt>
-            <dd>{{$consignment->value * $consignment->exchange_rate}}</dd> {{--change 60 to excahnge rate--}}
+            <dd>৳ {{$consignment->value * $consignment->exchange_rate}}</dd> {{--change 60 to excahnge rate--}}
 
             <dt class="mb-2">Total Tax Charged (TK)</dt>
-            <dd>{{$consignment->tax}}</dd>
+            <dd>৳ {{$consignment->tax}}</dd>
           </dl>
         </div>
       </div>
     </div> <!--col-->
-    <div class="col-md-6 clearfix">
+    <div class="col-lg-6 clearfix">
       <div class="box box-solid bg-purple">
         <div class="box-header bg-purple-active">
           <h3 class="box-title ">Containers</h3>
@@ -59,7 +59,7 @@
           <div>
             <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0 ?>
             @foreach ($containers as $container)
-              <table class="table table-bordered inner-white">
+              <table class="table table-bordered table-condensed inner-white">
                 <thead>
                 <tr>
                   <th colspan="6">Container# {{$container->Container_num}}</th>
@@ -83,10 +83,10 @@
                   <tr>
                   <td class="col-xs-3"><b>({{$listing->tyre->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
                   <td class="col-xs-1">{{$listing->qty}}</td>
-                  <td class="col-xs-2">{{number_format($listing->unit_price,2)}}</td>
-                  <td class="col-xs-2">{{number_format($listing->qty * $listing->unit_price,2)}}</td>
-                  <td class="col-xs-2">{{number_format($listing->total_tax,2)}}</td>
-                  <td class="col-xs-2">{{number_format($listing->total_weight,2)}}</td>
+                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{number_format($listing->unit_price,2)}}</td>
+                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{number_format($listing->qty * $listing->unit_price,2)}}</td>
+                  <td class="col-xs-2 text-right">৳{{number_format($listing->total_tax,2)}}</td>
+                  <td class="col-xs-2 text-right">{{number_format($listing->total_weight,2)}} kg</td>
                   </tr>
                     <?php
                       $total+= (floatval($listing->unit_price) * floatval($listing->qty));
@@ -101,15 +101,15 @@
                 </tbody>
               </table>
             @endforeach
-              <table class="table table-bordered inner-white bg-purple-active">
+              <table class="table table-bordered table-condensed inner-white bg-purple-active">
                 <thead>
                   <tr>
                     <th class="col-xs-3 text-uppercase">Total</th>
                     <th class="col-xs-1">{{$total_qty}}</th>
                     <th class="col-xs-2"></th>
-                    <th class="col-xs-2">{{ number_format($total, 2) }}</th>
-                    <th class="col-xs-2">{{ number_format($total_tax, 2) }}</th>
-                    <th class="col-xs-2">{{ number_format($total_weight, 2) }}</th>
+                    <th class="col-xs-2 text-right"><span class="currency-symbol"></span>{{ number_format($total, 2) }}</th>
+                    <th class="col-xs-2 text-right">৳{{ number_format($total_tax, 2) }}</th>
+                    <th class="col-xs-2 text-right">{{ number_format($total_weight, 2) }} kg</th>
                   </tr>
                 </thead>
               </table>
@@ -129,29 +129,29 @@
         </div>
         <div class="box-body">
           <div>
-            <table class="table table-responsive inner-white">
+            <table class="table table-condensed inner-white">
               <tr>
-                <th>Expense ID</th>
-                <th>Expense Note</th>
-                <th>Expense Local</th>
-                <th>Expense Foreign</th>
-                <th class="text-right">Total</th>
+                <th class="col-xs-1">Expense ID</th>
+                <th class="col-xs-3">Expense Note</th>
+                <th class="col-xs-2">Expense Local</th>
+                <th class="col-xs-2 text-right">Expense Foreign</th>
+                <th class="col-xs-4 text-right">Total</th>
               </tr>
 
             @foreach($expenses as $expense)
               <tr>
-              <td>{{$expense->expense_id}}</td>
-              <td>{{$expense->expense_notes}}</td>
-              <td>৳ {{$expense->expense_local}}</td>
-              <td>{{$expense->expense_foreign}}</td>
-              <td class="text-right">৳ {{number_format($expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local,2)}}</td>
+              <td class="col-xs-1">{{$expense->expense_id}}</td>
+              <td class="col-xs-3">{{$expense->expense_notes}}</td>
+              <td class="col-xs-2">৳{{$expense->expense_local}}</td>
+              <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{$expense->expense_foreign}}</td>
+              <td class="col-xs-5 text-right">৳{{number_format($expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local,2)}}</td>
               </tr>
             @endforeach
               <tr class="strong">
-                <td colspan="2" class="text-uppercase">Total</td>
-                <td>৳ {{number_format($consignment->expense_local_total,2)}}</td>
-                <td>{{number_format($consignment->expense_foreign_total,2)}}</td>
-                <td class="text-right">৳ {{number_format($consignment->expense_grand_total,2)}}</td>
+                <td colspan="2" class="col-xs-4 text-uppercase">Total</td>
+                <td class="col-xs-2">৳{{number_format($consignment->expense_local_total,2)}}</td>
+                <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{number_format($consignment->expense_foreign_total,2)}}</td>
+                <td class="col-xs-5 text-right">৳{{number_format($consignment->expense_grand_total,2)}}</td>
               </tr>
             </table>
             {{--<a href="/consignment_expenses/create/{{$consignment->BOL}}" class="btn btn-primary">Add an expense</a>--}}
@@ -165,4 +165,12 @@
 
   {{-- view containers section--}}
 
+@endsection
+
+@section('footer-scripts')
+  <script>
+      if (typeof currencies['{{$currency}}'] !== 'undefined')
+          $('.currency-symbol').html(currencies['{{$currency}}']);
+          //console.log(currencies['{{$currency}}']);
+  </script>
 @endsection
