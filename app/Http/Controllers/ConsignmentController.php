@@ -208,7 +208,9 @@ class ConsignmentController extends Controller
           $consignment->expense_foreign_total = $foreign_total;
           $consignment->expense_local_total = $local_total;
 
-        return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses'));
+          $currency = $consignment->letterOfCredit->currency_code;
+
+        return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses', 'currency'));
     }
 
     /**
