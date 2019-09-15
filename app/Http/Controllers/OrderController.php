@@ -17,7 +17,13 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function __construct()
+    {
+      //Not using auth in super class because of other middleware used
+      $this->middleware('auth');
 
+      $this->middleware('no_payments')->only('edit');
+    }
 
     public static function setContents(&$contents, $index, $order_num, $tyre_id, $price, $stock_listing, $qty_remain)
     {
@@ -271,11 +277,10 @@ class OrderController extends Controller
         //
         $customer = Customer::find($order->customer_id);
 
-        $contents = $order->orderContents()
-                        ->get();
-
-        $payments = $order->payment()
-                          ->get();
+//        $contents = $order->orderContents()
+//                        ->get();
+//
+//        $payments = $order->payments()->get();
 
         //INITILIZE some calculated values
         $order->totalValueBeforeDiscountAndTax();
@@ -283,7 +288,7 @@ class OrderController extends Controller
         $order->calculateAndSetTax();
         $order->calculatePayable();
 
-        return view('profiles.order', compact('order','contents','customer','payments'));
+        return view('profiles.order', compact('order','customer'));
     }
 
     public function showJSON($order_num)
@@ -304,6 +309,13 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         //
+      $in_stock = Order::tyresRemaining();
+
+      $order_contents = Order_content::where('Order_num', $order->Order_num)->with('tyre')->get();//$order->orderContents->with('tyre');
+     // dd($order_contents);
+     // dd(json_encode($order_contents));
+      return view('order_edit', compact('order', 'order_contents' , 'in_stock'));
+      //echo $order->Order_num;
     }
 
     /**
