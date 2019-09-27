@@ -124,101 +124,99 @@ class OrderController extends Controller
 
         DB::beginTransaction();
 
-        $order  = new Order;
+        try {
 
-        $order->customer_id = $request->input('customer');
-        $order->discount_percent = $request->input('discount_percent');
-        $order->discount_amount = $request->input('discount_amount');
-        $order->tax_percentage = $request->input('tax_percent');
-        $order->tax_amount = $request->input('tax_amount');
+          $order = new Order;
 
-        $order->save();
+          $order->customer_id=$request->input('customer');
+          $order->discount_percent=$request->input('discount_percent');
+          $order->discount_amount=$request->input('discount_amount');
+          $order->tax_percentage=$request->input('tax_percent');
+          $order->tax_amount=$request->input('tax_amount');
+
+          $order->save();
 
 
-        $order_contents = $request->input('order_contents');
+          $order_contents=$request->input('order_contents');
 
-        $tyre_remaining_cont = Order::tyresRemainingInContainers();
+          $tyre_remaining_cont=Order::tyresRemainingInContainers();
 
-        $new_contents = array();
+          $new_contents=array();
 
-        foreach($order_contents as $order_content)
-        {
-          $tyre = $order_content['tyre_id'];
-          $qty = intval($order_content['qty']);
-          $unit_price = floatval($order_content['unit_price']);
+          foreach ($order_contents as $order_content) {
+            $tyre=$order_content[ 'tyre_id' ];
+            $qty=intval($order_content[ 'qty' ]);
+            $unit_price=floatval($order_content[ 'unit_price' ]);
 
-          $filtered = $tyre_remaining_cont->where('tyre_id', $tyre)
-                                          ->filter(function($value, $key){
+            $filtered=$tyre_remaining_cont->where('tyre_id', $tyre)
+              ->filter(function ($value, $key) {
 
-                                              $keys[] = $key;
-                                              return (intval($value->in_stock)>0);
-                                          })
-                                          ->all();
+                $keys[]=$key;
+                return (intval($value->in_stock)>0);
+              })
+              ->all();
 
-          foreach($filtered as $key => $item)
-          {
-            $order_content =  new Order_content;
+            foreach ($filtered as $key=>$item) {
+              $order_content=new Order_content;
 
-            $order_content->tyre_id = $tyre;
-            $order_content->Container_num = $item->Container_num;
-            $order_content->BOL = $item->BOL;
-            $order_content->unit_price = $unit_price;
+              $order_content->tyre_id=$tyre;
+              $order_content->Container_num=$item->Container_num;
+              $order_content->BOL=$item->BOL;
+              $order_content->unit_price=$unit_price;
 
-            if(intval($item->in_stock)>=$qty)
-            {
-              $order_content->qty = $qty;
-              $tyre_remaining_cont[$key]->in_stock = intval($tyre_remaining_cont[$key]->in_stock) - $qty;
+              if (intval($item->in_stock)>=$qty) {
+                $order_content->qty=$qty;
+                $tyre_remaining_cont[ $key ]->in_stock=intval($tyre_remaining_cont[ $key ]->in_stock)-$qty;
 
-              array_push($new_contents, $order_content);
-              break; // loop exit
+                array_push($new_contents, $order_content);
+                break; // loop exit
+              } else {
+                $qty-=intval($item->in_stock);
+                $order_content->qty=intval($item->in_stock);
+                $tyre_remaining_cont[ $key ]->in_stock=0;
+
+                array_push($new_contents, $order_content);
+              }
+
+
+              //            $new_contents [] = $order_content;
             }
-            else
-            {
-              $qty -= intval($item->in_stock);
-              $order_content->qty = intval($item->in_stock);
-              $tyre_remaining_cont[$key]->in_stock = 0;
-
-              array_push($new_contents, $order_content);
-            }
 
 
-//            $new_contents [] = $order_content;
           }
 
 
+          $new_contents=collect($new_contents)->filter(function ($value) {
+            return intval($value->qty)>0;
+          })
+            ->all();
 
+          $order->orderContents()->saveMany($new_contents);
+          DB::commit();
+          //
+          $response=[];
+
+          $response[ 'status' ]='success';
+          $response[ 'order_num' ]=$order->Order_num;
+          $response[ 'date' ]=$order->created_at;
+          return $response;
         }
+        catch(\Exception $e)
+        {
+          DB::rollback();
 
+          $response[ 'status' ] = 'failed';
 
-        $new_contents = collect($new_contents)->filter(function($value){
-          return intval($value->qty) > 0;
-        })
-        ->all();
-
-        $order->orderContents()->saveMany($new_contents);
-        DB::commit();
-//
-        $response = [];
-
-        $response['status'] = 'success';
-        $response['order_num'] = $order->Order_num;
-        $response['date'] = $order->created_at;
-        return $response;
-
-
+          return $response;
+        }
         //      }
     }
-
-
-
     /**
      * Display the specified resource.
      *
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-
-
     public function detailsRow(Request $request)
     {
       $id = $request->input('order');
