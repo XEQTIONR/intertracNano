@@ -32,6 +32,7 @@
         <tbody>
 
         @foreach($in_stock as $item)
+        @if($item->in_stock > 0)
         <tr>
           <td class="text-center col-xs-1 strong">{{$item->tyre_id}}</td>
           <td class="text-center col-xs-3">{{$item->brand}}</td>
@@ -40,6 +41,7 @@
           <td class="text-center col-xs-2">{{$item->lisi}}</td>
           <td class="text-center col-xs-2 strong">{{$item->in_stock}}</td>
         </tr>
+        @endif
         @endforeach
         </tbody>
       </table>
