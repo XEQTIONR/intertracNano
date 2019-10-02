@@ -400,7 +400,9 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
+              @if(\Route::current()->getName() != 'home')
                 @yield('title')
+              @endif
                 <small>@yield('subtitle')</small>
             </h1>
             @yield('level')

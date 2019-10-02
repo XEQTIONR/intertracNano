@@ -6,6 +6,13 @@
     </address>
   </div>
 </div>
+@if(count($order->payments) == 0)
+<div class="row">
+  <div class="col-xs-12 col-md-4 my-2 invoice-col mx-3">
+    <button class="btn btn-xs btn-warning" onclick="location.href='orders/{{$order->Order_num}}/edit'"><b>EDIT</b></button>
+  </div>
+</div>
+@endif
 <div class="row">
   <div class="col-xs-12 col-md-4 my-2 invoice-col mx-3">
     <small class="text-uppercase"><b>Order/Invoice</b></small><br>
