@@ -14,7 +14,7 @@
   "devDependencies": {
     "admin-lte": "^2.4.10",
     "animate.css": "^3.7.0",
-    "axios": "^0.15.3",
+    "axios": "^0.18.1",
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^3.2.3",
     "currency-symbol-map": "^4.0.4",
