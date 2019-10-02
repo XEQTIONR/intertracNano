@@ -293,19 +293,12 @@ class OrderController extends Controller
           $order->orderContents()->delete();
         // javascript null becomes 0. ($request->input('past'))
         if($request->has('past') && ($request->input('past') != "0"))
-        {
-          Log::debug('in if (past)');
           $order->order_on=Carbon::createFromFormat('d/m/Y', $request->input('past_date'))->toDateString();
-        }
-        else if($request->has('edit'))
-        {
-          Log::debug('in else if - edit');
 
+        else if($request->has('edit')) {
         }
-        else {
-          Log::debug('in final else');
+        else
           $order->order_on=Carbon::now()->toDateString();
-        }
 
         $order->customer_id=$request->input('customer');
         $order->discount_percent=$request->input('discount_percent');

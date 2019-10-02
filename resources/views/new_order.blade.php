@@ -701,8 +701,6 @@
             },
 
             save : function(){
-                console.log("past_date :");
-                console.log(this.past_date);
                 $.post("{{route('orders.store')}}",
                     {
                         "_token" : "{{csrf_token()}}",
