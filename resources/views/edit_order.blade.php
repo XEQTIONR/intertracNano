@@ -673,7 +673,8 @@
                           "discount_percent" : parseFloat(this.discount_percent),
                           "discount_amount" : parseFloat(this.discount_amount),
                           "tax_percent" : parseFloat(this.tax_percent),
-                          "tax_amount" : parseFloat(this.tax_amount)
+                          "tax_amount" : parseFloat(this.tax_amount),
+                          "edit" : true
                       },
                       function(data){
 
@@ -683,7 +684,7 @@
                           if(data.status == 'success')
                               app.is_complete = true;
                           app.order_num = data.order_num;
-                          app.date = data.date.date;
+                          app.date = data.date;
 
                       });
               },

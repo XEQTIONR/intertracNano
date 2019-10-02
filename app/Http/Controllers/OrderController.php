@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Order;
 use App\Order_content;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -281,6 +283,7 @@ class OrderController extends Controller
 
     private function storeHelper(Request $request, Order $order = null)
     {
+      Log::debug('in Store Helper');
       DB::beginTransaction();
       try {
 
@@ -288,7 +291,21 @@ class OrderController extends Controller
           $order = new Order;
         else
           $order->orderContents()->delete();
+        // javascript null becomes 0. ($request->input('past'))
+        if($request->has('past') && ($request->input('past') != "0"))
+        {
+          Log::debug('in if (past)');
+          $order->order_on=Carbon::createFromFormat('d/m/Y', $request->input('past_date'))->toDateString();
+        }
+        else if($request->has('edit'))
+        {
+          Log::debug('in else if - edit');
 
+        }
+        else {
+          Log::debug('in final else');
+          $order->order_on=Carbon::now()->toDateString();
+        }
 
         $order->customer_id=$request->input('customer');
         $order->discount_percent=$request->input('discount_percent');
@@ -296,8 +313,9 @@ class OrderController extends Controller
         $order->tax_percentage=$request->input('tax_percent');
         $order->tax_amount=$request->input('tax_amount');
 
+        Log::debug('before order->save');
         $order->save();
-
+        Log::debug('after order->save');
 
         $order_contents=$request->input('order_contents');
 
@@ -360,7 +378,7 @@ class OrderController extends Controller
 
         $response[ 'status' ]='success';
         $response[ 'order_num' ]=$order->Order_num;
-        $response[ 'date' ]=$order->created_at;
+        $response[ 'date' ]=$order->order_on;
         return $response;
       }
       catch(\Exception $e)
@@ -368,7 +386,7 @@ class OrderController extends Controller
         DB::rollback();
 
         $response[ 'status' ] = 'failed';
-
+        $response['past'] = $request->input('past');
         return $response;
       }
     }

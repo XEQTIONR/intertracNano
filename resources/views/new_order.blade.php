@@ -46,6 +46,24 @@
           <div class="box-body">
             <div class="form">
               <div class="box-body">
+                <div class="row mb-4">
+                  <div class="col-xs-6 col-md-4 col-lg-3">
+                    <div class="form-group" :class="{'has-error' : errors.past_date}">
+                    <label v-show="past == 1">Enter Order date</label>
+                    <div v-show="past == 1" class="input-group">
+                      <input v-model="past_date" @blur="copyDate()" @click="datetify()" id="pastDate" type="text" class="form-control date" placeholder="dd/mm/yyyy">
+                      <div class="input-group-addon">
+                        <i class="icon-calendar-alt-s fa-calendar-alt"></i>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6 col-md-8 col-lg-9">
+                    <button v-if="past == 1" @click="past = 0" class="btn btn-warning btn-xs pull-right mt-2">Past Order</button>
+                    <button v-else @click="past = 1" class="btn btn-primary btn-xs pull-right mt-2">Current Order</button>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="form-group" :class="{'has-error' : errors.customer && customer==null}">
@@ -425,11 +443,19 @@
             is_complete : false,
 
             order_num : null,
-            date : null
+            date : null,
+            past : 0,
+            past_date : null,
         },
 
         watch: {
 
+            past : function(new_val)
+            {
+                if(new_val == 0)
+                    app.past_date = null;
+
+            },
             discount_percent : function(new_val)
             {
                 app.helperPositiveFloat(new_val, "discount_percent");
@@ -597,6 +623,17 @@
                 var errors = [];
 
                 console.log('IN VALIDATE');
+                console.log(this.past_date);
+
+                if(this.past == 1)
+                {
+                    var pattern = new RegExp(/\d\d\/\d\d\/\d\d\d\d/);
+                    if(!pattern.test(this.past_date))
+                      errors['past_date'] = "Enter a valid date";
+                    //    console.log('REGEX PASS');
+                    //else
+                    //    console.log('REGEX FAIL');
+                }
 
                 if(this.customer == null)
                     errors['customer'] = "Select a customer";
@@ -641,6 +678,10 @@
 
             },
 
+            datetify : function(){
+                $('.date').inputmask('dd/mm/yyyy');
+            },
+
             back : function(){
                 this.toggle = false;
 
@@ -660,7 +701,8 @@
             },
 
             save : function(){
-
+                console.log("past_date :");
+                console.log(this.past_date);
                 $.post("{{route('orders.store')}}",
                     {
                         "_token" : "{{csrf_token()}}",
@@ -670,7 +712,10 @@
                         "discount_percent" : parseFloat(this.discount_percent),
                         "discount_amount" : parseFloat(this.discount_amount),
                         "tax_percent" : parseFloat(this.tax_percent),
-                        "tax_amount" : parseFloat(this.tax_amount)
+                        "tax_amount" : parseFloat(this.tax_amount),
+
+                        "past" : this.past,
+                        "past_date" : this.past_date
                     },
                     function(data){
 
@@ -679,7 +724,7 @@
                       if(data.status == 'success')
                           app.is_complete = true;
                           app.order_num = data.order_num;
-                          app.date = data.date.date;
+                          app.date = data.date;
 
                     });
             },
@@ -783,6 +828,10 @@
 
                 return qty;
 
+            },
+
+            copyDate : function(){
+                this.past_date = document.getElementById('pastDate').value;
             }
 
 
