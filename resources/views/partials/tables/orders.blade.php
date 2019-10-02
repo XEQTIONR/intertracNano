@@ -1,15 +1,15 @@
 <table id="table_id" class="table table-condensed table-hover">
 <thead>
   <tr>
-    <th class="">Order#</th>
-    <th class="">Customer ID</th>
-    <th class="">Discount%</th>
-    <th class="">Discount Amount(&#2547)</th>
-    <th class="">Tax%</th>
-    <th class="">Tax Amount(&#2547)</th>
-    <th class="">Total(&#2547)</th>
-    <th class="">Payments Total(&#2547)</th>
-    <th class="">Created</th>
+    <th class="">Order <br> #</th>
+    <th class="">Customer <br> ID</th>
+    <th class="">Discount <br> %</th>
+    <th class="">Discount <br> Amount(&#2547)</th>
+    <th class="">Tax <br>%</th>
+    <th class="">Tax <br> Amout(&#2547)</th>
+    <th class="">Total <br> (&#2547)</th>
+    <th class="">Payments <br> Total(&#2547)</th>
+    <th class="">Order <br> Date</th>
     <th class="">Status</th>
   </tr>
 </thead>
@@ -24,7 +24,7 @@
       <td class="text-right">{{$order->tax_amount}}</td>
       <td class="text-right">{{number_format($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount, 2) }}</td>
       <td class="text-right">{{$order->payments_total}}</td>
-      <td class="text-center">{{$order->created_at}}</td>
+      <td class="text-center">{{$order->order_on}}</td>
       <td class="">
         @if($order->payments_total == 0)
           <span class="label label-danger">No payments</span>
