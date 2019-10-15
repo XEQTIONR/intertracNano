@@ -37,7 +37,7 @@
           console.log(rowData);
           var div = $('<div/>')
               .addClass( 'loading' )
-              .text( 'Loading...' );
+              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-spin"></i>' );
           $.ajax( {
               url: '/api/order',
               data: {
