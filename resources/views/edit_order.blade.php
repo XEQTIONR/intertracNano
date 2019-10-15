@@ -41,7 +41,7 @@
       <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Enter Order # {{$order->Order_num}}</h3>
+            <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Edit Order # {{$order->Order_num}}</h3>
           </div>
           <div class="box-body">
             <div class="form">
@@ -236,7 +236,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 v-if="!is_complete" class="page-header">
-                <span><i class="fa fa-check mr-3 text-success"></i>Confirm new Order information</span>
+                <span><i class="fa fa-check mr-3 text-success"></i>Confirm new information for Order # {{$order->Order_num}}</span>
                 {{--<small class="pull-right">Date: 2/10/2014</small>--}}
               </h2>
               <h2 v-else class="page-header">
