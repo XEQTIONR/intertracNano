@@ -26,6 +26,7 @@
         </div>
         <div class="modal-body">
           <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
+          <p v-if="past_date != null"> On past date - @{{past_date}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
@@ -194,6 +195,18 @@
             <div v-if="amount>0" class="row justify-content-center">
               @{{ amountToWords }}  <span class="mx-1" v-html="toWordsPoisha"></span> Taka only
             </div>
+
+            <div v-if="order!= null" class="row mt-4">
+              <div class="col-xs-12 col-md-4 col-md-offset-4 justify-content-center">
+                <label> Past Date (Optional) :</label>
+                <div class="input-group">
+                  <input v-model="past_date" class="form-control date" id="pastDate" placeholder="dd/mm/yyyy" @click="datetify()">
+                  <div class="input-group-addon">
+                    <i class="icon-calendar-alt-s fa-calendar-alt"></i>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- row -->
           </div>
 
         </form>
@@ -338,7 +351,9 @@
             numberToWords : numberToWords,
             paid : false,
             transaction_id : null,
-            payment_at : null
+            payment_at : null,
+            date_flag : false,
+            past_date : null
         },
 
         watch:{
@@ -507,7 +522,21 @@
             },
 
             showModal : function(){
-                $('#modal-warning').modal('show');
+
+                this.past_date = document.getElementById('pastDate').value;
+
+                var regex = /\d\d\/\d\d\/\d\d\d\d/;
+
+                if(this.validateDate())
+                  $('#modal-warning').modal('show');
+                else
+                  document.getElementById('pastDate').focus();
+            },
+
+            validateDate : function(){
+                var regex = /\d\d\/\d\d\/\d\d\d\d/;
+                // test/false
+               return (regex.test(this.past_date) || this.past_date=="" || this.past_date=="dd/mm/yyyy");
             },
 
             paymentsTotal : function(){
@@ -581,6 +610,15 @@
                     app[who] = app[who].substr(leading);
 
 
+            },
+            datetify : function(){
+
+                if(!this.date_flag)
+                {
+                    console.log("DATETIFIED");
+                    this.date_flag = true;
+                    $('.date').inputmask('dd/mm/yyyy');
+                }
             }
         },
 
