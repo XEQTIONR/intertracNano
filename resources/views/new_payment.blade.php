@@ -26,7 +26,7 @@
         </div>
         <div class="modal-body">
           <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
-          <p v-if="past_date != null"> On past date - @{{past_date}}</p>
+          <p v-if="past_date!='dd/mm/yyyy' && past_date!=null"> On past date - @{{past_date}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
@@ -183,11 +183,11 @@
             </div>
             <div v-if="order" class="row justify-content-center">
               <div class="col-xs-12 col-md-4">
-                <div class="input-group input-group-lg">
+                <div class="input-group input-group-lg" >
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
+                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat" :disabled="!(parseFloat(amount)>0)">Pay Now</button>
                   </span>
                 </div>
               </div>
@@ -199,8 +199,8 @@
             <div v-if="order!= null" class="row mt-4">
               <div class="col-xs-12 col-md-4 col-md-offset-4 justify-content-center">
                 <label> Past Date (Optional) :</label>
-                <div class="input-group">
-                  <input v-model="past_date" class="form-control date" id="pastDate" placeholder="dd/mm/yyyy" @click="datetify()">
+                <div class="input-group" :class="{ 'has-error' : !DateValidationFlag }">
+                  <input v-model="past_date" class="form-control date" id="pastDate" placeholder="dd/mm/yyyy" @focus="datetify()">
                   <div class="input-group-addon">
                     <i class="icon-calendar-alt-s fa-calendar-alt"></i>
                   </div>
@@ -501,6 +501,12 @@
                 return "hsl(" + val + ",60%,50%)";
 
                 //hsl(90,50%,50%)
+            },
+
+            DateValidationFlag : function(){
+                var regex = /\d\d\/\d\d\/\d\d\d\d/;
+                // test/false
+                return (regex.test(this.past_date) || this.past_date=="" || this.past_date=="dd/mm/yyyy"|| this.past_date==null);
             }
 
 
@@ -527,16 +533,16 @@
 
                 var regex = /\d\d\/\d\d\/\d\d\d\d/;
 
-                if(this.validateDate())
-                  $('#modal-warning').modal('show');
+                if(this.validateDate()) {
+                    $('#modal-warning').modal('show');
+                }
                 else
                   document.getElementById('pastDate').focus();
             },
 
             validateDate : function(){
-                var regex = /\d\d\/\d\d\/\d\d\d\d/;
-                // test/false
-               return (regex.test(this.past_date) || this.past_date=="" || this.past_date=="dd/mm/yyyy");
+
+                return this.DateValidationFlag;
             },
 
             paymentsTotal : function(){
@@ -558,7 +564,8 @@
                     {
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
-                        order : app.order.Order_num
+                        order : app.order.Order_num,
+                        past_date : app.past_date
                     },
 
                     function(data)

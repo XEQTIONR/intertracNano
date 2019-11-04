@@ -6,7 +6,7 @@ use App\Order;
 use App\Payment;
 use Illuminate\Http\Request;
 use Validator;
-
+use Carbon\Carbon;
 class PaymentController extends Controller
 {
     /**
@@ -54,7 +54,11 @@ class PaymentController extends Controller
         //INITIALIZE
         $payment->Order_num = $request->order;
         $payment->payment_amount = $request->amount;
-
+        
+        if($request->past_date!="dd/mm/yyyy" && $request->past_date!=null && !is_null($request->past_date))
+          $payment->created_at = Carbon::createFromFormat("d/m/Y", $request->past_date);
+        
+        
         //STORE
         $payment->save();
         $payment->new = true;
