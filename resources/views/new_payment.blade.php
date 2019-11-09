@@ -371,7 +371,8 @@
             payment_at : null,
             date_flag : false,
             past_date : null,
-            error_message : null
+            error_message : null,
+            random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch:{
@@ -583,7 +584,8 @@
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
                         order : app.order.Order_num,
-                        past_date : app.past_date
+                        past_date : app.past_date,
+                        random : app.random_string
                     },
 
                     function(data)

@@ -53,13 +53,24 @@ class PaymentController extends Controller
         $amount = $request->amount;
         $order = Order::find(intval($request->order));
         $payable = floatval($order->calculatePayable());
+        $duplicate = Payment::where('random', $request->random)->first();
 
         if($amount > $payable)
         {
           $response = [];
 
           $response['status'] = 'failed';
-          $response['message'] = "Amount paid is greater than payable amount";
+          $response['message'] = "Amount paid is greater than payable amount.";
+
+          return $response;
+        }
+
+        if($duplicate!= null){
+
+          $response = [];
+          
+          $response['status'] = 'failed';
+          $response['message'] = "Duplicate Hash. Refresh the page and try again.";
 
           return $response;
         }
@@ -70,7 +81,8 @@ class PaymentController extends Controller
         //INITIALIZE
         $payment->Order_num = $request->order;
         $payment->payment_amount = $request->amount;
-        
+        $payment->random = $request->random;
+
         if($request->past_date!="dd/mm/yyyy" && $request->past_date!=null && !is_null($request->past_date))
           $payment->created_at = Carbon::createFromFormat("d/m/Y", $request->past_date);
         
