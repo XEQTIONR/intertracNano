@@ -48,6 +48,22 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+
+        //VALIDATE
+        $amount = $request->amount;
+        $order = Order::find(intval($request->order));
+        $payable = floatval($order->calculatePayable());
+
+        if($amount > $payable)
+        {
+          $response = [];
+
+          $response['status'] = 'failed';
+          $response['message'] = "Amount paid is greater than payable amount";
+
+          return $response;
+        }
+
         //ALLOCATE
         $payment = new Payment;
 
