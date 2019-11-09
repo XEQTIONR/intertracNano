@@ -411,4 +411,9 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function viewReceipt(Order $order){
+
+      return view('components.receipt', compact('order'));
+    }
 }
