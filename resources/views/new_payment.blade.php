@@ -22,7 +22,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-          <h4 class="modal-title">Confirm payment</h4>
+          <h4 class="modal-title"><i class="fa fa-warning mr-2"></i> Confirm payment</h4>
         </div>
         <div class="modal-body">
           <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
@@ -31,6 +31,23 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
           <button @click="pay()" data-dismiss="modal" type="button" class="btn btn-outline">Confirm payment</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div v-cloak class="modal modal-danger fade in" id="modal-error">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"> <i class="fa fa-times-circle mr-2"></i> Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>@{{ error_message }}</p>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -353,7 +370,8 @@
             transaction_id : null,
             payment_at : null,
             date_flag : false,
-            past_date : null
+            past_date : null,
+            error_message : null
         },
 
         watch:{
@@ -578,6 +596,14 @@
                             app.payment_at = data.payment.created_at;
                             //app.amount = 0;
                         }
+                        else{
+                            if(data.status == 'failed' && data.message)
+                            {
+                                app.error_message = data.message;
+                                $('#modal-error').modal('show');
+                                //console.log(data.message);
+                            }
+                        }
 
                     });
             },
@@ -630,8 +656,8 @@
         },
 
         mounted: function(){
-            $('#modal-warning').modal();
-            $('#modal-warning').modal('hide');
+            $('.modal').modal();
+            $('.modal').modal('hide');
         }
     })
   </script>
