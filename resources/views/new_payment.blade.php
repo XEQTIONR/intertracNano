@@ -356,7 +356,8 @@
             paid : false,
             transaction_id : null,
             payment_at : null,
-            error_message : null
+            error_message : null,
+            random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch:{
@@ -547,7 +548,8 @@
                     {
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
-                        order : app.order.Order_num
+                        order : app.order.Order_num,
+                        past_date : app.past_date
                     },
 
                     function(data)
