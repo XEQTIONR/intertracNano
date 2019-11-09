@@ -283,6 +283,21 @@ class OrderController extends Controller
 
     private function storeHelper(Request $request, Order $order = null)
     {
+
+      //VALIDATE
+
+      $duplicate = Order::where('random', $request->random)->first();
+
+
+      if($duplicate!=null)
+      {
+        $response = [];
+
+        $response['status'] = 'failed';
+        $response['message'] = "Duplicate Hash. Refresh the page and try again.";
+
+        return $response;
+      }
       Log::debug('in Store Helper');
       DB::beginTransaction();
       try {
@@ -305,6 +320,7 @@ class OrderController extends Controller
         $order->discount_amount=$request->input('discount_amount');
         $order->tax_percentage=$request->input('tax_percent');
         $order->tax_amount=$request->input('tax_amount');
+        $order->random = $request->input('random');
 
         Log::debug('before order->save');
         $order->save();

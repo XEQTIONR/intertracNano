@@ -32,6 +32,23 @@
       </transition>
     </div>
   </div>
+  <div v-cloak class="modal modal-danger fade in" id="modal-error">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"> <i class="fa fa-times-circle mr-2"></i> Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>@{{ error_message }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
   <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
@@ -446,6 +463,8 @@
             date : null,
             past : 0,
             past_date : null,
+            error_message : null,
+            random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch: {
@@ -713,16 +732,25 @@
                         "tax_amount" : parseFloat(this.tax_amount),
 
                         "past" : this.past,
-                        "past_date" : this.past_date
+                        "past_date" : this.past_date,
+                        "random" : this.random_string
                     },
                     function(data){
 
                       console.log('return handler');
                       console.log(data);
-                      if(data.status == 'success')
+                      if(data.status == 'success') {
                           app.is_complete = true;
                           app.order_num = data.order_num;
                           app.date = data.date;
+                      }
+                      else{
+                          if(data.status == 'failed' && data.message)
+                          {
+                              app.error_message = data.message;
+                              $('#modal-error').modal('show');
+                          }
+                      }
 
                     });
             },
@@ -841,6 +869,8 @@
             //     .on('change', function(){
             //
             //     })
+            $('.modal').modal();
+            $('.modal').modal('hide');
         }
     })
 
