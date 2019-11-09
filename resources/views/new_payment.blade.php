@@ -548,8 +548,7 @@
                     {
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
-                        order : app.order.Order_num,
-                        past_date : app.past_date
+                        order : app.order.Order_num
                     },
 
                     function(data)
