@@ -70,7 +70,8 @@ class PaymentController extends Controller
           $response = [];
           
           $response['status'] = 'failed';
-          $response['message'] = "Duplicate Hash. Refresh the page and try again.";
+          $response['message'] = "Duplicate Request. Your payment may have been already added.".
+                                  " Check and then try again if required.";
 
           return $response;
         }
