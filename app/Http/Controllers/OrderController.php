@@ -21,8 +21,7 @@ class OrderController extends Controller
 
     public function __construct()
     {
-      //Not using auth in super class because of other middleware used
-      $this->middleware('auth');
+      parent::__construct();
 
       $this->middleware('no_payments')->only('edit');
     }
