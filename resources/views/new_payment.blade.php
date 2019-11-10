@@ -548,7 +548,8 @@
                     {
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
-                        order : app.order.Order_num
+                        order : app.order.Order_num,
+                        random : app.random_string
                     },
 
                     function(data)
