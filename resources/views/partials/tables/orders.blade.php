@@ -31,7 +31,14 @@
         @elseif(($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount) == $order->payments_total)
           <span class="label label-success">Paid Off</span>
         @else
-          <span class="label label-warning">{{intval(($order->payments_total*100)/($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount))}}%</span>
+          <?php $percentage = intval(($order->payments_total*100)/($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount)); ?>
+{{--          <span class="label label-warning">{{intval(($order->payments_total*100)/($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount))}}%</span>--}}
+
+          <div class="progress progress-xs" data-toggle="tooltip" title="{{$percentage}}% Paid">
+            <div class="progress-bar progress-bar-<?php if($percentage<33) echo "danger"; else {  echo $percentage<66 ?  "warning" :  "success"; } ?>"
+                 style="width: {{$percentage}}%"></div>
+          </div>
+
         @endif
       </td>
     </tr>
