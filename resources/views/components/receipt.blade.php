@@ -17,7 +17,7 @@
 
 @section('body')
   <div class="row justify-content-center">
-    <div class="col-xs-12 col-md-10">
+    <div class="col-xs-12 col-lg-8 col-xl-4">
       <section class="invoice">
         <div class="row">
           <div class="col-xs-12 ">
@@ -68,7 +68,7 @@
                 <th>Tyre</th>
                 <th>Qty</th>
                 <th>Unit Price</th>
-                <th>Sub-total</th>
+                <th class="text-right pr-5">Sub-total</th>
               </tr>
               </thead>
               <tbody>
@@ -81,7 +81,7 @@
                   <td class="col-xs-2">{{ $item->qty }}</td>
                   <td class="col-xs-2">৳ {{ $item->unit_price }}</td>
                   {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
-                  <td class="col-xs-2 text-right">৳ {{ number_format(floatval($item->unit_price)* intval($item->qty), 2)}}</td>
+                  <td class="col-xs-2 text-right pr-5">৳ {{ number_format(floatval($item->unit_price)* intval($item->qty), 2, ".", "")}}</td>
                 </tr>
               @endforeach
               <tr class="warning">
@@ -89,7 +89,7 @@
                 <td><b>Total</b></td>
                 <td><b>{{$order->qtytotal}}</b></td>
                 <td></td>
-                <td class="text-right">৳ {{number_format($order->subtotal, 2)}}</td>
+                <td class="text-right pr-5">৳ {{number_format($order->subtotal, 2, ".", "")}}</td>
               </tr>
 
               </tbody>
@@ -112,40 +112,44 @@
                 <tbody>
                 <tr>
                   <th style="width: 60%;" colspan="2">Total:</th>
-                  <td class="text-right">৳ {{number_format($order->subtotal, 2)}}</td>
+                  <td class="text-right">৳ {{number_format($order->subtotal, 2,".","")}}</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <th>Tax @if($order->tax_percentage>0)<span class="ml-2">({{$order->tax_percentage}} %)</span>@endif
+                  <th>Tax
+                    <br>
+                    @if($order->tax_percentage>0)<small>({{$order->tax_percentage}} %)</small>@endif
                     @if($order->tax_amount>0)
-                      <span class="ml-2">
-                        <b>
+                      <small class="ml-2">
                           <i class="fa fa-plus mr-2"></i> ৳ {{$order->tax_amount}}
-                        </b>
-                      </span>
+                      </small>
                     @endif
+
 
 
                   </th>
                   <td><i class="fa fa-plus mr-2"></i></td>
-                  <td class="text-right">৳ {{number_format($order->taxtotal,2) }}</td>
+                  <td class="text-right">৳ {{number_format($order->taxtotal,2,".","") }}</td>
                   <td></td>
                 </tr>
                 <tr>
-                  <th>Discount @if($order->discount_percent>0)<span class="ml-2">({{$order->discount_percent}} %)</span>@endif
+                  <th>Discount
+                    <br>
+
+                    @if($order->discount_percent>0)<small>({{$order->discount_percent}} %)</small>@endif
                     @if($order->discount_amount>0)
-                      <span class="ml-2">
+                      <small class="ml-2">
                         <i class="fa fa-minus mr-2"></i> ৳ {{$order->discount_amount}}
-                      </span>
+                      </small>
                     @endif
                   </th>
                   <td><i class="fa fa-minus mr-2"></i></td>
-                  <td class="text-right">৳ {{number_format($order->discounttotal, 2)}}</td>
+                  <td class="text-right">৳ {{number_format($order->discounttotal, 2,".","")}}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <th colspan="2" style="border-top: 1px solid #bbb;">Grand Total:</th>
-                  <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ {{number_format($order->grandtotal, 2)}}</b></td>
+                  <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ {{number_format($order->grandtotal, 2,".","")}}</b></td>
                   <td></td>
                 </tr>
                 </tbody>

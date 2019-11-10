@@ -268,7 +268,7 @@
           </div>
         </div>
       </div>
-      <div v-if="toggle==true" :key="true" class="col-xs-12 col-md-10 col-lg-8">
+      <div v-if="toggle==true" :key="true" class="col-xs-12 col-lg-8 col-xl-4">
         <section class="invoice">
           <div class="row">
             <div class="col-xs-12">
@@ -323,7 +323,7 @@
                   <th>Tyre</th>
                   <th>Qty</th>
                   <th>Unit Price</th>
-                  <th>Sub-total</th>
+                  <th class="text-right pr-5">Sub-total</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -332,14 +332,14 @@
                   <td><b>(@{{ record.tyre_id }})</b> @{{ record.brand }} @{{ record.size }} @{{ record.pattern }}  @{{ record.lisi }}</td>
                   <td>@{{ record.qty }}</td>
                   <td>৳ @{{ record.unit_price | currency }}</td>
-                  <td>৳ @{{ record.qty*record.unit_price | currency }}</td>
+                  <td class="text-right pr-5">৳ @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
                 <tr class="warning">
                   <td></td>
                   <td><b>Total</b></td>
                   <td><b>@{{ totalQty }}</b></td>
                   <td></td>
-                  <td>৳ @{{ subTotal | currency }}</td>
+                  <td class="text-right pr-5">৳ @{{ subTotal | currency }}</td>
                 </tr>
 
                 </tbody>
@@ -362,25 +362,37 @@
                 <table class="table">
                   <tbody>
                     <tr>
-                      <th style="width: 60%;" colspan="2">Subtotal:</th>
-                      <td>৳ @{{ subTotal | currency }}</td>
+                      <th style="width: 60%;" colspan="2">Total</th>
+                      <td class="text-right">৳ @{{ subTotal | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
-                      <th>Tax</th>
+                      <th>Tax
+                        <br>
+                        <small v-if="tax_percent>0">(@{{  tax_percent  }} %)</small>
+                        <small v-if="tax_amount>0" class="ml-2">
+                          <i class="fa fa-plus mr-2"></i> ৳ @{{  tax_amount  }}
+                        </small>
+                      </th>
                       <td><i class="fa fa-plus mr-2"></i></td>
-                      <td>৳ @{{ total_tax_amount | currency }}</td>
+                      <td class="text-right">৳ @{{ total_tax_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
-                      <th>Discount</th>
+                      <th>Discount
+                        <br>
+                          <small v-if="discount_percent>0">(@{{  discount_percent  }} %)</small>
+                          <small v-if="discount_amount>0" class="ml-2">
+                            <i class="fa fa-minus mr-2"></i> ৳ @{{  discount_amount  }}
+                          </small>
+                      </th>
                       <td><i class="fa fa-minus mr-2"></i></td>
-                      <td>৳ @{{ total_discount_amount | currency }}</td>
+                      <td class="text-right">৳ @{{ total_discount_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <th colspan="2" style="border-top: 1px solid #bbb;">Grand Total:</th>
-                      <td style="border-top: 1px solid #bbb;"><b>৳ @{{ grandTotal | currency }}</b></td>
+                      <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ @{{ grandTotal | currency }}</b></td>
                       <td></td>
                     </tr>
                   </tbody>
