@@ -179,7 +179,70 @@ class OrderController extends Controller
     public function detailsRow(Request $request)
     {
       $id = $request->input('order');
-      $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($id);
+
+      $order = $this->detailsHelper($id);
+
+      return view('partials.rows.order', compact('order'));
+    }
+
+    public function show(Order $order)
+    {
+        //
+        $customer = Customer::find($order->customer_id);
+
+//        $contents = $order->orderContents()
+//                        ->get();
+//
+//        $payments = $order->payments()->get();
+
+        //INITILIZE some calculated values
+        $order->totalValueBeforeDiscountAndTax();
+        $order->calculateAndSetDiscount();
+        $order->calculateAndSetTax();
+        $order->calculatePayable();
+
+        return view('profiles.order', compact('order','customer'));
+    }
+
+    public function showJSON($order_num)
+    {
+      //
+     //  $customer = Customer::find($order->customer_id);
+      $order = Order::find($order_num);
+
+      return compact('order');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Order $order)
+    {
+        //
+      return $this->storeHelper($request, $order);
+      //return [$request->input('order_contents'), $order];
+    }
+
+    public function viewReceipt(Order $order){
+
+
+      $id = $order->Order_num;
+      $order = $this->detailsHelper($id);
+
+      //return view('orders.receipt', compact('order'));
+      return view('components.receipt', compact('order'));
+    }
+
+
+    private function detailsHelper($order_id)
+    {
+
+      $order =  Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($order_id);
 
       $subtotal = 0;
       $subtotalReturn = 0;
@@ -226,57 +289,7 @@ class OrderController extends Controller
       $order->qtytotal = $qtytotal;
       $order->qtytotalReturn = $qtytotalReturn;
 
-      return view('partials.rows.order', compact('order'));
-    }
-
-    public function show(Order $order)
-    {
-        //
-        $customer = Customer::find($order->customer_id);
-
-//        $contents = $order->orderContents()
-//                        ->get();
-//
-//        $payments = $order->payments()->get();
-
-        //INITILIZE some calculated values
-        $order->totalValueBeforeDiscountAndTax();
-        $order->calculateAndSetDiscount();
-        $order->calculateAndSetTax();
-        $order->calculatePayable();
-
-        return view('profiles.order', compact('order','customer'));
-    }
-
-    public function showJSON($order_num)
-    {
-      //
-     //  $customer = Customer::find($order->customer_id);
-      $order = Order::find($order_num);
-
-      return compact('order');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-      return $this->storeHelper($request, $order);
-      //return [$request->input('order_contents'), $order];
+      return $order;
     }
 
 
@@ -298,7 +311,7 @@ class OrderController extends Controller
 
         return $response;
       }
-      Log::debug('in Store Helper');
+
       DB::beginTransaction();
       try {
 
@@ -411,8 +424,5 @@ class OrderController extends Controller
         //
     }
 
-    public function viewReceipt(Order $order){
 
-      return view('components.receipt', compact('order'));
-    }
 }

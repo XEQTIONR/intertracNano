@@ -60,7 +60,7 @@ Route::get('/orders/json/{order_num}', 'OrderController@showJSON');
 
 Route::resource('orders','OrderController');
 
-Route::get('orders/{order}/receipt', 'OrderController@viewReceipt');
+Route::get('orders/{order}/receipt', 'OrderController@viewReceipt')->name('orders.receipt');;
 
 
 
