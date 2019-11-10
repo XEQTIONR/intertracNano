@@ -755,6 +755,7 @@
                           app.is_complete = true;
                           app.order_num = data.order_num;
                           app.date = data.date;
+                          window.scrollTo(0,0);
                       }
                       else{
                           if(data.status == 'failed' && data.message)
