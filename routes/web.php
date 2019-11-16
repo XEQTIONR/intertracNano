@@ -64,9 +64,7 @@ Route::get('orders/{order}/receipt', 'OrderController@viewReceipt')->name('order
 
 
 
-Route::get('returns', 'ReturnController@create')->name('returns.create');
-
-Route::post('returns', 'ReturnController@returns')->name('returns.store');
+Route::resource('returns', 'ReturnController');
 
 
 Route::resource('payments','PaymentController');
