@@ -108,19 +108,28 @@
       <thead>
       <tr>
         <th class="col-xs-1">Transaction Id</th>
-        <th class="col-xs-3">Payment Date</th>
-        <th class="col-xs-2">Amount Paid</th>
-        <th class="col-xs-4"></th>
+        <th class="col-xs-3 text-center">Payment Date</th>
+        <th class="col-xs-2 text-right">Amount Paid</th>
+        <th class="col-xs-2 text-right">Refund Amount</th>
+        <th class="col-xs-2"></th>
         <th class="col-xs-2 text-right">Balance</th>
       </tr>
       </thead>
       <tbody>
-      @foreach($order->payments as $payment)
-      <tr>
+      @foreach($order->payments->sortByDesc('created_at') as $payment)
+        <?php
+          $class = "";
+          if($payment->refund_amount>0)
+            $class = " danger ".$class;
+          if($payment->refund_amount == $payment->payment_amount)
+            $class = " strikethrough-red ".$class;
+        ?>
+      <tr @if($payment->refund_amount>0) class="{{$class}}"   @endif>
         <td class="col-xs-1"> {{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
-        <td class="col-xs-3"> {{ $payment->created_at  }}</td>
-        <td class="col-xs-2">৳ {{ number_format($payment->payment_amount, 2) }}</td>
-        <td class="col-xs-4"></td>
+        <td class="col-xs-3 text-center"> {{ $payment->created_at  }}</td>
+        <td class="col-xs-2 text-right">৳ {{ number_format($payment->payment_amount, 2) }}</td>
+        <td class="col-xs-2 text-right">৳ {{ number_format($payment->refund_amount, 2) }}</td>
+        <td class="col-xs-2"></td>
         <td class="col-xs-2 text-right"><b>৳ {{ number_format($payment->balance, 2) }}</b></td>
       </tr>
       @endforeach

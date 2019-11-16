@@ -88,7 +88,7 @@
                     <div class="form-group">
                       <label for="inputOrder">Order</label>
                       <v-select id="order" class="form-control" placeholder="Select an order" name="inputOrder"
-                                v-model="order" :options="unpaidOrders" label="Order_num"
+                                v-model="order" :options="orders" label="Order_num"
                       >
                       </v-select>
                     </div>
@@ -260,16 +260,18 @@
                         <th class="col-xs-1">Transaction Id</th>
                         <th class="col-xs-3">Payment Date</th>
                         <th class="col-xs-2">Amount Paid</th>
-                        <th class="col-xs-4"></th>
+                        <th class="col-xs-2">Refund amount</th>
+                        <th class="col-xs-2"></th>
                         <th class="col-xs-2 text-right">Balance</th>
                       </tr>
                       </thead>
                       <tbody v-if="order && order.payments">
-                      <tr  v-for="(payment, index) in order.payments">
+                      <tr  v-for="(payment, index) in order.payments" :class="[{'danger' : payment.refund_amount>0},{'strikethrough-red' : payment.refund_amount==payment.payment_amount}]">
                         <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                         <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                         <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
-                        <td class="col-xs-4"></td>
+                        <td class="col-xs-2">৳ @{{ parseFloat(payment.refund_amount) | currency }}</td>
+                        <td class="col-xs-2"></td>
                         <td class="col-xs-2 text-right">৳ @{{ runningTotal(index) | currency }}</td>
                       </tr>
                       </tbody>
@@ -581,7 +583,7 @@
 
                       value.payments.forEach(function(value){
 
-                          paymentsTotal+= parseFloat(value.payment_amount);
+                          paymentsTotal+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount));
                       });
 
                       value.order_contents.forEach(function(value){
@@ -730,7 +732,7 @@
                   if(this.order)
                       this.order.payments.forEach(function(value){
 
-                          total+= parseFloat(value.payment_amount);
+                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount);
                       });
                   return total;
               },
@@ -747,7 +749,7 @@
 
                   for(var i=0; i<=index; i++)
                   {
-                      total -= parseFloat(this.order.payments[i].payment_amount);
+                      total -= (parseFloat(this.order.payments[i].payment_amount) - parseFloat(this.order.payments[i].refund_amount));
                   }
 
                   return total;
