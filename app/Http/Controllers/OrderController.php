@@ -281,7 +281,7 @@ class OrderController extends Controller
 
       $order->subtotalReturn = $subtotalReturn;
 
-      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0);
       $order->discounttotalReturn = ($subtotalReturn * $order->discount_percent/100.0);
 
       $order->grandtotalReturn = $order->subtotalReturn + $order->taxtotalReturn - $order->discounttotalReturn;
