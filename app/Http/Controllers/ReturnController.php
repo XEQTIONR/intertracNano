@@ -10,10 +10,32 @@ use Carbon\Carbon;
 
 class ReturnController extends Controller
 {
-
-    public function returns(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
+        //
+      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
 
+      foreach($orders as $order)
+      {
+        $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+      }
+      return view('new_return', compact('orders'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
       $order = Order::find($request->input('order'));
       $contents = $order->orderContents()->get();
       $returns = $request->input('returns');
@@ -94,34 +116,6 @@ class ReturnController extends Controller
 
       return array('status' => 'success');
       //return compact('order', 'contents', 'returns', 'collection');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
-
-      foreach($orders as $order)
-      {
-        $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
-      }
-      return view('new_return', compact('orders'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**

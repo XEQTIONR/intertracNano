@@ -62,9 +62,7 @@ Route::resource('orders','OrderController');
 
 
 
-Route::get('returns', 'ReturnController@create')->name('returns.create');
-
-Route::post('returns', 'ReturnController@returns')->name('returns.store');
+Route::resource('returns', 'ReturnController');
 
 
 Route::resource('payments','PaymentController');
