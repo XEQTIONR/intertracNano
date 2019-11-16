@@ -25,9 +25,17 @@
           <h4 class="modal-title">Confirm returns</h4>
         </div>
         <div class="modal-body" v-if="order">
-          <p> Confirm returns of <b>@{{ returnQty }}</b> tyres for a refund of ৳ @{{ grandTotalReturn | currency }}.
-            The new bill adjusted is ৳ @{{ grandTotal - subTotalReturn  | currency }}. Click continue if this information
-            is correct.
+          <p> Confirm returns of <span class="lead"><b>@{{ returnQty }}</b></span> tyres for a refund of <span class="lead"><b>৳ @{{ grandTotalReturn | currency }}</b></span>.
+          </p>
+          <p>
+            The new bill adjusted is <span class="lead"><b>৳ @{{ grandTotal - subTotalReturn  | currency }}</b></span>.
+          </p>
+
+          <p v-if="credits > 0">
+            PLEASE RETURN <span class="lead"><b>৳ @{{ credits | currency }}</b></span> or offer the amount as credit on the next order.
+          </p>
+          <p>
+            Click continue if this information is correct.
           </p>
         </div>
         <div class="modal-footer">
@@ -690,6 +698,12 @@
                   return this.subTotalReturn - this.discountReturnPercentAmount + this.taxReturnPercentAmount;
               },
 
+              credits : function(){
+
+                  var val = (this.paymentsTotal - (this.grandTotal-this.grandTotalReturn));
+                  return val>0 ? val :  0 ;
+              },
+
               amountToWords : function(){
 
                   return this.numberToWords.toWords(parseFloat(this.amount));
@@ -707,7 +721,19 @@
                   }
 
                   return count;
-              }
+              },
+              paymentsTotal : function(){
+
+                  // index-th order
+                  var total = 0;
+
+                  if(this.order)
+                      this.order.payments.forEach(function(value){
+
+                          total+= parseFloat(value.payment_amount);
+                      });
+                  return total;
+              },
 
 
           },
@@ -731,27 +757,15 @@
                   $('#modal-warning').modal('show');
               },
 
-              paymentsTotal : function(){
-
-                  // index-th order
-                  var total = 0;
-
-                  if(this.order)
-                      this.order.payments.forEach(function(value){
-
-                          total+= parseFloat(value.payment_amount);
-                      });
-                  return total;
-              },
-
               confirm : function(){
 
                   var params = {
 
                       "_token" : "{{csrf_token()}}",
                       order : app.order.Order_num,
-                      returns : app.filtered
-                  }
+                      returns : app.filtered,
+                      credits : app.credits
+                  };
 
                   if(this.order.tax_amount != this.old_tax_amount)
                       params.tax = this.order.tax_amount;
