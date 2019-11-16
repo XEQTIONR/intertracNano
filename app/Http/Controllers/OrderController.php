@@ -72,7 +72,7 @@ class OrderController extends Controller
           
           LEFT JOIN
           
-          (SELECT Order_num, SUM(payment_amount) as payments_total FROM payments GROUP BY Order_num) AS P
+          (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total FROM payments GROUP BY Order_num) AS P
           
           ON T.Order_num = P.Order_num
 
@@ -204,9 +204,9 @@ class OrderController extends Controller
 
       $grandtotal = $order->grandtotal;
 
-      foreach($order->payments as $payment)
+      foreach($order->payments->sortByDesc('created_at') as $payment)
       {
-        $grandtotal -= $payment->payment_amount;
+        $grandtotal -= ($payment->payment_amount - $payment->refund_amount);
         $payment->balance = $grandtotal;
       }
 

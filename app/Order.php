@@ -52,7 +52,7 @@ class Order extends Model
         $payments = $this->payments; // because ALWAYS expected to query with payments.
         foreach ($payments as $payment)
         {
-          $total -= $payment->payment_amount;
+          $total -= ($payment->payment_amount - $payment->return_amount);
         }
 
         return $total;
@@ -100,7 +100,7 @@ class Order extends Model
       return collect($remaining);
     }
 
-    
+
 
     public static function tyresRemaining()
     {
