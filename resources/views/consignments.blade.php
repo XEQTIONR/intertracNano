@@ -20,7 +20,7 @@
 @section('body')
   <div class="box box-teal">
     <div class="box-body">
-      <table id="table_id" class="table table-hover">
+      <table id="table_id" class="table table-hover table-bordered">
         <thead>
         <tr>
           <th>BOL#</th>
@@ -40,7 +40,7 @@
         @foreach ($consignments as $consignment)
           <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
             <td class="text-center strong">{{$consignment->BOL}}</td>
-            <td class="text-center">{{$consignment->lc}}</td>
+            <td class="">{{$consignment->lc}}</td>
             <td class="text-right">{{number_format($consignment->exchange_rate,2)}}</td>
             <td class="text-right">{{number_format($consignment->value, 2)}}</td>
             <td class="text-right">{{number_format($consignment->value * $consignment->exchange_rate,2)}}</td>

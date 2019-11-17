@@ -1,10 +1,10 @@
-<table id="table_id" class="table table-hover">
+<table id="table_id" class="table table-hover table-bordered">
 <thead>
   <tr>
-    <th>Transaction ID</th>
-    <th>Order #</th>
-    <th>Amount Paid (&#2547)</th>
-    <th>Created</th>
+    <th class="text-center">Transaction ID</th>
+    <th class="text-center">Order #</th>
+    <th class="text-center">Amount Paid (&#2547)</th>
+    <th class="text-center">Created</th>
   </tr>
 </thead>
 <tbody>

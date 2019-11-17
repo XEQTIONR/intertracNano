@@ -18,7 +18,7 @@
 @section('body')
   <div class="box box-orange">
     <div class="box-body">
-      <table id ="table_id" class="table table-striped">
+      <table id ="table_id" class="table table-striped table-bordered">
         <thead>
         <tr>
           <th>Customer ID</th>
