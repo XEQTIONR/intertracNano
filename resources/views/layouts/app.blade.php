@@ -548,8 +548,17 @@
     observer.observe(target, { attributes : true });
 
     var table;
+    $(".date").text(function(index, text){
 
-     $(document).ready(function() {
+        var temp = text.split(" ");
+
+        if(temp.length == 2)
+            return temp[0].split('-').reverse().join('/')+" "+temp[1];
+        return text.split('-').reverse().join('/');
+
+    });
+
+    $(document).ready(function() {
      table =   $('#table_id').DataTable();
         $(".date").inputmask( "dd/mm/yyyy");
     } );

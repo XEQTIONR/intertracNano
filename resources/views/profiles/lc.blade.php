@@ -24,10 +24,10 @@
           <dd class="mb-2">{{$lc->lc_num}}</dd>
 
           <dt>Date Issued</dt>
-          <dd class="mb-2">{{$lc->date_issued}}</dd>
+          <dd class="mb-2 date">{{$lc->date_issued}}</dd>
 
           <dt>Date Expiry</dt>
-          <dd class="mb-2">{{$lc->date_expiry}}</dd>
+          <dd class="mb-2 date">{{$lc->date_expiry}}</dd>
 
           <dt>Invoice#</dt>
           <dd class="mb-2">{{$lc->invoice_no}}</dd>
@@ -153,7 +153,7 @@
                 <td class=" strong" >{{$consignment->BOL}}</td>
                 <td class="text-right"><span class="currency-symbol mr-1"></span> {{$consignment->value}}</td>
                 <td class="text-right">৳ {{$consignment->tax}}</td>
-                <td class="">{{$consignment->land_date}}</td>
+                <td class="date">{{$consignment->land_date}}</td>
                 <td class=""><a href="/consignments/{{$consignment->BOL}}"
                        class="btn btn-primary btn-sm">
                     <i class="icon-eye-r mr-1"  style="position: relative; top: 2px;"></i>
