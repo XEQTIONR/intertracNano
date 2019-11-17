@@ -28,7 +28,7 @@
           <p> Confirm returns of <span class="lead"><b>@{{ returnQty }}</b></span> tyres for a refund of <span class="lead"><b>৳ @{{ grandTotalReturn | currency }}</b></span>.
           </p>
           <p>
-            The new bill adjusted is <span class="lead"><b>৳ @{{ grandTotal - subTotalReturn  | currency }}</b></span>.
+            The new bill adjusted is <span class="lead"><b>৳ @{{ grandTotal - grandTotalReturn  | currency }}</b></span>.
           </p>
 
           <p v-if="credits > 0">
@@ -160,7 +160,7 @@
                         </th>
 
 
-                        <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal - discountReturnPercentAmount | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
@@ -185,14 +185,14 @@
                             ৳ @{{ order.tax_amount | currency }}
                           </div>
                         </th>
-                        <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal - taxReturnPercentAmount  | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
                         <th class="text-uppercase">Grand Total</th>
                         <th></th>
                         <th></th>
-                        <th class="text-right">৳ @{{ grandTotal - subTotalReturn  | currency }}</th>
+                        <th class="text-right">৳ @{{ grandTotal - grandTotalReturn  | currency }}</th>
                       </tr>
                       </tbody>
                     </table>
@@ -639,7 +639,7 @@
 
                   if(app.order)
                   {
-                      discount_percentage_amount = (app.subTotal - app.subTotalReturn) * parseFloat(app.order.discount_percent)/100.0;
+                      discount_percentage_amount = app.subTotal * parseFloat(app.order.discount_percent)/100.0;
                       discount_amount_amount = parseFloat(app.order.discount_amount);
                   }
 
@@ -669,7 +669,7 @@
 
                   if(app.order)
                   {
-                      tax_percentage_amount = (app.subTotal- app.subTotalReturn) * parseFloat(app.order.tax_percentage)/100.0;
+                      tax_percentage_amount = app.subTotal * parseFloat(app.order.tax_percentage)/100.0;
                       tax_amount_amount = parseFloat(app.order.tax_amount);
                   }
 
@@ -732,7 +732,7 @@
                   if(this.order)
                       this.order.payments.forEach(function(value){
 
-                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount);
+                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount));
                       });
                   return total;
               },
@@ -745,7 +745,7 @@
               // for each payment alread
               runningTotal : function(index){
 
-                  var total =  this.grandTotal - this.subTotalReturn; // tax and discount already mutates in grandTotal
+                  var total =  this.grandTotal - this.grandTotalReturn; // tax and discount already mutates in grandTotal
 
                   for(var i=0; i<=index; i++)
                   {
