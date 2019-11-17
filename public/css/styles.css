@@ -38,6 +38,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+input[type=search]
+{
+  background-image: url(https://img.icons8.com/ios-filled/24/888888/search.png);
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: bottom 8px right 8px;
+}
+
+input[type=search]:focus {
+  background-image: url(https://img.icons8.com/ios-filled/24/000000/search.png);
+}
+
 .icon-anchor-r:before {
   content: "\61";
 }
