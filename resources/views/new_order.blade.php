@@ -88,6 +88,10 @@
                       <v-select id="customer" class="form-control" placeholder="Select a customer"
                                 v-model="customer" :options="customers" label="name"
                       >
+                        <template slot="option" slot-scope="option">
+                          <b>@{{ option.name }}</b> -- @{{ option.address }}
+
+                        </template>
                       </v-select>
                     </div>
                   </div>
