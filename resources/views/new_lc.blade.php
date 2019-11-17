@@ -42,8 +42,8 @@
       <transition  name="custom-classes-transition"
                   mode="out-in"
                   {{--enter-class = "mimi"--}}
-                   :enter-active-class="direction? 'animated fadeInRight fast' : 'animated fadeInLeft fast'"
-                   :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'"
+                   :enter-active-class="direction? 'animated fadeInRight ' : 'animated fadeInLeft '"
+                   :leave-active-class="direction? 'animated fadeOutLeft ' : 'animated fadeOutRight '"
                    {{--enter-active-class="animated fadeInRight fast"--}}
                    {{--leave-active-class="animated fadeOutLeft fast"--}}
       >
@@ -315,7 +315,7 @@
                                  {{--enter-class = "mimi"--}}
                                  enter-active-class="animated fadeInDown"
                                  {{--enter-class="animated tada"--}}
-                                 leave-active-class="animated fadeOutUp fast "
+                                 leave-active-class="animated fadeOutUp  "
                     >
                     <div v-if="!proforma_invoice.length" key="default" class="row list-item justify-content-center my-4">
                       <span class="text-center "> Nothing in the proforma invoice yet</span>
@@ -536,8 +536,8 @@
 
       </transition>
       <transition name="custom-classes-transition"
-                  :enter-active-class="direction? 'animated fadeInRight delay-1s fast' : 'animated fadeInLeft delay-1s fast'"
-                  :leave-active-class="direction? 'animated fadeOutLeft fast' : 'animated fadeOutRight fast'" >
+                  enter-active-class="animated fadeIn delay-1s"
+                  leave-active-class="animated fadeOut " >
         <div v-show="showForm == 1" class="col-xs-5">
           <div class="box box-primary">
             <div class="box-header with-border">
