@@ -34,7 +34,7 @@
         <div v-if="is_complete" id="alert" class="alert alert-success"  role="alert">
           <button type="button" class="close" aria-label="Close" data-dismiss="alert"><span @click="dismiss_warning()" aria-hidden="true">&times;</span></button>
           <h4><i class="icon fa fa-check-circle"></i> Done</h4>
-          New customer has been added. You can keep adding more customers.
+          Customer <b>@{{new_id}}</b> has been added. You can keep adding more customers.
         </div>
       </transition>
     </div>
@@ -132,7 +132,8 @@
               notes       : null,
               phone       : null,
               is_complete : false,
-              errors      : {}
+              errors      : {},
+              new_id      : null
           },
 
           methods : {
@@ -185,11 +186,13 @@
                                   app.address = null;
                                   app.notes = null;
                                   app.phone = null;
+                                  app.new_id = data.customer_id;
 
                                   $(window).scrollTop(0);
 
                                   setTimeout(function(){
                                       app.is_complete = false;
+                                      app.new_id = null;
                                   }, 5000);
                               }
 
