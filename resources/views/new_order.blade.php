@@ -52,8 +52,8 @@
   <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
-                 enter-active-class="animated fadeInRight fast"
-                 leave-active-class="animated fadeOutLeft fast"
+                 :enter-active-class="toggle? 'animated fadeInRight' : 'animated fadeInLeft'"
+                 :leave-active-class="toggle? 'animated fadeOutLeft' : 'animated fadeOutRight'"
     >
       <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
         <div class="box box-info">
@@ -427,8 +427,8 @@
     </transition>
     <transition  name="custom-classes-transition"
                  mode="out-in"
-                 enter-active-class="animated fadeInRight fast"
-                 leave-active-class="animated fadeOutRight fast"
+                 enter-active-class="animated fadeIn delay-2s"
+                 leave-active-class="animated fadeOut"
     >
     <div v-show="toggle==false" class="col-xs-12 col-md-5">
       <div class="box box-default">
