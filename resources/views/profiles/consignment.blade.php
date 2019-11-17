@@ -29,7 +29,7 @@
             <dd><a href="/lcs/{{$consignment->lc}}">{{$consignment->lc}}</a></dd>
 
             <dt class="mb-2">Landed On</dt>
-            <dd>{{$consignment->land_date}}</dd>
+            <dd class="date">{{$consignment->land_date}}</dd>
 
             <dt class="mb-2">Exchange_rate</dt>
             <dd>{{$consignment->exchange_rate}}</dd> {{--Change 60 to exchange_rate--}}
@@ -132,6 +132,7 @@
             <table class="table table-condensed inner-white">
               <tr>
                 <th class="col-xs-1">Expense ID</th>
+                <th class="col-xs-3">Expense Date</th>
                 <th class="col-xs-3">Expense Note</th>
                 <th class="col-xs-2">Expense Local</th>
                 <th class="col-xs-2 text-right">Expense Foreign</th>
@@ -141,17 +142,18 @@
             @foreach($expenses as $expense)
               <tr>
               <td class="col-xs-1">{{$expense->expense_id}}</td>
+              <td class="col-xs-1">{{$expense->created_at}}</td>
               <td class="col-xs-3">{{$expense->expense_notes}}</td>
               <td class="col-xs-2">৳{{$expense->expense_local}}</td>
               <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{$expense->expense_foreign}}</td>
-              <td class="col-xs-5 text-right">৳{{number_format($expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local,2)}}</td>
+              <td class="col-xs-4 text-right">৳{{number_format($expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local,2)}}</td>
               </tr>
             @endforeach
               <tr class="strong">
-                <td colspan="2" class="col-xs-4 text-uppercase">Total</td>
+                <td colspan="3" class="col-xs-4 text-uppercase">Total</td>
                 <td class="col-xs-2">৳{{number_format($consignment->expense_local_total,2)}}</td>
                 <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{number_format($consignment->expense_foreign_total,2)}}</td>
-                <td class="col-xs-5 text-right">৳{{number_format($consignment->expense_grand_total,2)}}</td>
+                <td class="col-xs-4 text-right">৳{{number_format($consignment->expense_grand_total,2)}}</td>
               </tr>
             </table>
             {{--<a href="/consignment_expenses/create/{{$consignment->BOL}}" class="btn btn-primary">Add an expense</a>--}}
