@@ -299,7 +299,7 @@ class OrderController extends Controller
       //VALIDATE
 
       $duplicate = Order::where('random', $request->random_string)->first();
-      
+
 
       if($duplicate!=null)
       {
@@ -333,7 +333,7 @@ class OrderController extends Controller
         $order->discount_amount=$request->input('discount_amount');
         $order->tax_percentage=$request->input('tax_percent');
         $order->tax_amount=$request->input('tax_amount');
-        $order->random = $request->input('random');
+        $order->random = $request->input('random_string');
 
         Log::debug('before order->save');
         $order->save();
