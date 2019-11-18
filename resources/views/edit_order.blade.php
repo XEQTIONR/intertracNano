@@ -442,7 +442,8 @@
 
               order_num : null,
               date : null,
-              error_message : null
+              error_message : null,
+              random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
           },
 
           watch: {
@@ -691,7 +692,7 @@
                           "discount_amount" : parseFloat(this.discount_amount),
                           "tax_percent" : parseFloat(this.tax_percent),
                           "tax_amount" : parseFloat(this.tax_amount),
-                          "random_string" : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                          "random_string" : this.random_string,
                           "edit" : true
                       },
                       function(data){
