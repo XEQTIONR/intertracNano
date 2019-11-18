@@ -674,6 +674,7 @@
                           "discount_amount" : parseFloat(this.discount_amount),
                           "tax_percent" : parseFloat(this.tax_percent),
                           "tax_amount" : parseFloat(this.tax_amount),
+                          "random_string" : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
                           "edit" : true
                       },
                       function(data){

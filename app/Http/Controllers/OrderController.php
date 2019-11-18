@@ -298,8 +298,8 @@ class OrderController extends Controller
 
       //VALIDATE
 
-      $duplicate = Order::where('random', $request->random)->first();
-
+      $duplicate = Order::where('random', $request->random_string)->first();
+      
 
       if($duplicate!=null)
       {
@@ -408,6 +408,7 @@ class OrderController extends Controller
         DB::rollback();
 
         $response[ 'status' ] = 'failed';
+        Log::error($e->getMessage());
         $response['past'] = $request->input('past');
         return $response;
       }
