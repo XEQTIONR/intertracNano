@@ -397,6 +397,7 @@ class OrderController extends Controller
 
         $response[ 'status' ] = 'failed';
         Log::error($e->getMessage());
+        $response['message'] = $e->getMessage();
         $response['past'] = $request->input('past');
         return $response;
       }
