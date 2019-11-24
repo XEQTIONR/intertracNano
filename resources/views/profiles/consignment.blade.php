@@ -45,6 +45,65 @@
           </dl>
         </div>
       </div>
+
+      <div class="box box-solid bg-orange">
+        <div class="box-header bg-orange-active">
+          <h3 class="box-title ">Sold</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" style="color: white"><i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div>
+            <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0 ?>
+            @foreach ($sold as $key => $val)
+              <table class="table table-bordered table-condensed inner-white">
+                <thead>
+                <tr>
+                  <th colspan="6">Container# {{$key}}</th>
+                </tr>
+                <tr>
+                  <th class="col-xs-3">Tyre</th>
+                  <th class="col-xs-1">Qty</th>
+                </tr>
+
+                </thead>
+                <tbody>
+
+
+                @foreach($val as $listing) {{---each tyre qty price etc--}}
+                <tr>
+                  <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->brand}} {{$listing->size}} {{$listing->pattern}} {{$listing->lisi}}</td>
+                  <td class="col-xs-1">{{$listing->total_pcs}}</td>
+                </tr>
+<!--                --><?php
+//                $total+= (floatval($listing->unit_price) * floatval($listing->qty));
+                  $total_qty += intval($listing->total_pcs);
+//                $total_tax += floatval($listing->total_tax);
+//                $total_weight += floatval($listing->total_weight);
+//                ?>
+                @endforeach
+                <tr>
+                  <th class="col-xs-3 text-uppercase bg-orange-active">Total</th>
+                  <th class="col-xs-1 bg-orange-active">{{$total_qty}}</th>
+                </tr>
+                </tbody>
+              </table>
+
+                <table class="table table-bordered table-condensed inner-white bg-orange-active">
+                  <thead>
+
+                  </thead>
+                </table>
+            @endforeach
+
+
+            {{--<a href="/container_contents/create/{{$consignment->BOL}}" class="btn btn-primary">Add a container</a>--}}
+
+          </div>
+        </div>
+      </div>
     </div> <!--col-->
     <div class="col-lg-6 clearfix">
       <div class="box box-solid bg-purple">
