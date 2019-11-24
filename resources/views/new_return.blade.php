@@ -732,7 +732,7 @@
                   if(this.order)
                       this.order.payments.forEach(function(value){
 
-                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount);
+                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount));
                       });
                   return total;
               },
