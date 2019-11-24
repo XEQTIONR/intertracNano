@@ -210,7 +210,9 @@ class ConsignmentController extends Controller
 
           $currency = $consignment->letterOfCredit->currency_code;
 
-        return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses', 'currency'));
+          $sold = $this->soldCount($consignment);
+
+          return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses', 'currency', 'sold'));
     }
 
     /**
@@ -245,5 +247,18 @@ class ConsignmentController extends Controller
     public function destroy(Consignment $consignment)
     {
         //
+    }
+
+    public function soldCount(Consignment $consignment){
+
+      $ret = DB::table('order_contents')
+              ->where('bol', $consignment->BOL)
+              ->join('tyres', 'tyres.tyre_id','=','order_contents.tyre_id')
+              ->select('tyres.tyre_id','brand','size','pattern','lisi' ,'container_num', 'bol', DB::raw('SUM(qty) AS total_pcs'))
+              ->groupBy('tyres.tyre_id', 'container_num', 'bol')
+              ->get();
+
+      return $ret->groupBy('container_num');
+      
     }
 }
