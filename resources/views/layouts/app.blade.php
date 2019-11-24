@@ -290,7 +290,7 @@
                 </li>
 
                 <li class="treeview
-                    @if(stristr(Route::currentRouteName(), 'orders'))
+                    @if(stristr(Route::currentRouteName(), 'orders') || stristr(Route::currentRouteName(), 'returns'))
                       active
                     @endif
                 ">
