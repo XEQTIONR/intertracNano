@@ -93,25 +93,15 @@ class CustomerController extends Controller
       $query = OrderController::QUERY. ' WHERE customer_id='.$customer->id;
 
       $ret =  DB::select($query);
-      return $ret;
-//        $payments = collect();  //Empty collection
-//        $orders = $customer->orders()
-//                          ->get();
+
+      $payments = DB::select('SELECT P.*
+                               FROM payments P INNER JOIN orders O ON P.Order_num = O.Order_num
+                                                INNER JOIN customers C ON O.customer_id = C.id 
+                               WHERE O.customer_id='.$customer->id.'
+                               ORDER BY P.created_at DESC
+                               LIMIT 10');
 //
-//
-//
-//        foreach ($orders as $order)
-//        {
-//          $some_payments = $order->payments()->get();
-//          //$payments = $payments->union($some_payments); //WHY DOES THIS NOT WORK??
-//
-//          foreach ($some_payments as $payment)
-//          {
-//            $payments->push($payment);
-//          }
-//        }
-//
-        return view('profiles.customer', compact('customer', 'orders', 'payments'));
+        return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
     }
 
     /**
