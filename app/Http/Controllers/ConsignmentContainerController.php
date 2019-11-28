@@ -18,20 +18,6 @@ class ConsignmentContainerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function detailsRow(Request $request)
-    {
-      $container_num = $request->input('container');
-      $bol = $request->input('consignment');
-
-      $container = Consignment_container::where([
-        'Container_num' => $container_num,
-        'BOL' => $bol
-      ])->with('contents')->first();
-
-      return view('partials.rows.consignment_container', compact('container'));
-
-    }
     public function index()
     {
         //
@@ -139,9 +125,18 @@ class ConsignmentContainerController extends Controller
      * @param  \App\Consignment_container  $consignment_container
      * @return \Illuminate\Http\Response
      */
-    public function show(Consignment_container $consignment_container)
+    public function show($consignment, $container)
     {
         //
+//      $container_num = $request->input('container');
+//      $bol = $request->input('consignment');
+
+      $container = Consignment_container::where([
+        'Container_num' => $container,
+        'BOL' => $consignment
+      ])->with('contents')->first();
+
+      return view('partials.rows.consignment_container', compact('container'));
     }
 
     /**

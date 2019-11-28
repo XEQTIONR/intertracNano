@@ -51,6 +51,7 @@ Route::resource('customers','CustomerController');
 Route::resource('consignment_expenses','ConsignmentExpenseController');
 
 Route::resource('consignment_containers','ConsignmentContainerController');
+Route::get('/consignment_containers/{consignment}/{container}', 'ConsignmentContainerController@show');
 
 Route::resource('performa_invoices','PerformaInvoiceController');
 

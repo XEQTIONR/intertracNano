@@ -19,7 +19,6 @@ use Illuminate\Http\Request;
 
 
 
-  Route::get('consignment_container', 'ConsignmentContainerController@detailsRow');
 
 //});
 

@@ -69,7 +69,7 @@
               .addClass( 'loading' )
               .text( 'Loading...' );
           $.ajax( {
-              url: '/api/consignment_container',
+              url: '/consignment_containers/'+rowData[1]+'/'+rowData[0],
               data: {
                   container : rowData[0],
                   consignment : rowData[1]
