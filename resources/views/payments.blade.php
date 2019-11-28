@@ -39,10 +39,7 @@
               .addClass( 'loading' )
               .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-spin"></i>' );
           $.ajax( {
-              url: '/api/order',
-              data: {
-                  order : rowData[1]
-              },
+              url: '/orders/'+rowData[1],
               dataType: 'text',
               success: function ( view ) {
                   console.log('successed');
