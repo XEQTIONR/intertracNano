@@ -49,3 +49,14 @@
   </div>
 
 @endsection
+
+@section('footer-scripts')
+  <script>
+      $(document).ready(function() {
+
+          table.order([5, 'desc'])
+              .draw();
+      });
+
+  </script>
+@endsection

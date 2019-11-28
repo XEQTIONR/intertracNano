@@ -70,6 +70,9 @@
 
       $(document).ready(function() {
 
+          table.order([0, 'desc'])
+            .draw();
+
           $('#table_id tbody').on('click', 'tr', function () {
               var tr = $(this).closest('tr');
               var row = table.row( this );

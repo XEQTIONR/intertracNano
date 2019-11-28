@@ -65,3 +65,14 @@
 
 
 @endsection
+
+@section('footer-scripts')
+  <script>
+      $(document).ready(function() {
+
+          table.order([7, 'desc'])
+              .draw();
+      });
+
+  </script>
+@endsection
