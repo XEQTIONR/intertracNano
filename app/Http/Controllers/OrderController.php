@@ -62,12 +62,13 @@ class OrderController extends Controller
         //
         $orders = DB::select('
           SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
-          FROM  (SELECT O.*, D.total 
+          FROM  (SELECT O.*, D.total, C.name 
                 FROM (SELECT B.*, SUM(B.multiply) as total 
                       FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
                             FROM order_contents C) AS B 
-                GROUP BY B.Order_num) D, orders O 
-          WHERE D.Order_num = O.Order_num) T
+                      GROUP BY B.Order_num) D, orders O, customers C 
+          WHERE D.Order_num = O.Order_num 
+                AND O.customer_id = C.id) T
           
           LEFT JOIN
           
