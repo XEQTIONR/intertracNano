@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
   Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
 
 
-  Route::get('order', 'OrderController@detailsRow');
 
   Route::get('consignment_container', 'ConsignmentContainerController@detailsRow');
 

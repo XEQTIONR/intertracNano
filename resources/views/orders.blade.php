@@ -33,10 +33,10 @@
           .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-spin"></i>' );
 
       $.ajax( {
-          url: '/api/order',
-          data: {
-              order : rowData[0]
-          },
+          url: '/orders/'+rowData[0],
+          // data: {
+          //     order : rowData[0]
+          // },
           dataType: 'text',
           success: function ( view ) {
               console.log('successed');

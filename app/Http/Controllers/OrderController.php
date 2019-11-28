@@ -177,32 +177,15 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function detailsRow(Request $request)
-    {
-      $id = $request->input('order');
-
-      $order = $this->detailsHelper($id);
-
-      return view('partials.rows.order', compact('order'));
-    }
 
     public function show(Order $order)
     {
         //
-        $customer = Customer::find($order->customer_id);
+      $id = $order->Order_num;
 
-//        $contents = $order->orderContents()
-//                        ->get();
-//
-//        $payments = $order->payments()->get();
+      $order = $this->detailsHelper($id);
 
-        //INITILIZE some calculated values
-        $order->totalValueBeforeDiscountAndTax();
-        $order->calculateAndSetDiscount();
-        $order->calculateAndSetTax();
-        $order->calculatePayable();
-
-        return view('profiles.order', compact('order','customer'));
+      return view('partials.rows.order', compact('order'));
     }
 
     public function showJSON($order_num)
