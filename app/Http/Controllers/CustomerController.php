@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 class CustomerController extends Controller
 {
@@ -89,23 +90,27 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //
-        $payments = collect();  //Empty collection
-        $orders = $customer->orders()
-                          ->get();
+      $query = OrderController::QUERY. ' WHERE customer_id='.$customer->id;
 
-
-
-        foreach ($orders as $order)
-        {
-          $some_payments = $order->payment()->get();
-          //$payments = $payments->union($some_payments); //WHY DOES THIS NOT WORK??
-
-          foreach ($some_payments as $payment)
-          {
-            $payments->push($payment);
-          }
-        }
-
+      $ret =  DB::select($query);
+      return $ret;
+//        $payments = collect();  //Empty collection
+//        $orders = $customer->orders()
+//                          ->get();
+//
+//
+//
+//        foreach ($orders as $order)
+//        {
+//          $some_payments = $order->payments()->get();
+//          //$payments = $payments->union($some_payments); //WHY DOES THIS NOT WORK??
+//
+//          foreach ($some_payments as $payment)
+//          {
+//            $payments->push($payment);
+//          }
+//        }
+//
         return view('profiles.customer', compact('customer', 'orders', 'payments'));
     }
 
