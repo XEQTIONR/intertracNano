@@ -89,7 +89,7 @@
                                 v-model="customer" :options="customers" label="name"
                       >
                         <template slot="option" slot-scope="option">
-                          <b>@{{ option.name }}</b> -- @{{ option.address }}
+                          <b>@{{ option.name }}</b> -- @{{ option.address_single_line }}
 
                         </template>
                       </v-select>

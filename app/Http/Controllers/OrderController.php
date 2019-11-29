@@ -92,13 +92,14 @@ class OrderController extends Controller
     public function create()
     {
         //
-        $customers = Customer::all();
+        $customers = Customer::select('id', 'name', 'address', 'phone')->get();
         $in_stock = Order::tyresRemaining();
 
         foreach($customers as $customer)
         {
-
           $customer->address = str_replace("\n", "",nl2br($customer->address));
+          $customer->address_single_line = str_replace("<br />", "",$customer->address);
+          //$customer->notes = str_replace("\n", "",nl2br($customer->notes));
         }
 
         $i = 0;
