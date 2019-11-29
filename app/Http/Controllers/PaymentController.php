@@ -29,11 +29,12 @@ class PaymentController extends Controller
     public function create()
     {
 
-      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
+      $orders = Order::with(['customer:id,name,address,phone','payments', 'orderContents.tyre'])->get();
 
       foreach($orders as $order)
       {
         $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+        //$order->customer->notes =  str_replace("\n", "", nl2br($order->customer->notes));
       }
 
 
