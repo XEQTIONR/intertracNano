@@ -104,6 +104,13 @@ class CustomerController extends Controller
         return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
     }
 
+    public function apiShow(Request $request){
+
+      $id = $request->customer;
+      $customer = Customer::find($id);
+      return $customer;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -136,6 +143,22 @@ class CustomerController extends Controller
 
         return redirect ("/customers/".$customer->id);
     }
+
+  public function apiUpdate(Request $request)
+  {
+    //
+    $customer = Customer::find($request->customer);
+    $customer->name = $request->name;
+    $customer->address = $request->address;
+    $customer->phone = $request->phone;
+    $customer->notes = $request->notes;
+
+    $customer->save();
+
+
+    return array('status' => 'success');
+    //return redirect ("/customers/".$customer->id);
+  }
 
     /**
      * Remove the specified resource from storage.
