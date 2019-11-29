@@ -67,7 +67,7 @@
           console.log(rowData);
           var div = $('<div/>')
               .addClass( 'loading' )
-              .text( 'Loading...' );
+              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-pulse"></i>' );
           $.ajax( {
               url: '/consignment_containers/'+rowData[1]+'/'+rowData[0],
               data: {

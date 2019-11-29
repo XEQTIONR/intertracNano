@@ -65,7 +65,7 @@
         </div>
         <div class="modal-body">
           <div class="spinner-container" style="margin-top: 9vh; margin-bottom: 10vh;">
-          <i style="margin-left: 48%; font-size: 2rem" class="fa fa-spinner fa-spin"></i><br>
+          <i style="margin-left: 48%; font-size: 2rem" class="fa fa-spinner fa-pulse"></i><br>
             <p class="text-center">Loading</p>
           </div>
           <div class="success-container">
@@ -117,7 +117,7 @@
       function format ( rowData ) {
           var div = $('<div/>')
               .addClass( 'loading' )
-              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-spin"></i>' );
+              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-pulse"></i>' );
 
           $.ajax( {
               url: '/customers/'+rowData[0],
