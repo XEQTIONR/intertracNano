@@ -115,7 +115,11 @@
                   <td class="text-right">৳ {{number_format($order->subtotal, 2,".","")}}</td>
                   <td></td>
                 </tr>
-                <tr>
+                <tr
+                  @if(floatval($order->taxtotal) == 0)
+                   class="no-print"
+                  @endif
+                >
                   <th>Tax
                     <br>
                     @if($order->tax_percentage>0)<small>({{$order->tax_percentage}} %)</small>@endif
@@ -136,7 +140,7 @@
                   <th>Discount
                     <br>
 
-                    @if($order->discount_percent>0)<small>({{$order->discount_percent}} %)</small>@endif
+                    @if($order->discount_percent>0)<small>(-{{$order->discount_percent}} %)</small>@endif
                     @if($order->discount_amount>0)
                       <small class="ml-2">
                         <i class="fa fa-minus mr-2"></i> ৳ {{$order->discount_amount}}

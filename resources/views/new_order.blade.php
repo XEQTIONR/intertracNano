@@ -370,7 +370,7 @@
                       <td class="text-right">৳ @{{ subTotal | currency }}</td>
                       <td></td>
                     </tr>
-                    <tr>
+                    <tr :class="{'no-print' : parseFloat(total_tax_amount) == 0.0}">
                       <th>Tax
                         <br>
                         <small v-if="tax_percent>0">(@{{  tax_percent  }} %)</small>
@@ -385,7 +385,7 @@
                     <tr>
                       <th>Discount
                         <br>
-                          <small v-if="discount_percent>0">(@{{  discount_percent  }} %)</small>
+                          <small v-if="discount_percent>0">(-@{{  discount_percent  }} %)</small>
                           <small v-if="discount_amount>0" class="ml-2">
                             <i class="fa fa-minus mr-2"></i> ৳ @{{  discount_amount  }}
                           </small>
