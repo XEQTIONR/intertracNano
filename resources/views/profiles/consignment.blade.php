@@ -134,11 +134,7 @@
 
                 </thead>
                 <tbody>
-                  @foreach ($contents as $content_one_container) {{--each container--}}
-                  {{--@ means if not empty--}}
-                  @if (@$content_one_container[0]->Container_num==$container->Container_num) {{-- if this container add BOL later --}}
-
-                  @foreach($content_one_container as $listing) {{---each tyre qty price etc--}}
+                  @foreach($container->contents as $listing) {{---each tyre qty price etc--}}
                   <tr>
                   <td class="col-xs-3"><b>({{$listing->tyre->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
                   <td class="col-xs-1">{{$listing->qty}}</td>
@@ -153,9 +149,6 @@
                       $total_tax += floatval($listing->total_tax);
                       $total_weight += floatval($listing->total_weight);
                     ?>
-                  @endforeach
-
-                  @endif
                   @endforeach
                 </tbody>
               </table>

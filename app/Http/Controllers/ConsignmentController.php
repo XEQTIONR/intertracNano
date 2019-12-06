@@ -174,20 +174,12 @@ class ConsignmentController extends Controller
      */
     public function show(Consignment $consignment)
     {
-        $contents = array();
 
 
           $containers = $consignment->containers()
-                                      ->get();
+                                    ->with('contents.tyre')
+                                    ->get();
           //array_push($containers, $somecontainers);
-
-          foreach($containers as $somecontainer)
-          {
-            $somecontents = $somecontainer->contents()
-                                          ->with('tyre')
-                                          ->get();
-            array_push($contents, $somecontents);
-          }
 
           $expenses = $consignment->expenses()
                                   ->get();
@@ -212,7 +204,8 @@ class ConsignmentController extends Controller
 
           $sold = $this->soldCount($consignment);
 
-          return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses', 'currency', 'sold'));
+
+          return view('profiles.consignment', compact('consignment', 'containers', 'expenses', 'currency', 'sold'));
     }
 
     /**
