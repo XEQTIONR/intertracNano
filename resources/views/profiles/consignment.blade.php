@@ -56,16 +56,18 @@
         </div>
         <div class="box-body">
           <div>
-            <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0 ?>
+            <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0; $total_stock = 0; $total_remain = 0 ?>
             @foreach ($sold as $key => $val)
               <table class="table table-bordered table-condensed inner-white">
                 <thead>
                 <tr>
-                  <th colspan="6">Container# {{$key}}</th>
+                  <th colspan="6" class="bg-orange-active">Container# {{$key}}</th>
                 </tr>
                 <tr>
-                  <th class="col-xs-3">Tyre</th>
-                  <th class="col-xs-1">Qty</th>
+                  <th class="col-xs-3 bg-orange-active">Tyre</th>
+                  <th class="col-xs-1 bg-orange-active">Sold</th>
+                  <th class="col-xs-1 bg-orange-active">Supply</th>
+                  <th class="col-xs-1 bg-teal-active">Remain</th>
                 </tr>
 
                 </thead>
@@ -76,17 +78,36 @@
                 <tr>
                   <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->brand}} {{$listing->size}} {{$listing->pattern}} {{$listing->lisi}}</td>
                   <td class="col-xs-1">{{$listing->total_pcs}}</td>
+                  <td class="col-xs-1">{{$listing->stock}}</td>
+                  <td class="col-xs-1 bg-teal">{{$listing->stock - $listing->total_pcs}}</td>
                 </tr>
-<!--                --><?php
-//                $total+= (floatval($listing->unit_price) * floatval($listing->qty));
+                <?php
                   $total_qty += intval($listing->total_pcs);
-//                $total_tax += floatval($listing->total_tax);
-//                $total_weight += floatval($listing->total_weight);
-//                ?>
+                  $total_stock += intval($listing->stock);
+                  $total_remain += (intval($listing->stock) - intval($listing->total_pcs));
+                ?>
+                @endforeach
+                @foreach($containers as $container)
+                  @if($container->Container_num == $key)
+                    @foreach($container->untapped as $listing)
+                      <tr>
+                        <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
+                        <td class="col-xs-1">0</td>
+                        <td class="col-xs-1">{{$listing->qty}}</td>
+                        <td class="col-xs-1 bg-teal">{{$listing->qty}}</td>
+                      </tr>
+                      <?php
+                      $total_stock += intval($listing->qty);
+                      $total_remain += intval($listing->qty);
+                      ?>
+                    @endforeach
+                  @endif
                 @endforeach
                 <tr>
                   <th class="col-xs-3 text-uppercase bg-orange-active">Total</th>
                   <th class="col-xs-1 bg-orange-active">{{$total_qty}}</th>
+                  <th class="col-xs-1 bg-orange-active">{{$total_stock}}</th>
+                  <th class="col-xs-1 bg-teal-active">{{$total_remain}}</th>
                 </tr>
                 </tbody>
               </table>
@@ -214,10 +235,6 @@
       </div>
     </div>
   </div> <!--row-->
-
-{{--</div> <!--container-->--}}
-
-  {{-- view containers section--}}
 
 @endsection
 

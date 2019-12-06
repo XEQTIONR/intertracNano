@@ -205,6 +205,35 @@ class ConsignmentController extends Controller
           $sold = $this->soldCount($consignment);
 
 
+          foreach($sold as $key => $val)
+            foreach($containers as $container)
+              if($container->Container_num == $key)
+                foreach($val as $listing)
+                  foreach($container->contents as $content)
+                    if($listing->tyre_id == $content->tyre_id ) {
+                      $content->tapped = true;
+                      if (isset($listing->stock))
+                        $listing->stock+=intval($content->qty);
+                      else
+                        $listing->stock=intval($content->qty);
+                    }
+
+
+          foreach($containers as $container){
+            $untapped = collect();
+            foreach($container->contents as $content)
+              if(!isset($content->tapped))
+                $untapped->push($content);
+
+            $container->untapped = $untapped;
+          }
+
+
+
+
+          //dd( compact(è))
+
+//          return compact('consignment', 'containers', 'expenses', 'currency', 'sold');
           return view('profiles.consignment', compact('consignment', 'containers', 'expenses', 'currency', 'sold'));
     }
 
