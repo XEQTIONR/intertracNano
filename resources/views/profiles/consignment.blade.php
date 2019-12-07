@@ -56,8 +56,9 @@
         </div>
         <div class="box-body">
           <div>
-            <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0; $total_stock = 0; $total_remain = 0 ?>
+
             @foreach ($sold as $key => $val)
+              <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0; $total_stock = 0; $total_remain = 0 ?>
               <table class="table table-bordered table-condensed inner-white">
                 <thead>
                 <tr>
