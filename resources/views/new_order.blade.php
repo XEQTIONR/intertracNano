@@ -278,13 +278,21 @@
             <div class="col-xs-12">
               <h2 v-if="!is_complete" class="page-header">
                 <span><i class="fa fa-check mr-3 text-success"></i>Confirm new Order information</span>
-                {{--<small class="pull-right">Date: 2/10/2014</small>--}}
+
               </h2>
-              <h2 v-else class="page-header">
-                <img src="/images/intertracnanologo.png" height="75" width="auto">
-                <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
+
+{{--              <img v-else class="d-block mx-auto" src="/" height="75" width="auto">--}}
+              <h2 v-if="is_complete" class="page-header">
+                <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+
               </h2>
-              <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>
+              <div v-if="is_complete" class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"><h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2></div>
+                <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> {{\Carbon\Carbon::now()->format('d/m/Y')}}</small></div>
+              </div>
+
+
             </div>
             <!-- /.col -->
           </div>
@@ -308,6 +316,7 @@
                 7/5 Ring Road, <br>
                 Shyamoli, <br>
                 Dhaka - 1207 <br>
+                <b>Ph:</b> +8801742162518, +8801815440669, +8801716427861
               </address>
             </div>
 
@@ -426,14 +435,14 @@
           <div class="col-xs-12">
             <div class="col-xs-5">
               <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
-                <h4 class="mx-auto">Authorized Signature</h4>
+                <h4 class="mx-auto">Received by</h4>
               </div>
             </div>
             <div class="col-xs-1"></div>
             <div class="col-xs-1"></div>
             <div class="col-xs-5">
               <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
-                <h4 class="mx-auto">Authorized Signature</h4>
+                <h4 class="mx-auto">For Intertrac Nano</h4>
               </div>
             </div>
           </div>

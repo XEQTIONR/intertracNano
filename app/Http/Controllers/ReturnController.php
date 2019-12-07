@@ -18,7 +18,7 @@ class ReturnController extends Controller
     public function create()
     {
         //
-      $orders = Order::with(['customer', 'orderContents.tyre','payments' => function($query){
+      $orders = Order::with(['customer:id,name,address,phone', 'orderContents.tyre','payments' => function($query){
 
         $query->orderBy('created_at', 'DESC');
       }])->get();
@@ -26,6 +26,7 @@ class ReturnController extends Controller
       foreach($orders as $order)
       {
         $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+        //$order->customer->notes =  str_replace("\n", "", nl2br($order->customer->notes));
       }
       return view('new_return', compact('orders'));
     }

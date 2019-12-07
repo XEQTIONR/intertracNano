@@ -302,13 +302,21 @@
               <div class="row">
                 <div class="col-xs-12">
                   <h2 class="page-header">
-                    <img src="/images/intertracnanologo.png" height="75" width="auto">
-                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
+                    <img class="d-block mx-auto" src="/images/intertracnanologo.png" height="75" width="auto">
+{{--                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>--}}
                   </h2>
-                  <h2 class="text-center text-uppercase mb-4"><b>Return Slip</b></h2>
                 </div>
-                <!-- /.col -->
               </div>
+              <div v-if="is_complete" class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"><h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Return Slip</b></h2></div>
+                <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ date | ddmmyyyy }}</small></div>
+              </div>
+                <!-- /.col -->
+
+
+
+
               <div class="row">
                 <div class="col-xs-12">
                   <div class="form-group">

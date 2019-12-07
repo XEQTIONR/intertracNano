@@ -256,7 +256,7 @@
                 {{--<small class="pull-right">Date: 2/10/2014</small>--}}
               </h2>
               <h2 v-else class="page-header">
-                <img src="/images/intertracnanologo.png" height="75" width="auto">
+                <img src="/images/intertracnanologocolor.bmp" height="75" width="auto">
                 <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
               </h2>
               <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>

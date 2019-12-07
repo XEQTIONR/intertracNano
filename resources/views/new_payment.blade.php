@@ -220,15 +220,20 @@
 </div>
   <div v-else key="1" class="row justify-content-center">
   <div class="col-xs-12 col-md-8">
-    <section  class="invoice" style="min-height: 800px">
+    <section  class="invoice" style="min-height: 95vh">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <img src="/images/intertracnanologo.png" height="75" width="auto">
-            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>
+            <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+{{--            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
           </h2>
-          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>
+          <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4"><h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2></div>
+            <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ payment_at | ddmmyyyy }}</small></div>
+          </div>
+{{--          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
         </div>
         <!-- /.col -->
       </div>
@@ -333,20 +338,20 @@
       </div>
 
       <div class="print-footer">
-        <div class="col-xs-12">
+{{--        <div class="col-xs-12">--}}
           <div class="col-xs-5">
             <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
-              <h4 class="mx-auto">Authorized Signature</h4>
+              <h4 class="mx-auto">Received By</h4>
             </div>
           </div>
           <div class="col-xs-1"></div>
           <div class="col-xs-1"></div>
           <div class="col-xs-5">
             <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
-              <h4 class="mx-auto">Authorized Signature</h4>
+              <h4 class="mx-auto">For Intertrac Nano</h4>
             </div>
           </div>
-        </div>
+{{--        </div>--}}
 
       </div>
     </section>
