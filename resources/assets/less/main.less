@@ -483,8 +483,44 @@ a {
 
 [v-cloak] { display:none }
 
+//@media print{
+//  .print-footer{
+//    //position: fixed;
+//    //bottom : 0;
+//    border: 1px solid black;
+//    position: fixed !important;
+//    left: 0;
+//    bottom: 0;
+//    width: 100%;
+//    //max-height: 100vh;
+//    //margin-top : 100%;
+//    //page-break-after:always;
+//  }
+//
+//
+//}
+
+@media screen{
+  .print-footer{
+    display: none;
+  }
+}
+@media print{
+.print-footer{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  //background-color: #efefef;
+  text-align: center;
+}
+}
+
+
 //HACKS
 
 .v-select{
   padding: 0;
 }
+

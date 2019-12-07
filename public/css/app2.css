@@ -4030,6 +4030,21 @@ a .fab {
 [v-cloak] {
   display: none;
 }
+@media screen {
+  .print-footer {
+    display: none;
+  }
+}
+@media print {
+  .print-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+  }
+}
 .v-select {
   padding: 0;
 }

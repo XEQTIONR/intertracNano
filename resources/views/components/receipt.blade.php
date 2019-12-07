@@ -18,7 +18,7 @@
 @section('body')
   <div class="row justify-content-center">
     <div class="col-xs-12 col-lg-8 col-xl-4">
-      <section class="invoice">
+      <section class="invoice" style="min-height: 95vh">
         <div class="row">
           <div class="col-xs-12 ">
             <h2 class="page-header">
@@ -167,6 +167,23 @@
               <i class="fa fa-print"></i> Print
             </button>
           </div>
+        </div>
+        <div class="print-footer">
+          <div class="col-xs-12">
+            <div class="col-xs-5">
+              <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+                <h4 class="mx-auto">Authorized Signature</h4>
+              </div>
+            </div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-5">
+              <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+                <h4 class="mx-auto">Authorized Signature</h4>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
