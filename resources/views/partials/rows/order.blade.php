@@ -12,7 +12,7 @@
     @if(count($order->payments) == 0)
     <button class="btn btn-xs btn-warning" onclick="location.href='orders/{{$order->Order_num}}/edit'"><b>EDIT</b></button>
     @endif
-    <button class="btn btn-xs bg-purple" onclick="location.href='orders/{{$order->Order_num}}/receipt'"><b>RECEIPT</b></button>
+    <button class="btn btn-xs bg-purple" onclick="location.href='orders/{{$order->Order_num}}/receipt'"><b>VIEW INVOICE</b></button>
   </div>
 </div>
 
