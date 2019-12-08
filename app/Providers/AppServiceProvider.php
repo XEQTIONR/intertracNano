@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
 
         //dd($remaining->toSql());
 
-        return $remaining;
+        return collect($remaining);
 
       });
     }

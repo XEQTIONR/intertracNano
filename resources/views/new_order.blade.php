@@ -482,9 +482,9 @@
 
   <script>
 
-    var stock = JSON.parse('{!! json_encode($in_stock) !!}');
+    var stock = JSON.parse('{!! $in_stock !!}');
 
-    var customers = JSON.parse('{!! json_encode($customers) !!}');
+    var customers = JSON.parse('{!! $customers !!}');
 
     var app = new Vue({
         el: '#app',
