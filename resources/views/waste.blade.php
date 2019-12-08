@@ -16,12 +16,16 @@
 @endsection
 
 @section('body')
-
+  <div class="row">
+    <div class="col-xs-12">
+    <h3 class="header"><i class="icon-tire-flat"></i> Add items that have perished.</h3>
+    </div>
+  </div>
   <div v-cloak class="row" v-for="(consignment,index) in remain">
     <div class="col-xs-12 col-lg-8" v-for="(contents, bol) in consignment">
       <div class="box">
         <div class="box-header">
-          <h3><b>BOL# </b>@{{ bol }}</h3>
+          <h3 class="box-title"><b>Bill Of Lading # </b>@{{ bol }}</h3>
         </div>
         <div class="box-body">
           <table class="table table-" v-for="(stock,container_num) in contents" style="margin-bottom: 5px !important;">
@@ -50,7 +54,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td class="col-xs-6 strong">Total</td>
+              <td class="col-xs-6 strong">Container Totals</td>
               <td class="col-xs-2 strong text-center">@{{ containerTotal(bol, container_num) }}</td>
               <td class="col-xs-2 strong text-center">@{{ containerWasteTotal(bol, container_num) }}</td>
               <td class="col-xs-2 text-red text-center strong" v-if="parseInt(containerTotal(bol, container_num))!=parseInt(containerTotalAfterReturn(bol, container_num))">@{{ containerTotalAfterReturn(bol, container_num) }}</td>
