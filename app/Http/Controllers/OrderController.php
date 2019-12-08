@@ -93,7 +93,7 @@ class OrderController extends Controller
     {
         //
         $customers = Customer::select('id', 'name', 'address', 'phone')->get();
-        $in_stock = Order::tyresRemaining();
+        $in_stock = resolve('TyresRemaining');
 
         foreach($customers as $customer)
         {
@@ -117,7 +117,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
       //$customers = Customer::all(); //remove
-      $in_stock = Order::tyresRemaining();
+      $in_stock = resolve('TyresRemaining');
       $customer =  $order->customer;
 
       //****** remove
@@ -327,7 +327,7 @@ class OrderController extends Controller
 
         $order_contents=$request->input('order_contents');
 
-        $tyre_remaining_cont=Order::tyresRemainingInContainers();
+        $tyre_remaining_cont=resolve('TyresRemainingInContainers');
 
         $new_contents=array();
 

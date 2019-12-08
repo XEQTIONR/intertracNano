@@ -85,7 +85,7 @@ Route::resource('order_contents', 'OrderContentController');
 
 Route::get('stock', function()
 {
-  $in_stock = App\Order::tyresRemaining();
+  $in_stock = resolve('TyresRemaining');
   return view('stock', compact('in_stock'));
 })->name('stock');
 
