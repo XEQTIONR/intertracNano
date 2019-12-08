@@ -36,7 +36,7 @@
               <th class="col-xs-6">Tyre</th>
               <th class="col-xs-2 text-center">in_stock</th>
               <th class="col-xs-2 text-center">add waste</th>
-              <th class="col-xs-2 text-center">updated_stock</th>
+              <th class="col-xs-2 text-center text-red">Updated Stock</th>
             </tr>
           </thead>
           <tbody>
@@ -44,16 +44,16 @@
             <tr v-for="(item, idx) in stock">
               <td class="col-xs-6"><b>(@{{ item.tyre_id }})</b> @{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>
               <td class="col-xs-2 text-center">@{{ item.in_stock }}</td>
-              <td class="col-xs-2"><input   v-model="remain[index][bol][container_num][idx].ret_amt"> </td>
-              <td class="col-xs-2">@{{ parseInt(item.in_stock) - parseInt(remain[index][bol][container_num][idx].ret_amt) }} </td>
+              <td class="col-xs-2"><input class="text-center"   v-model="remain[index][bol][container_num][idx].ret_amt"> </td>
+              <td class="col-xs-2 text-red text-center" v-if="parseInt(remain[index][bol][container_num][idx].ret_amt)!=0">@{{ parseInt(item.in_stock) - parseInt(remain[index][bol][container_num][idx].ret_amt) }} </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td class="col-xs-6 strong">Total</td>
               <td class="col-xs-2 strong text-center">@{{ containerTotal(bol, container_num) }}</td>
-              <td class="col-xs-2 strong"></td>
-              <td class="col-xs-2 strong">@{{ containerTotalAfterReturn(bol, container_num) }}</td>
+              <td class="col-xs-2 strong text-center">@{{ containerWasteTotal(bol, container_num) }}</td>
+              <td class="col-xs-2 text-red text-center strong" v-if="parseInt(containerTotal(bol, container_num))!=parseInt(containerTotalAfterReturn(bol, container_num))">@{{ containerTotalAfterReturn(bol, container_num) }}</td>
             </tr>
           </tfoot>
         </table>
@@ -187,6 +187,26 @@
                                         if(ret ==  null)
                                             ret = 0;
                                         ret += (parseInt(this.remain[i][bol][container_num][j].in_stock) - parseInt(this.remain[i][bol][container_num][j].ret_amt));
+                                    }
+                            })
+                        }
+
+                    });
+                }
+                return ret;
+            },
+            containerWasteTotal : function(bol, container_num){
+                var ret = null;
+                for(var i=0; i<this.remain.length; i++)
+                {
+                    Object.keys(this.remain[i]).forEach(function(key){
+                        if(key==bol){
+                            Object.keys(this.remain[i][bol]).forEach(function(cont){
+                                if(cont==container_num)
+                                    for(var j=0; j<this.remain[i][bol][container_num].length; j++){
+                                        if(ret ==  null)
+                                            ret = 0;
+                                        ret += parseInt(this.remain[i][bol][container_num][j].ret_amt);
                                     }
                             })
                         }
