@@ -37,7 +37,7 @@
 <body class="hold-transition skin-black sidebar-mini">
 
 
-<div class="wrapper">
+<div class="wrapper" style="overflow: hidden">
 
     <!-- Main Header -->
     <header class="main-header">
