@@ -286,7 +286,7 @@
                       <li><a href="{{ route('consignments.create')  }}"><i class="fa fa-angle-right"></i>Add a consignment</a></li>
                       <li><a href="{{  route('consignment_containers.create')  }}"><i class="fa fa-angle-right"></i>Add a container</a></li>
                       <li><a href="{{  route('consignment_expenses.create')  }}"><i class="fa fa-angle-right"></i>Add an expense</a></li>
-                      <li><a href=""><i class="fa fa-angle-right"></i>Add Waste</a></li>
+                      <li><a href="{{ route('waste.create') }}"><i class="fa fa-angle-right"></i>Add Waste</a></li>
                     </ul>
                 </li>
 

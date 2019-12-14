@@ -16,12 +16,27 @@
 @endsection
 
 @section('body')
-  <div class="row justify-content-center">
+
+  <div v-cloak class="row justify-content-center">
+    <div class="col-xs-12">
+  <transition name="custom-classes-transition"
+              enter-active-class="animated fadeIn faster"
+              leave-active-class="animated fadeOut faster"
+  >
+      <div v-if="done" id="alert" role="alert" class="alert alert-success">
+        <button type="button" aria-label="Close" data-dismiss="alert" class="close"><span aria-hidden="true">×</span></button>
+        <h4><i class="icon icon-check-circle-s fa-check-circle"></i> Done</h4>
+        Waste items added. Stock has been adjusted.
+        <a href="{{route('waste.create')}}" class="btn btn-success ml-5">Add More Returns</a>
+        <a href="{{route('stock')}}" class="btn btn-success">View Current Stock</a>
+      </div>
+  </transition>
+    </div>
+  </div>
+  <div v-if="!done" class="row justify-content-center">
     <div class="col-xs-12 col-sm-11 col-lg-8">
-      <div class="callout callout-danger">
-{{--        <div class="box-header">--}}
+      <div class="callout callout-info">
           <h4 class="mt-5"><i class="icon-tire-flat mr-2" style="position: relative; top: 1px"></i> Add items that have perished.</h4>
-{{--        </div>--}}
       </div>
     </div>
   </div>
@@ -69,65 +84,13 @@
         </div>
       </div>
     </div>
-
-
-
-
-
   </div>
-{{--  <div v-if="step==1" v-cloak class="row justify-content-center" v-for="(consignment,index) in filtered">--}}
-{{--    <div class="col-xs-11 col-lg-8" v-for="(contents, bol) in consignment">--}}
-{{--      <div class="box">--}}
-{{--        <div class="box-header">--}}
-{{--          <h3 class="box-title"><b>Bill Of Lading # </b>@{{ bol }}</h3>--}}
-{{--        </div>--}}
-{{--        <div class="box-body">--}}
-{{--          <table class="table table-" v-for="(stock,container_num) in contents" style="margin-bottom: 5px !important;">--}}
-{{--            <thead>--}}
-{{--            <tr>--}}
-{{--              <th colspan="4">--}}
-{{--                <i class="icon-container-storage-r fa-container-storage mr-3" style="position: relative; top: 3px; font-size : 1.5rem"></i>--}}
-{{--                # : @{{ container_num }}--}}
-{{--              </th>--}}
-{{--            </tr>--}}
-{{--            <tr>--}}
-{{--              <th class="col-xs-6">Tyre</th>--}}
-{{--              <th class="col-xs-2 text-center">in_stock</th>--}}
-{{--              <th class="col-xs-2 text-center">add waste</th>--}}
-{{--              <th class="col-xs-2 text-center text-red">Updated Stock</th>--}}
-{{--            </tr>--}}
-{{--            </thead>--}}
-{{--            <tbody>--}}
 
-{{--            <tr v-for="(item, idx) in stock">--}}
-{{--              <td class="col-xs-6"><b>(@{{ item.tyre_id }})</b> @{{ item.tyre.brand }} @{{ item.tyre.size }} @{{ item.tyre.pattern }} @{{ item.tyre.lisi }}</td>--}}
-{{--              <td class="col-xs-2 text-center">@{{ item.in_stock }}</td>--}}
-{{--              <td class="col-xs-2"><input class="text-center"   v-model="remain[index][bol][container_num][idx].ret_amt"> </td>--}}
-{{--              <td class="col-xs-2 text-red text-center" v-if="parseInt(remain[index][bol][container_num][idx].ret_amt)!=0">@{{ parseInt(item.in_stock) - parseInt(remain[index][bol][container_num][idx].ret_amt) }} </td>--}}
-{{--            </tr>--}}
-{{--            </tbody>--}}
-{{--            <tfoot>--}}
-{{--            <tr>--}}
-{{--              <td class="col-xs-6 strong">Container Totals</td>--}}
-{{--              <td class="col-xs-2 strong text-center"></td>--}}
-{{--              <td class="col-xs-2 strong text-center"></td>--}}
-{{--              <td class="col-xs-2 text-red text-center strong"></td>--}}
-{{--            </tr>--}}
-{{--            </tfoot>--}}
-{{--          </table>--}}
-{{--        </div>--}}
-{{--      </div>--}}
-{{--    </div>--}}
-
-
-
-
-
-{{--  </div>--}}
-  <div v-cloak class="row justify-content-center" v-if="change">
+  <div v-cloak class="row justify-content-center" v-if="!done && change">
     <div class="col-xs-12 col-sm-11 col-lg-8">
-      <button v-if="step == 1" class="btn btn-primary" @click="back()"><i class="fa fa-chevron-left mr-2"></i>Back  </button>
-      <button v-else class="btn btn-primary pull-right" @click="forward()">Continue <i class="fa fa-chevron-right ml-1"></i> </button>
+      <button v-if="step == 1" class="btn btn-default" @click="back()"><i class="fa fa-chevron-left mr-2"></i>Back  </button>
+      <button v-if="step == 1" class="btn btn-success pull-right" @click="submit()" ><i class="fa fa-check mr-1"></i> Confirm </button>
+      <button v-else class="btn btn-info pull-right" @click="forward()">Continue <i class="fa fa-chevron-right ml-1"></i> </button>
     </div>
   </div>
 
@@ -158,7 +121,8 @@
             return {
                 remain: remain,
                 change: false,
-                step: 0
+                step: 0,
+                done: false
             }
         },
 
@@ -222,6 +186,23 @@
 
             back : function(){
                 app.step = 0;
+            },
+
+            submit : function(){
+              //console.log("CONFIRM CLICKED");
+
+              $.post("{{route('waste.store')}}",
+                  {
+                      "_token" : "{{csrf_token()}}",
+                      data : this.remain
+                  },
+                  function(data){
+                      console.log('data');
+                      console.log(data);
+                      app.done=true;
+                      window.scrollTo(0,0);
+                  });
+
             },
 
             containerTotal : function(bol, container_num){

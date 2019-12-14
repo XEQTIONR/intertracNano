@@ -109,14 +109,8 @@ Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalan
 Route::get('reports/profit', 'ReportController@showProfitReport');
 
 
-Route::get('test', function(){
+Route::resource('waste', 'WasteController');
 
-  $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find(74);
-
-  return $order;
-  //dd($order);
-
-});
 
 Route::get('test2', 'OrderController@btest');
 Route::get('test3', 'OrderController@ctest');
