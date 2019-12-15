@@ -37,7 +37,7 @@
 <body class="hold-transition skin-black sidebar-mini">
 
 
-<div class="wrapper">
+<div class="wrapper" style="overflow: hidden">
 
     <!-- Main Header -->
     <header class="main-header">
@@ -271,7 +271,7 @@
                 </li>
 
               <li class="treeview
-                  @if(stristr(Route::currentRouteName(), 'consignments'))
+                  @if(stristr(Route::currentRouteName(), 'consignment'))
                     active
                   @endif
               ">
@@ -286,11 +286,12 @@
                       <li><a href="{{ route('consignments.create')  }}"><i class="fa fa-angle-right"></i>Add a consignment</a></li>
                       <li><a href="{{  route('consignment_containers.create')  }}"><i class="fa fa-angle-right"></i>Add a container</a></li>
                       <li><a href="{{  route('consignment_expenses.create')  }}"><i class="fa fa-angle-right"></i>Add an expense</a></li>
+                      <li><a href="{{ route('waste.create') }}"><i class="fa fa-angle-right"></i>Add Waste</a></li>
                     </ul>
                 </li>
 
                 <li class="treeview
-                    @if(stristr(Route::currentRouteName(), 'orders'))
+                    @if(stristr(Route::currentRouteName(), 'orders') || stristr(Route::currentRouteName(), 'returns'))
                       active
                     @endif
                 ">
@@ -548,8 +549,17 @@
     observer.observe(target, { attributes : true });
 
     var table;
+    $(".date").text(function(index, text){
 
-     $(document).ready(function() {
+        var temp = text.split(" ");
+
+        if(temp.length == 2)
+            return temp[0].split('-').reverse().join('/')+" "+temp[1];
+        return text.split('-').reverse().join('/');
+
+    });
+
+    $(document).ready(function() {
      table =   $('#table_id').DataTable();
         $(".date").inputmask( "dd/mm/yyyy");
     } );

@@ -32,11 +32,28 @@
       </transition>
     </div>
   </div>
+  <div v-cloak class="modal modal-danger fade in" id="modal-error">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"> <i class="fa fa-times-circle mr-2"></i> Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>@{{ error_message }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
   <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
-                 enter-active-class="animated fadeInRight fast"
-                 leave-active-class="animated fadeOutLeft fast"
+                 :enter-active-class="toggle? 'animated fadeInRight' : 'animated fadeInLeft'"
+                 :leave-active-class="toggle? 'animated fadeOutLeft' : 'animated fadeOutRight'"
     >
       <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
         <div class="box box-info">
@@ -71,6 +88,10 @@
                       <v-select id="customer" class="form-control" placeholder="Select a customer"
                                 v-model="customer" :options="customers" label="name"
                       >
+                        <template slot="option" slot-scope="option">
+                          <b>@{{ option.name }}</b> -- @{{ option.address_single_line }}
+
+                        </template>
                       </v-select>
                     </div>
                   </div>
@@ -251,19 +272,27 @@
           </div>
         </div>
       </div>
-      <div v-if="toggle==true" :key="true" class="col-xs-12 col-md-10 col-lg-8">
-        <section class="invoice">
+      <div v-if="toggle==true" :key="true" class="col-xs-12 col-lg-8 col-xl-4">
+        <section class="invoice" style="min-height: 95vh">
           <div class="row">
             <div class="col-xs-12">
               <h2 v-if="!is_complete" class="page-header">
                 <span><i class="fa fa-check mr-3 text-success"></i>Confirm new Order information</span>
-                {{--<small class="pull-right">Date: 2/10/2014</small>--}}
+
               </h2>
-              <h2 v-else class="page-header">
-                <img src="/images/intertracnanologo.png" height="75" width="auto">
-                <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
+
+{{--              <img v-else class="d-block mx-auto" src="/" height="75" width="auto">--}}
+              <h2 v-if="is_complete" class="page-header">
+                <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+
               </h2>
-              <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>
+              <div v-if="is_complete" class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"><h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2></div>
+                <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> {{\Carbon\Carbon::now()->format('d/m/Y')}}</small></div>
+              </div>
+
+
             </div>
             <!-- /.col -->
           </div>
@@ -287,6 +316,7 @@
                 7/5 Ring Road, <br>
                 Shyamoli, <br>
                 Dhaka - 1207 <br>
+                <b>Ph:</b> +8801742162518, +8801815440669, +8801716427861
               </address>
             </div>
 
@@ -306,7 +336,7 @@
                   <th>Tyre</th>
                   <th>Qty</th>
                   <th>Unit Price</th>
-                  <th>Sub-total</th>
+                  <th class="text-right pr-5">Sub-total</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -315,14 +345,14 @@
                   <td><b>(@{{ record.tyre_id }})</b> @{{ record.brand }} @{{ record.size }} @{{ record.pattern }}  @{{ record.lisi }}</td>
                   <td>@{{ record.qty }}</td>
                   <td>৳ @{{ record.unit_price | currency }}</td>
-                  <td>৳ @{{ record.qty*record.unit_price | currency }}</td>
+                  <td class="text-right pr-5">৳ @{{ record.qty*record.unit_price | currency }}</td>
                 </tr>
                 <tr class="warning">
                   <td></td>
                   <td><b>Total</b></td>
                   <td><b>@{{ totalQty }}</b></td>
                   <td></td>
-                  <td>৳ @{{ subTotal | currency }}</td>
+                  <td class="text-right pr-5">৳ @{{ subTotal | currency }}</td>
                 </tr>
 
                 </tbody>
@@ -345,25 +375,37 @@
                 <table class="table">
                   <tbody>
                     <tr>
-                      <th style="width: 60%;" colspan="2">Subtotal:</th>
-                      <td>৳ @{{ subTotal | currency }}</td>
+                      <th style="width: 60%;" colspan="2">Total</th>
+                      <td class="text-right">৳ @{{ subTotal | currency }}</td>
                       <td></td>
                     </tr>
-                    <tr>
-                      <th>Tax</th>
+                    <tr :class="{'no-print' : parseFloat(total_tax_amount) == 0.0}">
+                      <th>Tax
+                        <br>
+                        <small v-if="tax_percent>0">(@{{  tax_percent  }} %)</small>
+                        <small v-if="tax_amount>0" class="ml-2">
+                          <i class="fa fa-plus mr-2"></i> ৳ @{{  tax_amount  }}
+                        </small>
+                      </th>
                       <td><i class="fa fa-plus mr-2"></i></td>
-                      <td>৳ @{{ total_tax_amount | currency }}</td>
+                      <td class="text-right">৳ @{{ total_tax_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
-                      <th>Discount</th>
+                      <th>Discount
+                        <br>
+                          <small v-if="discount_percent>0">(-@{{  discount_percent  }} %)</small>
+                          <small v-if="discount_amount>0" class="ml-2">
+                            <i class="fa fa-minus mr-2"></i> ৳ @{{  discount_amount  }}
+                          </small>
+                      </th>
                       <td><i class="fa fa-minus mr-2"></i></td>
-                      <td>৳ @{{ total_discount_amount | currency }}</td>
+                      <td class="text-right">৳ @{{ total_discount_amount | currency }}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <th colspan="2" style="border-top: 1px solid #bbb;">Grand Total:</th>
-                      <td style="border-top: 1px solid #bbb;"><b>৳ @{{ grandTotal | currency }}</b></td>
+                      <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ @{{ grandTotal | currency }}</b></td>
                       <td></td>
                     </tr>
                   </tbody>
@@ -382,20 +424,38 @@
 
             </div>
           </div>
-          <div v-else class="row no-print">
+          <div v-if="is_complete" class="row no-print">
             <div class="col-xs-12">
               <button onclick="window.print()" class="btn btn-default">
                 <i class="fa fa-print"></i> Print
               </button>
             </div>
           </div>
+          <div v-if="is_complete" class="print-footer">
+          <div class="col-xs-12">
+            <div class="col-xs-5">
+              <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+                <h4 class="mx-auto">Received by</h4>
+              </div>
+            </div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-5">
+              <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+                <h4 class="mx-auto">For Intertrac Nano</h4>
+              </div>
+            </div>
+          </div>
+
+          </div>
+
         </section>
       </div>
     </transition>
     <transition  name="custom-classes-transition"
                  mode="out-in"
-                 enter-active-class="animated fadeInRight fast"
-                 leave-active-class="animated fadeOutRight fast"
+                 enter-active-class="animated fadeIn delay-2s"
+                 leave-active-class="animated fadeOut"
     >
     <div v-show="toggle==false" class="col-xs-12 col-md-5">
       <div class="box box-default">
@@ -422,9 +482,9 @@
 
   <script>
 
-    var stock = JSON.parse('{!! json_encode($in_stock) !!}');
+    var stock = JSON.parse('{!! $in_stock !!}');
 
-    var customers = JSON.parse('{!! json_encode($customers) !!}');
+    var customers = JSON.parse('{!! $customers !!}');
 
     var app = new Vue({
         el: '#app',
@@ -446,6 +506,8 @@
             date : null,
             past : 0,
             past_date : null,
+            error_message : null,
+            random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch: {
@@ -713,16 +775,26 @@
                         "tax_amount" : parseFloat(this.tax_amount),
 
                         "past" : this.past,
-                        "past_date" : this.past_date
+                        "past_date" : this.past_date,
+                        "random_string" : this.random_string
                     },
                     function(data){
 
                       console.log('return handler');
                       console.log(data);
-                      if(data.status == 'success')
+                      if(data.status == 'success') {
                           app.is_complete = true;
                           app.order_num = data.order_num;
                           app.date = data.date;
+                          window.scrollTo(0,0);
+                      }
+                      else{
+                          if(data.status == 'failed' && data.message)
+                          {
+                              app.error_message = data.message;
+                              $('#modal-error').modal('show');
+                          }
+                      }
 
                     });
             },
@@ -841,6 +913,8 @@
             //     .on('change', function(){
             //
             //     })
+            $('.modal').modal();
+            $('.modal').modal('hide');
         }
     })
 

@@ -174,20 +174,12 @@ class ConsignmentController extends Controller
      */
     public function show(Consignment $consignment)
     {
-        $contents = array();
 
 
           $containers = $consignment->containers()
-                                      ->get();
+                                    ->with('contents.tyre')
+                                    ->get();
           //array_push($containers, $somecontainers);
-
-          foreach($containers as $somecontainer)
-          {
-            $somecontents = $somecontainer->contents()
-                                          ->with('tyre')
-                                          ->get();
-            array_push($contents, $somecontents);
-          }
 
           $expenses = $consignment->expenses()
                                   ->get();
@@ -210,7 +202,39 @@ class ConsignmentController extends Controller
 
           $currency = $consignment->letterOfCredit->currency_code;
 
-        return view('profiles.consignment', compact('consignment', 'containers','contents', 'expenses', 'currency'));
+          $sold = $this->soldCount($consignment);
+
+
+          foreach($sold as $key => $val)
+            foreach($containers as $container)
+              if($container->Container_num == $key)
+                foreach($val as $listing)
+                  foreach($container->contents as $content)
+                    if($listing->tyre_id == $content->tyre_id ) {
+                      $content->tapped = true;
+                      if (isset($listing->stock))
+                        $listing->stock+=intval($content->qty);
+                      else
+                        $listing->stock=intval($content->qty);
+                    }
+
+
+          foreach($containers as $container){
+            $untapped = collect();
+            foreach($container->contents as $content)
+              if(!isset($content->tapped))
+                $untapped->push($content);
+
+            $container->untapped = $untapped;
+          }
+
+
+
+
+          //dd( compact(è))
+
+//          return compact('consignment', 'containers', 'expenses', 'currency', 'sold');
+          return view('profiles.consignment', compact('consignment', 'containers', 'expenses', 'currency', 'sold'));
     }
 
     /**
@@ -245,5 +269,18 @@ class ConsignmentController extends Controller
     public function destroy(Consignment $consignment)
     {
         //
+    }
+
+    public function soldCount(Consignment $consignment){
+
+      $ret = DB::table('order_contents')
+              ->where('bol', $consignment->BOL)
+              ->join('tyres', 'tyres.tyre_id','=','order_contents.tyre_id')
+              ->select('tyres.tyre_id','brand','size','pattern','lisi' ,'container_num', 'bol', DB::raw('SUM(qty) AS total_pcs'))
+              ->groupBy('tyres.tyre_id', 'container_num', 'bol')
+              ->get();
+
+      return $ret->groupBy('container_num');
+      
     }
 }

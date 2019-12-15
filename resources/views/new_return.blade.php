@@ -25,9 +25,17 @@
           <h4 class="modal-title">Confirm returns</h4>
         </div>
         <div class="modal-body" v-if="order">
-          <p> Confirm returns of <b>@{{ returnQty }}</b> tyres for a refund of ৳ @{{ grandTotalReturn | currency }}.
-            The new bill adjusted is ৳ @{{ grandTotal - subTotalReturn  | currency }}. Click continue if this information
-            is correct.
+          <p> Confirm returns of <span class="lead"><b>@{{ returnQty }}</b></span> tyres for a refund of <span class="lead"><b>৳ @{{ grandTotalReturn | currency }}</b></span>.
+          </p>
+          <p>
+            The new bill adjusted is <span class="lead"><b>৳ @{{ grandTotal - grandTotalReturn  | currency }}</b></span>.
+          </p>
+
+          <p v-if="credits > 0">
+            PLEASE RETURN <span class="lead"><b>৳ @{{ credits | currency }}</b></span> or offer the amount as credit on the next order.
+          </p>
+          <p>
+            Click continue if this information is correct.
           </p>
         </div>
         <div class="modal-footer">
@@ -80,7 +88,7 @@
                     <div class="form-group">
                       <label for="inputOrder">Order</label>
                       <v-select id="order" class="form-control" placeholder="Select an order" name="inputOrder"
-                                v-model="order" :options="unpaidOrders" label="Order_num"
+                                v-model="order" :options="orders" label="Order_num"
                       >
                       </v-select>
                     </div>
@@ -152,7 +160,7 @@
                         </th>
 
 
-                        <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-minus mr-3"></i>৳ @{{ discountTotal - discountReturnPercentAmount | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
@@ -177,14 +185,14 @@
                             ৳ @{{ order.tax_amount | currency }}
                           </div>
                         </th>
-                        <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal | currency }}</th>
+                        <th class="text-right"><i class="fa fa-plus mr-3"></i>৳ @{{ taxTotal - taxReturnPercentAmount  | currency }}</th>
                       </tr>
                       <tr>
                         <th></th>
                         <th class="text-uppercase">Grand Total</th>
                         <th></th>
                         <th></th>
-                        <th class="text-right">৳ @{{ grandTotal - subTotalReturn  | currency }}</th>
+                        <th class="text-right">৳ @{{ grandTotal - grandTotalReturn  | currency }}</th>
                       </tr>
                       </tbody>
                     </table>
@@ -252,16 +260,18 @@
                         <th class="col-xs-1">Transaction Id</th>
                         <th class="col-xs-3">Payment Date</th>
                         <th class="col-xs-2">Amount Paid</th>
-                        <th class="col-xs-4"></th>
+                        <th class="col-xs-2">Refund amount</th>
+                        <th class="col-xs-2"></th>
                         <th class="col-xs-2 text-right">Balance</th>
                       </tr>
                       </thead>
                       <tbody v-if="order && order.payments">
-                      <tr  v-for="(payment, index) in order.payments">
+                      <tr  v-for="(payment, index) in order.payments" :class="[{'danger' : payment.refund_amount>0},{'strikethrough-red' : payment.refund_amount==payment.payment_amount}]">
                         <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                         <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                         <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
-                        <td class="col-xs-4"></td>
+                        <td class="col-xs-2">৳ @{{ parseFloat(payment.refund_amount) | currency }}</td>
+                        <td class="col-xs-2"></td>
                         <td class="col-xs-2 text-right">৳ @{{ runningTotal(index) | currency }}</td>
                       </tr>
                       </tbody>
@@ -292,13 +302,21 @@
               <div class="row">
                 <div class="col-xs-12">
                   <h2 class="page-header">
-                    <img src="/images/intertracnanologo.png" height="75" width="auto">
-                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
+                    <img class="d-block mx-auto" src="/images/intertracnanologo.png" height="75" width="auto">
+{{--                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>--}}
                   </h2>
-                  <h2 class="text-center text-uppercase mb-4"><b>Return Slip</b></h2>
                 </div>
-                <!-- /.col -->
               </div>
+              <div v-if="is_complete" class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4"><h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Return Slip</b></h2></div>
+                <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ date | ddmmyyyy }}</small></div>
+              </div>
+                <!-- /.col -->
+
+
+
+
               <div class="row">
                 <div class="col-xs-12">
                   <div class="form-group">
@@ -573,7 +591,7 @@
 
                       value.payments.forEach(function(value){
 
-                          paymentsTotal+= parseFloat(value.payment_amount);
+                          paymentsTotal+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount));
                       });
 
                       value.order_contents.forEach(function(value){
@@ -629,7 +647,7 @@
 
                   if(app.order)
                   {
-                      discount_percentage_amount = (app.subTotal - app.subTotalReturn) * parseFloat(app.order.discount_percent)/100.0;
+                      discount_percentage_amount = app.subTotal * parseFloat(app.order.discount_percent)/100.0;
                       discount_amount_amount = parseFloat(app.order.discount_amount);
                   }
 
@@ -659,7 +677,7 @@
 
                   if(app.order)
                   {
-                      tax_percentage_amount = (app.subTotal- app.subTotalReturn) * parseFloat(app.order.tax_percentage)/100.0;
+                      tax_percentage_amount = app.subTotal * parseFloat(app.order.tax_percentage)/100.0;
                       tax_amount_amount = parseFloat(app.order.tax_amount);
                   }
 
@@ -690,6 +708,12 @@
                   return this.subTotalReturn - this.discountReturnPercentAmount + this.taxReturnPercentAmount;
               },
 
+              credits : function(){
+
+                  var val = (this.paymentsTotal - (this.grandTotal-this.grandTotalReturn));
+                  return val>0 ? val :  0 ;
+              },
+
               amountToWords : function(){
 
                   return this.numberToWords.toWords(parseFloat(this.amount));
@@ -707,7 +731,19 @@
                   }
 
                   return count;
-              }
+              },
+              paymentsTotal : function(){
+
+                  // index-th order
+                  var total = 0;
+
+                  if(this.order)
+                      this.order.payments.forEach(function(value){
+
+                          total+= (parseFloat(value.payment_amount)-parseFloat(value.refund_amount));
+                      });
+                  return total;
+              },
 
 
           },
@@ -717,11 +753,11 @@
               // for each payment alread
               runningTotal : function(index){
 
-                  var total =  this.grandTotal - this.subTotalReturn; // tax and discount already mutates in grandTotal
+                  var total =  this.grandTotal - this.grandTotalReturn; // tax and discount already mutates in grandTotal
 
                   for(var i=0; i<=index; i++)
                   {
-                      total -= parseFloat(this.order.payments[i].payment_amount);
+                      total -= (parseFloat(this.order.payments[i].payment_amount) - parseFloat(this.order.payments[i].refund_amount));
                   }
 
                   return total;
@@ -731,27 +767,15 @@
                   $('#modal-warning').modal('show');
               },
 
-              paymentsTotal : function(){
-
-                  // index-th order
-                  var total = 0;
-
-                  if(this.order)
-                      this.order.payments.forEach(function(value){
-
-                          total+= parseFloat(value.payment_amount);
-                      });
-                  return total;
-              },
-
               confirm : function(){
 
                   var params = {
 
                       "_token" : "{{csrf_token()}}",
                       order : app.order.Order_num,
-                      returns : app.filtered
-                  }
+                      returns : app.filtered,
+                      credits : app.credits
+                  };
 
                   if(this.order.tax_amount != this.old_tax_amount)
                       params.tax = this.order.tax_amount;

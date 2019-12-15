@@ -22,7 +22,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-          <h4 class="modal-title">Confirm payment</h4>
+          <h4 class="modal-title"><i class="fa fa-warning mr-2"></i> Confirm payment</h4>
         </div>
         <div class="modal-body">
           <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
@@ -30,6 +30,23 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
           <button @click="pay()" data-dismiss="modal" type="button" class="btn btn-outline">Confirm payment</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div v-cloak class="modal modal-danger fade in" id="modal-error">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"> <i class="fa fa-times-circle mr-2"></i> Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>@{{ error_message }}</p>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -203,15 +220,20 @@
 </div>
   <div v-else key="1" class="row justify-content-center">
   <div class="col-xs-12 col-md-8">
-    <section  class="invoice">
+    <section  class="invoice" style="min-height: 95vh">
       <!-- title row -->
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <img src="/images/intertracnanologo.png" height="75" width="auto">
-            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>
+            <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+{{--            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
           </h2>
-          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>
+          <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4"><h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2></div>
+            <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ payment_at | ddmmyyyy }}</small></div>
+          </div>
+{{--          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
         </div>
         <!-- /.col -->
       </div>
@@ -303,7 +325,7 @@
       <!-- /.row -->
 
       <!-- this row will not appear when printing -->
-      <div class="row no-print">
+      <div class="no-print row mx-auto" style="position: absolute; bottom: 10; left: 0; width: 100%">
         <div class="col-xs-12">
           <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print"></i> Print</button>
           <a href="{{ route('payments.create') }}" type="button" class="btn btn-default">
@@ -313,6 +335,24 @@
             {{--<i class="fa fa-download"></i> Generate PDF--}}
           {{--</button>--}}
         </div>
+      </div>
+
+      <div class="print-footer">
+{{--        <div class="col-xs-12">--}}
+          <div class="col-xs-5">
+            <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+              <h4 class="mx-auto">Received By</h4>
+            </div>
+          </div>
+          <div class="col-xs-1"></div>
+          <div class="col-xs-1"></div>
+          <div class="col-xs-5">
+            <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
+              <h4 class="mx-auto">For Intertrac Nano</h4>
+            </div>
+          </div>
+{{--        </div>--}}
+
       </div>
     </section>
   </div>
@@ -338,7 +378,9 @@
             numberToWords : numberToWords,
             paid : false,
             transaction_id : null,
-            payment_at : null
+            payment_at : null,
+            error_message : null,
+            random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch:{
@@ -529,7 +571,8 @@
                     {
                         "_token" : "{{csrf_token()}}",
                         amount : parseFloat(app.amount),
-                        order : app.order.Order_num
+                        order : app.order.Order_num,
+                        random : app.random_string
                     },
 
                     function(data)
@@ -541,6 +584,14 @@
                             app.transaction_id = data.payment.transaction_id;
                             app.payment_at = data.payment.created_at;
                             //app.amount = 0;
+                        }
+                        else{
+                            if(data.status == 'failed' && data.message)
+                            {
+                                app.error_message = data.message;
+                                $('#modal-error').modal('show');
+                                //console.log(data.message);
+                            }
                         }
 
                     });
@@ -585,8 +636,8 @@
         },
 
         mounted: function(){
-            $('#modal-warning').modal();
-            $('#modal-warning').modal('hide');
+            $('.modal').modal();
+            $('.modal').modal('hide');
         }
     })
   </script>

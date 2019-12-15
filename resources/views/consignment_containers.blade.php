@@ -20,7 +20,7 @@
 @section('body')
   <div class="box box-purple">
     <div class="box-body">
-      <table id="table_id" class="table table-hover">
+      <table id="table_id" class="table table-hover table-bordered">
         <thead>
         <tr>
           <th>Container#</th>
@@ -67,9 +67,9 @@
           console.log(rowData);
           var div = $('<div/>')
               .addClass( 'loading' )
-              .text( 'Loading...' );
+              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-pulse"></i>' );
           $.ajax( {
-              url: '/api/consignment_container',
+              url: '/consignment_containers/'+rowData[1]+'/'+rowData[0],
               data: {
                   container : rowData[0],
                   consignment : rowData[1]

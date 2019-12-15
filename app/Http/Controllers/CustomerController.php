@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 class CustomerController extends Controller
 {
@@ -89,24 +90,25 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //
-        $payments = collect();  //Empty collection
-        $orders = $customer->orders()
-                          ->get();
+      $query = OrderController::QUERY. ' WHERE customer_id='.$customer->id;
 
+      $ret =  DB::select($query);
 
+      $payments = DB::select('SELECT P.*
+                               FROM payments P INNER JOIN orders O ON P.Order_num = O.Order_num
+                                                INNER JOIN customers C ON O.customer_id = C.id 
+                               WHERE O.customer_id='.$customer->id.'
+                               ORDER BY P.created_at DESC
+                               LIMIT 10');
+//
+        return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
+    }
 
-        foreach ($orders as $order)
-        {
-          $some_payments = $order->payment()->get();
-          //$payments = $payments->union($some_payments); //WHY DOES THIS NOT WORK??
+    public function apiShow(Request $request){
 
-          foreach ($some_payments as $payment)
-          {
-            $payments->push($payment);
-          }
-        }
-
-        return view('profiles.customer', compact('customer', 'orders', 'payments'));
+      $id = $request->customer;
+      $customer = Customer::find($id);
+      return $customer;
     }
 
     /**
@@ -141,6 +143,22 @@ class CustomerController extends Controller
 
         return redirect ("/customers/".$customer->id);
     }
+
+  public function apiUpdate(Request $request)
+  {
+    //
+    $customer = Customer::find($request->customer);
+    $customer->name = $request->name;
+    $customer->address = $request->address;
+    $customer->phone = $request->phone;
+    $customer->notes = $request->notes;
+
+    $customer->save();
+
+
+    return array('status' => 'success');
+    //return redirect ("/customers/".$customer->id);
+  }
 
     /**
      * Remove the specified resource from storage.

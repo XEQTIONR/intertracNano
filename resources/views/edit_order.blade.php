@@ -32,6 +32,22 @@
       </transition>
     </div>
   </div>
+  <div v-cloak class="modal modal-danger fade in" id="modal-error">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title"> <i class="fa fa-times-circle mr-2"></i> Error</h4>
+        </div>
+        <div class="modal-body">
+          <p>@{{ error_message }}</p>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
   <div v-cloak class="row justify-content-center">
     <transition  name="custom-classes-transition"
                  mode="out-in"
@@ -41,7 +57,7 @@
       <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
         <div class="box box-info">
           <div class="box-header">
-            <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Enter Order # {{$order->Order_num}}</h3>
+            <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Edit Order # {{$order->Order_num}}</h3>
           </div>
           <div class="box-body">
             <div class="form">
@@ -236,11 +252,11 @@
           <div class="row">
             <div class="col-xs-12">
               <h2 v-if="!is_complete" class="page-header">
-                <span><i class="fa fa-check mr-3 text-success"></i>Confirm new Order information</span>
+                <span><i class="fa fa-check mr-3 text-success"></i>Confirm new information for Order # {{$order->Order_num}}</span>
                 {{--<small class="pull-right">Date: 2/10/2014</small>--}}
               </h2>
               <h2 v-else class="page-header">
-                <img src="/images/intertracnanologo.png" height="75" width="auto">
+                <img src="/images/intertracnanologocolor.bmp" height="75" width="auto">
                 <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
               </h2>
               <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>
@@ -425,7 +441,9 @@
               is_complete : false,
 
               order_num : null,
-              date : null
+              date : null,
+              error_message : null,
+              random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
           },
 
           watch: {
@@ -674,6 +692,7 @@
                           "discount_amount" : parseFloat(this.discount_amount),
                           "tax_percent" : parseFloat(this.tax_percent),
                           "tax_amount" : parseFloat(this.tax_amount),
+                          "random_string" : this.random_string,
                           "edit" : true
                       },
                       function(data){
@@ -682,9 +701,18 @@
                           console.log('return handler');
                           console.log(data);
                           if(data.status == 'success')
+                          {
                               app.is_complete = true;
-                          app.order_num = data.order_num;
-                          app.date = data.date;
+                              app.order_num = data.order_num;
+                              app.date = data.date;
+                          }
+                          else {
+                              if (data.status == 'failed' && data.message) {
+                                  app.error_message = data.message;
+                                  $('#modal-error').modal('show');
+                              }
+                          }
+
 
                       });
               },
@@ -808,6 +836,9 @@
                   //this.testMethod(order_contents[j].i);
                   j++;
               }
+
+              $('.modal').modal();
+              $('.modal').modal('hide');
           }
       })
 

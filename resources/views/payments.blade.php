@@ -37,12 +37,9 @@
           console.log(rowData);
           var div = $('<div/>')
               .addClass( 'loading' )
-              .text( 'Loading...' );
+              .html( '<i style="margin-left: 50%; font-size: 2rem" class="fa fa-spinner fa-pulse"></i>' );
           $.ajax( {
-              url: '/api/order',
-              data: {
-                  order : rowData[1]
-              },
+              url: '/orders/'+rowData[1],
               dataType: 'text',
               success: function ( view ) {
                   console.log('successed');
@@ -69,6 +66,9 @@
       }
 
       $(document).ready(function() {
+
+          table.order([0, 'desc'])
+            .draw();
 
           $('#table_id tbody').on('click', 'tr', function () {
               var tr = $(this).closest('tr');

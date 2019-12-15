@@ -17,10 +17,8 @@ use Illuminate\Http\Request;
 
   Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
 
-
-  Route::get('order', 'OrderController@detailsRow');
-
-  Route::get('consignment_container', 'ConsignmentContainerController@detailsRow');
+  Route::post('/customers', 'CustomerController@apiShow')->name('customers.apiShow');
+  Route::post('/customer-update', 'CustomerController@apiUpdate')->name('customers.apiUpdate');
 
 //});
 

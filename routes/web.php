@@ -51,6 +51,7 @@ Route::resource('customers','CustomerController');
 Route::resource('consignment_expenses','ConsignmentExpenseController');
 
 Route::resource('consignment_containers','ConsignmentContainerController');
+Route::get('/consignment_containers/{consignment}/{container}', 'ConsignmentContainerController@show');
 
 Route::resource('performa_invoices','PerformaInvoiceController');
 
@@ -60,11 +61,11 @@ Route::get('/orders/json/{order_num}', 'OrderController@showJSON');
 
 Route::resource('orders','OrderController');
 
+Route::get('orders/{order}/receipt', 'OrderController@viewReceipt')->name('orders.receipt');;
 
 
-Route::get('returns', 'ReturnController@create')->name('returns.create');
 
-Route::post('returns', 'ReturnController@returns')->name('returns.store');
+Route::resource('returns', 'ReturnController');
 
 
 Route::resource('payments','PaymentController');
@@ -84,7 +85,7 @@ Route::resource('order_contents', 'OrderContentController');
 
 Route::get('stock', function()
 {
-  $in_stock = App\Order::tyresRemaining();
+  $in_stock = resolve('TyresRemaining');
   return view('stock', compact('in_stock'));
 })->name('stock');
 
@@ -108,14 +109,8 @@ Route::get('reports/outstanding_balance', 'ReportController@showOutstandingBalan
 Route::get('reports/profit', 'ReportController@showProfitReport');
 
 
-Route::get('test', function(){
+Route::resource('waste', 'WasteController');
 
-  $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find(74);
-
-  return $order;
-  //dd($order);
-
-});
 
 Route::get('test2', 'OrderController@btest');
 Route::get('test3', 'OrderController@ctest');

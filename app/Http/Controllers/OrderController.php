@@ -19,10 +19,26 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    const QUERY =
+     'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
+      FROM  (SELECT O.*, D.total, C.name 
+            FROM (SELECT B.*, SUM(B.multiply) as total 
+                  FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
+                        FROM order_contents C) AS B 
+                  GROUP BY B.Order_num) D, orders O, customers C 
+            WHERE D.Order_num = O.Order_num 
+                AND O.customer_id = C.id) T
+          
+      LEFT JOIN
+        (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total 
+        FROM payments 
+        GROUP BY Order_num) AS P
+          
+        ON T.Order_num = P.Order_num';
+
     public function __construct()
     {
-      //Not using auth in super class because of other middleware used
-      $this->middleware('auth');
+      parent::__construct();
 
       $this->middleware('no_payments')->only('edit');
     }
@@ -61,22 +77,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = DB::select('
-          SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
-          FROM  (SELECT O.*, D.total 
-                FROM (SELECT B.*, SUM(B.multiply) as total 
-                      FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
-                            FROM order_contents C) AS B 
-                GROUP BY B.Order_num) D, orders O 
-          WHERE D.Order_num = O.Order_num) T
-          
-          LEFT JOIN
-          
-          (SELECT Order_num, SUM(payment_amount) as payments_total FROM payments GROUP BY Order_num) AS P
-          
-          ON T.Order_num = P.Order_num
-
-        ');
+        $orders = DB::select(self::QUERY);
 
         //return $in_stock;
         //dd(DB::getQueryLog());
@@ -91,13 +92,14 @@ class OrderController extends Controller
     public function create()
     {
         //
-        $customers = Customer::all();
-        $in_stock = Order::tyresRemaining();
+        $customers = Customer::select('id', 'name', 'address', 'phone')->get();
+        $in_stock = resolve('TyresRemaining');
 
         foreach($customers as $customer)
         {
-
           $customer->address = str_replace("\n", "",nl2br($customer->address));
+          $customer->address_single_line = str_replace("<br />", "",$customer->address);
+          //$customer->notes = str_replace("\n", "",nl2br($customer->notes));
         }
 
         $i = 0;
@@ -115,7 +117,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
       //$customers = Customer::all(); //remove
-      $in_stock = Order::tyresRemaining();
+      $in_stock = resolve('TyresRemaining');
       $customer =  $order->customer;
 
       //****** remove
@@ -177,10 +179,56 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function detailsRow(Request $request)
+
+    public function show(Order $order)
     {
-      $id = $request->input('order');
-      $order =  \App\Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($id);
+        //
+      $id = $order->Order_num;
+
+      $order = $this->detailsHelper($id);
+
+      return view('partials.rows.order', compact('order'));
+    }
+
+    public function showJSON($order_num)
+    {
+      //
+     //  $customer = Customer::find($order->customer_id);
+      $order = Order::find($order_num);
+
+      return compact('order');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Order  $order
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Order $order)
+    {
+        //
+      return $this->storeHelper($request, $order);
+      //return [$request->input('order_contents'), $order];
+    }
+
+    public function viewReceipt(Order $order){
+
+
+      $id = $order->Order_num;
+      $order = $this->detailsHelper($id);
+
+      //return view('orders.receipt', compact('order'));
+      return view('components.receipt', compact('order'));
+    }
+
+
+    private function detailsHelper($order_id)
+    {
+
+      $order =  Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($order_id);
 
       $subtotal = 0;
       $subtotalReturn = 0;
@@ -204,9 +252,9 @@ class OrderController extends Controller
 
       $grandtotal = $order->grandtotal;
 
-      foreach($order->payments as $payment)
+      foreach($order->payments->sortByDesc('created_at') as $payment)
       {
-        $grandtotal -= $payment->payment_amount;
+        $grandtotal -= ($payment->payment_amount - $payment->refund_amount);
         $payment->balance = $grandtotal;
       }
 
@@ -219,7 +267,7 @@ class OrderController extends Controller
 
       $order->subtotalReturn = $subtotalReturn;
 
-      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0) + $order->tax_amount;
+      $order->taxtotalReturn = ($subtotalReturn * $order->tax_percentage/100.0);
       $order->discounttotalReturn = ($subtotalReturn * $order->discount_percent/100.0);
 
       $order->grandtotalReturn = $order->subtotalReturn + $order->taxtotalReturn - $order->discounttotalReturn;
@@ -227,63 +275,29 @@ class OrderController extends Controller
       $order->qtytotal = $qtytotal;
       $order->qtytotalReturn = $qtytotalReturn;
 
-      return view('partials.rows.order', compact('order'));
-    }
-
-    public function show(Order $order)
-    {
-        //
-        $customer = Customer::find($order->customer_id);
-
-//        $contents = $order->orderContents()
-//                        ->get();
-//
-//        $payments = $order->payments()->get();
-
-        //INITILIZE some calculated values
-        $order->totalValueBeforeDiscountAndTax();
-        $order->calculateAndSetDiscount();
-        $order->calculateAndSetTax();
-        $order->calculatePayable();
-
-        return view('profiles.order', compact('order','customer'));
-    }
-
-    public function showJSON($order_num)
-    {
-      //
-     //  $customer = Customer::find($order->customer_id);
-      $order = Order::find($order_num);
-
-      return compact('order');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-      return $this->storeHelper($request, $order);
-      //return [$request->input('order_contents'), $order];
+      return $order;
     }
 
 
     private function storeHelper(Request $request, Order $order = null)
     {
-      Log::debug('in Store Helper');
+
+      //VALIDATE
+
+      $duplicate = Order::where('random', $request->random_string)->first();
+
+
+      if($duplicate!=null)
+      {
+        $response = [];
+
+        $response['status'] = 'failed';
+        $response['message'] = "Duplicate Request. Your order may have been already added.".
+                                  " Check and then try again if required.";
+
+        return $response;
+      }
+
       DB::beginTransaction();
       try {
 
@@ -305,6 +319,7 @@ class OrderController extends Controller
         $order->discount_amount=$request->input('discount_amount');
         $order->tax_percentage=$request->input('tax_percent');
         $order->tax_amount=$request->input('tax_amount');
+        $order->random = $request->input('random_string');
 
         Log::debug('before order->save');
         $order->save();
@@ -312,7 +327,7 @@ class OrderController extends Controller
 
         $order_contents=$request->input('order_contents');
 
-        $tyre_remaining_cont=Order::tyresRemainingInContainers();
+        $tyre_remaining_cont=resolve('TyresRemainingInContainers');
 
         $new_contents=array();
 
@@ -379,6 +394,8 @@ class OrderController extends Controller
         DB::rollback();
 
         $response[ 'status' ] = 'failed';
+        Log::error($e->getMessage());
+        $response['message'] = $e->getMessage();
         $response['past'] = $request->input('past');
         return $response;
       }
@@ -394,4 +411,6 @@ class OrderController extends Controller
     {
         //
     }
+
+
 }

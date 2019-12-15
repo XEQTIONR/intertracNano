@@ -29,11 +29,12 @@ class PaymentController extends Controller
     public function create()
     {
 
-      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
+      $orders = Order::with(['customer:id,name,address,phone','payments', 'orderContents.tyre'])->get();
 
       foreach($orders as $order)
       {
         $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+        //$order->customer->notes =  str_replace("\n", "", nl2br($order->customer->notes));
       }
 
 
@@ -48,13 +49,41 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+
+        //VALIDATE
+        $amount = $request->amount;
+        $order = Order::find(intval($request->order));
+        $payable = floatval($order->calculatePayable());
+        $duplicate = Payment::where('random', $request->random)->first();
+
+        if($amount > $payable)
+        {
+          $response = [];
+
+          $response['status'] = 'failed';
+          $response['message'] = "Amount paid is greater than payable amount.";
+
+          return $response;
+        }
+
+        if($duplicate!= null){
+
+          $response = [];
+          
+          $response['status'] = 'failed';
+          $response['message'] = "Duplicate Request. Your payment may have been already added.".
+                                  " Check and then try again if required.";
+
+          return $response;
+        }
+
         //ALLOCATE
         $payment = new Payment;
 
         //INITIALIZE
         $payment->Order_num = $request->order;
         $payment->payment_amount = $request->amount;
-
+        $payment->random = $request->random;
         //STORE
         $payment->save();
         $payment->new = true;

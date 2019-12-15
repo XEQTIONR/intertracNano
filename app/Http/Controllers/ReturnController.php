@@ -10,13 +10,43 @@ use Carbon\Carbon;
 
 class ReturnController extends Controller
 {
-
-    public function returns(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
+        //
+      $orders = Order::with(['customer:id,name,address,phone', 'orderContents.tyre','payments' => function($query){
 
+        $query->orderBy('created_at', 'DESC');
+      }])->get();
+
+      foreach($orders as $order)
+      {
+        $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
+        //$order->customer->notes =  str_replace("\n", "", nl2br($order->customer->notes));
+      }
+      return view('new_return', compact('orders'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
       $order = Order::find($request->input('order'));
       $contents = $order->orderContents()->get();
+      $payments = $order->payments()->orderBy('created_at', 'desc')->get();
+
       $returns = $request->input('returns');
+      $credits = floatval($request->input('credits'));
+
 
       $tax = floatval($request->input('tax'));
       $discount = floatval($request->input('discount'));
@@ -91,37 +121,26 @@ class ReturnController extends Controller
 //      $order->orderContents()->saveMany($contents);
       $order->orderReturns()->saveMany($collection);
 
+      if(count($payments) && $credits > 0)
+        foreach($payments as $payment) //ordered desc
+          if($payment->payment_amount > $payment->refund_amount && $credits>0)
+            if($payment->payment_amount - $payment->refund_amount >= $credits)
+            {
+              $payment->refund_amount += $credits;
+              $credits = 0;
+              $payment->save();
+              break;
+            }
+            else{
+              $credits -= ($payment->payment_amount - $payment->refund_amount);
+              $payment->refund_amount = $payment->payment_amount;
+
+              $payment->save();
+            }
+
+
 
       return array('status' => 'success');
-      //return compact('order', 'contents', 'returns', 'collection');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-      $orders = Order::with(['customer','payments', 'orderContents.tyre'])->get();
-
-      foreach($orders as $order)
-      {
-        $order->customer->address =  str_replace("\n", "", nl2br($order->customer->address));
-      }
-      return view('new_return', compact('orders'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
