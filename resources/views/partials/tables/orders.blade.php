@@ -35,9 +35,9 @@
 {{--      <td class="text-right">{{$order->discount_amount}}</td>--}}
 {{--      <td class="text-right">{{$order->tax_percentage}}</td>--}}
 {{--      <td class="text-right">{{$order->tax_amount}}</td>--}}
-      <td class="text-right">{{number_format($total, 2) }}</td>
-      <td class="text-right">{{number_format($order->payments_total,2)}}</td>
-      <td class="text-right">{{number_format($total - $order->payments_total,2)}}</td>
+      <td class="text-right">{{$total}}</td>
+      <td class="text-right">{{$order->payments_total}}</td>
+      <td class="text-right">{{$total - $order->payments_total}}</td>
       <td class="">
         @if($order->payments_total == 0)
           <span class="label label-danger"><i class="fa fa-times mr-1"></i> No payments</span>
@@ -57,6 +57,18 @@
     </tr>
   @endforeach
 </tbody>
+<tfoot>
+  <tr>
+    <th class="text-center" colspan="3"></th>
+{{--    <th></th>--}}
+{{--    <th></th>--}}
+    <th></th>
+    <th class="text-right"></th>
+    <th class="text-right"></th>
+    <th class="text-right"></th>
+    <th></th>
+  </tr>
+</tfoot>
 </table>
 
 @if (method_exists($orders, 'links'))

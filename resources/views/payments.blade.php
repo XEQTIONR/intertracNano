@@ -67,6 +67,59 @@
 
       $(document).ready(function() {
 
+          table = $('#table_id').DataTable({
+              destroy : true,
+              columnDefs :[
+                  {targets: [2,3], render : function(data, type, row){
+
+                          if(type == "display")
+                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                          else
+                              return data;
+
+                      }}
+              ],
+              footerCallback : function(row, data, start, end, display){
+                  //console.log("FOOTER CALLBACK");
+                  //console.log(row);
+                  var api = this.api(), data;
+
+                  var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
+
+                  var num_orders = api
+                      .column( 1, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          return parseFloat(a) + 1;
+                      }, 0 );
+
+                  var total = api
+                      .column( 2, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+
+                  var refund_total = api
+                      .column( 3, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+                  var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
+
+
+
+                  $( api.column( 0 ).footer() ).html(footer_label);
+                  $( api.column( 1 ).footer() ).html(num_orders);
+                  $( api.column( 2 ).footer() ).html(number_format(total, 2));
+                  $( api.column( 3 ).footer() ).html(number_format(refund_total, 2));
+              }
+          });
+
           table.order([0, 'desc'])
             .draw();
 

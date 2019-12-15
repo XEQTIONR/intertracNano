@@ -569,6 +569,12 @@
 
 
 <script>
+
+
+
+    function number_format(float_val, decimal_places){
+        return float_val.toFixed(decimal_places).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     //<!-- Vue Filters -->
     Vue.filter('currency', function (value) {
         return parseFloat(value).toFixed(2);
