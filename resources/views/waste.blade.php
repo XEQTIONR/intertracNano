@@ -35,8 +35,10 @@
   </div>
   <div v-if="!done" class="row justify-content-center">
     <div class="col-xs-12 col-sm-11 col-lg-8">
-      <div class="callout callout-info">
-          <h4 class="mt-5"><i class="icon-tire-flat mr-2" style="position: relative; top: 1px"></i> Add items that have perished.</h4>
+      <div class="box box-info">
+        <div class="box-header">
+          <h3 class="page-header ml-3"><i class="icon-tire-flat mr-2" style="position: relative; top: 1px"></i> <span v-if="step==0">Add</span><span v-else>Confirm</span> items that have perished.</h3>
+        </div>
       </div>
     </div>
   </div>
