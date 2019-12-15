@@ -25,4 +25,9 @@ class Consignment extends Model
     {
       return $this->hasMany('App\Consignment_expense','BOL');
     }
+
+    public function waste()
+    {
+      return $this->hasMany('App\Waste', 'BOL');
+    }
 }

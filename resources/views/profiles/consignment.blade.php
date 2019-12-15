@@ -48,7 +48,7 @@
 
       <div class="box box-solid bg-orange">
         <div class="box-header bg-orange-active">
-          <h3 class="box-title ">Sold</h3>
+          <h3 class="box-title ">Sold / Waste</h3>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" style="color: white"><i class="fa fa-minus"></i>
             </button>
@@ -57,17 +57,19 @@
         <div class="box-body">
           <div>
 
-            @foreach ($sold as $key => $val)
-              <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_weight = 0; $total_stock = 0; $total_remain = 0 ?>
+            @foreach ($containers as $container)
+            @if(isset($container->sold) || isset($container->waste))
+              <?php $total = 0; $total_qty = 0; $total_tax = 0; $total_waste = 0; $total_stock = 0; $total_remain = 0 ?>
               <table class="table table-bordered table-condensed inner-white">
                 <thead>
                 <tr>
-                  <th colspan="6" class="bg-orange-active">Container# {{$key}}</th>
+                  <th colspan="6" class="bg-orange-active">Container# {{$container->Container_num}}</th>
                 </tr>
                 <tr>
                   <th class="col-xs-3 bg-orange-active">Tyre</th>
-                  <th class="col-xs-1 bg-orange-active">Sold</th>
                   <th class="col-xs-1 bg-orange-active">Supply</th>
+                  <th class="col-xs-1 bg-orange-active">Sold</th>
+                  <th class="col-xs-1 bg-orange-active">Waste</th>
                   <th class="col-xs-1 bg-teal-active">Remain</th>
                 </tr>
 
@@ -75,39 +77,27 @@
                 <tbody>
 
 
-                @foreach($val as $listing) {{---each tyre qty price etc--}}
+                @foreach($container->contents as $listing)
                 <tr>
-                  <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->brand}} {{$listing->size}} {{$listing->pattern}} {{$listing->lisi}}</td>
-                  <td class="col-xs-1">{{$listing->total_pcs}}</td>
-                  <td class="col-xs-1">{{$listing->stock}}</td>
-                  <td class="col-xs-1 bg-teal">{{$listing->stock - $listing->total_pcs}}</td>
+                  <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
+                  <td class="col-xs-1">{{$listing->qty}}</td>
+                  <td class="col-xs-1">{{$listing->sold}}</td>
+                  <td class="col-xs-1">{{$listing->qty_minus_sold - $listing->remain}}</td>
+                  <td class="col-xs-1 bg-teal">{{$listing->remain}}</td>
                 </tr>
                 <?php
-                  $total_qty += intval($listing->total_pcs);
-                  $total_stock += intval($listing->stock);
-                  $total_remain += (intval($listing->stock) - intval($listing->total_pcs));
+                  $total_qty += intval($listing->sold);
+                  $total_stock += intval($listing->qty);
+                  $total_waste += (intval($listing->qty_minus_sold) - intval($listing->remain));
+                  $total_remain += $listing->remain;
                 ?>
                 @endforeach
-                @foreach($containers as $container)
-                  @if($container->Container_num == $key)
-                    @foreach($container->untapped as $listing)
-                      <tr>
-                        <td class="col-xs-3"><b>({{$listing->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
-                        <td class="col-xs-1">0</td>
-                        <td class="col-xs-1">{{$listing->qty}}</td>
-                        <td class="col-xs-1 bg-teal">{{$listing->qty}}</td>
-                      </tr>
-                      <?php
-                      $total_stock += intval($listing->qty);
-                      $total_remain += intval($listing->qty);
-                      ?>
-                    @endforeach
-                  @endif
-                @endforeach
+
                 <tr>
                   <th class="col-xs-3 text-uppercase bg-orange-active">Total</th>
-                  <th class="col-xs-1 bg-orange-active">{{$total_qty}}</th>
                   <th class="col-xs-1 bg-orange-active">{{$total_stock}}</th>
+                  <th class="col-xs-1 bg-orange-active">{{$total_qty}}</th>
+                  <th class="col-xs-1 bg-orange-active">{{$total_waste}}</th>
                   <th class="col-xs-1 bg-teal-active">{{$total_remain}}</th>
                 </tr>
                 </tbody>
@@ -118,11 +108,8 @@
 
                   </thead>
                 </table>
+            @endif
             @endforeach
-
-
-            {{--<a href="/container_contents/create/{{$consignment->BOL}}" class="btn btn-primary">Add a container</a>--}}
-
           </div>
         </div>
       </div>
