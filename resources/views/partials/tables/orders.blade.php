@@ -37,7 +37,7 @@
 {{--      <td class="text-right">{{$order->tax_amount}}</td>--}}
       <td class="text-right">{{$total}}</td>
       <td class="text-right">{{$order->payments_total}}</td>
-      <td class="text-right">{{$total - $order->payments_total}}</td>
+      <td class="text-right strong @if(floatval($total - $order->payments_total)>0) text-red @else text-green @endif">{{$total - $order->payments_total}}</td>
       <td class="">
         @if($order->payments_total == 0)
           <span class="label label-danger"><i class="fa fa-times mr-1"></i> No payments</span>
@@ -65,7 +65,7 @@
     <th></th>
     <th class="text-right"></th>
     <th class="text-right"></th>
-    <th class="text-right"></th>
+    <th class="text-right text-red"></th>
     <th></th>
   </tr>
 </tfoot>

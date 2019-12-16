@@ -36,7 +36,7 @@
         <tbody>
         @foreach ($customers as $customer)
           <tr>
-            <td class="col-xs-1 text-center">{{$customer->id}}</td>
+            <td class="col-xs-1 text-center strong">{{$customer->id}}</td>
             <td class="col-xs-1">{{$customer->name}}</td>
             <td class="col-xs-2">{{$customer->address}}</td>
             <td class="col-xs-1">{{$customer->phone}}</td>
@@ -44,7 +44,7 @@
             <td class="col-xs-1 text-center">{{$customer->number_of_orders}}</td>
             <td class="col-xs-2 text-right">{{$customer->sum_grand_total}}</td>
             <td class="col-xs-2 text-right">{{$customer->sum_payments_total}}</td>
-            <td class="col-xs-1 text-right">{{$customer->balance_total}}</td>
+            <td class="col-xs-1 text-right strong @if(floatval($customer->balance_total)>0) text-red @else text-green @endif">{{$customer->balance_total}}</td>
 
             {{--<td class="text-center">{{$customer->updated_at}}</td>--}}
             {{--<td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>--}}
@@ -68,7 +68,7 @@
 
             <th class="col-xs-2 text-right"></th>
             <th class="col-xs-2 text-right"></th>
-            <th class="col-xs-1 text-right"></th>
+            <th class="col-xs-1 text-right text-red"></th>
             <th class="col-xs-1"></th>
 
 
@@ -260,7 +260,7 @@
                           {
                               if(!isNaN(parseFloat(data)))
                                   return number_format(parseFloat(data), 2);
-                              return 0;
+                              return number_format(0, 2);
                           }
                           else
                               return parseFloat(data);
