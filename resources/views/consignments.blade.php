@@ -32,7 +32,7 @@
           <th>Land Date</th>
           <th>Created</th>
           {{--<th>Updated</th>--}}
-          <th>Progress</th>
+          <th>Stock</th>
         </tr>
         </thead>
 

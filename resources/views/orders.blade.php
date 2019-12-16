@@ -74,7 +74,7 @@
               {targets: [4,5,6], render : function(data, type, row){
 
                       if(type == "display")
-                          return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                          return number_format(parseFloat(data), 2);
 
                       else
                           return data;
