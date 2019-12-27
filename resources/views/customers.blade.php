@@ -22,7 +22,7 @@
         <thead>
         <tr>
           <th class="col-xs-1">Customer ID</th>
-          <th  class="col-xs-1">Customer Name</th>
+          <th  class="col-xs-1">Name</th>
           <th  class="col-xs-2">Address</th>
           <th class="col-xs-1">Phone</th>
 {{--          <th>Notes</th>--}}
