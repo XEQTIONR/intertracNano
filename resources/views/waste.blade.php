@@ -4,13 +4,13 @@
   Waste
 @endsection
 @section('subtitle')
-  Waste.
+  Add Waste.
 @endsection
 
 @section('level')
   @component('components.level',
     ['crumb' => 'Waste',
-    'subcrumb' => 'waste',
+    'subcrumb' => 'Add Waste',
     'link' => ''])
   @endcomponent
 @endsection

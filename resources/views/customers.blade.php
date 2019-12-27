@@ -21,28 +21,34 @@
       <table id ="table_id" class="table table-striped table-bordered table-condensed">
         <thead>
         <tr>
-          <th>Customer ID</th>
-          <th>Customer Name</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>Notes</th>
-          <th>Created</th>
-          <th>Actions</th>
+          <th class="col-xs-1">Customer ID</th>
+          <th  class="col-xs-1">Name</th>
+          <th  class="col-xs-2">Address</th>
+          <th class="col-xs-1">Phone</th>
+{{--          <th>Notes</th>--}}
+          <th class="col-xs-1"># of Orders</th>
+          <th class="col-xs-2">Orders Total</th>
+          <th class="col-xs-2">Payments Total</th>
+          <th class="col-xs-1">Balance Total</th>
+          <th class="col-xs-1">Actions</th>
         </tr>
         </thead>
         <tbody>
         @foreach ($customers as $customer)
           <tr>
-            <td class="text-center">{{$customer->id}}</td>
-            <td>{{$customer->name}}</td>
-            <td>{{$customer->address}}</td>
-            <td class="">{{$customer->phone}}</td>
-            <td>{{$customer->notes}}</td>
-            <td class="text-center">{{$customer->created_at}}</td>
+            <td class="col-xs-1 text-center strong">{{$customer->id}}</td>
+            <td class="col-xs-1">{{$customer->name}}</td>
+            <td class="col-xs-2">{{$customer->address}}</td>
+            <td class="col-xs-1">{{$customer->phone}}</td>
+{{--            <td>{{$customer->notes}}</td>--}}
+            <td class="col-xs-1 text-center">{{$customer->number_of_orders}}</td>
+            <td class="col-xs-2 text-right">{{$customer->sum_grand_total}}</td>
+            <td class="col-xs-2 text-right">{{$customer->sum_payments_total}}</td>
+            <td class="col-xs-1 text-right strong @if(floatval($customer->balance_total)>0) text-red @else text-green @endif">{{$customer->balance_total}}</td>
 
             {{--<td class="text-center">{{$customer->updated_at}}</td>--}}
             {{--<td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>--}}
-            <td class="text-center">
+            <td class="col-xs-1 text-center">
               <div class="btn-group" > <!-- style="display: block; min-width: 80px" -->
                 <button type="button" data-toggle="tooltip" title="Edit" onclick="startEdit({{$customer->id}})" class="btn bg-orange-active" style="border-color : #FFF"><i class="fa  fa-edit"></i></button>
 {{--                <button type="button" class="btn bg-orange-active" style="border-color : #FFF"><i class="icon-clipboard-list-r"></i></button>--}}
@@ -51,6 +57,23 @@
           </tr>
         @endforeach
         <tbody>
+        <tfoot>
+          <tr>
+            <th class="col-xs-2 text-center" colspan="2"></th>
+{{--            <th></th>--}}
+            <th class="col-xs-2"></th>
+            <th class="col-xs-1"></th>
+
+            <th class="col-xs-1 text-center"></th>
+
+            <th class="col-xs-2 text-right"></th>
+            <th class="col-xs-2 text-right"></th>
+            <th class="col-xs-1 text-right text-red"></th>
+            <th class="col-xs-1"></th>
+
+
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -225,6 +248,100 @@
       }
 
       $(document).ready(function() {
+
+
+
+          table = $('#table_id').DataTable({
+              destroy : true,
+              columnDefs :[
+                  {targets: [5,6,7], render : function(data, type, row){
+
+                          if(type == "display")
+                          {
+                              if(!isNaN(parseFloat(data)))
+                                  return number_format(parseFloat(data), 2);
+                              return number_format(0, 2);
+                          }
+                          else
+                              return parseFloat(data);
+
+                      }
+                  },
+                  {targets : 4, render : function(data, type, row){
+
+                          if(type=="display"){
+                              if(!isNaN(parseInt(data)))
+                                  return parseInt(data);
+                              return 0;
+                          }
+                          else
+                              return data;
+
+                      }
+                  }
+              ],
+              footerCallback : function(row, data, start, end, display){
+                  var api = this.api(), data;
+
+                  var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
+
+
+                  var number_of_orders_total = api
+                      .column( 4, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          console.log('b = ' + typeof b);
+                          if(b == null || b=="")
+                              return parseInt(a);
+                          return parseInt(a) + parseInt(b);
+                      }, 0 );
+
+                  var total = api
+                      .column( 5, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          console.log('b = ' + typeof b);
+                          if(b == null || b=="")
+                              return parseFloat(a);
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+                  var payments_total = api
+                      .column( 6, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          if(b == null || b=="")
+                              return parseFloat(a);
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+
+                  var balance_total = api
+                      .column( 7, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          if(b == null || b=="")
+                              return parseFloat(a);
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+                  var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
+
+
+
+                  $( api.column( 0 ).footer() ).html(footer_label);
+                  $( api.column( 4 ).footer() ).html(parseInt(number_of_orders_total));
+                  $( api.column( 5 ).footer() ).html(number_format(total,2));
+                  $( api.column( 6 ).footer() ).html(number_format(payments_total, 2));
+                  $( api.column( 7 ).footer() ).html(number_format(balance_total, 2));
+              }
+          });
+
+          table.order([7, 'desc'])
+              .draw();
+
+
+
 
           $('.success-container').hide();
           $('#table_id tbody').on('click', 'tr', function (e) {

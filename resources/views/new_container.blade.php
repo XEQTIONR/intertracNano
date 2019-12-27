@@ -716,13 +716,17 @@
 @section('footer-scripts')
 
   <script>
-
     $(window).scroll(function(){
-       // console.log($(window).scrollTop());
 
-        var top = (parseFloat($(window).scrollTop()) -100 );
+        var scrollTop = $(window).scrollTop();
+        var windowInnerHeight = $(window).innerHeight();
+        var innerHeight = $('#catalogContainer').innerHeight();
+        var top = (parseFloat(scrollTop) -100 );
 
-        $('#catalogContainer').css('top', top>0 ? top : 0);
+        top = top>0 ? top : 0;
+
+        if((top + innerHeight + 200) < windowInnerHeight)
+          $('#catalogContainer').css('top', top);
     });
 
       var tyre_catalog = JSON.parse('{!! json_encode($tyres) !!}');

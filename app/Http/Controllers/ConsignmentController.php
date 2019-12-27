@@ -205,36 +205,106 @@ class ConsignmentController extends Controller
           $sold = $this->soldCount($consignment);
 
 
-          foreach($sold as $key => $val)
-            foreach($containers as $container)
-              if($container->Container_num == $key)
-                foreach($val as $listing)
+          foreach($containers as $container)
+          {
+            foreach($sold as $sold_container_num => $sold_contents)
+            {
+              if($sold_container_num == $container->Container_num){
+                foreach($sold_contents  as $sold_content)
+                {
+                  $total_pcs = intval($sold_content->total_pcs);
+
                   foreach($container->contents as $content)
-                    if($listing->tyre_id == $content->tyre_id ) {
-                      $content->tapped = true;
-                      if (isset($listing->stock))
-                        $listing->stock+=intval($content->qty);
-                      else
-                        $listing->stock=intval($content->qty);
+                  {
+                    if($sold_content->tyre_id == $content->tyre_id)
+                    {
+                      if($total_pcs >= $content->qty)
+                      {
+                        $content->sold = $content->qty;
+                        $total_pcs-= $content->qty;
+                        $container->sold = true;
+                      }
+                      else{
+                        $content->sold = $total_pcs;
+                        $total_pcs=0;
+                        $container->sold = true;
+                      }
+
+                      if($total_pcs==0)
+                        break;
                     }
-
-
-          foreach($containers as $container){
-            $untapped = collect();
-            foreach($container->contents as $content)
-              if(!isset($content->tapped))
-                $untapped->push($content);
-
-            $container->untapped = $untapped;
+                  }
+                }
+              }
+            }
           }
 
+          foreach($containers as $container)
+            foreach($container->contents as $content)
+            {
+              if(!isset($content->sold))
+                $content->sold = 0;
+
+              $content->qty_minus_sold = $content->qty - $content->sold;
+            }
 
 
 
-          //dd( compact(è))
+          //foreach()
 
-//          return compact('consignment', 'containers', 'expenses', 'currency', 'sold');
-          return view('profiles.consignment', compact('consignment', 'containers', 'expenses', 'currency', 'sold'));
+          $waste = $consignment->waste;
+
+          foreach($waste as $awaste)
+          {
+            $waste_qty = $awaste->qty;
+            foreach($containers as $container)
+            {
+              if($awaste->Container_num == $container->Container_num)
+                foreach($container->contents as $content)
+                  if($awaste->tyre_id == $content->tyre_id)
+                  {
+                    if(isset($content->remain))
+                    {
+                      if($waste_qty > $content->remain && $content->remain!=0)
+                      {
+                        $waste_qty-= $content->remain;
+                        $content->remain = 0;
+                        $container->waste = true;
+                      }
+                      elseif($content->remain!=0){
+                        $content->remain = $content->remain - $waste_qty;
+                        $waste_qty = 0;
+                        $container->waste = true;
+                      }
+                    }
+                    else {
+                      if ($waste_qty > $content->qty_minus_sold) {
+                        $content->remain=0;
+                        $waste_qty-=$content->qty_minus_sold;
+                        $container->waste = true;
+                      } else {
+                        $content->remain=$content->qty_minus_sold-$waste_qty;
+                        $waste_qty=0;
+                        $container->waste = true;
+                      }
+                    }
+
+                    if($waste_qty == 0) // optimization
+                      break;
+                  }
+
+
+              if($waste_qty == 0) //optimization
+                break;
+            }
+          }
+
+          foreach($containers as $container)
+            foreach($container->contents as $content)
+              if(!isset($content->remain))
+                $content->remain = $content->qty_minus_sold;
+
+          return view('profiles.consignment', compact('consignment', 'containers', 'expenses', 'currency'));
     }
 
     /**

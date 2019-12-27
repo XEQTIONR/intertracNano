@@ -4,6 +4,7 @@
     <th class="text-center">Transaction ID</th>
     <th class="text-center">Order #</th>
     <th class="text-center">Amount Paid (&#2547)</th>
+    <th class="text-center">Refund (&#2547)</th>
     <th class="text-center">Created</th>
   </tr>
 </thead>
@@ -13,10 +14,21 @@
       <td class="text-center strong">{{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
       <td class="text-center">{{$payment->Order_num}}</td>
       <td class="text-right">{{$payment->payment_amount}}</td>
+      <td class="text-right">{{$payment->refund_amount}}</td>
       <td class="text-center">{{$payment->created_at}}</td>
     </tr>
   @endforeach
 </tbody>
+  <tfoot>
+  <tr>
+
+    <th class="text-center"></th>
+    <th class="text-center"></th>
+    <th class="text-right"></th>
+    <th class="text-right"></th>
+    <th></th>
+  </tr>
+  </tfoot>
 </table>
 
 @if (method_exists($payments, 'links'))
