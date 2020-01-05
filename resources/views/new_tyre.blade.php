@@ -57,28 +57,28 @@
               {{--{{ csrf_field() }}--}}
             <div class="row justify-content-center">
               <div class="col-xs-12">
-              <div class="form-group" :class="{ 'has-error' : errors.brand && ( brand==null || brand== '')}">
+              <div class="form-group" :class="{ 'has-error' : errors.brand }">
                 <label for="inputBrand">Brand</label>
                 {{--<div class="input-group">--}}
                   <input v-model="brand" type="text" class="form-control" name="Brand" id="inputBrand" value="{{old('Brand')}}" required>
                 {{--</div>--}}
               </div>
 
-              <div class="form-group" :class="{ 'has-error' : errors.size && ( size==null || size== '')}">
+              <div class="form-group" :class="{ 'has-error' : errors.size }">
                 <label for="inputSize">Size Code</label>
                 {{--<div class="input-group">--}}
                   <input v-model="size" type="text" class="form-control" name="Size" id="inputSize" value="{{old('Size')}}" required>
                 {{--</div>--}}
               </div>
 
-              <div class="form-group" :class="{ 'has-error' : errors.lisi && ( lisi==null || lisi== '')}">
+              <div class="form-group" :class="{ 'has-error' : errors.lisi }">
                 <label for="inputLisi">Li/Si</label>
                 {{--<div class="input-group">--}}
                   <input v-model="lisi" type="text" class="form-control" name="Lisi" id="inputLisi" value="{{old('Lisi')}}">
                 {{--</div>--}}
               </div>
 
-              <div class="form-group" :class="{ 'has-error' : errors.pattern && ( pattern==null || pattern== '')}">
+              <div class="form-group" :class="{ 'has-error' : errors.pattern }">
                 <label for="inputPattern">Pattern Code</label>
                 {{--<div class="input-group">--}}
                   <input v-model="pattern" type="text" class="form-control" name="Pattern" id="inputPattern" value="{{old('Pattern')}}" required>
@@ -185,6 +185,16 @@
                              setTimeout(function(){
                                  app.is_complete = false;
                              }, 5000);
+                         }
+                         else{
+                             if(data.status == 'failed')
+                             {
+                                app.errors = {};
+                                app.errors.brand = 'Duplicate';
+                                app.errors.size = 'Duplicate';
+                                app.errors.pattern = 'Duplicate';
+                                app.errors.lisi = 'Duplicate';
+                             }
                          }
 
                      }
