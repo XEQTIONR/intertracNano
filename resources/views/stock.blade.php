@@ -18,7 +18,7 @@
 @section('body')
   <div class="box" id="app">
     <div class="box-body">
-      <table id ="table_id" class="table table-striped table-bordered">
+      <table id="table_id" class="table table-striped table-bordered">
         <thead>
         <tr>
           <th class="text-center col-xs-1"> Tyre ID </th>
@@ -44,6 +44,15 @@
         @endif
         @endforeach
         </tbody>
+        <tfoot>
+        <tr>
+          <th class="text-center" colspan="3"></th>
+          <th></th>
+          <th class="text-right"></th>
+          <th class="text-center"></th>
+{{--          <th class="text-right text-red"></th>--}}
+        </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -54,8 +63,67 @@
   <script>
       $(document).ready(function() {
 
-          table.order([5, 'desc'])
-              .draw();
+
+          table = $('#table_id').DataTable({
+              destroy : true,
+              // columnDefs :[
+              //     {targets: [4,5,6], render : function(data, type, row){
+              //
+              //             if(type == "display")
+              //                 return number_format(parseFloat(data), 2);
+              //
+              //             else
+              //                 return data;
+              //
+              //         }}
+              // ],
+              footerCallback : function(row, data, start, end, display){
+                  //console.log("FOOTER CALLBACK");
+                  //console.log(row);
+                  var api = this.api(), data;
+
+                  var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
+
+
+                  var total = api
+                      .column( 5, {page: page} )
+                      .data()
+                      .reduce( function (a, b) {
+                          return parseFloat(a) + parseFloat(b);
+                      }, 0 );
+
+                  // var payments_total = api
+                  //     .column( 5, {page: page} )
+                  //     .data()
+                  //     .reduce( function (a, b) {
+                  //         return parseFloat(a) + parseFloat(b);
+                  //     }, 0 );
+                  //
+                  //
+                  // var balance_total = api
+                  //     .column( 6, {page: page} )
+                  //     .data()
+                  //     .reduce( function (a, b) {
+                  //         return parseFloat(a) + parseFloat(b);
+                  //     }, 0 );
+
+                  var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
+
+
+
+                  $( api.column( 0 ).footer() ).html(footer_label);
+                  // $( api.column( 4 ).footer() ).html(number_format(total,2));
+                  // $( api.column( 5 ).footer() ).html(number_format(payments_total, 2));
+                  $( api.column( 5 ).footer() ).html(total);
+              }
+          });
+
+
+
+
+
+          // table.order([5, 'desc'])
+          //     .draw();
       });
 
   </script>
