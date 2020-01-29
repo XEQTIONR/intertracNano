@@ -22,7 +22,7 @@ class OrderController extends Controller
     const QUERY =
      'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
       FROM  (SELECT O.*, D.total, C.name 
-            FROM (SELECT B.*, SUM(B.multiply) as total 
+            FROM (SELECT B.Order_num, SUM(B.multiply) as total 
                   FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
                         FROM order_contents C) AS B 
                   GROUP BY B.Order_num) D, orders O, customers C 
