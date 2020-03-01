@@ -98,8 +98,10 @@ class OrderController extends Controller
         foreach($customers as $customer)
         {
           $customer->address = str_replace("\n", "",nl2br($customer->address));
+          $customer->address = str_replace("'", "\'",nl2br($customer->address));
           $customer->address_single_line = str_replace("<br />", "",$customer->address);
           //$customer->notes = str_replace("\n", "",nl2br($customer->notes));
+          $customer->notes = str_replace("'", "\'",$customer->notes);
         }
 
         $i = 0;
