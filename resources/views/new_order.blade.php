@@ -484,7 +484,9 @@
 
     var stock = JSON.parse('{!! $in_stock !!}');
 
-    var customers = JSON.parse('{!! $customers !!}'.replace(/'/g, "/'"));
+    var customer_json = '{!! $customers !!}';
+    customer_json = customer_json.replace(/'/g, "/'");
+    var customers = JSON.parse(customer_json);
 
     var app = new Vue({
         el: '#app',
