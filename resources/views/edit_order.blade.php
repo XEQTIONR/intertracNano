@@ -418,11 +418,11 @@
 
   <script>
 
-      var stock = JSON.parse('{!! json_encode($in_stock) !!}');
+      var stock = JSON.parse('{!! $in_stock !!}');
 
 
 
-      var customer = JSON.parse('{!! json_encode($customer) !!}');
+      var customer = JSON.parse('{!! str_replace("'", "\'", $customer) !!}');
 
       var app = new Vue({
           el: '#app',
