@@ -564,7 +564,7 @@
         $(".date").inputmask( "dd/mm/yyyy");
     } );
 
-    console.log("CURRENCY : " + currencies.BDT);
+    //console.log("CURRENCY : " + currencies.BDT);
 </script>
 
 
