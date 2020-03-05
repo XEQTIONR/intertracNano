@@ -15,6 +15,15 @@
   @endcomponent
 @endsection
 
+@section('header-scripts')
+  <style>
+    .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+      background-color: #727272 !important;
+      border-color: #727272 !important;
+    }
+  </style>
+@endsection
+
 @section('body')
   <div class="box" id="app">
     <div class="box-body">

@@ -480,7 +480,7 @@
 @section('footer-scripts')
   <script>
 
-      var orders = JSON.parse('{!! json_encode($orders) !!}');
+      var orders = JSON.parse('{!! str_replace("'", "\'",$orders) !!}');
 
       var app = new Vue({
           el: '#app',

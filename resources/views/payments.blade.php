@@ -15,7 +15,14 @@
   @endcomponent
 @endsection
 
-
+@section('header-scripts')
+  <style>
+    .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+      background-color: #D81B60 !important;
+      border-color: #D81B60 !important;
+    }
+  </style>
+@endsection
 
 @section('body')
   <div class="box box-maroon">

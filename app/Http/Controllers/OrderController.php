@@ -321,9 +321,9 @@ class OrderController extends Controller
         $order->tax_amount=$request->input('tax_amount');
         $order->random = $request->input('random_string');
 
-        Log::debug('before order->save');
+        //Log::debug('before order->save');
         $order->save();
-        Log::debug('after order->save');
+        //Log::debug('after order->save');
 
         $order_contents=$request->input('order_contents');
 
@@ -365,9 +365,6 @@ class OrderController extends Controller
 
               array_push($new_contents, $order_content);
             }
-
-
-            //            $new_contents [] = $order_content;
           }
 
 
