@@ -27,13 +27,13 @@ class ConsignmentContainerController extends Controller
                 (SELECT A.BOL, A.Container_num, total_bought, IFNULL(total_sold, 0) AS total_sold 
                 FROM (SELECT Container_num, BOL, SUM(qty) AS total_bought 
 	                    FROM container_contents 
-	                    GROUP BY Container_num) AS A 
+	                    GROUP BY Container_num, BOL) AS A 
 	
 	                    LEFT JOIN 
 	
 	                    (SELECT container_num, bol, SUM(qty) AS total_sold 
 	                    FROM order_contents 
-	                    GROUP BY container_num) AS B 
+	                    GROUP BY container_num, bol) AS B 
 
 	                    ON A.Container_num = B.container_num AND A.BOL = B.bol) AS X
                 WHERE X.BOL = Y.BOL AND X.Container_num = Y.Container_num
