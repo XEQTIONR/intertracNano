@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-    Login
+    Register
 @endsection
 @section('body')
 <body class="hold-transition login-page">
@@ -11,7 +11,7 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Register a new user</p>
                 <form method="POST" action="{{ route('register') }}">
                     {{ csrf_field() }}
 
@@ -41,7 +41,7 @@
 
                     <div class="form-group has-feedback">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-                        <span class="glyphicon glyphicon-option-horizontal form-control-feedback"></span>
+                        <span class="glyphicon glyphicon glyphicon-ok form-control-feedback"></span>
                         @if ($errors->has('password-confirm'))
                             <strong class="text-danger">{{ $errors->first('password-confirm') }}</strong>
                         @endif
