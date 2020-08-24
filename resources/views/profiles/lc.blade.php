@@ -36,25 +36,25 @@
           <dd class="mb-2"></dd>
 
           <dt>Value(Foreign)</dt>
-          <dd class="mb-2">{{$lc->foreign_amount}}</dd>
+          <dd class="mb-2">{{numfmt_format(resolve('CurrencyFormatter'),$lc->foreign_amount)}}</dd>
 
           <dt>Currency code</dt>
           <dd class="mb-2">{{$lc->currency_code}}</dd>
 
           <dt>Exchange rate</dt>
-          <dd class="mb-2">{{$lc->exchange_rate}}</dd>
+          <dd class="mb-2">{{numfmt_format(resolve('CurrencyFormatter'),$lc->exchange_rate)}}</dd>
 
           <dt>Value(TK)</dt>
-          <dd class="mb-2">{{$lc->foreign_amount * $lc->exchange_rate}}</dd>
+          <dd class="mb-2">{{numfmt_format(resolve('CurrencyFormatter'),($lc->foreign_amount * $lc->exchange_rate))}}</dd>
 
           <dt>Expenses Paid(Foreign)</dt>
-          <dd>{{$lc->foreign_expense}}</dd>
+          <dd>{{numfmt_format(resolve('CurrencyFormatter'),$lc->foreign_expense) }}</dd>
 
           <dt>Expenses Paid(Local)</dt>
-          <dd class="mb-2">{{$lc->domestic_expense}}</dd>
+          <dd class="mb-2">{{numfmt_format(resolve('CurrencyFormatter'),$lc->domestic_expense) }}</dd>
 
           <dt>Expenses Total(TK)</dt>
-          <dd class="mb-2">{{($lc->foreign_expense * $lc->exchange_rate)+$lc->domestic_expense}}</dd>
+          <dd class="mb-2">{{numfmt_format(resolve('CurrencyFormatter'),($lc->foreign_expense * $lc->exchange_rate)+$lc->domestic_expense) }}</dd>
 
           <dt>Applicant</dt>
           <dd class="mb-2">{!! $lc->applicant !!}</dd>
@@ -151,8 +151,8 @@
             @foreach($consignments as $consignment)
               <tr>
                 <td class=" strong" >{{$consignment->BOL}}</td>
-                <td class="text-right"><span class="currency-symbol mr-1"></span> {{$consignment->value}}</td>
-                <td class="text-right">৳ {{$consignment->tax}}</td>
+                <td class="text-right"><span class="currency-symbol mr-1"></span> {{numfmt_format(resolve('CurrencyFormatter'),$consignment->value)}}</td>
+                <td class="text-right">৳ {{numfmt_format(resolve('CurrencyFormatter'),$consignment->tax)}}</td>
                 <td class="date">{{$consignment->land_date}}</td>
                 <td class=""><a href="/consignments/{{$consignment->BOL}}"
                        class="btn btn-primary btn-sm">
