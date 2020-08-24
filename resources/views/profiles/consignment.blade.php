@@ -147,10 +147,10 @@
                   <tr>
                   <td class="col-xs-3"><b>({{$listing->tyre->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
                   <td class="col-xs-1">{{$listing->qty}}</td>
-                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{number_format($listing->unit_price,2)}}</td>
-                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{number_format($listing->qty * $listing->unit_price,2)}}</td>
-                  <td class="col-xs-2 text-right">৳{{number_format($listing->total_tax,2)}}</td>
-                  <td class="col-xs-2 text-right">{{number_format($listing->total_weight,2)}} kg</td>
+                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{numfmt_format(resolve('CurrencyFormatter'),$listing->unit_price)}}</td>
+                  <td class="col-xs-2 text-right"><span class="currency-symbol"></span>{{numfmt_format(resolve('CurrencyFormatter'),$listing->qty * $listing->unit_price)}}</td>
+                  <td class="col-xs-2 text-right">৳{{numfmt_format(resolve('CurrencyFormatter'),$listing->total_tax)}}</td>
+                  <td class="col-xs-2 text-right">{{numfmt_format(resolve('CurrencyFormatter'),$listing->total_weight)}} kg</td>
                   </tr>
                     <?php
                       $total+= (floatval($listing->unit_price) * floatval($listing->qty));
@@ -168,9 +168,9 @@
                     <th class="col-xs-3 text-uppercase">Total</th>
                     <th class="col-xs-1">{{$total_qty}}</th>
                     <th class="col-xs-2"></th>
-                    <th class="col-xs-2 text-right"><span class="currency-symbol"></span>{{ number_format($total, 2) }}</th>
-                    <th class="col-xs-2 text-right">৳{{ number_format($total_tax, 2) }}</th>
-                    <th class="col-xs-2 text-right">{{ number_format($total_weight, 2) }} kg</th>
+                    <th class="col-xs-2 text-right"><span class="currency-symbol"></span>{{ numfmt_format(resolve('CurrencyFormatter'),$total, 2) }}</th>
+                    <th class="col-xs-2 text-right">৳{{ numfmt_format(resolve('CurrencyFormatter'),$total_tax, 2) }}</th>
+                    <th class="col-xs-2 text-right">{{ numfmt_format(resolve('CurrencyFormatter'),$total_weight, 2) }} kg</th>
                   </tr>
                 </thead>
               </table>
@@ -207,14 +207,14 @@
               <td class="col-xs-3">{{$expense->expense_notes}}</td>
               <td class="col-xs-2">৳{{$expense->expense_local}}</td>
               <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{$expense->expense_foreign}}</td>
-              <td class="col-xs-4 text-right">৳{{number_format($expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local,2)}}</td>
+              <td class="col-xs-4 text-right">৳{{numfmt_format(resolve('CurrencyFormatter'),$expense->expense_foreign*$consignment->exchange_rate+ $expense->expense_local)}}</td>
               </tr>
             @endforeach
               <tr class="strong">
                 <td colspan="3" class="col-xs-4 text-uppercase">Total</td>
-                <td class="col-xs-2">৳{{number_format($consignment->expense_local_total,2)}}</td>
-                <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{number_format($consignment->expense_foreign_total,2)}}</td>
-                <td class="col-xs-4 text-right">৳{{number_format($consignment->expense_grand_total,2)}}</td>
+                <td class="col-xs-2">৳{{numfmt_format(resolve('CurrencyFormatter'),$consignment->expense_local_total)}}</td>
+                <td class="col-xs-1 text-right"><span class="currency-symbol"></span>{{numfmt_format(resolve('CurrencyFormatter'),$consignment->expense_foreign_total)}}</td>
+                <td class="col-xs-4 text-right">৳{{numfmt_format(resolve('CurrencyFormatter'),$consignment->expense_grand_total)}}</td>
               </tr>
             </table>
             {{--<a href="/consignment_expenses/create/{{$consignment->BOL}}" class="btn btn-primary">Add an expense</a>--}}

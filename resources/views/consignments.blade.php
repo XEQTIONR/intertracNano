@@ -48,9 +48,9 @@
           <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
             <td class="text-center strong">{{$consignment->BOL}}</td>
             <td class="">{{$consignment->lc}}</td>
-            <td class="text-right">{{number_format($consignment->exchange_rate,2)}}</td>
-            <td class="text-right">{{number_format($consignment->value, 2)}}</td>
-            <td class="text-right">{{number_format($consignment->value * $consignment->exchange_rate,2)}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->exchange_rate)}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value)}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value * $consignment->exchange_rate)}}</td>
             <td class="text-right">{{$consignment->tax}}</td>
             <td class="text-center">{{$consignment->land_date}}</td>
             <td class="text-center">{{$consignment->created_at}}</td>

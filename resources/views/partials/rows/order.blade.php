@@ -43,7 +43,7 @@
         <td class="col-xs-2">{{ $item->qty }}</td>
         <td class="col-xs-2">৳ {{ $item->unit_price }}</td>
         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
-        <td class="col-xs-2 text-right">৳ {{ number_format(floatval($item->unit_price)* intval($item->qty), 2)}}</td>
+        <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),floatval($item->unit_price)* intval($item->qty))}}</td>
       </tr>
       @endforeach
       <tr>
@@ -51,7 +51,7 @@
         <td><b>Total</b></td>
         <td><b>{{$order->qtytotal}}</b></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->subtotal, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->subtotal)}}</b></td>
       </tr>
       @if($order->discounttotal>0)
       <tr>
@@ -68,7 +68,7 @@
           @endif
         </td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->discounttotal, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->discounttotal)}}</b></td>
       </tr>
       @endif
       @if($order->taxtotal>0)
@@ -86,7 +86,7 @@
           @endif
         </td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->taxtotal, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->taxtotal)}}</b></td>
       </tr>
       @endif
       <tr>
@@ -94,7 +94,7 @@
         <td class="text-uppercase"><b>Grand Total</b></td>
         <td></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->grandtotal, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->grandtotal)}}</b></td>
       </tr>
       </tbody>
     </table>
@@ -130,10 +130,10 @@
       <tr @if($payment->refund_amount>0) class="{{$class}}"   @endif>
         <td class="col-xs-1"> {{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
         <td class="col-xs-3 text-center"> {{ $payment->created_at  }}</td>
-        <td class="col-xs-2 text-right">৳ {{ number_format($payment->payment_amount, 2) }}</td>
-        <td class="col-xs-2 text-right">৳ {{ number_format($payment->refund_amount, 2) }}</td>
+        <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount) }}</td>
+        <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount) }}</td>
         <td class="col-xs-2"></td>
-        <td class="col-xs-2 text-right"><b>৳ {{ number_format($payment->balance, 2) }}</b></td>
+        <td class="col-xs-2 text-right"><b>৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->balance) }}</b></td>
       </tr>
       @endforeach
       </tbody>
@@ -171,7 +171,7 @@
           <td class="col-xs-2">{{ $item->qty }}</td>
           <td class="col-xs-2">৳ {{ $item->unit_price }}</td>
           {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
-          <td class="col-xs-2 text-right">৳ {{ number_format(floatval($item->unit_price)* intval($item->qty), 2)}}</td>
+          <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),floatval($item->unit_price)* intval($item->qty))}}</td>
         </tr>
       @endforeach
       <tr>
@@ -180,7 +180,7 @@
         <td></td>
         <td><b>{{$order->qtytotalReturn}}</b></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->subtotalReturn, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->subtotalReturn)}}</b></td>
       </tr>
       @if($order->discounttotalReturn>0)
       <tr>
@@ -189,7 +189,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->discounttotalReturn, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->discounttotalReturn)}}</b></td>
       </tr>
       @endif
       @if($order->taxtotalReturn>0)
@@ -199,7 +199,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->taxtotalReturn, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->taxtotalReturn)}}</b></td>
       </tr>
       @endif
       <tr>
@@ -208,7 +208,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td class="text-right"><b>৳ {{number_format($order->grandtotalReturn, 2)}}</b></td>
+        <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->grandtotalReturn)}}</b></td>
       </tr>
       </tbody>
     </table>

@@ -106,9 +106,9 @@
               <tr>
                 <td><b>({{$record->tyre->tyre_id}})</b> {{$record->tyre->brand}} {{$record->tyre->size}} {{$record->tyre->pattern}} {{$record->tyre->lisi}}</td>
                 <td>{{$record->qty}}</td>
-                <td><span class="currency-symbol mr-1"></span>{{number_format($record->unit_price,2)}}</td>
+                <td><span class="currency-symbol mr-1"></span>{{numfmt_format(resolve('CurrencyFormatter'),$record->unit_price)}}</td>
 
-                <td class="text-right"><span class="currency-symbol mr-1"></span>{{number_format($record->qty*$record->unit_price,2)}}</td>
+                <td class="text-right"><span class="currency-symbol mr-1"></span>{{numfmt_format(resolve('CurrencyFormatter'),$record->qty*$record->unit_price)}}</td>
               </tr>
             @endforeach
             @if($lc->total>0)
@@ -116,7 +116,7 @@
                 <td class="text-uppercase"><b> Total</b></td>
                 <td class="text-uppercase"><b>{{ $lc->totalqty }}</b></td>
                 <td></td>
-                <td class="text-right"><b><span class="currency-symbol mr-1"></span>{{ number_format($lc->total, 2) }}</b></td>
+                <td class="text-right"><b><span class="currency-symbol mr-1"></span>{{ numfmt_format(resolve('CurrencyFormatter'),$lc->total) }}</b></td>
               </tr>
             @endif
             </tbody>

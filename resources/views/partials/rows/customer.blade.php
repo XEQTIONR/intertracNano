@@ -40,9 +40,9 @@
           <td class="text-right">{{$row->discount_amount}}</td>
           <td>{{$row->tax_percentage}}</td>
           <td class="text-right">{{$row->tax_amount}}</td>
-          <td class="text-right">{{number_format($row->total,2)}}</td>
-          <td class="text-right">{{number_format($row->payments_total,2)}}</td>
-          <td class="text-right">{{number_format($row->total - $row->payments_total,2)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->payments_total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->total - $row->payments_total)}}</td>
         </tr>
         <?php
           $total_total+=$row->total;
@@ -57,9 +57,9 @@
           <td></td>
           <td></td>
           <td></td>
-          <td class="strong text-right">{{number_format($total_total,2)}}</td>
-          <td class="strong text-right">{{number_format($payments_total,2)}}</td>
-          <td class="strong text-right">{{number_format($balance_total,2)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$total_total)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payments_total)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$balance_total)}}</td>
         </tr>
         </tfoot>
       </tbody>
