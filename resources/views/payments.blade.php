@@ -80,10 +80,10 @@
                   {targets: [2,3], render : function(data, type, row){
 
                           if(type == "display")
-                            return data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            return data;
 
                           else
-                              return data;
+                              return data.replace(/,/g, '');
 
                       }}
               ],

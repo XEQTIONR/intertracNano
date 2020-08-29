@@ -598,8 +598,20 @@
 
     function customFormatDataTable(columns)
     {
+        let targets = columns.map( (item) => item.number);
+
         table = $('#table_id').DataTable({
             destroy : true,
+            columnDefs : [{
+                targets : targets,
+                render : function(data, type, row){
+                    if(type == "display")
+                        return data;
+
+                    else
+                        return data.replace(/,/g, '');
+                }
+            }],
 
             footerCallback : function(row, data, start, end, display){
                 var api = this.api();
