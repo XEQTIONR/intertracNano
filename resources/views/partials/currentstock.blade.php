@@ -9,7 +9,7 @@
 
 
     <th># in stock </th>
-    <th></th>
+    <th style="width: 5%"></th>
   </tr>
 </thead>
 <tbody>
@@ -22,7 +22,7 @@
       <td class="text-center">@{{item.lisi}}</td>
 
       <td class="text-center" :class="{'text-red' : helperStockLive(index)<0}">@{{helperStockLive(index)}}</td>
-      <td>
+      <td style="width: 5%">
         <a class="text-success" @click="add(index)">
           <i class="icon-plus-circle-s fa-plus-circle"></i>
         </a>

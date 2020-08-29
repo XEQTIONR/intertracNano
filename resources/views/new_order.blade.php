@@ -55,7 +55,7 @@
                  :enter-active-class="toggle? 'animated fadeInRight' : 'animated fadeInLeft'"
                  :leave-active-class="toggle? 'animated fadeOutLeft' : 'animated fadeOutRight'"
     >
-      <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-7">
+      <div v-if="toggle==false" :key="false" class="col-xs-12 col-md-6">
         <div class="box box-info">
           <div class="box-header">
             <h3 class="page-header ml-3"><i class="icon-dolly-s fa-dolly mr-3"></i>Enter new order information</h3>
@@ -457,7 +457,7 @@
                  enter-active-class="animated fadeIn delay-2s"
                  leave-active-class="animated fadeOut"
     >
-    <div v-show="toggle==false" class="col-xs-12 col-md-5">
+    <div v-show="toggle==false" class="col-xs-12 col-md-6">
       <div class="box box-default">
         <div class="box-header">
           <h3 class="page-header ml-3"><i class="icon-warehouse-s fa-warehouse mr-3"></i></i></i>Current Stock</h3>
