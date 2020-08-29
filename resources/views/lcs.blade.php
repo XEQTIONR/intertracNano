@@ -50,6 +50,15 @@
           </tr>
         @endforeach
         </tbody>
+        <tfoot>
+          <tr>
+            <th class="text-center" colspan="3"></th>
+            <th></th>
+            <th class="text-right"></th>
+            <th class="text-right"></th>
+            <th class="text-right text-red"></th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -60,6 +69,15 @@
 @section('footer-scripts')
   <script>
       $(document).ready(function() {
+
+
+        let options = [
+          { number : 4, prefix : "$ "},
+          { number : 5, prefix : "৳ "},
+          { number : 6, prefix : "৳ "},
+        ];
+
+        customFormatDataTable(options);
 
           table.order([7, 'desc'])
               .draw();

@@ -88,8 +88,7 @@
                       }}
               ],
               footerCallback : function(row, data, start, end, display){
-                  //console.log("FOOTER CALLBACK");
-                  //console.log(row);
+
                   var api = this.api(), data;
 
                   var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
@@ -105,7 +104,7 @@
                       .column( 2, {page: page} )
                       .data()
                       .reduce( function (a, b) {
-                          return parseFloat(a) + parseFloat(b);
+                          return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                       }, 0 );
 
 
@@ -113,7 +112,7 @@
                       .column( 3, {page: page} )
                       .data()
                       .reduce( function (a, b) {
-                          return parseFloat(a) + parseFloat(b);
+                          return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                       }, 0 );
 
                   var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
@@ -122,8 +121,8 @@
 
                   $( api.column( 0 ).footer() ).html(footer_label);
                   $( api.column( 1 ).footer() ).html(num_orders);
-                  $( api.column( 2 ).footer() ).html(number_format(total, 2));
-                  $( api.column( 3 ).footer() ).html(number_format(refund_total, 2));
+                  $( api.column( 2 ).footer() ).html(commafy(total));
+                  $( api.column( 3 ).footer() ).html(commafy(refund_total));
               }
           });
 

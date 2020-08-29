@@ -51,8 +51,8 @@
             <td class="col-xs-1">{{$customer->phone}}</td>
 {{--            <td>{{$customer->notes}}</td>--}}
             <td class="col-xs-1 text-center">{{$customer->number_of_orders}}</td>
-            <td class="col-xs-2 text-right">numfmt_format(resolve('CurrencyFormatter'),{{$customer->sum_grand_total}})</td>
-            <td class="col-xs-2 text-right">numfmt_format(resolve('CurrencyFormatter'),{{$customer->sum_payments_total}})</td>
+            <td class="col-xs-2 text-right">{{$customer->sum_grand_total}}</td>
+            <td class="col-xs-2 text-right">{{$customer->sum_payments_total}}</td>
             <td class="col-xs-1 text-right strong @if(floatval($customer->balance_total)>0) text-red @else text-green @endif">{{$customer->balance_total}}</td>
 
             {{--<td class="text-center">{{$customer->updated_at}}</td>--}}
@@ -266,11 +266,11 @@
                   {targets: [5,6,7], render : function(data, type, row){
 
                           if(type == "display")
-                          {
-                              if(!isNaN(parseFloat(data)))
-                                  return number_format(parseFloat(data), 2);
-                              return number_format(0, 2);
-                          }
+
+                              if(data == '')
+                                  return "0.00";
+                              else
+                                  return commafy(parseFloat(data));
                           else
                               return parseFloat(data);
 
@@ -290,7 +290,7 @@
                   }
               ],
               footerCallback : function(row, data, start, end, display){
-                  var api = this.api(), data;
+                  var api = this.api();
 
                   var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
 
@@ -300,6 +300,7 @@
                       .data()
                       .reduce( function (a, b) {
                           console.log('b = ' + typeof b);
+                          console.log('b = ' + b);
                           if(b == null || b=="")
                               return parseInt(a);
                           return parseInt(a) + parseInt(b);
@@ -309,10 +310,11 @@
                       .column( 5, {page: page} )
                       .data()
                       .reduce( function (a, b) {
-                          console.log('b = ' + typeof b);
+                          console.log('b => ' + typeof b);
+                          console.log('b = ' + b);
                           if(b == null || b=="")
                               return parseFloat(a);
-                          return parseFloat(a) + parseFloat(b);
+                          return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                       }, 0 );
 
                   var payments_total = api
@@ -321,7 +323,7 @@
                       .reduce( function (a, b) {
                           if(b == null || b=="")
                               return parseFloat(a);
-                          return parseFloat(a) + parseFloat(b);
+                          return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                       }, 0 );
 
 
@@ -340,9 +342,9 @@
 
                   $( api.column( 0 ).footer() ).html(footer_label);
                   $( api.column( 4 ).footer() ).html(parseInt(number_of_orders_total));
-                  $( api.column( 5 ).footer() ).html(number_format(total,2));
-                  $( api.column( 6 ).footer() ).html(number_format(payments_total, 2));
-                  $( api.column( 7 ).footer() ).html(number_format(balance_total, 2));
+                  $( api.column( 5 ).footer() ).html(commafy(total));
+                  $( api.column( 6 ).footer() ).html(commafy(payments_total));
+                  $( api.column( 7 ).footer() ).html(commafy(balance_total));
               }
           });
 

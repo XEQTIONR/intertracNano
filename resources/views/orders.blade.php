@@ -71,53 +71,13 @@
 
   $(document).ready(function() {
 
+      let options = [
+          { number : 4, prefix : "৳ "},
+          { number : 5, prefix : "৳ "},
+          { number : 6, prefix : "৳ "},
+      ];
 
-      table = $('#table_id').DataTable({
-          destroy : true,
-
-          footerCallback : function(row, data, start, end, display){
-              //console.log("FOOTER CALLBACK");
-              //console.log(row);
-              var api = this.api(), data;
-
-              var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
-
-
-              var total = api
-                  .column( 4, {page: page} )
-                  .data()
-                  .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
-                  }, 0 );
-
-              var payments_total = api
-                  .column( 5, {page: page} )
-                  .data()
-                  .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
-                  }, 0 );
-
-
-              var balance_total = api
-                  .column( 6, {page: page} )
-                  .data()
-                  .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
-                  }, 0 );
-
-              var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
-
-
-
-              $( api.column( 0 ).footer() ).html(footer_label);
-              $( api.column( 4 ).footer() ).html("৳  "+commafy(total));
-              $( api.column( 5 ).footer() ).html("৳  "+commafy(payments_total));
-              $( api.column( 6 ).footer() ).html("৳  "+commafy(balance_total));
-          }
-      });
-
-
-
+      customFormatDataTable(options);
 
 
 

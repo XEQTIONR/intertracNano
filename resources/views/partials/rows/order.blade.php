@@ -41,7 +41,7 @@
         <td class="col-xs-1">{{$i}}</td>
         <td class="col-xs-5"><b>({{ $item->tyre->tyre_id }})</b> {{ $item->tyre->brand }} {{ $item->tyre->size }} {{ $item->tyre->pattern }} {{ $item->tyre->lisi }}</td>
         <td class="col-xs-2">{{ $item->qty }}</td>
-        <td class="col-xs-2">৳ {{ $item->unit_price }}</td>
+        <td class="col-xs-2">৳ {{ numfmt_format(resolve('CurrencyFormatter'), $item->unit_price) }}</td>
         {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
         <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),floatval($item->unit_price)* intval($item->qty))}}</td>
       </tr>

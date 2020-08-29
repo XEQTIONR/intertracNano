@@ -595,6 +595,39 @@
         return split.join(".");
 
     }
+
+    function customFormatDataTable(columns)
+    {
+        table = $('#table_id').DataTable({
+            destroy : true,
+
+            footerCallback : function(row, data, start, end, display){
+                var api = this.api();
+
+                var page = $('.dataTables_filter input').val().length>0 ? 'current' : 'all';
+
+
+                for(let i=0; i<columns.length; i++)
+                {
+                    var total = api
+                        .column( columns[i].number, {page: page} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
+                        }, 0 );
+
+                    $( api.column( columns[i].number ).footer() ).html(columns[i].prefix+commafy(total));
+
+                }
+
+                var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
+
+
+
+                $( api.column( 0 ).footer() ).html(footer_label);
+            }
+        });
+    }
 </script>
 
 
