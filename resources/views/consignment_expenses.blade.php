@@ -31,8 +31,8 @@
   <tr>
     <td class="text-center">{{$expense->BOL}}</td>
     <td class="text-center">{{$expense->expense_id}}</td>
-    <td class="text-right">{{$expense->expense_foreign}}</td>
-    <td class="text-right">{{$expense->expense_local}}</td>
+    <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$expense->expense_foreign)}}</td>
+    <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$expense->expense_local)}}</td>
     <td>{{$expense->expense_notes}}</td>
     <td class="text-center">{{$expense->created_at}}</td>
     <td class="text-center">{{$expense->updated_at}}</td>

@@ -23,10 +23,10 @@
   <tr>
     <td class="col-xs-3"><b>({{$listing->tyre->tyre_id}})</b> {{$listing->tyre->brand}} {{$listing->tyre->size}} {{$listing->tyre->pattern}} {{$listing->tyre->lisi}}</td>
     <td class="col-xs-1">{{$listing->qty}}</td>
-    <td class="col-xs-2">{{number_format($listing->unit_price,2)}}</td>
-    <td class="col-xs-2">{{number_format($listing->qty * $listing->unit_price,2)}}</td>
-    <td class="col-xs-2">{{number_format($listing->total_tax,2)}}</td>
-    <td class="col-xs-2">{{number_format($listing->total_weight,2)}}</td>
+    <td class="col-xs-2">{{numfmt_format(resolve('CurrencyFormatter'),$listing->unit_price)}}</td>
+    <td class="col-xs-2">{{numfmt_format(resolve('CurrencyFormatter'),$listing->qty * $listing->unit_price)}}</td>
+    <td class="col-xs-2">{{numfmt_format(resolve('CurrencyFormatter'),$listing->total_tax)}}</td>
+    <td class="col-xs-2">{{numfmt_format(resolve('CurrencyFormatter'),$listing->total_weight)}}</td>
   </tr>
   <?php
   $total+= (floatval($listing->unit_price) * floatval($listing->qty));
@@ -42,9 +42,9 @@
     <td class="col-xs-3 text-uppercase"> TOTAL </td>
     <td class="col-xs-1"> {{$total_qty}} </td>
     <td class="col-xs-2"> </td>
-    <td class="col-xs-2"> {{number_format($total, 2)}} </td>
-    <td class="col-xs-2"> {{number_format($total_tax, 2)}} </td>
-    <td class="col-xs-2"> {{number_format($total_weight, 2)}} </td>
+    <td class="col-xs-2"> {{numfmt_format(resolve('CurrencyFormatter'),$total)}} </td>
+    <td class="col-xs-2"> {{numfmt_format(resolve('CurrencyFormatter'),$total_tax)}} </td>
+    <td class="col-xs-2"> {{numfmt_format(resolve('CurrencyFormatter'),$total_weight)}} </td>
   </tr>
   </tbody>
 </table>

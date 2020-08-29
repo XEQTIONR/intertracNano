@@ -48,10 +48,10 @@
           <tr style="cursor: pointer;" onclick="location.href='/consignments/{{$consignment->BOL}}'">
             <td class="text-center strong">{{$consignment->BOL}}</td>
             <td class="">{{$consignment->lc}}</td>
-            <td class="text-right">{{number_format($consignment->exchange_rate,2)}}</td>
-            <td class="text-right">{{number_format($consignment->value, 2)}}</td>
-            <td class="text-right">{{number_format($consignment->value * $consignment->exchange_rate,2)}}</td>
-            <td class="text-right">{{$consignment->tax}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->exchange_rate)}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value)}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value * $consignment->exchange_rate)}}</td>
+            <td class="text-right text-red">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->tax)}}</td>
             <td class="text-center">{{$consignment->land_date}}</td>
             <td class="text-center">{{$consignment->created_at}}</td>
             {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}
@@ -72,6 +72,17 @@
           </tr>
         @endforeach
         </tbody>
+        <tfoot>
+        <tr>
+          <th class="text-center" colspan="3"></th>
+          <th class="text-right"></th>
+          <th class="text-right"></th>
+          <th class="text-right text-red"></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -82,6 +93,14 @@
 @section('footer-scripts')
 <script>
   $(document).ready(function() {
+
+    let options = [
+      { number : 3, prefix : "$ "},
+      { number : 4, prefix : "৳ "},
+      { number : 5, prefix : "৳ "},
+    ];
+
+    customFormatDataTable(options);
 
       table.order([7, 'desc'])
           .draw();

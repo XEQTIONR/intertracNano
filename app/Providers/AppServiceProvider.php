@@ -135,6 +135,14 @@ class AppServiceProvider extends ServiceProvider
           return collect($customers);
         });
 
+        app()->singleton('CurrencyFormatter', function(){
+            $fmt = numfmt_create( 'en_IN', \NumberFormatter::DECIMAL );
+            $fmt->setAttribute(\NumberFormatter::MIN_FRACTION_DIGITS, 2);
+            $fmt->setAttribute(\NumberFormatter::MAX_FRACTION_DIGITS, 2);
+            //$fmt->setSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL, "’");
+            return $fmt;
+        });
+
 
 
     }

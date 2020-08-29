@@ -35,9 +35,9 @@
 {{--      <td class="text-right">{{$order->discount_amount}}</td>--}}
 {{--      <td class="text-right">{{$order->tax_percentage}}</td>--}}
 {{--      <td class="text-right">{{$order->tax_amount}}</td>--}}
-      <td class="text-right">{{$total}}</td>
-      <td class="text-right">{{$order->payments_total}}</td>
-      <td class="text-right strong @if(floatval($total - $order->payments_total)>0) text-red @else text-green @endif">{{$total - $order->payments_total}}</td>
+      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),floatval($total))}}</td>
+      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),floatval($order->payments_total))}}</td>
+      <td class="text-right strong @if(floatval($total - $order->payments_total)>0) text-red @else text-green @endif">{{numfmt_format(resolve('CurrencyFormatter'),($total - $order->payments_total))}}</td>
       <td class="">
         @if($order->payments_total == 0)
           <span class="label label-danger"><i class="fa fa-times mr-1"></i> No payments</span>

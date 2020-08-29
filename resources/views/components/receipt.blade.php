@@ -86,7 +86,7 @@
                   <td class="col-xs-2">{{ $item->qty }}</td>
                   <td class="col-xs-2">৳ {{ $item->unit_price }}</td>
                   {{--<td class="col-xs-2"> @{{ parseFloat(item.unit_price)* parseInt(item.qty) / parseFloat(subTotal) |percentage_rounded}}</td>--}}
-                  <td class="col-xs-2 text-right pr-5">৳ {{ number_format(floatval($item->unit_price)* intval($item->qty), 2, ".", "")}}</td>
+                  <td class="col-xs-2 text-right pr-5">৳ {{ numfmt_format(resolve('CurrencyFormatter'),floatval($item->unit_price)* intval($item->qty))}}</td>
                 </tr>
               @endforeach
               <tr class="warning">
@@ -94,7 +94,7 @@
                 <td><b>Total</b></td>
                 <td><b>{{$order->qtytotal}}</b></td>
                 <td></td>
-                <td class="text-right pr-5">৳ {{number_format($order->subtotal, 2, ".", "")}}</td>
+                <td class="text-right pr-5">৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->subtotal)}}</td>
               </tr>
 
               </tbody>
@@ -117,7 +117,7 @@
                 <tbody>
                 <tr>
                   <th style="width: 60%;" colspan="2">Total:</th>
-                  <td class="text-right">৳ {{number_format($order->subtotal, 2,".","")}}</td>
+                  <td class="text-right">৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->subtotal)}}</td>
                   <td></td>
                 </tr>
                 <tr
@@ -138,7 +138,7 @@
 
                   </th>
                   <td><i class="fa fa-plus mr-2"></i></td>
-                  <td class="text-right">৳ {{number_format($order->taxtotal,2,".","") }}</td>
+                  <td class="text-right">৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->taxtotal) }}</td>
                   <td></td>
                 </tr>
                 <tr>
@@ -153,12 +153,12 @@
                     @endif
                   </th>
                   <td><i class="fa fa-minus mr-2"></i></td>
-                  <td class="text-right">৳ {{number_format($order->discounttotal, 2,".","")}}</td>
+                  <td class="text-right">৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->discounttotal)}}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <th colspan="2" style="border-top: 1px solid #bbb;">Grand Total:</th>
-                  <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ {{number_format($order->grandtotal, 2,".","")}}</b></td>
+                  <td class="text-right" style="border-top: 1px solid #bbb;"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->grandtotal)}}</b></td>
                   <td></td>
                 </tr>
                 </tbody>
