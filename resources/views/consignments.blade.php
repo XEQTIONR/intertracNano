@@ -51,7 +51,7 @@
             <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->exchange_rate)}}</td>
             <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value)}}</td>
             <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->value * $consignment->exchange_rate)}}</td>
-            <td class="text-right">{{$consignment->tax}}</td>
+            <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$consignment->tax)}}</td>
             <td class="text-center">{{$consignment->land_date}}</td>
             <td class="text-center">{{$consignment->created_at}}</td>
             {{--<td class="text-center">{{$consignment->updated_at}}</td>--}}

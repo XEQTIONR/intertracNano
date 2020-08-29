@@ -72,22 +72,9 @@
   $(document).ready(function() {
 
 
-
-
-
       table = $('#table_id').DataTable({
           destroy : true,
-          columnDefs :[
-              {targets: [4,5,6], render : function(data, type, row){
 
-                      if(type == "display")
-                          return number_format(parseFloat(data), 2);
-
-                      else
-                          return data;
-
-                  }}
-          ],
           footerCallback : function(row, data, start, end, display){
               //console.log("FOOTER CALLBACK");
               //console.log(row);
@@ -100,14 +87,14 @@
                   .column( 4, {page: page} )
                   .data()
                   .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b);
+                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                   }, 0 );
 
               var payments_total = api
                   .column( 5, {page: page} )
                   .data()
                   .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b);
+                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                   }, 0 );
 
 
@@ -115,7 +102,7 @@
                   .column( 6, {page: page} )
                   .data()
                   .reduce( function (a, b) {
-                      return parseFloat(a) + parseFloat(b);
+                      return parseFloat(a) + parseFloat(b.replace(/,/g, ''));
                   }, 0 );
 
               var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
@@ -123,9 +110,9 @@
 
 
               $( api.column( 0 ).footer() ).html(footer_label);
-              $( api.column( 4 ).footer() ).html(number_format(total,2));
-              $( api.column( 5 ).footer() ).html(number_format(payments_total, 2));
-              $( api.column( 6 ).footer() ).html(number_format(balance_total, 2));
+              $( api.column( 4 ).footer() ).html("৳  "+commafy(total));
+              $( api.column( 5 ).footer() ).html("৳  "+commafy(payments_total));
+              $( api.column( 6 ).footer() ).html("৳  "+commafy(balance_total));
           }
       });
 

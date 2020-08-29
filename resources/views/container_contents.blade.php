@@ -22,9 +22,9 @@
       <td>{{$content->BOL}}</td>
       <td>{{$content->tyre_id}}</td>
       <td>{{$content->qty}}</td>
-      <td>{{$content->unit_price}}</td>
+      <td>{{numfmt_format(resolve('CurrencyFormatter'),$content->unit_price}})</td>
       <td>{{$content->total_weight}}</td>
-      <td>{{$content->total_tax}}</td>
+      <td>numfmt_format(resolve('CurrencyFormatter'),{{$content->total_tax}})</td>
       <td>{{$content->created_at}}</td>
       <td>{{$content->updated_at}}</td>
     </tr>

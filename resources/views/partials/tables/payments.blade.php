@@ -13,8 +13,8 @@
     <tr>
       <td class="text-center strong">{{ str_pad($payment->transaction_id, 10, "0", STR_PAD_LEFT) }}</td>
       <td class="text-center">{{$payment->Order_num}}</td>
-      <td class="text-right">{{$payment->payment_amount}}</td>
-      <td class="text-right">{{$payment->refund_amount}}</td>
+      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount)}}</td>
+      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount)}}</td>
       <td class="text-center">{{$payment->created_at}}</td>
     </tr>
   @endforeach

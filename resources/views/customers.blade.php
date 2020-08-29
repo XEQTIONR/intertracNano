@@ -51,8 +51,8 @@
             <td class="col-xs-1">{{$customer->phone}}</td>
 {{--            <td>{{$customer->notes}}</td>--}}
             <td class="col-xs-1 text-center">{{$customer->number_of_orders}}</td>
-            <td class="col-xs-2 text-right">{{$customer->sum_grand_total}}</td>
-            <td class="col-xs-2 text-right">{{$customer->sum_payments_total}}</td>
+            <td class="col-xs-2 text-right">numfmt_format(resolve('CurrencyFormatter'),{{$customer->sum_grand_total}})</td>
+            <td class="col-xs-2 text-right">numfmt_format(resolve('CurrencyFormatter'),{{$customer->sum_payments_total}})</td>
             <td class="col-xs-1 text-right strong @if(floatval($customer->balance_total)>0) text-red @else text-green @endif">{{$customer->balance_total}}</td>
 
             {{--<td class="text-center">{{$customer->updated_at}}</td>--}}

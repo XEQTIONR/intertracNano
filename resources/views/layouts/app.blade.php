@@ -565,6 +565,36 @@
     } );
 
     //console.log("CURRENCY : " + currencies.BDT);
+
+    function commafy(number)
+    {
+        let str = "" + number.toFixed(2);
+        let split = str.split(".");
+
+        let whole = split[0].split("").reverse().join("");
+
+        let spaces = [3,2,2];
+
+        let output = ""
+
+        let l = 0;
+        let i = 0;
+
+        while(l<whole.length)
+        {
+            output = output + whole.substr(l, spaces[i])+',';
+
+            l = l+ spaces[i];
+            i = (i+1) % spaces.length
+
+        }
+
+        split[0] = output.substr(0, output.length-1).split("").reverse().join("");
+
+
+        return split.join(".");
+
+    }
 </script>
 
 
