@@ -640,7 +640,7 @@
     }
     //<!-- Vue Filters -->
     Vue.filter('currency', function (value) {
-        return parseFloat(value).toFixed(2);
+        return commafy(parseFloat(value));
     });
 
     Vue.filter('percentage_rounded', function (value) {
