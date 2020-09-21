@@ -40,12 +40,12 @@
           <td class="text-right">{{$row->discount_amount}}</td>
           <td>{{$row->tax_percentage}}</td>
           <td class="text-right">{{$row->tax_amount}}</td>
-          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->grand_total)}}</td>
           <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->payments_total)}}</td>
-          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->total - $row->payments_total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->balance)}}</td>
         </tr>
         <?php
-          $total_total+=$row->total;
+          $total_total+=$row->grand_total;
           $payments_total+= $row->payments_total;
           $balance_total+= ($row->total - $row->payments_total);
         ?>
@@ -89,9 +89,9 @@
           <tr>
             <td>{{$payment->transaction_id}}</td>
             <td>{{$payment->Order_num}}</td>
-            <td>{{$payment->payment_amount}}</td>
-            <td>{{$payment->refund_amount}}</td>
-            <td>{{date('d/m/Y',strtotime($payment->created_at))}}</td>
+            <td>{{numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount)}}</td>
+            <td>{{numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount)}}</td>
+            <td>{{$payment->payment_on}}</td>
           </tr>
         @endforeach
       </tbody>
