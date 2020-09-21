@@ -47,7 +47,7 @@
         <?php
           $total_total+=$row->grand_total;
           $payments_total+= $row->payments_total;
-          $balance_total+= ($row->total - $row->payments_total);
+          $balance_total+= ($total_total - $payments_total);
         ?>
         @endforeach
         <tfoot>
