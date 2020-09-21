@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +17,7 @@
 
 Route::get('/', function()
 {
-  return view('welcome');
+  return view('welcome', ['now' => \Carbon\Carbon::now()]);
 })->middleware('auth')->name('home');
 
 Route::get('/admin-test', function(){
