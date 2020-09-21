@@ -23,6 +23,11 @@ class Payment extends Model
       return $this->payment_amount - $this->refund_amount;
     }
 
+    public function getPaymentOnAttribute()
+    {
+      return $this->created_at->format('d/m/Y');
+    }
+
     public static function paymentsInMonth($month, $year)
     {
       $payments = DB::table('payments')

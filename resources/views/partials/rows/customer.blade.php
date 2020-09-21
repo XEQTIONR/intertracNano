@@ -91,7 +91,7 @@
             <td>{{$payment->Order_num}}</td>
             <td>{{numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount)}}</td>
             <td>{{numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount)}}</td>
-            <td>{{date('d/m/Y',strtotime($payment->created_at))}}</td>
+            <td>{{$payment->payment_on}}</td>
           </tr>
         @endforeach
       </tbody>
