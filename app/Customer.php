@@ -13,4 +13,9 @@ class Customer extends Model
       return $this->hasMany('App\Order', 'customer_id');
     }
 
+    public function payments()
+    {
+      return $this->hasManyThrough('App\Payment', 'App\Order', 'customer_id', 'Order_num');
+    }
+
 }

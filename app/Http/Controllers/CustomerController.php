@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -90,18 +91,29 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //
-      $query = OrderController::QUERY. ' WHERE customer_id='.$customer->id;
+      $ret = $customer->orders()->with('payments', 'orderContents')->get();
 
-      $ret =  DB::select($query);
 
-      $payments = DB::select('SELECT P.*
-                               FROM payments P INNER JOIN orders O ON P.Order_num = O.Order_num
-                                                INNER JOIN customers C ON O.customer_id = C.id 
-                               WHERE O.customer_id='.$customer->id.'
-                               ORDER BY P.created_at DESC
-                               LIMIT 10');
-//
-        return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
+      $ret->each(function($order) {
+          $total = $order->payments->reduce(function($carry, $payment){
+            return $carry + $payment->amount;
+          }, 0);
+          $order->payments_total = $total;
+
+          $total = $order->orderContents->reduce(function($carry, $item){
+              return $carry + ($item->qty * $item->unit_price);
+          }, 0);
+          $order->sub_total = $total;
+
+          $order->discount_total = ($order->sub_total* $order->discount_percent/100.0) + $order->discount_amount;
+          $order->tax_total = ($order->sub_total* $order->tax_percentage) + $order->tax_amount;
+          $order->grand_total = $order->sub_total + $order->tax_total - $order->discount_total;
+          $order->balance = $order->grand_total - $order->payments_total;
+      });
+
+      $payments = $customer->payments()->orderBy('created_at', 'desc')->limit(10)->get();
+      
+      return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
     }
 
     public function apiShow(Request $request){
