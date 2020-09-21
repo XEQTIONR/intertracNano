@@ -8,11 +8,19 @@ use Carbon\Carbon;
 class Payment extends Model
 {
     //
+
+    protected $appends = ['amount'];
+
     public $primaryKey = 'transaction_id';
 
     public function order()
     {
       return $this->belongsTo('App\Order','Order_num');
+    }
+
+    public function getAmountAttribute()
+    {
+      return $this->payment_amount - $this->refund_amount;
     }
 
     public static function paymentsInMonth($month, $year)
