@@ -17,7 +17,8 @@
     <table class="table table-bordered">
       <thead>
       <tr>
-        <th>Order_num</th>
+        <th>Order#</th>
+        <th>Order Date</th>
         <th>Discount %</th>
         <th class="text-right">Discount Amount</th>
         <th>Tax %</th>
@@ -36,6 +37,7 @@
         @foreach($ret as $row)
         <tr>
           <td>{{$row->Order_num}}</td>
+          <td>{{$row->order_on}}</td>
           <td>{{$row->discount_percent}}</td>
           <td class="text-right">{{$row->discount_amount}}</td>
           <td>{{$row->tax_percentage}}</td>
