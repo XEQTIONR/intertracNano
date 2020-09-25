@@ -25,7 +25,7 @@
           <th>LC#</th>
           <th>Date Issued</th>
           <th>Date Expiry</th>
-          <th>Exchange Rate (/&#2547)</th>
+          <th>Exchange Rate (&#2547/$)</th>
 
           <th>LC Value($)</th>
           <th>LC Value(&#2547)</th>

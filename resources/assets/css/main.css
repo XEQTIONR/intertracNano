@@ -377,6 +377,13 @@ a .fab {
 .border-bottom-header {
   border-bottom: 1px solid #ddd;
 }
+.bg-transparent {
+  background: transparent !important;
+}
+.flex-wrap {
+  -ms-flex-wrap: wrap !important;
+      flex-wrap: wrap !important;
+}
 [v-cloak] {
   display: none;
 }

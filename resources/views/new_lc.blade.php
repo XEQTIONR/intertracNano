@@ -41,11 +41,8 @@
     <div v-cloak class="row justify-content-center">
       <transition  name="custom-classes-transition"
                   mode="out-in"
-                  {{--enter-class = "mimi"--}}
                    :enter-active-class="direction? 'animated fadeInRight ' : 'animated fadeInLeft '"
                    :leave-active-class="direction? 'animated fadeOutLeft ' : 'animated fadeOutRight '"
-                   {{--enter-active-class="animated fadeInRight fast"--}}
-                   {{--leave-active-class="animated fadeOutLeft fast"--}}
       >
         <div  v-if="showForm == 0" key="0" class="col-xs-12 col-md-6">
 
@@ -251,12 +248,6 @@
                   </div>
 
 
-                  <!-- /.input group -->
-
-                  {{--<label for="LcNumber" class="col-md-3 col-md-offset-2 control-label">LC#  <small>F20</small></label>--}}
-                  {{--<div class="col-md-3">--}}
-                  {{--<input type="text" class="form-control" name="LcNumber" id="inputLCnum" value="{{old('LcNumber')}}" required>--}}
-                  {{--</div>--}}
                 </div>
               </form>
 
@@ -264,18 +255,7 @@
             </div>
           </div>
         </div>
-        {{--</transition>--}}
-        {{--<transition name="custom-classes-transition" enter-active-class="animated zoomin" leave-active-class="animated fadeOutRight">--}}
         <div  v-if="showForm == 1" key="1"  class="col-xs-7">
-          {{--<div class="col-xs-7">--}}
-            {{--<div class="box">--}}
-              {{--<button @click="add()">Click Me!</button>--}}
-              {{--<transition-group name="list" tag="div">--}}
-                {{--<span v-for="item in jaitems" class="list-item" :key="item.id">--}}
-                  {{--@{{ item.name }}--}}
-                {{--</span>--}}
-              {{--</transition-group>--}}
-            {{--</div>--}}
             <div class="box box-primary">
               <div class="box-header">
                 <h3 class="page-header ml-3"><i class="icon-receipt-r fa-receipt mr-3"></i> Enter Proforma Invoice</h3>
@@ -288,9 +268,7 @@
 
                       <div class="form-group" :class="{ 'has-error' :  errors.invoice_num }">
                         <label>Invoice #</label>
-                        {{--<div class="input-group">--}}
                           <input v-model="invoice_num" type="text" class="form-control" placeholder="Enter the proforma invoice #">
-                        {{--</div>--}}
                         <span v-if=" errors.invoice_num" class="help-block text-danger">@{{ errors.invoice_num }}</span>
                       </div>
                     </div>
@@ -305,23 +283,15 @@
                     <div  class="col-xs-2 text-right"><strong>Sub Total</strong></div>
                     <div class="col-xs-1"></div>
                   </div>
-                  {{--<ol class="table ">--}}
 
-
-                    {{--<tbody>--}}
                     <transition-group  name="custom-classes-transition"
-                                       {{--tag="ol"--}}
-                                       {{--mode="out-in"--}}
-                                 {{--enter-class = "mimi"--}}
                                  enter-active-class="animated fadeInDown"
-                                 {{--enter-class="animated tada"--}}
                                  leave-active-class="animated fadeOutUp  "
                     >
                     <div v-if="!proforma_invoice.length" key="default" class="row list-item justify-content-center my-4">
                       <span class="text-center "> Nothing in the proforma invoice yet</span>
                     </div>
                     <div class="row list-item pt-4" :class="{'bg-light-gray' : !(index%2)}" v-for="(item,index) in proforma_invoice" :key="item.tyre_id" >
-                      {{--<div class="row">--}}
                       <div class="col-xs-1 text-center">
                         @{{ index+1 }}
                       </div>
@@ -342,7 +312,6 @@
                           <i class="icon-minus-circle-s fa-minus-circle mt-1"></i>
                         </a>
                       </div>
-                      {{--</div>--}}
                     </div>
                     </transition-group>
                     <div class="row list-item pt-2 border-light-gray">
@@ -370,10 +339,6 @@
                         @{{ total_qty }}
                       </div>
                     </div>
-
-
-                    {{--</tbody>--}}
-                  {{--</ol>--}}
                 </form>
                 <button type="button" class="btn btn-default" @click="toggle(false)">
                   <i class="fa fa-chevron-left pt-1 mr-2"></i>
@@ -486,8 +451,6 @@
                 </div>
               </div>
               <div class="col-xs-6">
-                {{--<p class="lead">Amount Due 2/22/2014</p>--}}
-
                 <div class="table-responsive mt-5 pt-3">
                   <table class="table">
                     <tbody><tr>
@@ -690,7 +653,7 @@
                 if(new_val.length>5)
                 {
                     app.is_verifying = true;
-                    $.post("{{route('lcs.check')}}",
+                    $.post("{{route('api.lcs.check')}}",
                         {
                             "_token" : "{{csrf_token()}}",
                             "lc_num" : this.lc_num,

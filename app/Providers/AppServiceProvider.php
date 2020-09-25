@@ -90,20 +90,13 @@ class AppServiceProvider extends ServiceProvider
         
         ');
 
-
-
-
-        //         ->get();
-
-        //dd($remaining->toSql());
-
         return collect($remaining);
 
       });
 
-        app()->bind('CustomersWithOwing', function(){
+        app()->bind('CustomersOwingSQL', function(){
 
-          $customers = DB::select('
+          $customers = '
             
             SELECT C.*, B.*, (B.sum_grand_total - B.sum_payments_total) AS balance_total
             FROM customers C LEFT JOIN
@@ -129,10 +122,31 @@ class AppServiceProvider extends ServiceProvider
             GROUP BY customer_id) B
             
             ON C.id = B.customer_id
+            
+            ORDER BY balance_total DESC
           
-          ');
+          ';
 
-          return collect($customers);
+          return $customers;
+        });
+
+        app()->bind('OrdersSummarySQL', function(){
+            return
+              'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total, IFNULL(P.count,0) AS num_payments 
+                FROM  (SELECT O.*, D.total, C.name 
+                        FROM (SELECT B.Order_num, SUM(B.multiply) as total 
+                                FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
+                                        FROM order_contents C) AS B 
+                                        GROUP BY B.Order_num) D, orders O, customers C 
+                                WHERE D.Order_num = O.Order_num 
+                                AND O.customer_id = C.id) T
+          
+                LEFT JOIN
+                (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total, COUNT(*) AS count 
+                  FROM payments 
+                  GROUP BY Order_num) AS P
+          
+                  ON T.Order_num = P.Order_num';
         });
 
         app()->singleton('CurrencyFormatter', function(){

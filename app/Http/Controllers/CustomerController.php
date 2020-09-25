@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Validator;
+use DB;
+
 class CustomerController extends Controller
 {
     /**
@@ -19,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        $customers = resolve('CustomersWithOwing');
+        $customers = DB::select(resolve('CustomersOwingSQL'));
 
         return view('customers',['customers'=>$customers]);
 
@@ -91,10 +91,14 @@ class CustomerController extends Controller
     public function show(Customer $customer)
     {
         //
-      $ret = $customer->orders()->with('payments', 'orderContents')->get();
+      $orders = $customer->orders()->with('payments', 'orderContents')->get();
 
+      $totals = new \stdClass();
+      $totals->total = 0;
+      $totals->payments = 0;
+      $totals->balance = 0;
 
-      $ret->each(function($order) {
+      $orders->each(function($order) use ($totals) {
           $total = $order->payments->reduce(function($carry, $payment){
             return $carry + $payment->amount;
           }, 0);
@@ -109,11 +113,15 @@ class CustomerController extends Controller
           $order->tax_total = ($order->sub_total* $order->tax_percentage) + $order->tax_amount;
           $order->grand_total = $order->sub_total + $order->tax_total - $order->discount_total;
           $order->balance = $order->grand_total - $order->payments_total;
+
+          $totals->total += $order->grand_total;
+          $totals->payments+= $order->payments_total;
+          $totals->balance += $order->balance;
       });
 
       $payments = $customer->payments()->orderBy('created_at', 'desc')->limit(10)->get();
       
-      return view('partials.rows.customer', compact('customer', 'ret', 'payments'));
+      return view('partials.rows.customer', compact('customer', 'orders', 'payments', 'totals'));
     }
 
     public function apiShow(Request $request){

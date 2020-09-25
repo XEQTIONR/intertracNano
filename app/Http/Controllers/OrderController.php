@@ -13,28 +13,9 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
-    const QUERY =
-     'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total 
-      FROM  (SELECT O.*, D.total, C.name 
-            FROM (SELECT B.Order_num, SUM(B.multiply) as total 
-                  FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
-                        FROM order_contents C) AS B 
-                  GROUP BY B.Order_num) D, orders O, customers C 
-            WHERE D.Order_num = O.Order_num 
-                AND O.customer_id = C.id) T
-          
-      LEFT JOIN
-        (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total 
-        FROM payments 
-        GROUP BY Order_num) AS P
-          
-        ON T.Order_num = P.Order_num';
+
+
 
     public function __construct()
     {
@@ -74,10 +55,15 @@ class OrderController extends Controller
       return $qty_remain;
 
     }
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
     public function index()
     {
         //
-        $orders = DB::select(self::QUERY);
+        $orders = DB::select(resolve('OrdersSummarySQL'));
 
         //return $in_stock;
         //dd(DB::getQueryLog());

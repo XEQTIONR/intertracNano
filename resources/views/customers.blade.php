@@ -153,9 +153,6 @@
 
           $.ajax( {
               url: '/customers/'+rowData[0],
-              // data: {
-              //     order : rowData[0]
-              // },
               dataType: 'text',
               success: function ( view ) {
                   console.log('successed');
@@ -164,7 +161,6 @@
                       .html( view )
                       .removeClass( 'loading' );
 
-                  //div.addClass('zeload');
 
               },
 
@@ -182,14 +178,12 @@
       }
 
       function startEdit(customer_id){
-          console.log("EDIT CUSTOMER CALLED :"+customer_id);
 
-          //$('#modalForm').show();
           $('#modalForm').modal();
           $('.spinner-container').show();
           $('.form').hide();
           $.ajax({
-              url: '{{route('customers.apiShow')}}',
+              url: '{{route('api.customers')}}',
               method: "POST",
               data : {
                   _token : "{{csrf_token()}}",
@@ -199,7 +193,6 @@
               success : function(data){
                   console.log("success editCustomer");
                   console.log(data);
-                  //$('#modalForm').show();
 
                   $('#customer_id').val(data.id);
                   $('#name').val(data.name);
@@ -210,8 +203,6 @@
                   $('.form').show();
 
               },
-              // error: function(xhr, status, error) {
-              //     var err = eval("(" + xhr.responseText + ")");
               error : function(error){
                   console.log("ERROR editCustomer");
                   console.log(error);
@@ -224,7 +215,6 @@
       }
 
       function finishEdit(){
-          console.log("FINISH EDIT CALLED");
 
           var data = {
               _token : "{{csrf_token()}}",
@@ -237,7 +227,7 @@
           console.log(data);
 
           $.ajax({
-              url: '{{route('customers.apiUpdate')}}',
+              url: '{{route('api.customers.update')}}',
               method: "POST",
               data : data,
               success : function(data){
@@ -394,9 +384,6 @@
               });
           })
 
-          //$('#modalForm').modal();
-          //$('#modalForm').hide();
-          //$('#name').val('Some val');
       } );
 
 
