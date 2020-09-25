@@ -29,28 +29,18 @@
       </tr>
       </thead>
       <tbody>
-        <?php
-          $total_total = 0;
-          $payments_total = 0;
-          $balance_total = 0;
-        ?>
-        @foreach($ret as $row)
+        @foreach($orders as $order)
         <tr>
-          <td>{{$row->Order_num}}</td>
-          <td>{{$row->order_on}}</td>
-          <td>{{$row->discount_percent}}</td>
-          <td class="text-right">{{$row->discount_amount}}</td>
-          <td>{{$row->tax_percentage}}</td>
-          <td class="text-right">{{$row->tax_amount}}</td>
-          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->grand_total)}}</td>
-          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->payments_total)}}</td>
-          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$row->balance)}}</td>
+          <td>{{$order->Order_num}}</td>
+          <td>{{$order->order_on}}</td>
+          <td>{{$order->discount_percent}}</td>
+          <td class="text-right">{{$order->discount_amount}}</td>
+          <td>{{$order->tax_percentage}}</td>
+          <td class="text-right">{{$order->tax_amount}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->grand_total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->payments_total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->balance)}}</td>
         </tr>
-        <?php
-          $total_total+=$row->grand_total;
-          $payments_total+= $row->payments_total;
-          $balance_total+= $row->balance;
-        ?>
         @endforeach
         <tfoot>
         <tr>
@@ -59,9 +49,10 @@
           <td></td>
           <td></td>
           <td></td>
-          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$total_total)}}</td>
-          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payments_total)}}</td>
-          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$balance_total)}}</td>
+          <td></td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->total)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->payments)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->balance)}}</td>
         </tr>
         </tfoot>
       </tbody>
