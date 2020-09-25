@@ -11,14 +11,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('/', 'WelcomeController@show');
 
-//Route::get('test', 'WelcomeController@show');
-
-Route::get('/', function()
-{
-  return view('welcome', ['now' => \Carbon\Carbon::now()]);
-})->middleware('auth')->name('home');
+Route::get('/', 'MiscController@welcome')->middleware('auth')->name('home');
 
 Route::get('/admin-test', function(){
 

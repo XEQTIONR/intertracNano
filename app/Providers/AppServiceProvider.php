@@ -90,13 +90,6 @@ class AppServiceProvider extends ServiceProvider
         
         ');
 
-
-
-
-        //         ->get();
-
-        //dd($remaining->toSql());
-
         return collect($remaining);
 
       });
@@ -132,7 +125,7 @@ class AppServiceProvider extends ServiceProvider
           
           ');
 
-          return collect($customers);
+          return $customers;
         });
 
         app()->singleton('CurrencyFormatter', function(){

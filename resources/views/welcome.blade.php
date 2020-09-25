@@ -9,9 +9,10 @@
   <h2>Welcome to <b>nanoDB</b></h2>
   <p>Stock and accounting tool for Intertrac Nano</p>
   <p>Current version : <b>{{ config('app.version') }}</b></p>
-
+  <p>
   <span>Server Time : <b>{{$now->toDayDateTimeString()}}</b></span> <br>
   <span>Local Time : <b v-cloak id="app">@{{ date_string }}</b></span>
+  </p>
 @endsection
 
 

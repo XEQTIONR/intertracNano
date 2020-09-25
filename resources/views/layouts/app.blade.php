@@ -537,17 +537,6 @@
 {{--<script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>--}}
 
 <script>
-
-    var target = document.querySelector('.content-wrapper');
-
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutationRecord) {
-            $('.content-wrapper').css('min-height', '100vh');
-        });
-    });
-
-    observer.observe(target, { attributes : true });
-
     var table;
     $(".date").text(function(index, text){
 
