@@ -13,13 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::middleware('auth')->group(function(){
+Route::prefix('api')
+      ->name('api.')
+      ->middleware('auth')
+      ->group(function(){
 
-  Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
+          Route::post('/lcs/check', 'LcController@checkLCNumber')->name('lcs.check');
+          Route::post('/customers', 'CustomerController@apiShow')->name('customers');
+          Route::post('/customer-update', 'CustomerController@apiUpdate')->name('customers.update');
 
-  Route::post('/customers', 'CustomerController@apiShow')->name('customers.apiShow');
-  Route::post('/customer-update', 'CustomerController@apiUpdate')->name('customers.apiUpdate');
-
-//});
+});
 
 
