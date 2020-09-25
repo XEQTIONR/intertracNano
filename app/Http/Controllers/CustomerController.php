@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Customer;
 use Illuminate\Http\Request;
 use Validator;
+use DB;
+
 class CustomerController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         //
-        $customers = resolve('CustomersWithOwing');
+        $customers = DB::select(resolve('CustomersOwingSQL'));
 
         return view('customers',['customers'=>$customers]);
 
