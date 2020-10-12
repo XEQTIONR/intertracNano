@@ -52,7 +52,7 @@
               <li class="p-4">
                 <span class="badge bg-red mr-2" date-toggle="tooltip" title="{{$order->order_on}}">{{$order->Order_num}}</span>
                 {{$order->name}}
-                <span class="pull-right text-red">৳ {{numfmt_format( resolve('CurrencyFormatter'), $order->total)}}</span></li>
+                <span class="pull-right text-red">৳ {{numfmt_format( resolve('CurrencyFormatter'), $order->grand_total)}}</span></li>
             @endforeach
           </ul>
         </div>
@@ -74,7 +74,7 @@
               <li class="p-4">
                 <span class="badge bg-red mr-2" date-toggle="tooltip" title="{{$order->order_on}}">{{$order->Order_num}}</span>
                 {{$order->name}}
-                <span class="pull-right text-red">৳ {{numfmt_format( resolve('CurrencyFormatter'), $order->total)}}</span></li>
+                <span class="pull-right text-red">৳ {{numfmt_format( resolve('CurrencyFormatter'), $order->balance)}}</span></li>
             @endforeach
           </ul>
         </div>

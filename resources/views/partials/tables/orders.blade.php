@@ -5,10 +5,6 @@
     <th class="">Order On</th>
     <th class="">Customer ID</th>
     <th> Customer Name</th>
-{{--    <th class="">Discount <br> %</th>--}}
-{{--    <th class="">Discount <br> Amount(&#2547)</th>--}}
-{{--    <th class="">Tax <br>%</th>--}}
-{{--    <th class="">Tax <br> Amout(&#2547)</th>--}}
     <th class="">Order Total (&#2547)</th>
     <th class="">Payments Total(&#2547)</th>
     <th class="">Balance (&#2547)</th>
@@ -17,35 +13,21 @@
 </thead>
 <tbody>
   @foreach ($orders as $order)
-    <?php $total = $order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount ?>
-    <tr style="cursor: pointer;"
-
-{{--    @if($order->payments_total == 0)--}}
-{{--      class="danger"--}}
-{{--    @elseif(($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount) == $order->payments_total)--}}
-{{--      class="success"--}}
-{{--    @endif--}}
-
-    >
+    <tr style="cursor: pointer;">
       <td class="text-center details-control strong">{{$order->Order_num}}</td>
       <td class="text-center">{{$order->order_on}}</td>
       <td class="text-center">{{$order->customer_id}}</td>
       <td class="">{{$order->name}}</td>
-{{--      <td class="text-right">{{$order->discount_percent}}</td>--}}
-{{--      <td class="text-right">{{$order->discount_amount}}</td>--}}
-{{--      <td class="text-right">{{$order->tax_percentage}}</td>--}}
-{{--      <td class="text-right">{{$order->tax_amount}}</td>--}}
-      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),floatval($total))}}</td>
+      <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),floatval($order->grand_total))}}</td>
       <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),floatval($order->payments_total))}}</td>
-      <td class="text-right strong @if(floatval($total - $order->payments_total)>0) text-red @else text-green @endif">{{numfmt_format(resolve('CurrencyFormatter'),($total - $order->payments_total))}}</td>
+      <td class="text-right strong @if(floatval($order->balance)>0) text-red @else text-green @endif">{{numfmt_format(resolve('CurrencyFormatter'),$order->balance)}}</td>
       <td class="">
         @if($order->payments_total == 0)
           <span class="label label-danger"><i class="fa fa-times mr-1"></i> No payments</span>
-        @elseif(($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount) == $order->payments_total)
+        @elseif($order->balance == 0)
           <span class="label label-success">  <i class="fa fa-check mr-1"></i> Paid Off</span>
         @else
-          <?php $percentage = intval(($order->payments_total*100)/($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount)); ?>
-{{--          <span class="label label-warning">{{intval(($order->payments_total*100)/($order->total - ($order->total* $order->discount_percent/100.0) - $order->discount_amount + ($order->total* $order->tax_percentage/100.0) + $order->tax_amount))}}%</span>--}}
+          <?php $percentage = intval(($order->payments_total*100)/$order->grand_total); ?>
 
           <div class="progress progress-xs" data-toggle="tooltip" title="{{$percentage}}% Paid">
             <div class="progress-bar progress-bar-<?php if($percentage<33) echo "danger"; else {  echo $percentage<66 ?  "warning" :  "success"; } ?>"
@@ -60,8 +42,6 @@
 <tfoot>
   <tr>
     <th class="text-center" colspan="3"></th>
-{{--    <th></th>--}}
-{{--    <th></th>--}}
     <th></th>
     <th class="text-right"></th>
     <th class="text-right"></th>
