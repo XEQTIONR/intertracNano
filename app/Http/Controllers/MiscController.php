@@ -14,24 +14,11 @@ class MiscController extends Controller
     {
       $highest_owing_customers = collect(DB::select(resolve('CustomersOwingSQL'). 'LIMIT 5'));
 
-      $all_orders = collect(DB::select(resolve('OrdersSummarySQL')));
-
-      $all_orders->each(function($order) {
-
-          $discount = (floatval($order->total) * floatval($order->discount_percent)/100.0) + floatval($order->discount_amount);
-          $tax = (floatval($order->total) * floatval($order->tax_percentage)/100.0) + floatval($order->tax_amount);
-
-          $order->discount_total = $discount;
-          $order->tax_total = $tax;
-
-          $order->grand_total = floatval($order->total) - floatval($discount) + floatval($tax);
-
-          $order->balance = $order->grand_total - $order->payments_total;
-      });
+      $all_orders = resolve('OrdersSummary');
 
       $highest_no_payments =  $all_orders
         ->filter(function($item) { return floatval($item->payments_total) == 0; })
-        ->sortByDesc(function($item) { return floatval($item->total);})
+        ->sortByDesc(function($item) { return floatval($item->grand_total);})
         ->values()
         ->take(5);
 
@@ -40,8 +27,6 @@ class MiscController extends Controller
         ->sortByDesc('created_at')
         ->values()
         ->take(5);
-
-//      return $newest_owing_orders;
 
 
       return view('welcome',
