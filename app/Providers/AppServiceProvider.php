@@ -135,9 +135,9 @@ class AppServiceProvider extends ServiceProvider
               'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total, IFNULL(P.count,0) AS num_payments 
                 FROM  (SELECT O.*, D.total, C.name 
                         FROM (SELECT B.Order_num, SUM(B.multiply) as total 
-                                FROM (SELECT C.*, C.unit_price*C.qty AS multiply 
+                                FROM (SELECT C.Order_num, C.unit_price*C.qty AS multiply 
                                         FROM order_contents C) AS B 
-                                        GROUP BY B.Order_num) D, orders O, customers C 
+                                GROUP BY B.Order_num) D, orders O, customers C 
                                 WHERE D.Order_num = O.Order_num 
                                 AND O.customer_id = C.id) T
           
