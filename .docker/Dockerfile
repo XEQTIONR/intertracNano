@@ -24,6 +24,12 @@ RUN apt-get update && apt-get install -y \
 
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
+#install NodeJS
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \
+    && apt-get  -y install nodejs
+
+
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY composer.json composer.json
@@ -32,6 +38,9 @@ RUN composer install  --prefer-dist  --no-scripts --no-autoloader
 
 # App must be copied after composer install -- I dont know why
 COPY . .
+
+RUN npm install \
+    && npm run dev
 
 RUN composer dump-autoload \
    &&chown -R www-data:www-data /var/www/html/storage \

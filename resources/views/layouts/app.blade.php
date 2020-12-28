@@ -14,7 +14,7 @@
 <!-- Theme style -->
     {{--<link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">--}}
 
-    <link rel="stylesheet" href="/css/app2.css">
+    <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/styles.css">
     {{--<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.1/css/all.css">--}}
     {{--<link rel="stylesheet" href='https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css'>--}}
