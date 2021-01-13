@@ -199,7 +199,7 @@
                       <label>LC Value (in local currency) </label>
                       <div class="input-group">
                         <span class="input-group-addon"><strong>৳</strong></span>
-                        <input type="number" step="0.01" class="form-control" placeholder="Enter Departing Port" :value="lc_local_value | currency" disabled>
+                        <input class="form-control" :value="lc_local_value | currency" disabled>
                       </div>
                     </div>
                   </div>
