@@ -283,7 +283,7 @@
 
 {{--              <img v-else class="d-block mx-auto" src="/" height="75" width="auto">--}}
               <h2 v-if="is_complete" class="page-header">
-                <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+                <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
 
               </h2>
               <div v-if="is_complete" class="row">
@@ -312,7 +312,7 @@
             <div class="col-sm-4 invoice-col">
               <small class="text-uppercase">Beneficiary</small><br>
               <address>
-                <b>Intertrac Nano</b> <br>
+                <b>Cross Country</b> <br>
                 7/5 Ring Road, <br>
                 Shyamoli, <br>
                 Dhaka - 1207 <br>

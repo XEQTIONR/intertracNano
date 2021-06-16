@@ -22,7 +22,7 @@
         <div class="row">
           <div class="col-xs-12 ">
             <h2 class="page-header">
-              <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+              <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
 {{--              <small class="pull-right">Date : {{\Carbon\Carbon::createFromFormat('Y-m-d', $order->order_on)->format('d/m/Y')}}</small>--}}
             </h2>
             <div class="row">
@@ -49,7 +49,7 @@
           <div class="col-sm-4 invoice-col">
             <small class="text-uppercase">Beneficiary</small><br>
             <address>
-              <b>Intertrac Nano</b> <br>
+              <b>Cross Country</b> <br>
               7/5 Ring Road, <br>
               Shyamoli, <br>
               Dhaka - 1207 <br>
