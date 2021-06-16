@@ -225,7 +225,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <img class="d-block mx-auto" src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+            <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
 {{--            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
           </h2>
           <div class="row">
@@ -251,7 +251,7 @@
         <div class="col-sm-4 invoice-col">
           Paid To
           <address>
-            <strong>IntertracNano</strong><br>
+            <strong>Cross Country</strong><br>
             7/5 Ring Road Shyamoli,<br>
             Dhaka 1207
           </address>

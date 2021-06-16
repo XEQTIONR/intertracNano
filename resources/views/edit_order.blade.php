@@ -256,7 +256,7 @@
                 {{--<small class="pull-right">Date: 2/10/2014</small>--}}
               </h2>
               <h2 v-else class="page-header">
-                <img src="/images/intertracnanologocolor.bmp" height="75" width="auto">
+                <img src="/images/crosscountry.png" height="75" width="auto">
                 <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>
               </h2>
               <h2 v-if="is_complete" class="text-center text-uppercase mb-4"><b>Invoice</b></h2>
@@ -279,7 +279,7 @@
             <div class="col-sm-4 invoice-col">
               <small class="text-uppercase">Beneficiary</small><br>
               <address>
-                <b>Intertrac Nano</b> <br>
+                <b>Cross Country</b> <br>
                 7/5 Ring Road, <br>
                 Shyamoli, <br>
                 Dhaka - 1207 <br>
