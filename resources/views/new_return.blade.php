@@ -302,7 +302,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   <h2 class="page-header">
-                    <img class="d-block mx-auto" src="/images/intertracnanologo.png" height="75" width="auto">
+                    <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
 {{--                    <small class="pull-right">Date : @{{ date | ddmmyyyy }}</small>--}}
                   </h2>
                 </div>
