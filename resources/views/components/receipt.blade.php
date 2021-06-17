@@ -184,7 +184,7 @@
             <div class="col-xs-1"></div>
             <div class="col-xs-5">
               <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
-                <h4 class="mx-auto">For Intertrac Nano</h4>
+                <h4 class="mx-auto">For Cross Country</h4>
               </div>
             </div>
           </div>
