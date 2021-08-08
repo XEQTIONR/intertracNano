@@ -34,7 +34,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY composer.json composer.json
 
-RUN composer install  --prefer-dist  --no-scripts --no-autoloader
+RUN composer self-update --2
+
+RUN php -d memory_limit=-1 \
+&& composer install  --prefer-dist  --no-scripts --no-autoloader
 
 # App must be copied after composer install -- I dont know why
 COPY . .
@@ -42,8 +45,9 @@ COPY . .
 RUN npm install \
     && npm run dev
 
-RUN composer dump-autoload \
-   &&chown -R www-data:www-data /var/www/html/storage \
+#RUN composer dump-autoload \
+
+RUN chown -R www-data:www-data /var/www/html/storage \
    && a2enmod rewrite \
    # Optional
    && service apache2 restart
