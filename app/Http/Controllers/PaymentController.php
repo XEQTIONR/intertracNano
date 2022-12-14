@@ -70,7 +70,7 @@ class PaymentController extends Controller
           return $response;
         }
 
-        if($duplicate!= null){
+        if($duplicate != null){
 
           $response = [];
 
@@ -88,6 +88,8 @@ class PaymentController extends Controller
         $payment->Order_num = $request->order;
         $payment->payment_amount = $request->amount;
         $payment->random = $request->random;
+        $payment->type = $request->paymentType;
+        $payment->account = $request->accountId;
         //STORE
         $payment->save();
         $payment->new = true;

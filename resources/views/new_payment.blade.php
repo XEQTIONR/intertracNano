@@ -25,7 +25,11 @@
           <h4 class="modal-title"><i class="fa fa-warning mr-2"></i> Confirm payment</h4>
         </div>
         <div class="modal-body">
-          <p> Confirm payment of ৳<b>@{{ amount | currency }}</b>. You can print the receipt after confirming</p>
+          <p> Confirm payment of ৳<b>@{{ amount | currency }}</b> via
+            <b>@{{ paymentTypes[paymentType] }}</b> <span v-if="paymentType !== 'cash'">deposited at
+              <i>@{{ bankLabel }}</i></span>.
+            You can print the receipt after confirming.
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
@@ -217,7 +221,10 @@
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat" :disabled="!(parseFloat(amount)>0)">Pay</button>
+                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat"
+                            :disabled="( !( parseFloat(amount) > 0 ) || ( paymentType !== 'cash' && accountId === null ) )">
+                      Pay
+                    </button>
                   </span>
                 </div>
               </div>
@@ -274,7 +281,7 @@
         <div class="col-sm-4 invoice-col">
           <b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>
           <b>Order #</b> @{{ order.Order_num }}<br>
-          <b>Account :</b> @{{ order.customer.id }}
+          <b>Customer ID :</b> @{{ order.customer.id }}
         </div>
         <!-- /.col -->
       </div>
@@ -551,6 +558,18 @@
                 return "hsl(" + val + ",60%,50%)";
 
                 //hsl(90,50%,50%)
+            },
+
+            bankLabel : function() {
+              if( app.paymentType !== 'cash') {
+                const accountInfo = app.bankAccounts.find(function(item){
+                  return item.id === app.accountId;
+                });
+                if(accountInfo) {
+                  return accountInfo.bank_name + ' Account # ' + accountInfo.account_number;
+                }
+              }
+              return null;
             }
 
 
@@ -592,10 +611,12 @@
 
                 $.post("{{ route('payments.store')  }}",
                     {
-                        "_token" : "{{csrf_token()}}",
-                        amount : parseFloat(app.amount),
-                        order : app.order.Order_num,
-                        random : app.random_string
+                        "_token": "{{csrf_token()}}",
+                        amount: parseFloat(app.amount),
+                        order: app.order.Order_num,
+                        random: app.random_string,
+                        paymentType: app.paymentType,
+                        accountId: app.accountId
                     },
 
                     function(data)
