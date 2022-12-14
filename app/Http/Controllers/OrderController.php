@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Order;
 use App\Order_content;
+use App\Payment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -170,8 +171,8 @@ class OrderController extends Controller
       $id = $order->Order_num;
 
       $order = $this->detailsHelper($id);
-
-      return view('partials.rows.order', compact('order'));
+      $paymentTypes = Payment::$paymentTypes;
+      return view('partials.rows.order', compact('order', 'paymentTypes'));
     }
 
     public function showJSON($order_num)

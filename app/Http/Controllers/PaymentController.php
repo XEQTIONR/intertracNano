@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BankAccount;
 use App\Order;
 use App\Payment;
 use Illuminate\Http\Request;
@@ -12,23 +13,26 @@ class PaymentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
         $payments = Payment::orderBy('created_at', 'desc')->get();
-        return view('payments', compact('payments'));
+        $paymentTypes = Payment::$paymentTypes;
+
+        return view('payments', compact('payments', 'paymentTypes'));
     }
 
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function create()
     {
-
+      $paymentTypes = array_filter( Payment::$paymentTypes, function($val) { return $val !== 'Unknown'; });
+      $bankAccounts = BankAccount::all();
       $orders = Order::with(['customer:id,name,address,phone','payments', 'orderContents.tyre'])->get();
 
       foreach($orders as $order)
@@ -38,7 +42,7 @@ class PaymentController extends Controller
       }
 
 
-      return view('new_payment', compact('orders'));
+      return view('new_payment', compact('orders', 'paymentTypes', 'bankAccounts'));
     }
 
     /**
@@ -69,7 +73,7 @@ class PaymentController extends Controller
         if($duplicate!= null){
 
           $response = [];
-          
+
           $response['status'] = 'failed';
           $response['message'] = "Duplicate Request. Your payment may have been already added.".
                                   " Check and then try again if required.";

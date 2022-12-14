@@ -13,6 +13,13 @@ class Payment extends Model
 
     public $primaryKey = 'transaction_id';
 
+    public static $paymentTypes = [
+      'unknown' => 'Unknown',
+      'cash'    => 'Cash',
+      'check'   => 'Check',
+      'deposit' => 'Bank Deposit'
+    ];
+
     public function order()
     {
       return $this->belongsTo('App\Order','Order_num');

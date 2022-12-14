@@ -197,7 +197,21 @@
                 <div class="progress-bar progress-bar-colorful" :style="{width: fractionTotalP+'%', backgroundColor: fractionColor}">@{{ (fractionTotalP < 100) ? (parseFloat(fractionTotalP).toFixed(2)) +' % Paid'   : 'Paid Off' }}</div>
               </div>
             </div>
-            <div v-if="order" class="row justify-content-center">
+            <div v-if="order" class="row justify-content-start">
+              <div class="col-xs-12 col-md-4">
+                <select v-model="paymentType" class="input-lg w-100"
+                >
+                  <option v-for="(key, val) in paymentTypes" :value="val">@{{ key }}</option>
+                </select>
+              </div>
+              <div v-if="paymentType !== 'cash'" class="col-xs-12 col-md-4">
+                <select v-model="accountId"
+                        class="input-lg"
+                >
+                  <option :value="null" disabled selected>Select a bank account</option>
+                  <option v-for="account in bankAccounts" :value="account.id">@{{ account.bank_name + ' ' + account.account_number }}</option>
+                </select>
+              </div>
               <div class="col-xs-12 col-md-4">
                 <div class="input-group input-group-lg">
                   <span class="input-group-addon"><b>৳</b></span>
@@ -367,31 +381,40 @@
 @section('footer-scripts')
   <script>
 
-    var orders = JSON.parse('{!! str_replace("'", "\'", $orders) !!}');
-
-    var app = new Vue({
+    const orders = JSON.parse('{!! str_replace("'", "\'", $orders) !!}');
+    const bankAccounts = JSON.parse('{!! str_replace("'", "\'", $bankAccounts) !!}');
+    const paymentTypes = JSON.parse('{!! json_encode($paymentTypes) !!}');
+    const app = new Vue({
         el: '#app',
         data: {
             orders : Object.values(orders), // object to array
             order : null,
             amount : 0,
+            accountId : null,
+            bankAccounts,
             numberToWords : numberToWords,
             paid : false,
             transaction_id : null,
             payment_at : null,
+            paymentTypes,
+            paymentType : 'cash',
             error_message : null,
             random_string : Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         },
 
         watch:{
 
-            amount : function(new_val){
-
-                if(parseFloat(new_val)> this.grandTotal - this.paymentsTotal())
-                  this.amount = this.grandTotal- this.paymentsTotal();
-                else
-                  this.helperPositiveFloat(new_val, "amount");
+            amount : function( newValue ){
+              if( parseFloat(newValue) > this.grandTotal - this.paymentsTotal())
+                this.amount = this.grandTotal- this.paymentsTotal();
+              else
+                this.helperPositiveFloat(newValue, "amount");
             },
+            paymentType : function( newValue ) {
+              if( newValue === 'cash' ) {
+                this.accountId = null;
+              }
+            }
         },
 
         computed : {
@@ -447,9 +470,9 @@
 
                     var grandTotal = subTotal - discountTotal + taxTotal;
 
-                    console.log('index : ' + index);
-                    console.log('grandTotal: ' + grandTotal);
-                    console.log('paymentsTotal: ' + paymentsTotal);
+                    // console.log('index : ' + index);
+                    // console.log('grandTotal: ' + grandTotal);
+                    // console.log('paymentsTotal: ' + paymentsTotal);
 
 
                     if(grandTotal > paymentsTotal)
