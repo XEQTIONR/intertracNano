@@ -114,7 +114,7 @@
         <th class="col-xs-3 text-center">Payment Date</th>
         <th class="col-xs-2 text-right">Amount Paid</th>
         <th class="col-xs-2 text-right">Refund Amount</th>
-        <th class="col-xs-2"></th>
+        <th class="col-xs-2">Payment Type</th>
         <th class="col-xs-2 text-right">Balance</th>
       </tr>
       </thead>
@@ -132,7 +132,7 @@
         <td class="col-xs-3 text-center"> {{ $payment->created_at  }}</td>
         <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount) }}</td>
         <td class="col-xs-2 text-right">৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount) }}</td>
-        <td class="col-xs-2"></td>
+        <td class="col-xs-2">{{ $paymentTypes[$payment->type] }}</td>
         <td class="col-xs-2 text-right"><b>৳ {{ numfmt_format(resolve('CurrencyFormatter'),$payment->balance) }}</b></td>
       </tr>
       @endforeach
