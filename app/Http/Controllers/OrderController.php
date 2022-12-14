@@ -237,7 +237,7 @@ class OrderController extends Controller
 
       $grandtotal = $order->grandtotal;
 
-      foreach($order->payments->sortByDesc('created_at') as $payment)
+      foreach($order->payments->sortBy('created_at') as $payment)
       {
         $grandtotal -= ($payment->payment_amount - $payment->refund_amount);
         $payment->balance = $grandtotal;
