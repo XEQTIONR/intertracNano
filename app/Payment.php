@@ -25,6 +25,11 @@ class Payment extends Model
       return $this->belongsTo('App\Order','Order_num');
     }
 
+    public function bankAccount()
+    {
+      return $this->belongsTo('App\BankAccount','account');
+    }
+
     public function getAmountAttribute()
     {
       return $this->payment_amount - $this->refund_amount;

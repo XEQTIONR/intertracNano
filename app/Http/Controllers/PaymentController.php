@@ -17,7 +17,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::orderBy('created_at', 'desc')->get();
+        $payments = Payment::with('bankAccount')->orderBy('created_at', 'desc')->get();
         $paymentTypes = Payment::$paymentTypes;
 
         return view('payments', compact('payments', 'paymentTypes'));

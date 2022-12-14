@@ -5,7 +5,8 @@
     <th class="text-center">Order #</th>
     <th class="text-center">Amount Paid (&#2547)</th>
     <th class="text-center">Refund (&#2547)</th>
-    <th class="text-center">Payment Type (&#2547)</th>
+    <th class="text-center">Payment Type</th>
+    <th class="text-center">Bank</th>
     <th class="text-center">Created</th>
   </tr>
 </thead>
@@ -17,6 +18,7 @@
       <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payment->payment_amount)}}</td>
       <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$payment->refund_amount)}}</td>
       <td class="text-center">{{$paymentTypes[$payment->type]}}</td>
+      <td class="text-center">{{$payment->bankAccount ? $payment->bankAccount->bank_name : null }}</td>
       <td class="text-center">{{$payment->created_at}}</td>
     </tr>
   @endforeach
@@ -28,6 +30,7 @@
     <th class="text-center"></th>
     <th class="text-right"></th>
     <th class="text-right"></th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>

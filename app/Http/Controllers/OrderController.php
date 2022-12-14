@@ -213,7 +213,7 @@ class OrderController extends Controller
     private function detailsHelper($order_id)
     {
 
-      $order =  Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments'])->find($order_id);
+      $order =  Order::with(['customer', 'orderContents.tyre', 'orderReturns.tyre', 'payments.bankAccount'])->find($order_id);
 
       $subtotal = 0;
       $subtotalReturn = 0;
@@ -237,7 +237,7 @@ class OrderController extends Controller
 
       $grandtotal = $order->grandtotal;
 
-      foreach($order->payments->sortByDesc('created_at') as $payment)
+      foreach($order->payments->sortBy('created_at') as $payment)
       {
         $grandtotal -= ($payment->payment_amount - $payment->refund_amount);
         $payment->balance = $grandtotal;
