@@ -63,4 +63,4 @@ mix.less('resources/assets/less/main.less', '../resources/assets/css')
         'node_modules/vue-select/dist/vue-select.css',
         // 'node_modules/select2/dist/css/select2.css',
         // 'node_modules/inputmask/css/inputmask.css',
-        'resources/assets/css/main.css'], 'public/css/app2.css');
+        'resources/assets/css/main.css'], 'public/css/app.css');
