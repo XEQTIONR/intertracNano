@@ -64,7 +64,7 @@
             <div class="form">
               <div class="box-body">
                 <div class="row mb-4">
-                  <div class="col-xs-6 col-md-4 col-lg-3">
+                  <div class="col-xs-6">
                     <div class="form-group" :class="{'has-error' : errors.past_date}">
                     <label v-show="past == 1">Enter Order date</label>
                     <div v-show="past == 1" class="input-group">
