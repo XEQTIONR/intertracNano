@@ -116,7 +116,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr id="selector" class="selector" v-for="(content,index) in order_contents" style="display:none;">
+                          <tr id="selector" class="selector" v-for="(content,index) in order_contents">
                             <td style="width: 5%;" >@{{ index+1 }}</td>
                             <td style="width: 45%;" ><b>(@{{ content.tyre_id }})</b> @{{ content.brand }} @{{ content.size }} @{{ content.pattern }} @{{ content.lisi }}</td>
                             <td style="width: 15%;" >
@@ -139,7 +139,7 @@
                             </td>
                           </tr>
 
-                          <tr id="subTotal" class="" style="display: none;">
+                          <tr id="subTotal" class="">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Total</th>
                             <th style="width: 15%" class="text-right" style="padding-right: 5%;">@{{ totalQty }}</th>
@@ -148,21 +148,21 @@
                             <th style="width: 5%" ></th>
                           </tr>
 
-                          <tr id="discount" class="warning" style="display:none">
+                          <tr id="discount" class="warning">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Discount</th>
                             <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-minus"></i></th>
                             <th style="width: 15%" class="text-right"  scope="col">৳ @{{ total_discount_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
-                          <tr id="tax" class="danger" style="display:none">
+                          <tr id="tax" class="danger">
                             <th style="width: 5%"></th>
                             <th style="width: 45%">Tax</th>
                             <th class="text-right" style="width: 30%" colspan="2"><i class="fa fa-plus"></i></th>
                             <th style="width: 15%" class="text-right">৳ @{{ total_tax_amount | currency }}</th>
                             <th style="width: 5%" ></th>
                           </tr>
-                          <tr id="grandTotal" class="info" style="display:none">
+                          <tr id="grandTotal" class="info">
                             <th style="width: 5%"></th>
                             <th style="width: 45%" class="text-uppercase">Grand Total</th>
                             <th style="width: 45%" class="text-right"  colspan="3">৳ @{{ grandTotal | currency }}</th>
