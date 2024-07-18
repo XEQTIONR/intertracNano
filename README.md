@@ -64,6 +64,11 @@ Some general requirements. You may have work-arounds on these.
   -- END --
   ___
 
+  ## Docker Instructions
+  - Put a copy of production sql in `.docker/nano_db.sql`
+  - `docker compose up`
+  - Site is on - http://localhost
+
 
 
 <span>July 2, 2017</span>
