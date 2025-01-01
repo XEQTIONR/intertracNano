@@ -15,7 +15,7 @@ services:
       - ./public:/var/www/html/public
   db:
     image: mysql:5.7
-    restart: always
+    restart: unless-stopped
     platform: linux/x86_64 #For Apple Silicon processors
     ports:
       - "3306:3306"
@@ -27,4 +27,4 @@ services:
       - "3306"
     volumes:
       - ./db:/var/lib/mysql
-      - ./.docker/nano_db.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./nano_db.sql:/docker-entrypoint-initdb.d/1.sql
