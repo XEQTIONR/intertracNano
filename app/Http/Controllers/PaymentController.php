@@ -92,6 +92,7 @@ class PaymentController extends Controller
         $payment->account = $request->accountId;
         //STORE
         $payment->save();
+        $payment->refresh(); // otherwise $payment->refund_amount is not hydrated.
         $payment->new = true;
 
         //REDIRECT

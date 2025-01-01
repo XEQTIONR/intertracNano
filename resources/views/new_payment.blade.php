@@ -178,7 +178,7 @@
                       <th class="col-xs-1">Transaction Id</th>
                       <th class="col-xs-3">Payment Date</th>
                       <th class="col-xs-2">Amount Paid</th>
-                      <th class="col-xs-2"></th>
+                      <th class="col-xs-2">Amount Refunded</th>
                       <th class="col-xs-2 text-right">Balance</th>
                       <th class="col-xs-2"></th>
                     </tr>
@@ -188,7 +188,7 @@
                       <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                       <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                       <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
-                      <td class="col-xs-2"></td>
+                      <td class="col-xs-2">৳ @{{ parseFloat(payment.refund_amount) | currency }}</td>
                       <td class="col-xs-2 text-right">৳ @{{ runningTotal(index) | currency }}</td>
                       <td class="col-xs-2"></td>
                     </tr>
@@ -315,7 +315,7 @@
             <tr>
               <th>Previous Payments Total</th>
               <td><i class="fa fa-minus"></i></td>
-              <td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>
+              <td>৳ <span style="float :right">@{{ paymentsTotal() - parseFloat(amount) | currency }}</span></td>
               <td></td>
             </tr>
             <tr>
@@ -425,7 +425,6 @@
         },
 
         computed : {
-
             toWordsPoisha : function(){
 
                 var amount;
@@ -464,7 +463,7 @@
 
                     value.payments.forEach(function(value){
 
-                        paymentsTotal+= parseFloat(value.payment_amount);
+                        paymentsTotal+= (parseFloat(value.payment_amount) - parseFloat(value.refund_amount));
                     });
 
                     value.order_contents.forEach(function(value){
@@ -476,11 +475,6 @@
                     var taxTotal = (subTotal * parseFloat(value.tax_percentage)/100.0) + parseFloat(value.tax_amount);
 
                     var grandTotal = subTotal - discountTotal + taxTotal;
-
-                    // console.log('index : ' + index);
-                    // console.log('grandTotal: ' + grandTotal);
-                    // console.log('paymentsTotal: ' + paymentsTotal);
-
 
                     if(grandTotal > paymentsTotal)
                         unpaid.push(value);
@@ -540,8 +534,6 @@
             },
 
             fractionTotalP : function(){
-
-                //return this.paymentsTotal();
                 return ((this.paymentsTotal()+parseFloat(this.amount))/this.grandTotal)*100;// * 100;
             },
 
@@ -584,7 +576,7 @@
 
                 for(var i=0; i<=index; i++)
                 {
-                    total -= parseFloat(this.order.payments[i].payment_amount);
+                    total -= (parseFloat(this.order.payments[i].payment_amount) - parseFloat(this.order.payments[i].refund_amount));
                 }
 
                 return total;
@@ -595,14 +587,11 @@
             },
 
             paymentsTotal : function(){
-
-                // index-th order
                 var total = 0;
 
                 if(this.order)
                     this.order.payments.forEach(function(value){
-
-                        total+= parseFloat(value.payment_amount);
+                        total+= (parseFloat(value.payment_amount) - parseFloat(value.refund_amount));
                     });
                 return total;
             },
@@ -627,17 +616,12 @@
                             app.paid = true;
                             app.transaction_id = data.payment.transaction_id;
                             app.payment_at = data.payment.created_at;
-                            //app.amount = 0;
                         }
-                        else{
-                            if(data.status == 'failed' && data.message)
-                            {
-                                app.error_message = data.message;
-                                $('#modal-error').modal('show');
-                                //console.log(data.message);
-                            }
+                        else if(data.status == 'failed' && data.message)
+                        {
+                            app.error_message = data.message;
+                            $('#modal-error').modal('show');
                         }
-
                     });
             },
             //HELPERs
