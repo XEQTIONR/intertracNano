@@ -208,10 +208,8 @@
                   <option v-for="(key, val) in paymentTypes" :value="val">@{{ key }}</option>
                 </select>
               </div>
-              <div v-if="paymentType !== 'cash'" class="col-xs-12 col-md-4">
-                <select v-model="accountId"
-                        class="input-lg"
-                >
+              <div v-if="(paymentType == 'check') || (paymentType == 'deposit')" class="col-xs-12 col-md-4">
+                <select v-model="accountId" class="input-lg">
                   <option :value="null" disabled selected>Select a bank account</option>
                   <option v-for="account in bankAccounts" :value="account.id">@{{ account.bank_name + ' ' + account.account_number }}</option>
                 </select>
@@ -221,8 +219,10 @@
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat"
-                            :disabled="( !( parseFloat(amount) > 0 ) || ( paymentType !== 'cash' && accountId === null ) )">
+                    <button 
+                      @click="showModal()"  type="button" class="btn bg-maroon btn-flat"
+                      :disabled="( !( parseFloat(amount) > 0 ) || ( (paymentType == 'check' || paymentType == 'deposit') && accountId === null ) )"
+                    >
                       Pay
                     </button>
                   </span>
@@ -239,7 +239,7 @@
     </div>
   </div>
 </div>
-  <div v-else key="1" class="row justify-content-center">
+<div v-else key="1" class="row justify-content-center">
   <div class="col-xs-12 col-md-8">
     <section  class="invoice" style="min-height: 95vh">
       <!-- title row -->
@@ -247,14 +247,19 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
-{{--            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
           </h2>
           <div class="row">
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4"><h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2></div>
+            <div class="col-xs-8"></div>
             <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ payment_at | ddmmyyyy }}</small></div>
           </div>
-{{--          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="text-center text-uppercase mb-4">
+                <b v-if="paymentType == 'commission'">Commission Receipt</b>
+                <b v-else>Payment Receipt</b>
+              </h2>
+            </div>
+          </div>
         </div>
         <!-- /.col -->
       </div>
@@ -262,7 +267,12 @@
       <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
           Payment By
-          <address>
+          <address v-if="paymentType == 'commission'">
+            <strong>Cross Country</strong><br>
+            7/5 Ring Road Shyamoli,<br>
+            Dhaka 1207
+          </address>
+          <address v-else>
             <strong v-text="order.customer.name"></strong><br>
             <span v-html="order.customer.address"></span><br>
             <span v-text="order.customer.phone"></span>
@@ -271,7 +281,12 @@
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           Paid To
-          <address>
+          <address v-if="paymentType == 'commission'">
+            <strong v-text="order.customer.name"></strong><br>
+            <span v-html="order.customer.address"></span><br>
+            <span v-text="order.customer.phone"></span>
+          </address>
+          <address v-else>
             <strong>Cross Country</strong><br>
             7/5 Ring Road Shyamoli,<br>
             Dhaka 1207
@@ -313,13 +328,14 @@
             </thead>
             <tbody>
             <tr>
-              <th>Previous Payments Total</th>
+              <th>Previous Payments / Commissions</th>
               <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ paymentsTotal() - parseFloat(amount) | currency }}</span></td>
               <td></td>
             </tr>
             <tr>
-              <th>Current Payment</th>
+              <th v-if="paymentType == 'commission'">Commission Paid</th>
+              <th v-else>Current Payment</th>
               <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ amount | currency }}</span></td>
               <td></td>
@@ -348,18 +364,15 @@
       <!-- this row will not appear when printing -->
       <div class="no-print row mx-auto" style="position: absolute; bottom: 10; left: 0; width: 100%">
         <div class="col-xs-12">
-          <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print"></i> Print</button>
+          <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print mr-2"></i> Print</button>
           <a href="{{ route('payments.create') }}" type="button" class="btn btn-default">
-            <i class="fa fa-chevron-left"></i> Another Payment
+            <i class="fa fa-chevron-left mr-2"></i> Another Payment
           </a>
-          {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
-            {{--<i class="fa fa-download"></i> Generate PDF--}}
-          {{--</button>--}}
         </div>
       </div>
 
+      
       <div class="print-footer">
-{{--        <div class="col-xs-12">--}}
           <div class="col-xs-5">
             <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
               <h4 class="mx-auto">Received By</h4>
@@ -372,8 +385,6 @@
               <h4 class="mx-auto">For Cross Country</h4>
             </div>
           </div>
-{{--        </div>--}}
-
       </div>
     </section>
   </div>
