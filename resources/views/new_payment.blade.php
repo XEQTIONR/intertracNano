@@ -22,12 +22,16 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-          <h4 class="modal-title"><i class="fa fa-warning mr-2"></i> Confirm payment</h4>
+          <h4 class="modal-title">
+            <i class="fa fa-warning mr-2"></i>
+            Confirm <span v-if="paymentType == 'commission'">commission</span> payment
+          </h4>
         </div>
         <div class="modal-body">
-          <p> Confirm payment of ৳<b>@{{ amount | currency }}</b> via
-            <b>@{{ paymentTypes[paymentType] }}</b> <span v-if="paymentType !== 'cash'">deposited at
-              <i>@{{ bankLabel }}</i></span>.
+          <p> Confirm <b>@{{ paymentTypes[paymentType] }}</b> payment of ৳ <b>@{{ amount | currency }}</b>
+              <span v-if="paymentType == 'check' || paymentType == 'deposit'">
+                deposited at <i>@{{ bankLabel }}</i>
+              </span>.
             You can print the receipt after confirming.
           </p>
         </div>
@@ -294,7 +298,7 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>
+          <span v-if="paymentType != 'commission'"><b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br></span>
           <b>Order #</b> @{{ order.Order_num }}<br>
           <b>Customer ID :</b> @{{ order.customer.id }}
         </div>
@@ -328,7 +332,7 @@
             </thead>
             <tbody>
             <tr>
-              <th>Previous Payments / Commissions</th>
+              <th>Previous Payments</th>
               <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ paymentsTotal() - parseFloat(amount) | currency }}</span></td>
               <td></td>
