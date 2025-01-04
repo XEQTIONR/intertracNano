@@ -25,6 +25,7 @@
         <th class="text-right">Tax Amount</th>
         <th class="text-right">Total</th>
         <th class="text-right">Payments Total</th>
+        <th class="text-right">Commissions Total</th>
         <th class="text-right">Balance <br></th>
       </tr>
       </thead>
@@ -39,6 +40,7 @@
           <td class="text-right">{{$order->tax_amount}}</td>
           <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->grand_total)}}</td>
           <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->payments_total)}}</td>
+          <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->commission)}}</td>
           <td class="text-right">{{numfmt_format(resolve('CurrencyFormatter'),$order->balance)}}</td>
         </tr>
         @endforeach
@@ -52,6 +54,7 @@
           <td></td>
           <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->total)}}</td>
           <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->payments)}}</td>
+          <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->commission)}}</td>
           <td class="strong text-right">{{numfmt_format(resolve('CurrencyFormatter'),$totals->balance)}}</td>
         </tr>
         </tfoot>
