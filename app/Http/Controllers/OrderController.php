@@ -64,7 +64,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = resolve('OrdersSummary');
+        $orders = collect(DB::select(resolve('OrdersSummarySQL')));;
 
         return view('orders', compact('orders'));
     }
