@@ -130,7 +130,7 @@ class AppServiceProvider extends ServiceProvider
 
         app()->bind('OrdersSummarySQL', function(){
             return
-              'SELECT X.*, (sub_total - discount + tax) AS grand_total, payments_total, (sub_total - discount + tax - payments_total) AS balance
+              'SELECT X.*, (sub_total - discount + tax) AS grand_total, payments_total, (sub_total - discount + tax - commission - payments_total) AS balance
               FROM
                 (SELECT T.*, 
                   ((T.sub_total * T.discount_percent/100.0) + T.discount_amount) AS discount,

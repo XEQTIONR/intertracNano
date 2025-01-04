@@ -170,6 +170,14 @@
                       <th class="text-right">৳ @{{ grandTotal | currency }}</th>
                       <th></th>
                     </tr>
+                    <tr>
+                      <th></th>
+                      <th class="text-uppercase">Commission Paid</th>
+                      <th></th>
+                      <th></th>
+                      <th class="text-right">- ৳ @{{ order.commission | currency }}</th>
+                      <th></th>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -344,10 +352,16 @@
               <td>৳ <span style="float :right">@{{ amount | currency }}</span></td>
               <td></td>
             </tr>
+            <tr v-if="parseFloat(order.commission) > 0">
+              <th>Commission Paid</th>
+              <td><i class="fa fa-minus"></i></td>
+              <td>৳ <span style="float :right">@{{ order.commission | currency }}</span></td>
+              <td></td>
+            </tr>
             <tr style="border-top : 2px solid black">
               <th>Balance</th>
               <td></td>
-              <td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() | currency }}</span></td>
+              <td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() - parseFloat(order.commission) | currency }}</span></td>
               <td></td>
             </tr>
             </tbody>
@@ -427,8 +441,8 @@
         watch:{
 
             amount : function( newValue ){
-              if( parseFloat(newValue) > this.grandTotal - this.paymentsTotal())
-                this.amount = this.grandTotal- this.paymentsTotal();
+              if( parseFloat(newValue) > this.grandTotal - parseFloat(this.order.commission) - this.paymentsTotal())
+                this.amount = this.grandTotal - parseFloat(this.order.commission) - this.paymentsTotal();
               else
                 this.helperPositiveFloat(newValue, "amount");
             },
@@ -468,8 +482,6 @@
             unpaidOrders : function(){
 
                 var unpaid = [];
-                // console.log(this.orders);
-                // console.log(this.orders.length);
 
                 this.orders.forEach(function (value, index) {
 
@@ -491,7 +503,7 @@
 
                     var grandTotal = subTotal - discountTotal + taxTotal;
 
-                    if(grandTotal > paymentsTotal)
+                    if(grandTotal > (paymentsTotal + parseFloat(value.commission)))
                         unpaid.push(value);
                 });
 
@@ -549,7 +561,7 @@
             },
 
             fractionTotalP : function(){
-                return ((this.paymentsTotal()+parseFloat(this.amount))/this.grandTotal)*100;// * 100;
+                return ((this.paymentsTotal()+parseFloat(this.amount))/(this.grandTotal - parseFloat(this.order.commission)))*100;// * 100;
             },
 
             fractionColor : function(){
@@ -587,7 +599,7 @@
             // for each payment alread
             runningTotal : function(index){
 
-                var total =  this.grandTotal;
+                var total =  this.grandTotal - this.order.commission;
 
                 for(var i=0; i<=index; i++)
                 {
