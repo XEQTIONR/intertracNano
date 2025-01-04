@@ -31,14 +31,14 @@
         <thead>
         <tr>
           <th class="col-xs-1">Customer ID</th>
-          <th  class="col-xs-1">Name</th>
-          <th  class="col-xs-2">Address</th>
+          <th class="col-xs-2">Name</th>
+          <th class="col-xs-2">Address</th>
           <th class="col-xs-1">Phone</th>
-{{--          <th>Notes</th>--}}
           <th class="col-xs-1"># of Orders</th>
-          <th class="col-xs-2">Orders Total</th>
-          <th class="col-xs-2">Payments Total</th>
-          <th class="col-xs-1">Balance Total</th>
+          <th class="col-xs-1">Orders Total</th>
+          <th class="col-xs-1">Revenue</th>
+          <!-- something --><th class="col-xs-1">Commission</th>
+          <th class="col-xs-1">Balance</th>
           <th class="col-xs-1">Actions</th>
         </tr>
         </thead>
@@ -46,21 +46,17 @@
         @foreach ($customers as $customer)
           <tr>
             <td class="col-xs-1 text-center strong">{{$customer->id}}</td>
-            <td class="col-xs-1">{{$customer->name}}</td>
+            <td class="col-xs-2">{{$customer->name}}</td>
             <td class="col-xs-2">{{$customer->address}}</td>
             <td class="col-xs-1">{{$customer->phone}}</td>
-{{--            <td>{{$customer->notes}}</td>--}}
             <td class="col-xs-1 text-center">{{$customer->number_of_orders}}</td>
-            <td class="col-xs-2 text-right">{{$customer->sum_grand_total}}</td>
-            <td class="col-xs-2 text-right">{{$customer->sum_payments_total}}</td>
+            <td class="col-xs-1 text-right">{{$customer->sum_grand_total}}</td>
+            <td class="col-xs-1 text-right">{{$customer->sum_payments_total}}</td>
+            <td class="col-xs-1 text-right">{{$customer->sum_commission}}</td>
             <td class="col-xs-1 text-right strong @if(floatval($customer->balance_total)>0) text-red @else text-green @endif">{{$customer->balance_total}}</td>
-
-            {{--<td class="text-center">{{$customer->updated_at}}</td>--}}
-            {{--<td><a href="/customers/{{$customer->id}}" class="btn btn-primary">More Info</a></td>--}}
             <td class="col-xs-1 text-center">
               <div class="btn-group" > <!-- style="display: block; min-width: 80px" -->
                 <button type="button" data-toggle="tooltip" title="Edit" onclick="startEdit({{$customer->id}})" class="btn bg-orange-active" style="border-color : #FFF"><i class="fa  fa-edit"></i></button>
-{{--                <button type="button" class="btn bg-orange-active" style="border-color : #FFF"><i class="icon-clipboard-list-r"></i></button>--}}
               </div>
             </td>
           </tr>
@@ -68,15 +64,15 @@
         <tbody>
         <tfoot>
           <tr>
-            <th class="col-xs-2 text-center" colspan="2"></th>
-{{--            <th></th>--}}
+            <th class="col-xs-3 text-center" colspan="2"></th>
             <th class="col-xs-2"></th>
             <th class="col-xs-1"></th>
 
             <th class="col-xs-1 text-center"></th>
 
-            <th class="col-xs-2 text-right"></th>
-            <th class="col-xs-2 text-right"></th>
+            <th class="col-xs-1 text-right"></th>
+            <th class="col-xs-1 text-right"></th>
+            <th class="col-xs-1 text-right"></th>
             <th class="col-xs-1 text-right text-red"></th>
             <th class="col-xs-1"></th>
 
@@ -253,7 +249,7 @@
           table = $('#table_id').DataTable({
               destroy : true,
               columnDefs :[
-                  {targets: [5,6,7], render : function(data, type, row){
+                  {targets: [5,6,7,8], render : function(data, type, row){
 
                           if(type == "display")
 
@@ -317,7 +313,7 @@
                       }, 0 );
 
 
-                  var balance_total = api
+                  var commission_total = api
                       .column( 7, {page: page} )
                       .data()
                       .reduce( function (a, b) {
@@ -325,6 +321,15 @@
                               return parseFloat(a);
                           return parseFloat(a) + parseFloat(b);
                       }, 0 );
+
+                  var balance_total = api
+                  .column( 8, {page: page} )
+                  .data()
+                  .reduce( function (a, b) {
+                      if(b == null || b=="")
+                          return parseFloat(a);
+                      return parseFloat(a) + parseFloat(b);
+                  }, 0 );
 
                   var footer_label = (page == 'current') ? 'TOTAL (current page)' : 'TOTAL (all pages)';
 
@@ -334,11 +339,12 @@
                   $( api.column( 4 ).footer() ).html(parseInt(number_of_orders_total));
                   $( api.column( 5 ).footer() ).html(commafy(total));
                   $( api.column( 6 ).footer() ).html(commafy(payments_total));
-                  $( api.column( 7 ).footer() ).html(commafy(balance_total));
+                  $( api.column( 7 ).footer() ).html(commafy(commission_total));
+                  $( api.column( 8 ).footer() ).html(commafy(balance_total));
               }
           });
 
-          table.order([7, 'desc'])
+          table.order([8, 'desc'])
               .draw();
 
 

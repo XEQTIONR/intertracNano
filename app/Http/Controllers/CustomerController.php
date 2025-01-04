@@ -96,6 +96,7 @@ class CustomerController extends Controller
       $totals = new \stdClass();
       $totals->total = 0;
       $totals->payments = 0;
+      $totals->commission = 0;
       $totals->balance = 0;
 
       $orders->each(function($order) use ($totals) {
@@ -112,10 +113,12 @@ class CustomerController extends Controller
           $order->discount_total = ($order->sub_total* $order->discount_percent/100.0) + $order->discount_amount;
           $order->tax_total = ($order->sub_total* $order->tax_percentage) + $order->tax_amount;
           $order->grand_total = $order->sub_total + $order->tax_total - $order->discount_total;
-          $order->balance = $order->grand_total - $order->payments_total;
+          $order->balance = $order->grand_total - $order->commission - $order->payments_total;
+
 
           $totals->total += $order->grand_total;
           $totals->payments+= $order->payments_total;
+          $totals->commission += $order->commission;
           $totals->balance += $order->balance;
       });
 

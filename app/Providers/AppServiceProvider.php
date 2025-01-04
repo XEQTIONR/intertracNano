@@ -94,29 +94,33 @@ class AppServiceProvider extends ServiceProvider
 
         app()->bind('CustomersOwingSQL', function(){
 
-          $customers = '
-            
-            SELECT C.*, B.*, (B.sum_grand_total - B.sum_payments_total) AS balance_total
-            FROM customers C LEFT JOIN
+          $customers = 
+            'SELECT C.*, B.*, (B.sum_grand_total - B.sum_payments_total - B.sum_commission) AS balance_total
+            FROM customers C 
+            LEFT JOIN
             (SELECT customer_id, SUM(sub_total) AS sum_sub_total, 
                     SUM(grand_total) AS sum_grand_total, 
                     SUM(payments_total) AS sum_payments_total,
+                    SUM(commission) AS sum_commission,
                     COUNT(*) AS number_of_orders
             FROM
                 (SELECT orders.customer_id, ST.sub_total, 
                         (ST.sub_total - ((ST.sub_total*orders.discount_percent)/100) - orders.discount_amount + ((ST.sub_total*orders.tax_percentage)/100) + orders.tax_amount) AS grand_total,
-                        IFNULL(payment_total, 0) AS payments_total
+                        IFNULL(payment_total, 0) AS payments_total,
+                        orders.commission -- 3. get order info including subtotal, and sum payments
                 FROM orders
-                    INNER JOIN  (SELECT Order_num, SUM(qty*unit_price) as sub_total
-                                FROM order_contents
-                                GROUP BY Order_num) as ST
-                        
-                    ON orders.Order_num = ST.Order_num
+                  INNER JOIN  
+                    (SELECT Order_num, SUM(qty*unit_price) AS sub_total -- 1. get subtotal
+                    FROM order_contents
+                    GROUP BY Order_num) AS ST        
+                  ON orders.Order_num = ST.Order_num
                             
-                    LEFT JOIN (SELECT Order_num, SUM(payment_amount-refund_amount) as payment_total
-                               FROM payments
-                               GROUP BY Order_num) as P
-                    ON orders.Order_num = P.Order_num) AS A
+                  LEFT JOIN 
+                    (SELECT Order_num, SUM(payment_amount-refund_amount) as payment_total -- 2. get sum of payments
+                    FROM payments
+                    GROUP BY Order_num) AS P
+                  ON orders.Order_num = P.Order_num) AS A
+
             GROUP BY customer_id) B
             
             ON C.id = B.customer_id
