@@ -134,12 +134,10 @@ class AppServiceProvider extends ServiceProvider
             $orders = collect(DB::select(
               'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total, IFNULL(P.count,0) AS num_payments 
                 FROM  (SELECT O.*, D.sub_total, C.name 
-                        FROM (SELECT B.Order_num, SUM(B.multiply) as sub_total 
-                                FROM (SELECT C.Order_num, C.unit_price*C.qty AS multiply 
-                                        FROM order_contents C) AS B 
-                                GROUP BY B.Order_num) D, orders O, customers C 
-                                WHERE D.Order_num = O.Order_num 
-                                AND O.customer_id = C.id) T
+                        FROM (SELECT Order_num, SUM(unit_price*qty) as sub_total 
+                              FROM order_contents 
+                              GROUP BY Order_num) D, orders O, customers C 
+                        WHERE D.Order_num = O.Order_num AND O.customer_id = C.id) T
           
                 LEFT JOIN
                 (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total, COUNT(*) AS count 
