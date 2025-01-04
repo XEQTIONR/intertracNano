@@ -78,7 +78,7 @@ class OrderController extends Controller
     {
         //
         $customers = Customer::select('id', 'name', 'address', 'phone')->get();
-        $in_stock = resolve('TyresRemaining');
+        $in_stock = collect(DB::select(resolve('TyresRemainingSQL')));
 
         foreach($customers as $customer)
         {
@@ -102,7 +102,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
       //$customers = Customer::all(); //remove
-      $in_stock = resolve('TyresRemaining');
+      $in_stock = collect(DB::select(resolve('TyresRemainingSQL')));
       $customer =  $order->customer;
 
       //****** remove

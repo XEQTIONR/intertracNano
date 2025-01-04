@@ -58,9 +58,9 @@ class AppServiceProvider extends ServiceProvider
           return collect($remaining); //because we need collection not array
         });
 
-        app()->bind('TyresRemaining', function(){
+        app()->bind('TyresRemainingSQL', function(){
 
-          $remaining = DB::select('
+          return '
       
           SELECT T.tyre_id, T.brand, T.size, T.pattern, T.lisi, E.qtyavailable AS in_stock
           FROM	(SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0) - IFNULL(W.waste,0)) AS qtyavailable  
@@ -88,9 +88,7 @@ class AppServiceProvider extends ServiceProvider
                 GROUP BY tyre_id) E, tyres T	
           WHERE T.tyre_id = E.tyre_id
         
-        ');
-
-        return collect($remaining);
+        ';
 
       });
 

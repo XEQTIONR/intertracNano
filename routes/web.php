@@ -80,7 +80,7 @@ Route::resource('order_contents', 'OrderContentController');
 
 Route::get('stock', function()
 {
-  $in_stock = resolve('TyresRemaining');
+  $in_stock = collect(DB::select(resolve('TyresRemainingSQL')));
   return view('stock', compact('in_stock'));
 })->name('stock');
 
