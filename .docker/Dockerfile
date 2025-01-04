@@ -45,7 +45,7 @@ COPY . .
 RUN npm install \
     && npm run dev
 
-#RUN composer dump-autoload \
+RUN composer dump-autoload
 
 RUN chown -R www-data:www-data /var/www/html/storage \
    && a2enmod rewrite \
@@ -56,4 +56,4 @@ COPY .env.docker ./.env
 
 RUN chown www-data:www-data .env
 
-RUN php artisan key:generate
+#RUN php artisan key:generate

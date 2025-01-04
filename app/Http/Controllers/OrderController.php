@@ -64,7 +64,7 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = resolve('OrdersSummary');
+        $orders = collect(DB::select(resolve('OrdersSummarySQL')));;
 
         return view('orders', compact('orders'));
     }
@@ -78,7 +78,7 @@ class OrderController extends Controller
     {
         //
         $customers = Customer::select('id', 'name', 'address', 'phone')->get();
-        $in_stock = resolve('TyresRemaining');
+        $in_stock = collect(DB::select(resolve('TyresRemainingSQL')));
 
         foreach($customers as $customer)
         {
@@ -102,7 +102,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
       //$customers = Customer::all(); //remove
-      $in_stock = resolve('TyresRemaining');
+      $in_stock = collect(DB::select(resolve('TyresRemainingSQL')));
       $customer =  $order->customer;
 
       //****** remove
@@ -240,7 +240,7 @@ class OrderController extends Controller
       foreach($order->payments->sortBy('created_at') as $payment)
       {
         $grandtotal -= ($payment->payment_amount - $payment->refund_amount);
-        $payment->balance = $grandtotal;
+        $payment->balance = ($grandtotal - $order->commission);
       }
 
       foreach($order->orderReturns as $item)

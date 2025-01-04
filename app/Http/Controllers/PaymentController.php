@@ -87,11 +87,25 @@ class PaymentController extends Controller
         //INITIALIZE
         $payment->Order_num = $request->order;
         $payment->payment_amount = $request->amount;
+        $payment->refund_amount = 0;
         $payment->random = $request->random;
         $payment->type = $request->paymentType;
         $payment->account = $request->accountId;
+
+
         //STORE
-        $payment->save();
+        if ($request->paymentType == 'commission') { // payment is not created if it is a commission 
+          $order->commission = $request->amount;
+          $order->save();
+          $order->refresh();
+          //fake payment details
+          $payment->created_at = $order->updated_at;
+          $payment->updated_at = $order->updated_at;
+        } else {
+          $payment->save();
+          $payment->refresh(); // otherwise $payment->refund_amount is not hydrated.
+        }
+
         $payment->new = true;
 
         //REDIRECT

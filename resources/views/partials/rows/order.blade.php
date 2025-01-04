@@ -96,6 +96,14 @@
         <td></td>
         <td class="text-right"><b>৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->grandtotal)}}</b></td>
       </tr>
+      <tr>
+        <th></th>
+        <th class="text-uppercase">Commission Paid</th>
+        <th></th>
+        <th></th>
+        <th class="text-right">- ৳ {{numfmt_format(resolve('CurrencyFormatter'),$order->commission)}}</th>
+        <th></th>
+      </tr>
       </tbody>
     </table>
   </div>

@@ -41,19 +41,11 @@
 
       $.ajax( {
           url: '/orders/'+rowData[0],
-          // data: {
-          //     order : rowData[0]
-          // },
           dataType: 'text',
           success: function ( view ) {
-              console.log('successed');
-              console.log(rowData);
               div
                   .html( view )
                   .removeClass( 'loading' );
-
-              //div.addClass('zeload');
-
           },
 
           error : function(error){
@@ -75,6 +67,7 @@
           { number : 4, prefix : "৳ "},
           { number : 5, prefix : "৳ "},
           { number : 6, prefix : "৳ "},
+          { number : 7, prefix : "৳ "},
       ];
 
       customFormatDataTable(options);

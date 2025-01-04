@@ -17,7 +17,8 @@ class Payment extends Model
       'unknown' => 'Unknown',
       'cash'    => 'Cash',
       'check'   => 'Check',
-      'deposit' => 'Bank Deposit'
+      'deposit' => 'Bank Deposit',
+      'commission' => 'Commission',
     ];
 
     public function order()

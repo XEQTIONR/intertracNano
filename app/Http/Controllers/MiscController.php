@@ -14,7 +14,7 @@ class MiscController extends Controller
     {
       $highest_owing_customers = collect(DB::select(resolve('CustomersOwingSQL'). 'LIMIT 5'));
 
-      $all_orders = resolve('OrdersSummary');
+      $all_orders = collect(DB::select(resolve('OrdersSummarySQL')));
 
       $highest_no_payments =  $all_orders
         ->filter(function($item) { return floatval($item->payments_total) == 0; })

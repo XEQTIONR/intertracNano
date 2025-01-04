@@ -58,9 +58,9 @@ class AppServiceProvider extends ServiceProvider
           return collect($remaining); //because we need collection not array
         });
 
-        app()->bind('TyresRemaining', function(){
+        app()->bind('TyresRemainingSQL', function(){
 
-          $remaining = DB::select('
+          return '
       
           SELECT T.tyre_id, T.brand, T.size, T.pattern, T.lisi, E.qtyavailable AS in_stock
           FROM	(SELECT  C.tyre_id, SUM(C.supplyqty -  IFNULL(B.sumqty,0) - IFNULL(W.waste,0)) AS qtyavailable  
@@ -88,9 +88,7 @@ class AppServiceProvider extends ServiceProvider
                 GROUP BY tyre_id) E, tyres T	
           WHERE T.tyre_id = E.tyre_id
         
-        ');
-
-        return collect($remaining);
+        ';
 
       });
 
@@ -130,39 +128,28 @@ class AppServiceProvider extends ServiceProvider
           return $customers;
         });
 
-        app()->bind('OrdersSummary', function(){
-            $orders = collect(DB::select(
-              'SELECT T.*, IFNULL(P.payments_total,0) AS payments_total, IFNULL(P.count,0) AS num_payments 
+        app()->bind('OrdersSummarySQL', function(){
+            return
+              'SELECT X.*, (sub_total - discount + tax) AS grand_total, payments_total, (sub_total - discount + tax - commission - payments_total) AS balance
+              FROM
+                (SELECT T.*, 
+                  ((T.sub_total * T.discount_percent/100.0) + T.discount_amount) AS discount,
+                  ((T.sub_total * T.tax_percentage/100.0) + T.tax_amount) AS tax,
+                  IFNULL(P.payments_total,0) AS payments_total,
+                  IFNULL(P.count,0) AS num_payments
                 FROM  (SELECT O.*, D.sub_total, C.name 
-                        FROM (SELECT B.Order_num, SUM(B.multiply) as sub_total 
-                                FROM (SELECT C.Order_num, C.unit_price*C.qty AS multiply 
-                                        FROM order_contents C) AS B 
-                                GROUP BY B.Order_num) D, orders O, customers C 
-                                WHERE D.Order_num = O.Order_num 
-                                AND O.customer_id = C.id) T
-          
+                      FROM (SELECT Order_num, SUM(unit_price*qty) as sub_total 
+                            FROM order_contents 
+                            GROUP BY Order_num) D, orders O, customers C 
+                      WHERE D.Order_num = O.Order_num AND O.customer_id = C.id) T
+            
                 LEFT JOIN
-                (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total, COUNT(*) AS count 
+
+                  (SELECT Order_num, (SUM(payment_amount) - SUM(refund_amount)) as payments_total, COUNT(*) AS count 
                   FROM payments 
-                  GROUP BY Order_num) AS P
-          
-                  ON T.Order_num = P.Order_num'
-            ));
-
-            $orders->each(function($order) {
-
-                $discount = (floatval($order->sub_total) * floatval($order->discount_percent)/100.0) + floatval($order->discount_amount);
-                $tax = (floatval($order->sub_total) * floatval($order->tax_percentage)/100.0) + floatval($order->tax_amount);
-
-                $order->discount_total = $discount;
-                $order->tax_total = $tax;
-
-                $order->grand_total = floatval($order->sub_total) - floatval($discount) + floatval($tax);
-
-                $order->balance = $order->grand_total - $order->payments_total;
-            });
-
-            return $orders;
+                  GROUP BY Order_num) P
+      
+                ON T.Order_num = P.Order_num) X';
         });
 
         app()->singleton('CurrencyFormatter', function(){

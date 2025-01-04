@@ -22,12 +22,16 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-          <h4 class="modal-title"><i class="fa fa-warning mr-2"></i> Confirm payment</h4>
+          <h4 class="modal-title">
+            <i class="fa fa-warning mr-2"></i>
+            Confirm <span v-if="paymentType == 'commission'">commission</span> payment
+          </h4>
         </div>
         <div class="modal-body">
-          <p> Confirm payment of ৳<b>@{{ amount | currency }}</b> via
-            <b>@{{ paymentTypes[paymentType] }}</b> <span v-if="paymentType !== 'cash'">deposited at
-              <i>@{{ bankLabel }}</i></span>.
+          <p> Confirm <b>@{{ paymentTypes[paymentType] }}</b> payment of ৳ <b>@{{ amount | currency }}</b>
+              <span v-if="paymentType == 'check' || paymentType == 'deposit'">
+                deposited at <i>@{{ bankLabel }}</i>
+              </span>.
             You can print the receipt after confirming.
           </p>
         </div>
@@ -166,6 +170,14 @@
                       <th class="text-right">৳ @{{ grandTotal | currency }}</th>
                       <th></th>
                     </tr>
+                    <tr>
+                      <th></th>
+                      <th class="text-uppercase">Commission Paid</th>
+                      <th></th>
+                      <th></th>
+                      <th class="text-right">- ৳ @{{ order.commission | currency }}</th>
+                      <th></th>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -178,7 +190,7 @@
                       <th class="col-xs-1">Transaction Id</th>
                       <th class="col-xs-3">Payment Date</th>
                       <th class="col-xs-2">Amount Paid</th>
-                      <th class="col-xs-2"></th>
+                      <th class="col-xs-2">Amount Refunded</th>
                       <th class="col-xs-2 text-right">Balance</th>
                       <th class="col-xs-2"></th>
                     </tr>
@@ -188,7 +200,7 @@
                       <td class="col-xs-1"> @{{ payment.transaction_id | transactionid_zerofill}}</td>
                       <td class="col-xs-3"> @{{ payment.created_at | ddmmyyyy }}</td>
                       <td class="col-xs-2">৳ @{{ parseFloat(payment.payment_amount) | currency }}</td>
-                      <td class="col-xs-2"></td>
+                      <td class="col-xs-2">৳ @{{ parseFloat(payment.refund_amount) | currency }}</td>
                       <td class="col-xs-2 text-right">৳ @{{ runningTotal(index) | currency }}</td>
                       <td class="col-xs-2"></td>
                     </tr>
@@ -208,10 +220,8 @@
                   <option v-for="(key, val) in paymentTypes" :value="val">@{{ key }}</option>
                 </select>
               </div>
-              <div v-if="paymentType !== 'cash'" class="col-xs-12 col-md-4">
-                <select v-model="accountId"
-                        class="input-lg"
-                >
+              <div v-if="(paymentType == 'check') || (paymentType == 'deposit')" class="col-xs-12 col-md-4">
+                <select v-model="accountId" class="input-lg">
                   <option :value="null" disabled selected>Select a bank account</option>
                   <option v-for="account in bankAccounts" :value="account.id">@{{ account.bank_name + ' ' + account.account_number }}</option>
                 </select>
@@ -221,8 +231,10 @@
                   <span class="input-group-addon"><b>৳</b></span>
                   <input v-model="amount" type="number" min="1" step="0.1" class="form-control">
                   <span class="input-group-btn">
-                    <button @click="showModal()"  type="button" class="btn bg-maroon btn-flat"
-                            :disabled="( !( parseFloat(amount) > 0 ) || ( paymentType !== 'cash' && accountId === null ) )">
+                    <button 
+                      @click="showModal()"  type="button" class="btn bg-maroon btn-flat"
+                      :disabled="( !( parseFloat(amount) > 0 ) || ( (paymentType == 'check' || paymentType == 'deposit') && accountId === null ) )"
+                    >
                       Pay
                     </button>
                   </span>
@@ -239,7 +251,7 @@
     </div>
   </div>
 </div>
-  <div v-else key="1" class="row justify-content-center">
+<div v-else key="1" class="row justify-content-center">
   <div class="col-xs-12 col-md-8">
     <section  class="invoice" style="min-height: 95vh">
       <!-- title row -->
@@ -247,14 +259,19 @@
         <div class="col-xs-12">
           <h2 class="page-header">
             <img class="d-block mx-auto" src="/images/crosscountry.png" height="75" width="auto">
-{{--            <small class="pull-right">Date: @{{ payment_at | ddmmyyyy }}</small>--}}
           </h2>
           <div class="row">
-            <div class="col-xs-4"></div>
-            <div class="col-xs-4"><h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2></div>
+            <div class="col-xs-8"></div>
             <div class="col-xs-4"><small class="pull-right"><strong>Date :</strong> @{{ payment_at | ddmmyyyy }}</small></div>
           </div>
-{{--          <h2 class="text-center text-uppercase mb-4"><b>Receipt</b></h2>--}}
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="text-center text-uppercase mb-4">
+                <b v-if="paymentType == 'commission'">Commission Receipt</b>
+                <b v-else>Payment Receipt</b>
+              </h2>
+            </div>
+          </div>
         </div>
         <!-- /.col -->
       </div>
@@ -262,7 +279,12 @@
       <div class="row invoice-info">
         <div class="col-sm-4 invoice-col">
           Payment By
-          <address>
+          <address v-if="paymentType == 'commission'">
+            <strong>Cross Country</strong><br>
+            7/5 Ring Road Shyamoli,<br>
+            Dhaka 1207
+          </address>
+          <address v-else>
             <strong v-text="order.customer.name"></strong><br>
             <span v-html="order.customer.address"></span><br>
             <span v-text="order.customer.phone"></span>
@@ -271,7 +293,12 @@
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
           Paid To
-          <address>
+          <address v-if="paymentType == 'commission'">
+            <strong v-text="order.customer.name"></strong><br>
+            <span v-html="order.customer.address"></span><br>
+            <span v-text="order.customer.phone"></span>
+          </address>
+          <address v-else>
             <strong>Cross Country</strong><br>
             7/5 Ring Road Shyamoli,<br>
             Dhaka 1207
@@ -279,7 +306,7 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br>
+          <span v-if="paymentType != 'commission'"><b>Transaction ID : @{{ transaction_id | transactionid_zerofill}}</b><br></span>
           <b>Order #</b> @{{ order.Order_num }}<br>
           <b>Customer ID :</b> @{{ order.customer.id }}
         </div>
@@ -313,21 +340,28 @@
             </thead>
             <tbody>
             <tr>
-              <th>Previous Payments Total</th>
+              <th>Previous Payments</th>
               <td><i class="fa fa-minus"></i></td>
-              <td>৳ <span style="float :right">@{{ paymentsTotal() - amount | currency }}</span></td>
+              <td>৳ <span style="float :right">@{{ paymentsTotal() - parseFloat(amount) | currency }}</span></td>
               <td></td>
             </tr>
             <tr>
-              <th>Current Payment</th>
+              <th v-if="paymentType == 'commission'">Commission Paid</th>
+              <th v-else>Current Payment</th>
               <td><i class="fa fa-minus"></i></td>
               <td>৳ <span style="float :right">@{{ amount | currency }}</span></td>
+              <td></td>
+            </tr>
+            <tr v-if="parseFloat(order.commission) > 0">
+              <th>Commission Paid</th>
+              <td><i class="fa fa-minus"></i></td>
+              <td>৳ <span style="float :right">@{{ order.commission | currency }}</span></td>
               <td></td>
             </tr>
             <tr style="border-top : 2px solid black">
               <th>Balance</th>
               <td></td>
-              <td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() | currency }}</span></td>
+              <td>৳ <span style="float :right">@{{ grandTotal - paymentsTotal() - parseFloat(order.commission) | currency }}</span></td>
               <td></td>
             </tr>
             </tbody>
@@ -348,18 +382,15 @@
       <!-- this row will not appear when printing -->
       <div class="no-print row mx-auto" style="position: absolute; bottom: 10; left: 0; width: 100%">
         <div class="col-xs-12">
-          <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print"></i> Print</button>
+          <button onclick="window.print()" class="btn bg-navy pull-right"><i class="fa fa-print mr-2"></i> Print</button>
           <a href="{{ route('payments.create') }}" type="button" class="btn btn-default">
-            <i class="fa fa-chevron-left"></i> Another Payment
+            <i class="fa fa-chevron-left mr-2"></i> Another Payment
           </a>
-          {{--<button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">--}}
-            {{--<i class="fa fa-download"></i> Generate PDF--}}
-          {{--</button>--}}
         </div>
       </div>
 
+      
       <div class="print-footer">
-{{--        <div class="col-xs-12">--}}
           <div class="col-xs-5">
             <div class="row" style="border-top: 1px solid rgb(187, 187, 187);">
               <h4 class="mx-auto">Received By</h4>
@@ -372,8 +403,6 @@
               <h4 class="mx-auto">For Cross Country</h4>
             </div>
           </div>
-{{--        </div>--}}
-
       </div>
     </section>
   </div>
@@ -412,8 +441,8 @@
         watch:{
 
             amount : function( newValue ){
-              if( parseFloat(newValue) > this.grandTotal - this.paymentsTotal())
-                this.amount = this.grandTotal- this.paymentsTotal();
+              if( parseFloat(newValue) > this.grandTotal - parseFloat(this.order.commission) - this.paymentsTotal())
+                this.amount = this.grandTotal - parseFloat(this.order.commission) - this.paymentsTotal();
               else
                 this.helperPositiveFloat(newValue, "amount");
             },
@@ -425,7 +454,6 @@
         },
 
         computed : {
-
             toWordsPoisha : function(){
 
                 var amount;
@@ -454,8 +482,6 @@
             unpaidOrders : function(){
 
                 var unpaid = [];
-                // console.log(this.orders);
-                // console.log(this.orders.length);
 
                 this.orders.forEach(function (value, index) {
 
@@ -464,7 +490,7 @@
 
                     value.payments.forEach(function(value){
 
-                        paymentsTotal+= parseFloat(value.payment_amount);
+                        paymentsTotal+= (parseFloat(value.payment_amount) - parseFloat(value.refund_amount));
                     });
 
                     value.order_contents.forEach(function(value){
@@ -477,12 +503,7 @@
 
                     var grandTotal = subTotal - discountTotal + taxTotal;
 
-                    // console.log('index : ' + index);
-                    // console.log('grandTotal: ' + grandTotal);
-                    // console.log('paymentsTotal: ' + paymentsTotal);
-
-
-                    if(grandTotal > paymentsTotal)
+                    if(grandTotal > (paymentsTotal + parseFloat(value.commission)))
                         unpaid.push(value);
                 });
 
@@ -540,9 +561,7 @@
             },
 
             fractionTotalP : function(){
-
-                //return this.paymentsTotal();
-                return ((this.paymentsTotal()+parseFloat(this.amount))/this.grandTotal)*100;// * 100;
+                return ((this.paymentsTotal()+parseFloat(this.amount))/(this.grandTotal - parseFloat(this.order.commission)))*100;// * 100;
             },
 
             fractionColor : function(){
@@ -580,11 +599,11 @@
             // for each payment alread
             runningTotal : function(index){
 
-                var total =  this.grandTotal;
+                var total =  this.grandTotal - this.order.commission;
 
                 for(var i=0; i<=index; i++)
                 {
-                    total -= parseFloat(this.order.payments[i].payment_amount);
+                    total -= (parseFloat(this.order.payments[i].payment_amount) - parseFloat(this.order.payments[i].refund_amount));
                 }
 
                 return total;
@@ -595,14 +614,11 @@
             },
 
             paymentsTotal : function(){
-
-                // index-th order
                 var total = 0;
 
                 if(this.order)
                     this.order.payments.forEach(function(value){
-
-                        total+= parseFloat(value.payment_amount);
+                        total+= (parseFloat(value.payment_amount) - parseFloat(value.refund_amount));
                     });
                 return total;
             },
@@ -627,17 +643,12 @@
                             app.paid = true;
                             app.transaction_id = data.payment.transaction_id;
                             app.payment_at = data.payment.created_at;
-                            //app.amount = 0;
                         }
-                        else{
-                            if(data.status == 'failed' && data.message)
-                            {
-                                app.error_message = data.message;
-                                $('#modal-error').modal('show');
-                                //console.log(data.message);
-                            }
+                        else if(data.status == 'failed' && data.message)
+                        {
+                            app.error_message = data.message;
+                            $('#modal-error').modal('show');
                         }
-
                     });
             },
             //HELPERs

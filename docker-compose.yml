@@ -12,14 +12,19 @@ services:
       - ./database:/var/www/html/database
       - ./routes:/var/www/html/routes
       - ./resources:/var/www/html/resources
+      - ./public:/var/www/html/public
   db:
     image: mysql:5.7
-    restart: always
+    restart: unless-stopped
+    platform: linux/x86_64 #For Apple Silicon processors
     ports:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: 'nano_db'
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
       MYSQL_ROOT_PASSWORD: ""
+    expose:
+      - "3306"
     volumes:
       - ./db:/var/lib/mysql
+      - ./nano_db.sql:/docker-entrypoint-initdb.d/1.sql
