@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/XEQTIONR/intertracNano/master/public/images/intertracnanologocolor.bmp" />
+
 # intertracNano
 
 This is a secondary version of the nanoDB app written by Ishtehar Hussain for Intertrac Nano. The web application is written mostly in PHP on Laravel 5.4 Framework.
